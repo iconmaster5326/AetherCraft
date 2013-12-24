@@ -46,6 +46,9 @@ public class DynamicAVRegister {
         	Map.Entry pairs = (Map.Entry)it.next();
         	getItemAV((ArrayList)pairs.getValue());
         }
+        
+        //Equate the AV of smelting recipes
+        
 	}
 	
 	private static int getItemAV(ArrayList list) {
