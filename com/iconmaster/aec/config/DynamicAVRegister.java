@@ -184,7 +184,7 @@ public class DynamicAVRegister {
 	 * @return
 	 */
 	private static List getUID(ItemStack item) {
-		return Arrays.asList(item.itemID,item.getHasSubtypes() ? item.getItemDamage() : 0);
+		return Arrays.asList(item.itemID,item.getHasSubtypes() && !((Integer)item.getItemDamage()).equals(32767) ? item.getItemDamage() : 0);
 	}
 	
 	/**
