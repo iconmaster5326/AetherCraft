@@ -1,4 +1,4 @@
-package com.iconmaster.aec.config;
+package com.iconmaster.aec.aether;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.util.UidUtils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -30,7 +31,7 @@ public class DynamicAVRegister {
 			{
 				if (isValidRecipe(recipe)) {
 					ItemStack output = getOutput(recipe);
-					List uid = getUID(output);
+					List uid = UidUtils.getUID(output);
 					if (recipeList.get(uid) == null) {
 						recipeList.put(uid, new ArrayList());
 					}
@@ -49,7 +50,7 @@ public class DynamicAVRegister {
         	Map.Entry pairs = (Map.Entry)it.next();
         	AVSmeltingRecipe recipe = new AVSmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
 			ItemStack output = getOutput(recipe);
-			List uid = getUID(output);
+			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {
 				recipeList.put(uid, new ArrayList());
 			}
@@ -60,9 +61,9 @@ public class DynamicAVRegister {
 		it = FurnaceRecipes.smelting().getMetaSmeltingList().entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
-        	AVSmeltingRecipe recipe = new AVSmeltingRecipe(getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
+        	AVSmeltingRecipe recipe = new AVSmeltingRecipe(UidUtils.getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
 			ItemStack output = getOutput(recipe);
-			List uid = getUID(output);
+			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {
 				recipeList.put(uid, new ArrayList());
 			}
@@ -100,7 +101,7 @@ public class DynamicAVRegister {
 		ItemStack output = getOutput(recipe);
 		if (output == null) { System.out.println("Failed: no output!"); return 0; }
 		System.out.println("Getting AV of "+getDebugName(output));
-		List uid = getUID(output);
+		List uid = UidUtils.getUID(output);
 		ArrayList inputs = getInputs(recipe);
 		if (inputs == null || inputs.size() == 0) { System.out.println("	Failed: Inputs were empty!"); return 0; }
 		if (lookedOver.get(uid) != null) {
@@ -119,7 +120,7 @@ public class DynamicAVRegister {
 				System.out.println("	Found component "+getDebugName(item));
 				
 				int av = AetherCraft.getAetherValueByItemStack(item);
-				if (lookedOver.get(getUID(item)) != null) {
+				if (lookedOver.get(UidUtils.getUID(item)) != null) {
 					//it's an infinite recursive recipe
 					System.out.println("	Failed: recursive recipe input!");
 					return 0;
@@ -133,7 +134,7 @@ public class DynamicAVRegister {
 						System.out.println("	Failed: Automatic recursion detection triggered!");
 						return 0;
 					}
-					av = getItemAV((ArrayList) recipeList.get(getUID(item)));
+					av = getItemAV((ArrayList) recipeList.get(UidUtils.getUID(item)));
 					if (av==0 || av==2147483647) {
 						System.out.println("		}");
 						System.out.println("	Failed: Geting subrecipe failed!");
@@ -170,30 +171,10 @@ public class DynamicAVRegister {
 			return flattenInputs(new ArrayList(Arrays.asList(((ShapedOreRecipe)recipe).getInput())));
 		} else if (recipe instanceof ShapelessOreRecipe) {
 			return flattenInputs(((ShapelessOreRecipe)recipe).getInput());
-		} else if (recipe instanceof AVSmeltingRecipe) {
-			ArrayList a = new ArrayList();
-			a.add(((AVSmeltingRecipe)recipe).getInput());
-			return a;
+		} else if (recipe instanceof IDynamicAVRecipe) {
+			return ((IDynamicAVRecipe)recipe).getInputs();
 		}
 		return null;
-	}
-	
-	/**
-	 * Gets the List you can use to put a ItemStack in a hash.
-	 * @param item
-	 * @return
-	 */
-	private static List getUID(ItemStack item) {
-		return Arrays.asList(item.itemID,item.getHasSubtypes() && !((Integer)item.getItemDamage()).equals(32767) ? item.getItemDamage() : 0);
-	}
-	
-	/**
-	 * Gets the ItemStack that a uid encodes for.
-	 * @param uid
-	 * @return
-	 */
-	private static ItemStack getStackFromUid(List uid) {
-		return new ItemStack((Integer)uid.get(0),1,(Integer)uid.get(1));
 	}
 	
 	private static ItemStack getOutput(Object recipe) {
@@ -205,8 +186,8 @@ public class DynamicAVRegister {
 			return ((ShapedOreRecipe)recipe).getRecipeOutput();
 		} else if (recipe instanceof ShapelessOreRecipe) {
 			return ((ShapelessOreRecipe)recipe).getRecipeOutput();
-		} else if (recipe instanceof AVSmeltingRecipe) {
-			return ((AVSmeltingRecipe)recipe).getOutput();
+		} else if (recipe instanceof IDynamicAVRecipe) {
+			return ((IDynamicAVRecipe)recipe).getOutput();
 		}
 		return null;
 	}

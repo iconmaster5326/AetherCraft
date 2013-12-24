@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.iconmaster.aec.aether.DynamicAVRegister;
 import com.iconmaster.aec.client.ClientPacketHandler;
 import com.iconmaster.aec.command.ConfigCommand;
 import com.iconmaster.aec.common.block.BlockAetherContainer;
@@ -14,7 +15,6 @@ import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.config.DefaultAetherValuesConfig;
 import com.iconmaster.aec.config.AetherManipulatorConfig;
-import com.iconmaster.aec.config.DynamicAVRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

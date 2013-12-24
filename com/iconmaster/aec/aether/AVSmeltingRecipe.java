@@ -1,8 +1,10 @@
-package com.iconmaster.aec.config;
+package com.iconmaster.aec.aether;
+
+import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 
-public class AVSmeltingRecipe {
+public class AVSmeltingRecipe implements IDynamicAVRecipe {
 
 	private ItemStack input;
 	private ItemStack output;
@@ -16,13 +18,17 @@ public class AVSmeltingRecipe {
 		this.input = input;
 		this.output = output;
 	}
-
-	public ItemStack getInput() {
-		return input;
-	}
 	
+	@Override
 	public ItemStack getOutput() {
 		return output;
+	}
+
+	@Override
+	public ArrayList getInputs() {
+		ArrayList a = new ArrayList();
+		a.add(input);
+		return a;
 	}
 	
 }
