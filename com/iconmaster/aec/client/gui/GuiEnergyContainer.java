@@ -194,7 +194,7 @@ public class GuiEnergyContainer extends GuiContainer {
 		}
 
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "GraEnMaReq";
+		packet.channel = "AecReq";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		PacketDispatcher.sendPacketToServer(packet);

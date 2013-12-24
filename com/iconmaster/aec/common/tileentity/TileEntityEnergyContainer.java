@@ -247,7 +247,7 @@ public class TileEntityEnergyContainer extends TileEntity implements
 			}
 
 			Packet250CustomPayload packet = new Packet250CustomPayload();
-			packet.channel = "GraEnMa";
+			packet.channel = "Aec";
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			if (this.worldObj != null && this.worldObj.provider != null) {

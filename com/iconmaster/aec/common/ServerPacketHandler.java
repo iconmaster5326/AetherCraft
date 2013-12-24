@@ -19,7 +19,7 @@ public class ServerPacketHandler implements IPacketHandler {
 			Packet250CustomPayload packet, Player player) {
 		EntityPlayer sender = (EntityPlayer) player;
 
-		if (packet.channel.equals("GraEnMaReq")) {
+		if (packet.channel.equals("AecReq")) {
 			handlePacketRequest(packet, sender);
 		}
 	}

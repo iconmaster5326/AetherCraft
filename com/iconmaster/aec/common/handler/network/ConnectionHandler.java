@@ -30,7 +30,7 @@ public class ConnectionHandler implements IConnectionHandler {
 			ex.printStackTrace();
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "GraEnMaTrans";
+		packet.channel = "AecTrans";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		PacketDispatcher.sendPacketToPlayer(packet, (Player) player);

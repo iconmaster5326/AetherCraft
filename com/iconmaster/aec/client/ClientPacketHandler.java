@@ -24,10 +24,10 @@ public class ClientPacketHandler implements IPacketHandler {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(
 				packet.data));
 
-		if (packet.channel.equals("GraEnMa")) {
+		if (packet.channel.equals("Aec")) {
 			handlePacket(packet, sender);
 		}
-		if (packet.channel.equals("GraEnMaTrans")) {
+		if (packet.channel.equals("AecTrans")) {
 			handleTransferPacket(packet, sender);
 		}
 	}
