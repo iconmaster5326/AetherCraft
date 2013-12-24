@@ -87,11 +87,11 @@ public class BlockAetherManipulator extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.blockIcon = iconRegister
-				.registerIcon("aec:ManipulatorSide");
+				.registerIcon("aec:aetherManipulatorSide");
 		this.blockIconTop = iconRegister
-				.registerIcon("aec:ManipulatorTop");
+				.registerIcon("aec:aetherManipulatorTop");
 		this.blockIconBottom = iconRegister
-				.registerIcon("aec:ManipulatorBottom");
+				.registerIcon("aec:aetherManipulatorBottom");
 	}
 
 	/**
