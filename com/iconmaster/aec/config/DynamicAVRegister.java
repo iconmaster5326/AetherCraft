@@ -11,6 +11,7 @@ import com.iconmaster.aec.common.AetherCraft;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
@@ -39,15 +40,26 @@ public class DynamicAVRegister {
 				//avoiding crashes with MCPC+ since 2013!
 			}
 		}
+		//put smelting recipes on the list too
+		Iterator it = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
+        while (it.hasNext()) {
+        	Map.Entry pairs = (Map.Entry)it.next();
+        	AVSmeltingRecipe recipe = new AVSmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
+			ItemStack output = getOutput(recipe);
+			List uid = getUID(output);
+			if (recipeList.get(uid) == null) {
+				recipeList.put(uid, new ArrayList());
+			}
+			((ArrayList) recipeList.get(uid)).add(recipe);
+        }
+        	
 		
 		//Begin to add recipes to list. Recursively calls getRecipeAV.
-		Iterator it = recipeList.entrySet().iterator();
+		it = recipeList.entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
         	getItemAV((ArrayList)pairs.getValue());
         }
-        
-        //Equate the AV of smelting recipes
         
 	}
 	
@@ -117,7 +129,7 @@ public class DynamicAVRegister {
 	}
 
 	private static boolean isValidRecipe(Object recipe) {
-		return recipe instanceof ShapedRecipes || recipe instanceof ShapelessRecipes || recipe instanceof ShapedOreRecipe || recipe instanceof ShapelessOreRecipe;
+		return recipe instanceof ShapedRecipes || recipe instanceof ShapelessRecipes || recipe instanceof ShapedOreRecipe || recipe instanceof ShapelessOreRecipe || recipe instanceof AVSmeltingRecipe;
 	}
 	
 	private static ArrayList getInputs(Object recipe) {
@@ -129,6 +141,10 @@ public class DynamicAVRegister {
 			return flattenInputs(new ArrayList(Arrays.asList(((ShapedOreRecipe)recipe).getInput())));
 		} else if (recipe instanceof ShapelessOreRecipe) {
 			return flattenInputs(((ShapelessOreRecipe)recipe).getInput());
+		} else if (recipe instanceof AVSmeltingRecipe) {
+			ArrayList a = new ArrayList();
+			a.add(((AVSmeltingRecipe)recipe).getInput());
+			return a;
 		}
 		return null;
 	}
@@ -160,6 +176,8 @@ public class DynamicAVRegister {
 			return ((ShapedOreRecipe)recipe).getRecipeOutput();
 		} else if (recipe instanceof ShapelessOreRecipe) {
 			return ((ShapelessOreRecipe)recipe).getRecipeOutput();
+		} else if (recipe instanceof AVSmeltingRecipe) {
+			return ((AVSmeltingRecipe)recipe).getOutput();
 		}
 		return null;
 	}
