@@ -14,6 +14,7 @@ import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.config.DefaultAetherValuesConfig;
 import com.iconmaster.aec.config.AetherManipulatorConfig;
+import com.iconmaster.aec.util.DynamicAVRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -74,6 +75,7 @@ public class AetherCraft {
 		forgeConfigFile = event.getSuggestedConfigurationFile();
 
 		this.reloadConfigFiles();
+		
 	}
 
 	@EventHandler
@@ -101,6 +103,8 @@ public class AetherCraft {
 		proxy.addRecipes();
 		proxy.registerTickHandlers();
 		proxy.registerEventHandlers();
+		
+		DynamicAVRegister.addDynamicValues();
 	}
 
 	@EventHandler

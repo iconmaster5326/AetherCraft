@@ -310,7 +310,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public int addEnergy(int ev) {
+	public int addAether(int ev) {
 		int ecmaxstorage = Integer.parseInt(AetherCraft
 				.getOptions("ecmaxstorage"));
 		if (this.energy + ev <= ecmaxstorage) {
@@ -326,7 +326,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public int extractEnergy(int ev) {
+	public int extractAether(int ev) {
 		if (this.energy - ev >= 0) {
 			this.energy -= ev;
 			this.sync();
@@ -339,13 +339,13 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public void setEnergy(int ev) {
+	public void setAether(int ev) {
 		this.energy = ev;
 		this.sync();
 	}
 
 	@Override
-	public int getEnergy() {
+	public int getAether() {
 		return this.energy;
 	}
 }

@@ -1,11 +1,11 @@
 package com.iconmaster.aec.common;
 
 public interface IAetherContainer {
-	public int addEnergy(int ev);
+	public int addAether(int av);
 
-	public int extractEnergy(int ev);
+	public int extractAether(int av);
 
-	public void setEnergy(int ev);
+	public void setAether(int av);
 
-	public int getEnergy();
+	public int getAether();
 }

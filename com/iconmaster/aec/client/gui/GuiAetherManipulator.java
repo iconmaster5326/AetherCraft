@@ -51,7 +51,7 @@ public class GuiAetherManipulator extends GuiContainer {
 		this.fontRenderer.drawStringWithShadow("Internal Energy:", 9, 26,
 				0xFF0000);
 		this.fontRenderer.drawStringWithShadow(
-				Integer.toString(this.te.getEnergy()), 95, 26, 0x00FF00);
+				Integer.toString(this.te.getAether()), 95, 26, 0x00FF00);
 
 		this.fontRenderer.drawStringWithShadow("Consume Precission:", 9, 38,
 				0xFF0000);

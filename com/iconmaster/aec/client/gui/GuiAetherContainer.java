@@ -49,7 +49,7 @@ public class GuiAetherContainer extends GuiContainer {
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRenderer.drawStringWithShadow(
-				"Energy: " + Integer.toString(this.te.getEnergy()), 34, 38,
+				"Energy: " + Integer.toString(this.te.getAether()), 34, 38,
 				0x55FF55);
 
 		int a = 68 - 16;
