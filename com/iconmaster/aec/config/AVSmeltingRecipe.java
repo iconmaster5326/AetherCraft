@@ -12,6 +12,11 @@ public class AVSmeltingRecipe {
 		this.output = output;
 	}
 	
+	public AVSmeltingRecipe(ItemStack input, ItemStack output) {
+		this.input = input;
+		this.output = output;
+	}
+
 	public ItemStack getInput() {
 		return input;
 	}

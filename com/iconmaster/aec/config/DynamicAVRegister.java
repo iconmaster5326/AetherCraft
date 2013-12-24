@@ -35,17 +35,32 @@ public class DynamicAVRegister {
 						recipeList.put(uid, new ArrayList());
 					}
 					((ArrayList) recipeList.get(uid)).add(recipe);
+				} else {
+					System.out.println("Found new recipe class: "+recipe.getClass());
 				}
 			} catch (NullPointerException e) {
 				System.out.println("Invalid recipe state!");
 				//avoiding crashes with MCPC+ since 2013!
 			}
 		}
-		//put smelting recipes on the list too
+		//put smelting recipes on the list too...
 		Iterator it = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
         	AVSmeltingRecipe recipe = new AVSmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
+			ItemStack output = getOutput(recipe);
+			List uid = getUID(output);
+			if (recipeList.get(uid) == null) {
+				recipeList.put(uid, new ArrayList());
+			}
+			((ArrayList) recipeList.get(uid)).add(recipe);
+        }
+        
+        // AND meta-smelting. Hoo boy.
+		it = FurnaceRecipes.smelting().getMetaSmeltingList().entrySet().iterator();
+        while (it.hasNext()) {
+        	Map.Entry pairs = (Map.Entry)it.next();
+        	AVSmeltingRecipe recipe = new AVSmeltingRecipe(getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
 			ItemStack output = getOutput(recipe);
 			List uid = getUID(output);
 			if (recipeList.get(uid) == null) {
