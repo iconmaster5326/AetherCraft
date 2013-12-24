@@ -95,11 +95,11 @@ public class BlockAetherContainer extends BlockContainer {
     public void registerIcons(IconRegister iconRegister)
     {
         this.blockIcon = iconRegister
-                         .registerIcon("aec:energyContainerSide");
+                         .registerIcon("aec:aetherContainerSide");
         this.blockIconTop = iconRegister
-                            .registerIcon("aec:energyContainerTop");
+                            .registerIcon("aec:aetherContainerTop");
         this.blockIconBottom = iconRegister
-                               .registerIcon("aec:energyContainerBottom");
+                               .registerIcon("aec:aetherContainerBottom");
     }
 
     @Override

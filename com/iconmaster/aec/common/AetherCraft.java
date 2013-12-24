@@ -14,7 +14,7 @@ import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.config.DefaultAetherValuesConfig;
 import com.iconmaster.aec.config.AetherManipulatorConfig;
-import com.iconmaster.aec.util.DynamicAVRegister;
+import com.iconmaster.aec.config.DynamicAVRegister;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

@@ -30,7 +30,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiAetherContainer extends GuiContainer {
 	private static final ResourceLocation gui_texture = new ResourceLocation(
-			"aec", "textures/gui/energyContainerGui.png");
+			"aec", "textures/gui/aetherContainerGui.png");
 	private TileEntityAetherContainer te;
 
 	public GuiAetherContainer(InventoryPlayer player,

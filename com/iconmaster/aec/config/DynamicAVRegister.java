@@ -1,4 +1,4 @@
-package com.iconmaster.aec.util;
+package com.iconmaster.aec.config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
