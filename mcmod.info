@@ -1,0 +1,26 @@
+[
+{
+  "modid": "AetherCraft",
+  "name": "AetherCraft",
+  "description": "A fork of Graknol's Energy Manipulator mod. Turn matter into other kinds of matter today!",
+  "version": "1.2.0",
+  "url": "https://github.com/iconmaster5326/AetherCraft",
+  "updateUrl": "",
+  "authorList": [
+    "Graknol"
+    "dman10311"
+    "iconmaster"
+  ],
+  "credits": "Thanks to Graknol and dman10311 fot the original mod (http://tinyurl.com/othpwju). Thanks to ChickenBones for the NEI integration.",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "requiredMods": [
+    "Forge"
+  ],
+  "dependencies": [
+    "Forge", "NotEnoughItems"
+  ]
+}
+]
