@@ -1,6 +1,6 @@
 package com.iconmaster.aec.common.gui;
 
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -8,12 +8,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerEnergyContainer extends Container {
-	private TileEntityEnergyContainer tileEntity;
+public class ContainerAetherContainer extends Container {
+	private TileEntityAetherContainer tileEntity;
 
-	public ContainerEnergyContainer(InventoryPlayer player,
-			TileEntityEnergyContainer tileEntityEnergyContainer) {
-		this.tileEntity = tileEntityEnergyContainer;
+	public ContainerAetherContainer(InventoryPlayer player,
+			TileEntityAetherContainer tileEntityAetherContainer) {
+		this.tileEntity = tileEntityAetherContainer;
 
 		this.addSlotToContainer(new Slot(this.tileEntity, 0, 12, 23));
 		this.addSlotToContainer(new Slot(this.tileEntity, 1, 12, 45));

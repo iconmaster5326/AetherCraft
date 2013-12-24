@@ -4,8 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyContainer;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
@@ -32,7 +32,7 @@ public class ServerPacketHandler implements IPacketHandler {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
 			case 0:
-				TileEntityEnergyManipulator tem = (TileEntityEnergyManipulator) player.worldObj
+				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tem != null) {
@@ -40,7 +40,7 @@ public class ServerPacketHandler implements IPacketHandler {
 				}
 				break;
 			case 1:
-				TileEntityEnergyContainer tec = (TileEntityEnergyContainer) player.worldObj
+				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tec != null) {

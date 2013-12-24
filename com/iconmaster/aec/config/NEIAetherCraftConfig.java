@@ -9,7 +9,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.forge.GuiContainerManager;
 
-public class NEIEnergyManipulatorConfig implements IConfigureNEI {
+public class NEIAetherCraftConfig implements IConfigureNEI {
 	private static boolean isNeiLoaded = false;
 
 	@Override
@@ -20,7 +20,7 @@ public class NEIEnergyManipulatorConfig implements IConfigureNEI {
 
 	@Override
 	public String getName() {
-		return "Energy Manipulator";
+		return "AetherCraft";
 	}
 
 	@Override

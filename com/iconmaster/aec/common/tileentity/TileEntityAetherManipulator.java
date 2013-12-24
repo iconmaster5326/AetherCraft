@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.IEnergyContainer;
+import com.iconmaster.aec.common.IAetherContainer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -18,8 +18,8 @@ import cpw.mods.fml.common.network.FMLPacket;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 
-public class TileEntityEnergyManipulator extends TileEntity implements
-		ISidedInventory, IEnergyContainer {
+public class TileEntityAetherManipulator extends TileEntity implements
+		ISidedInventory, IAetherContainer {
 	public static final byte energyBlockType = 0;
 
 	private ItemStack[] inventory;
@@ -30,7 +30,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 	// 0 = Bottom, 1 = Top, 2 = North, 3 = South, 4 = East, 5 = West
 	private boolean connectedSides[];
 
-	public TileEntityEnergyManipulator() {
+	public TileEntityAetherManipulator() {
 		inventory = new ItemStack[55];
 		connectedSides = new boolean[6];
 	}
@@ -174,16 +174,16 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 			// ------------------- Consuming -------------------
 			if (currentStack != null) {
 				if (topStack != null) {
-					if ((AetherCraft.getEnergyValueByItemStack(topStack) > 0 || topStack.itemID == AetherCraft.itemEnergyBattery.itemID)
+					if ((AetherCraft.getAetherValueByItemStack(topStack) > 0 || topStack.itemID == AetherCraft.itemAetherBattery.itemID)
 							&& AetherCraft
-									.getEnergyValueByItemStack(currentStack) > 0
-							&& ((currentStack.itemID != AetherCraft.itemEnergyBattery.itemID && currentStack.itemID != topStack.itemID) || (currentStack
+									.getAetherValueByItemStack(currentStack) > 0
+							&& ((currentStack.itemID != AetherCraft.itemAetherBattery.itemID && currentStack.itemID != topStack.itemID) || (currentStack
 									.getHasSubtypes()
 									&& topStack.getHasSubtypes() && currentStack
 									.getItemDamage() != topStack
 									.getItemDamage()))) {
 						int stackEv = AetherCraft
-								.getEnergyValueByItemStack(currentStack);
+								.getAetherValueByItemStack(currentStack);
 						if ((stackEv
 								* ((float) Integer.parseInt(AetherCraft
 										.getOptions("consumeprecission"))) / 100.0f) <= this
@@ -199,10 +199,10 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					}
 				} else {
 					if (AetherCraft
-							.getEnergyValueByItemStack(currentStack) > 0
-							&& currentStack.itemID != AetherCraft.itemEnergyBattery.itemID) {
+							.getAetherValueByItemStack(currentStack) > 0
+							&& currentStack.itemID != AetherCraft.itemAetherBattery.itemID) {
 						int stackEv = AetherCraft
-								.getEnergyValueByItemStack(currentStack);
+								.getAetherValueByItemStack(currentStack);
 						if ((stackEv
 								* ((float) Integer.parseInt(AetherCraft
 										.getOptions("consumeprecission"))) / 100.0f) <= this
@@ -220,17 +220,17 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 			}
 			// ------------------- Transmuting -------------------
 			if (topStack != null
-					&& AetherCraft.getEnergyValueByItemStack(topStack) > 0
+					&& AetherCraft.getAetherValueByItemStack(topStack) > 0
 					&& this.getCombinedEnergy() >= AetherCraft
-							.getEnergyValueByItemStack(topStack)
-					&& topStack.itemID != AetherCraft.itemEnergyBattery.itemID) {
+							.getAetherValueByItemStack(topStack)
+					&& topStack.itemID != AetherCraft.itemAetherBattery.itemID) {
 				int slot = this.getStackableSlot(topStack);
 
 				if (slot > 0) {
 					ItemStack newStack = this.getStackInSlot(slot);
 					newStack.stackSize++;
 					this.extractEnergyFromConnectedAndSelf(AetherCraft
-							.getEnergyValueByItemStack(topStack));
+							.getAetherValueByItemStack(topStack));
 					doneSomething = true;
 				} else {
 					slot = this.getEmptySlot();
@@ -240,7 +240,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 						newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
 						this.extractEnergyFromConnectedAndSelf(AetherCraft
-								.getEnergyValueByItemStack(topStack));
+								.getAetherValueByItemStack(topStack));
 						doneSomething = true;
 					}
 				}
@@ -333,7 +333,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 		if (stack != null) {
 			this.progress = (int) ((float) this.getCombinedEnergy()
 					/ (float) AetherCraft
-							.getEnergyValueByItemStack(stack) * 100.0f);
+							.getAetherValueByItemStack(stack) * 100.0f);
 
 			if (this.progress > 100) {
 				this.progress = 100;
@@ -372,13 +372,13 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 		return -1;
 	}
 
-	private int getConnectedECWithEVHigherOrEqual(int ev) {
+	private int getConnectedECWithAVHigherOrEqual(int ev) {
 		for (int i = 0; i < this.connectedSides.length; i++) {
 			if (this.connectedSides[i]) {
 				switch (i) {
 				// Bottom
 				case 0:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 									this.zCoord)).getEnergy() >= ev) {
 						return 0;
@@ -386,7 +386,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// Top
 				case 1:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 									this.zCoord)).getEnergy() >= ev) {
 						return 1;
@@ -394,7 +394,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// North
 				case 2:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
 									this.zCoord - 1)).getEnergy() >= ev) {
 						return 2;
@@ -402,7 +402,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// South
 				case 3:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
 									this.zCoord + 1)).getEnergy() >= ev) {
 						return 3;
@@ -410,7 +410,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// West
 				case 4:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 									this.zCoord)).getEnergy() >= ev) {
 						return 4;
@@ -418,7 +418,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// East
 				case 5:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 									this.zCoord)).getEnergy() >= ev) {
 						return 5;
@@ -430,13 +430,13 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 		return -1;
 	}
 
-	private int getConnectedECWithEVLowerOrEqual(int ev) {
+	private int getConnectedECWithAVLowerOrEqual(int ev) {
 		for (int i = 0; i < this.connectedSides.length; i++) {
 			if (this.connectedSides[i]) {
 				switch (i) {
 				// Bottom
 				case 0:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 									this.zCoord)).getEnergy() <= ev) {
 						return 0;
@@ -444,7 +444,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// Top
 				case 1:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 									this.zCoord)).getEnergy() <= ev) {
 						return 1;
@@ -452,7 +452,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// North
 				case 2:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
 									this.zCoord - 1)).getEnergy() <= ev) {
 						return 2;
@@ -460,7 +460,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// South
 				case 3:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
 									this.zCoord + 1)).getEnergy() <= ev) {
 						return 3;
@@ -468,7 +468,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// West
 				case 4:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 									this.zCoord)).getEnergy() <= ev) {
 						return 4;
@@ -476,7 +476,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 					break;
 				// East
 				case 5:
-					if (((TileEntityEnergyContainer) this.worldObj
+					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 									this.zCoord)).getEnergy() <= ev) {
 						return 5;
@@ -493,37 +493,37 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 		// Bottom
 		case 0:
 			return this.worldObj.getBlockId(this.xCoord, this.yCoord - 1,
-					this.zCoord) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 							this.zCoord)).getEnergy() : 0;
 			// Top
 		case 1:
 			return this.worldObj.getBlockId(this.xCoord, this.yCoord + 1,
-					this.zCoord) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 							this.zCoord)).getEnergy() : 0;
 			// North
 		case 2:
 			return this.worldObj.getBlockId(this.xCoord, this.yCoord,
-					this.zCoord - 1) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord - 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord,
 							this.zCoord - 1)).getEnergy() : 0;
 			// South
 		case 3:
 			return this.worldObj.getBlockId(this.xCoord, this.yCoord,
-					this.zCoord + 1) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord + 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord,
 							this.zCoord + 1)).getEnergy() : 0;
 			// West
 		case 4:
 			return this.worldObj.getBlockId(this.xCoord - 1, this.yCoord,
-					this.zCoord) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 							this.zCoord)).getEnergy() : 0;
 			// East
 		case 5:
 			return this.worldObj.getBlockId(this.xCoord + 1, this.yCoord,
-					this.zCoord) == AetherCraft.blockEnergyContainer.blockID ? ((TileEntityEnergyContainer) this.worldObj
+					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 							this.zCoord)).getEnergy() : 0;
 		default:
@@ -533,37 +533,37 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 
 	public void updateConnectedSides() {
 		// Bottom
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord - 1, this.zCoord) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord, this.yCoord - 1, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[0] = true;
 		} else {
 			this.connectedSides[0] = false;
 		}
 		// Top
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord + 1, this.zCoord) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord, this.yCoord + 1, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[1] = true;
 		} else {
 			this.connectedSides[1] = false;
 		}
 		// North
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord - 1) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord - 1) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[2] = true;
 		} else {
 			this.connectedSides[2] = false;
 		}
 		// South
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord + 1) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord + 1) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[3] = true;
 		} else {
 			this.connectedSides[3] = false;
 		}
 		// West
-		if (this.worldObj.getBlockId(this.xCoord - 1, this.yCoord, this.zCoord) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord - 1, this.yCoord, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[4] = true;
 		} else {
 			this.connectedSides[4] = false;
 		}
 		// East
-		if (this.worldObj.getBlockId(this.xCoord + 1, this.yCoord, this.zCoord) == AetherCraft.blockEnergyContainer.blockID) {
+		if (this.worldObj.getBlockId(this.xCoord + 1, this.yCoord, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
 			this.connectedSides[5] = true;
 		} else {
 			this.connectedSides[5] = false;
@@ -590,11 +590,11 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 
 	public int addEnergyToConnectedECs(int ev) {
 		int rest = ev;
-		TileEntityEnergyContainer te;
+		TileEntityAetherContainer te;
 		int ec;
 		while (true) {
 			ec = this
-					.getConnectedECWithEVLowerOrEqual(Integer
+					.getConnectedECWithAVLowerOrEqual(Integer
 							.parseInt(AetherCraft
 									.getOptions("ecmaxstorage")) - 1);
 			if (ec == -1 || rest <= 0) {
@@ -604,7 +604,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 			switch (ec) {
 			// Bottom
 			case 0:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 								this.zCoord);
 				if (te != null) {
@@ -613,7 +613,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// Top
 			case 1:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 								this.zCoord);
 				if (te != null) {
@@ -622,7 +622,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// North
 			case 2:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord - 1);
 				if (te != null) {
@@ -631,7 +631,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// South
 			case 3:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord + 1);
 				if (te != null) {
@@ -640,7 +640,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// West
 			case 4:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {
@@ -649,7 +649,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// East
 			case 5:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {
@@ -662,10 +662,10 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 
 	public int extractEnergyFromConnectedECs(int ev) {
 		int extracted = 0;
-		TileEntityEnergyContainer te;
+		TileEntityAetherContainer te;
 		int ec;
 		while (true) {
-			ec = this.getConnectedECWithEVHigherOrEqual(1);
+			ec = this.getConnectedECWithAVHigherOrEqual(1);
 			if (ec == -1 || extracted >= ev) {
 				this.sync();
 				return extracted;
@@ -673,7 +673,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 			switch (ec) {
 			// Bottom
 			case 0:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 								this.zCoord);
 				if (te != null) {
@@ -682,7 +682,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// Top
 			case 1:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 								this.zCoord);
 				if (te != null) {
@@ -691,7 +691,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// North
 			case 2:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord - 1);
 				if (te != null) {
@@ -700,7 +700,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// South
 			case 3:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord + 1);
 				if (te != null) {
@@ -709,7 +709,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// West
 			case 4:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {
@@ -718,7 +718,7 @@ public class TileEntityEnergyManipulator extends TileEntity implements
 				break;
 			// East
 			case 5:
-				te = (TileEntityEnergyContainer) this.worldObj
+				te = (TileEntityAetherContainer) this.worldObj
 						.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {

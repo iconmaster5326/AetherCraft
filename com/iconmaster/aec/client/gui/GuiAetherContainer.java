@@ -18,24 +18,24 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.gui.ContainerEnergyContainer;
-import com.iconmaster.aec.common.gui.ContainerEnergyManipulator;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyContainer;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyManipulator;
+import com.iconmaster.aec.common.gui.ContainerAetherContainer;
+import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiEnergyContainer extends GuiContainer {
+public class GuiAetherContainer extends GuiContainer {
 	private static final ResourceLocation gui_texture = new ResourceLocation(
 			"aec", "textures/gui/energyContainerGui.png");
-	private TileEntityEnergyContainer te;
+	private TileEntityAetherContainer te;
 
-	public GuiEnergyContainer(InventoryPlayer player,
-			TileEntityEnergyContainer tileEntity) {
-		super(new ContainerEnergyContainer(player, tileEntity));
+	public GuiAetherContainer(InventoryPlayer player,
+			TileEntityAetherContainer tileEntity) {
+		super(new ContainerAetherContainer(player, tileEntity));
 		this.xSize = 176;
 		this.ySize = 166;
 		this.te = tileEntity;
@@ -90,10 +90,10 @@ public class GuiEnergyContainer extends GuiContainer {
 		if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard
 				.isKeyDown(Keyboard.KEY_RSHIFT))
 				&& stack != null
-				&& stack.itemID != AetherCraft.itemEnergyBattery.itemID) {
-			int ev = AetherCraft.getEnergyValueByItemStack(stack);
+				&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
+			int ev = AetherCraft.getAetherValueByItemStack(stack);
 
-			list.add("\u00a72" + "EV: " + Integer.toString(ev));
+			list.add("\u00a72" + "AV: " + Integer.toString(ev));
 		}
 
 		if (list != null && stack != null) {

@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.IEnergyContainer;
+import com.iconmaster.aec.common.IAetherContainer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -17,8 +17,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 
-public class TileEntityEnergyContainer extends TileEntity implements
-		IInventory, IEnergyContainer {
+public class TileEntityAetherContainer extends TileEntity implements
+		IInventory, IAetherContainer {
 	public static final byte energyBlockType = 1;
 
 	private ItemStack[] inventory;
@@ -27,7 +27,7 @@ public class TileEntityEnergyContainer extends TileEntity implements
 
 	private boolean powered;
 
-	public TileEntityEnergyContainer() {
+	public TileEntityAetherContainer() {
 		inventory = new ItemStack[2];
 	}
 
@@ -162,27 +162,27 @@ public class TileEntityEnergyContainer extends TileEntity implements
 		// ------------------- Discharging - TOP SLOT -------------------
 		// Energy Battery
 		if (topStack != null
-				&& AetherCraft.itemEnergyBattery != null
-				&& topStack.itemID == AetherCraft.itemEnergyBattery.itemID) {
+				&& AetherCraft.itemAetherBattery != null
+				&& topStack.itemID == AetherCraft.itemAetherBattery.itemID) {
 			if (!topStack.hasTagCompound()) {
 				topStack.setTagCompound(new NBTTagCompound());
 			}
 			NBTTagCompound tag = topStack.getTagCompound();
-			if (!tag.hasKey("EMEV")) {
-				tag.setInteger("EMEV", 0);
+			if (!tag.hasKey("EMAV")) {
+				tag.setInteger("EMAV", 0);
 			}
-			int batteryEv = tag.getInteger("EMEV");
+			int batteryEv = tag.getInteger("EMAV");
 			if (batteryEv > batteryMaxStorage) {
 				batteryEv = batteryMaxStorage;
-				tag.setInteger("EMEV", batteryEv);
+				tag.setInteger("EMAV", batteryEv);
 			}
 			if (batteryEv > 0) {
 				if (this.energy + batteryEv <= ecMaxStorage) {
 					this.energy += batteryEv;
-					tag.setInteger("EMEV", 0);
+					tag.setInteger("EMAV", 0);
 					doneSomething = true;
 				} else {
-					tag.setInteger("EMEV", batteryEv - (ecMaxStorage
+					tag.setInteger("EMAV", batteryEv - (ecMaxStorage
 							- this.energy));
 					this.energy = ecMaxStorage;
 					doneSomething = true;
@@ -193,25 +193,25 @@ public class TileEntityEnergyContainer extends TileEntity implements
 		// ------------------- Charging - BOTTOM SLOT -------------------
 		// Energy Battery
 		if (bottomStack != null
-				&& AetherCraft.itemEnergyBattery != null
-				&& bottomStack.itemID == AetherCraft.itemEnergyBattery.itemID
+				&& AetherCraft.itemAetherBattery != null
+				&& bottomStack.itemID == AetherCraft.itemAetherBattery.itemID
 				&& this.energy > 0) {
 			if (!bottomStack.hasTagCompound()) {
 				bottomStack.setTagCompound(new NBTTagCompound());
 			}
 			NBTTagCompound tag = bottomStack.getTagCompound();
-			if (!tag.hasKey("EMEV")) {
-				tag.setInteger("EMEV", 0);
+			if (!tag.hasKey("EMAV")) {
+				tag.setInteger("EMAV", 0);
 			}
-			int batteryEv = tag.getInteger("EMEV");
+			int batteryEv = tag.getInteger("EMAV");
 			if (batteryEv < batteryMaxStorage) {
 				if (batteryEv + this.energy <= batteryMaxStorage) {
-					tag.setInteger("EMEV", batteryEv + this.energy);
+					tag.setInteger("EMAV", batteryEv + this.energy);
 					this.energy = 0;
 					doneSomething = true;
 				} else {
 					this.energy -= batteryMaxStorage - batteryEv;
-					tag.setInteger("EMEV", batteryMaxStorage);
+					tag.setInteger("EMAV", batteryMaxStorage);
 					doneSomething = true;
 				}
 			}

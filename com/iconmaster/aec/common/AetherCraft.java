@@ -7,13 +7,13 @@ import java.util.HashMap;
 
 import com.iconmaster.aec.client.ClientPacketHandler;
 import com.iconmaster.aec.command.ConfigCommand;
-import com.iconmaster.aec.common.block.BlockEnergyContainer;
-import com.iconmaster.aec.common.block.BlockEnergyManipulator;
+import com.iconmaster.aec.common.block.BlockAetherContainer;
+import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.handler.network.ConnectionHandler;
-import com.iconmaster.aec.common.item.ItemEnergyBattery;
+import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
-import com.iconmaster.aec.config.DefaultEnergyValuesConfig;
-import com.iconmaster.aec.config.EnergyManipulatorConfig;
+import com.iconmaster.aec.config.DefaultAetherValuesConfig;
+import com.iconmaster.aec.config.AetherManipulatorConfig;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -52,19 +52,19 @@ public class AetherCraft {
 	@SidedProxy(clientSide = "com.iconmaster.aec.client.ClientProxy", serverSide = "com.iconmaster.aec.common.CommonProxy")
 	public static CommonProxy proxy;
 
-	public static Block blockEnergyManipulator;
-	public static Block blockEnergyContainer;
-	public static Item itemEnergyBattery;
+	public static Block blockAetherManipulator;
+	public static Block blockAetherContainer;
+	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 
 	private static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
 
-	private static HashMap<String, Integer> currentConfigEV = new HashMap<String, Integer>();
-	private static HashMap<String, Integer> energyValues = new HashMap<String, Integer>();
+	private static HashMap<String, Integer> currentConfigAV = new HashMap<String, Integer>();
+	private static HashMap<String, Integer> aetherValues = new HashMap<String, Integer>();
 	private static HashMap<String, String> options = new HashMap<String, String>();
 
-	private static File configDir, forgeConfigFile, currentEVConfig;
+	private static File configDir, forgeConfigFile, currentAVConfig;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -80,12 +80,12 @@ public class AetherCraft {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderInformation();
 		// Blocks
-		blockEnergyManipulator = new BlockEnergyManipulator(blockIds.get(0),
+		blockAetherManipulator = new BlockAetherManipulator(blockIds.get(0),
 				Material.rock).setLightValue(0.3f);
-		blockEnergyContainer = new BlockEnergyContainer(blockIds.get(1),
+		blockAetherContainer = new BlockAetherContainer(blockIds.get(1),
 				Material.rock).setLightValue(0.2f);
 		// Items
-		itemEnergyBattery = new ItemEnergyBattery(itemIds.get(0));
+		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
 
 		// Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -108,19 +108,19 @@ public class AetherCraft {
 		event.registerServerCommand(new ConfigCommand());
 	}
 
-	public static int getEnergyValueByItemStack(ItemStack stack) {
+	public static int getAetherValueByItemStack(ItemStack stack) {
 		if (stack != null) {
-			// Energy Battery
-			if (stack.itemID == itemEnergyBattery.itemID) {
+			// Aether Battery
+			if (stack.itemID == itemAetherBattery.itemID) {
 				if (!stack.hasTagCompound()) {
 					stack.setTagCompound(new NBTTagCompound());
 				}
 				int ev = 0;
 				NBTTagCompound tag = stack.getTagCompound();
-				if (tag.hasKey("EMEV")) {
-					ev = tag.getInteger("EMEV");
+				if (tag.hasKey("EMAV")) {
+					ev = tag.getInteger("EMAV");
 				} else {
-					tag.setInteger("EMEV", 0);
+					tag.setInteger("EMAV", 0);
 				}
 				return ev;
 			}
@@ -130,7 +130,7 @@ public class AetherCraft {
 				sb.append(stack.getUnlocalizedName());
 
 				// Unlocalized Name
-				if (energyValues.containsKey(sb.toString())) {
+				if (aetherValues.containsKey(sb.toString())) {
 					if (stack.getItem().isItemTool(stack) && stack.itemID != Item.book.itemID) {
 						int extraEv = 0;
 						if (stack.isItemEnchanted()) {
@@ -140,15 +140,15 @@ public class AetherCraft {
 										.tagAt(i);
 								short eid = tag.getShort("id");
 								short elvl = tag.getShort("lvl");
-								if (energyValues.containsKey("enchantment_"
+								if (aetherValues.containsKey("enchantment_"
 										+ eid)) {
-									extraEv += energyValues.get("enchantment_"
+									extraEv += aetherValues.get("enchantment_"
 											+ eid)
 											* elvl;
 								}
 							}
 						}
-						float a = (float) ((((float) energyValues.get(sb
+						float a = (float) ((((float) aetherValues.get(sb
 								.toString()) / (float) stack.getMaxDamage())
 								* (float) (stack.getMaxDamage() - stack
 										.getItemDamage()) + extraEv) * Double
@@ -159,7 +159,7 @@ public class AetherCraft {
 							return (int) (a);
 						}
 					} else {
-						Integer result = (int) ((float) energyValues.get(sb
+						Integer result = (int) ((float) aetherValues.get(sb
 								.toString()) * Double
 								.parseDouble(getOptions("evmultiplier")));
 						return result != null ? result : 0;
@@ -174,9 +174,9 @@ public class AetherCraft {
 						sb.append(':');
 						sb.append(Integer.toString(stack.getItemDamage()));
 					}
-					if (energyValues.containsKey(sb.toString())) {
+					if (aetherValues.containsKey(sb.toString())) {
 						if (stack.getItem().isItemTool(stack)) {
-							int extraEv = 0;
+							int extraAv = 0;
 							if (stack.isItemEnchanted()) {
 								NBTTagList tagList = stack
 										.getEnchantmentTagList();
@@ -185,18 +185,18 @@ public class AetherCraft {
 											.tagAt(i);
 									short eid = tag.getShort("id");
 									short elvl = tag.getShort("lvl");
-									if (energyValues.containsKey("enchantment_"
+									if (aetherValues.containsKey("enchantment_"
 											+ eid)) {
-										extraEv += energyValues
+										extraAv += aetherValues
 												.get("enchantment_" + eid)
 												* elvl;
 									}
 								}
 							}
-							float a = (float) ((((float) energyValues.get(sb
+							float a = (float) ((((float) aetherValues.get(sb
 									.toString()) / (float) stack.getMaxDamage())
 									* (float) (stack.getMaxDamage() - stack
-											.getItemDamage()) + extraEv) * Double
+											.getItemDamage()) + extraAv) * Double
 									.parseDouble(getOptions("evmultiplier")));
 							if (a <= 0) {
 								return 0;
@@ -204,7 +204,7 @@ public class AetherCraft {
 								return (int) (a);
 							}
 						} else {
-							Integer result = (int) ((float) energyValues.get(sb
+							Integer result = (int) ((float) aetherValues.get(sb
 									.toString()) * Double
 									.parseDouble(getOptions("evmultiplier")));
 							return result != null ? result : 0;
@@ -212,9 +212,9 @@ public class AetherCraft {
 					} else {
 						sb = new StringBuilder();
 						sb.append(Integer.toString(stack.itemID));
-						if (energyValues.containsKey(sb.toString())) {
+						if (aetherValues.containsKey(sb.toString())) {
 							if (stack.getItem().isItemTool(stack)) {
-								int extraEv = 0;
+								int extraAv = 0;
 								if (stack.isItemEnchanted()) {
 									NBTTagList tagList = stack
 											.getEnchantmentTagList();
@@ -223,20 +223,20 @@ public class AetherCraft {
 												.tagAt(i);
 										short eid = tag.getShort("id");
 										short elvl = tag.getShort("lvl");
-										if (energyValues
+										if (aetherValues
 												.containsKey("enchantment_"
 														+ eid)) {
-											extraEv += energyValues
+											extraAv += aetherValues
 													.get("enchantment_" + eid)
 													* elvl;
 										}
 									}
 								}
-								float a = (float) ((((float) energyValues
+								float a = (float) ((((float) aetherValues
 										.get(sb.toString()) / (float) stack
 										.getMaxDamage())
 										* (float) (stack.getMaxDamage() - stack
-												.getItemDamage()) + extraEv) * Double
+												.getItemDamage()) + extraAv) * Double
 										.parseDouble(getOptions("evmultiplier")));
 								if (a <= 0) {
 									return 0;
@@ -244,7 +244,7 @@ public class AetherCraft {
 									return (int) (a);
 								}
 							} else {
-								Integer result = (int) ((float) energyValues
+								Integer result = (int) ((float) aetherValues
 										.get(sb.toString()) * Double
 										.parseDouble(getOptions("evmultiplier")));
 								return result != null ? result : 0;
@@ -280,26 +280,26 @@ public class AetherCraft {
 	}
 
 	public static void reloadConfigFiles() {
-		// ------------------- ENERGY VALUE CONFIGS -------------------
+		// ------------------- AETHER VALUE CONFIGS -------------------
 		if (!doesFileExist(configDir, DEFAULT_CONFIG_FILE)) {
-			DefaultEnergyValuesConfig.createDefaultEvConfigFile(new File(
+			DefaultAetherValuesConfig.createDefaultEvConfigFile(new File(
 					configDir, DEFAULT_CONFIG_FILE));
 		}
-		EnergyManipulatorConfig config = new EnergyManipulatorConfig(new File(
+		AetherManipulatorConfig config = new AetherManipulatorConfig(new File(
 				configDir, DEFAULT_CONFIG_FILE));
-		config.getAllEnergyValues(energyValues);
+		config.getAllAetherValues(aetherValues);
 
-		// ------------------- PLUG-IN ENERGY VALUE CONFIGS -------------------
+		// ------------------- PLUG-IN AETHER VALUE CONFIGS -------------------
 		File[] configFiles = configDir.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
-				return name.startsWith("EMEV_") && name.endsWith(".cfg");
+				return name.endsWith(".cfg");
 			}
 		});
 		for (File file : configFiles) {
-			EnergyManipulatorConfig tempConfig = new EnergyManipulatorConfig(
+			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
 					file);
-			tempConfig.getAllEnergyValues(energyValues);
+			tempConfig.getAllAetherValues(aetherValues);
 		}
 
 		// ------------------- CONFIG -------------------
@@ -315,7 +315,7 @@ public class AetherCraft {
 						.get("options",
 								"consumeprecission",
 								100,
-								"How much of the EV an Energy Manipulator will consume (in percentage without the %, range 0-100)")
+								"How much of the AV an Aether Manipulator will consume (in percentage without the %, range 0-100)")
 						.getInt()));
 
 		options.put(
@@ -324,24 +324,24 @@ public class AetherCraft {
 						.get("options",
 								"evmultiplier",
 								1.0,
-								"Easily ramp up the EVs with this multiplier, added to comphensate for consumeprecission changing values for stone and such to 0 (decimal number)")
+								"Easily ramp up the AVs with this multiplier, added to comphensate for consumeprecission changing values for stone and such to 0 (decimal number)")
 						.getDouble(1.0)));
 
 		options.put("emmaxstorage", Integer.toString(forgeConfig.get("options",
 				"emmaxstorage", 32768,
-				"How much energy an energy manipulator can store").getInt()));
+				"How much aether an aether manipulator can store").getInt()));
 
 		options.put("ecmaxstorage", Integer.toString(forgeConfig.get("options",
 				"ecmaxstorage", 131072,
-				"How much energy an energy container can store").getInt()));
+				"How much aether an aether container can store").getInt()));
 
 		options.put("ebatterymaxstorage", Integer.toString(forgeConfig.get(
 				"options", "ebatterymaxstorage", 16384,
-				"How much energy an energy battery can store").getInt()));
+				"How much aether an aether battery can store").getInt()));
 
 		options.put("flycostpersecond", Integer.toString(forgeConfig.get(
 				"options", "flycostpersecond", 8,
-				"How much EV the flying ring will drain per second.").getInt()));
+				"How much AV the flying ring will drain per second.").getInt()));
 
 		// BOOLEAN
 		options.put(
@@ -350,23 +350,23 @@ public class AetherCraft {
 						.get("options",
 								"instantconsume",
 								false,
-								"Whether stacks will get get transmuted/consumed instantly or not (Values: true, false)")
+								"Whether stacks will get get transmuted/consumed instantly or not")
 						.getBoolean(false)));
 
 		options.put(
 				"debug",
 				Boolean.toString(forgeConfig.get("options", "debug", false,
-						"(Values: true, false)").getBoolean(false)));
+						"").getBoolean(false)));
 
 		options.put(
 				"enableflyring",
 				Boolean.toString(forgeConfig.get("options", "enableflyring",
-						true, "(Values: true, false)").getBoolean(true)));
+						true, "").getBoolean(true)));
 
 		options.put(
 				"showevalways",
 				Boolean.toString(forgeConfig.get("options", "showevalways",
-						false, "(Values: true, false)").getBoolean(false)));
+						false, "").getBoolean(false)));
 
 		// CRAFTING RECIPES
 		options.put(
@@ -395,27 +395,27 @@ public class AetherCraft {
 								"Top left to bottom right.").getString());
 
 		// ------------------- REGISTER BLOCK/ITEM IDs -------------------
-		blockIds.add(forgeConfig.getBlock("energymanipulator", 2690).getInt());
-		blockIds.add(forgeConfig.getBlock("energycontainer", 2691).getInt());
-		itemIds.add(forgeConfig.getItem("energybattery", 2700).getInt());
+		blockIds.add(forgeConfig.getBlock("aethermanipulator", 2690).getInt());
+		blockIds.add(forgeConfig.getBlock("aethercontainer", 2691).getInt());
+		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		forgeConfig.save();
 	}
 
-	public static boolean addEVEntryToConfig(String entry, int value) {
-		if (currentEVConfig != null) {
-			currentConfigEV.put(entry, value);
+	public static boolean addAVEntryToConfig(String entry, int value) {
+		if (currentAVConfig != null) {
+			currentConfigAV.put(entry, value);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean loadEVConfig(final String config) {
+	public static boolean loadAVConfig(final String config) {
 		File[] configFiles = configDir.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
-				if (name.equals("EMEV_" + config + ".cfg")) {
+				if (name.equals("EMAV_" + config + ".cfg")) {
 					return true;
 				} else {
 					return false;
@@ -423,45 +423,45 @@ public class AetherCraft {
 			}
 		});
 		if (configFiles.length > 0) {
-			currentEVConfig = configFiles[0];
-			currentConfigEV = new HashMap<String, Integer>();
-			EnergyManipulatorConfig tempConfig = new EnergyManipulatorConfig(
+			currentAVConfig = configFiles[0];
+			currentConfigAV = new HashMap<String, Integer>();
+			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
 					configFiles[0]);
-			tempConfig.getAllEnergyValues(currentConfigEV);
+			tempConfig.getAllAetherValues(currentConfigAV);
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean createNewEVConfig(String config) {
-		File tempConfig = new File(configDir, "EMEV_" + config + ".cfg");
+	public static boolean createNewAVConfig(String config) {
+		File tempConfig = new File(configDir, "EMAV_" + config + ".cfg");
 		if (!tempConfig.exists()) {
-			currentEVConfig = tempConfig;
-			currentConfigEV = new HashMap<String, Integer>();
+			currentAVConfig = tempConfig;
+			currentConfigAV = new HashMap<String, Integer>();
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static void saveCurrentEVConfig() {
-		EnergyManipulatorConfig tempConfig = new EnergyManipulatorConfig(
-				currentEVConfig);
-		tempConfig.saveEnergyValues(currentConfigEV);
+	public static void saveCurrentAVConfig() {
+		AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
+				currentAVConfig);
+		tempConfig.saveAetherValues(currentConfigAV);
 	}
 
 	public static File getCurrentConfigFile() {
-		return currentEVConfig;
+		return currentAVConfig;
 	}
 
 	public static void unloadCurrentConfig() {
-		currentConfigEV = new HashMap<String, Integer>();
-		currentEVConfig = null;
+		currentConfigAV = new HashMap<String, Integer>();
+		currentAVConfig = null;
 	}
 
 	public static boolean doesConfigExist(String config) {
-		return doesFileExist(configDir, "EMEV_" + config + ".cfg");
+		return doesFileExist(configDir, "EMAV_" + config + ".cfg");
 	}
 
 	public static int[] stringToCraftingArray(String input) {
@@ -489,16 +489,16 @@ public class AetherCraft {
 		return output;
 	}
 
-	public static HashMap<String, Integer> getEnergyValuesMap() {
-		return energyValues;
+	public static HashMap<String, Integer> getAetherValuesMap() {
+		return aetherValues;
 	}
 
 	public static HashMap<String, String> getOptionsMap() {
 		return options;
 	}
 
-	public static void setEnergyValuesMap(HashMap<String, Integer> evm) {
-		energyValues = evm;
+	public static void setAetherValuesMap(HashMap<String, Integer> evm) {
+		aetherValues = evm;
 	}
 
 	public static void setOptionsMap(HashMap<String, String> om) {

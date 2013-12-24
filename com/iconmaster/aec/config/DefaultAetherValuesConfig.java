@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
-public class DefaultEnergyValuesConfig {
+public class DefaultAetherValuesConfig {
 	public static void createDefaultEvConfigFile(File configFile) {
 		String s = System.getProperty("line.separator");
 		StringBuilder sb = new StringBuilder();

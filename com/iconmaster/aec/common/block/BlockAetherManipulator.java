@@ -3,7 +3,7 @@ package com.iconmaster.aec.common.block;
 import java.util.Random;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -23,14 +23,14 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockEnergyManipulator extends BlockContainer {
+public class BlockAetherManipulator extends BlockContainer {
 	private Icon blockIconTop, blockIconBottom;
 
-	public BlockEnergyManipulator(int id, Material material) {
+	public BlockAetherManipulator(int id, Material material) {
 		super(id, material);
 		this.setCreativeTab(CreativeTabs.tabBlock);
 		this.setHardness(1.5f);
-        this.setUnlocalizedName("aec.energyManipulator");
+        this.setUnlocalizedName("aec.aetherManipulator");
 	}
 
 	@Override
@@ -87,11 +87,11 @@ public class BlockEnergyManipulator extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.blockIcon = iconRegister
-				.registerIcon("aec:energyManipulatorSide");
+				.registerIcon("aec:ManipulatorSide");
 		this.blockIconTop = iconRegister
-				.registerIcon("aec:energyManipulatorTop");
+				.registerIcon("aec:ManipulatorTop");
 		this.blockIconBottom = iconRegister
-				.registerIcon("aec:energyManipulatorBottom");
+				.registerIcon("aec:ManipulatorBottom");
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class BlockEnergyManipulator extends BlockContainer {
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if (!world.isRemote) {
 			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-			TileEntityEnergyManipulator tileEntity = (TileEntityEnergyManipulator) world
+			TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
 					.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
@@ -117,7 +117,7 @@ public class BlockEnergyManipulator extends BlockContainer {
     public void updateTick(World world, int x, int y, int z, Random random)
     {
 		boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-		TileEntityEnergyManipulator tileEntity = (TileEntityEnergyManipulator) world
+		TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
 				.getBlockTileEntity(x, y, z);
 		if (tileEntity != null) {
 			tileEntity.setPoweredState(state);
@@ -133,7 +133,7 @@ public class BlockEnergyManipulator extends BlockContainer {
 	public void onNeighborBlockChange(World world, int x, int y, int z, int par5) {
 		if (!world.isRemote) {
 			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-			TileEntityEnergyManipulator tileEntity = (TileEntityEnergyManipulator) world
+			TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
 					.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
@@ -145,7 +145,7 @@ public class BlockEnergyManipulator extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int par6, float par7, float par8, float par9) {
-		TileEntityEnergyManipulator tileEntity = (TileEntityEnergyManipulator) world
+		TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
 				.getBlockTileEntity(x, y, z);
 
 		if (tileEntity == null || player.isSneaking()) {
@@ -165,6 +165,6 @@ public class BlockEnergyManipulator extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		return new TileEntityEnergyManipulator();
+		return new TileEntityAetherManipulator();
 	}
 }

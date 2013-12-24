@@ -13,18 +13,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 
-public class ItemEnergyBattery extends Item {
-	public ItemEnergyBattery(int id) {
+public class ItemAetherBattery extends Item {
+	public ItemAetherBattery(int id) {
 		super(id);
 		this.setCreativeTab(CreativeTabs.tabMisc);
-        this.setUnlocalizedName("aec.energyBattery");
+        this.setUnlocalizedName("aec.aetherBattery");
         this.setMaxStackSize(1);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		this.itemIcon = iconRegister.registerIcon("aec:itemEnergyBattery");
+		this.itemIcon = iconRegister.registerIcon("aec:itemAetherBattery");
 	}
 
 	@Override
@@ -32,10 +32,10 @@ public class ItemEnergyBattery extends Item {
 			EntityPlayer entityPlayer) {
 		if(!stack.hasTagCompound()){
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			tagCompound.setInteger("EMEV", 0);
+			tagCompound.setInteger("EMAV", 0);
 			stack.setTagCompound(tagCompound);
-		} else if(!stack.getTagCompound().hasKey("EMEV")){
-			stack.getTagCompound().setInteger("EMEV", 0);
+		} else if(!stack.getTagCompound().hasKey("EMAV")){
+			stack.getTagCompound().setInteger("EMAV", 0);
 		}
 	}
 
@@ -46,10 +46,10 @@ public class ItemEnergyBattery extends Item {
 		int ev = 0;
 		if(stack.hasTagCompound()){
 			NBTTagCompound tag = stack.getTagCompound();
-			if(tag.hasKey("EMEV")){
-				ev = tag.getInteger("EMEV");
+			if(tag.hasKey("EMAV")){
+				ev = tag.getInteger("EMAV");
 			}
 		}
-		list.add("\u00a72" + "EV: " + ev);
+		list.add("\u00a72" + "AV: " + ev);
 	}
 }

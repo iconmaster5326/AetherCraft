@@ -23,7 +23,7 @@ public class ConnectionHandler implements IConnectionHandler {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
 			oos.writeByte(AetherCraft.PACKET_TTID_CONFIG);
-			oos.writeObject(AetherCraft.getEnergyValuesMap());
+			oos.writeObject(AetherCraft.getAetherValuesMap());
 			oos.writeObject(AetherCraft.getOptionsMap());
 			oos.writeInt(2);
 		} catch (Exception ex) {

@@ -1,7 +1,7 @@
 package com.iconmaster.aec.common.item;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.util.EMInvUtils;
+import com.iconmaster.aec.util.AecInvUtils;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -73,21 +73,21 @@ public class ItemFlyingRing extends Item {
 									.parseInt(AetherCraft
 											.getOptions("flycostpersecond"));
 
-							ItemStack[] batteries = EMInvUtils.getAllISInArray(
+							ItemStack[] batteries = AecInvUtils.getAllISInArray(
 									player.inventory.mainInventory,
-									AetherCraft.itemEnergyBattery.itemID);
-							ItemStack[] batteriesAboveMinimum = EMInvUtils
+									AetherCraft.itemAetherBattery.itemID);
+							ItemStack[] batteriesAboveMinimum = AecInvUtils
 									.getAllBatteriesWithEnergyAboveOrEqual(
 											batteries, flySecondCost);
-							ItemStack[] batteriesAboveZero = EMInvUtils
+							ItemStack[] batteriesAboveZero = AecInvUtils
 									.getAllBatteriesWithEnergyAboveOrEqual(
 											batteries, 1);
 							if (batteriesAboveMinimum != null
 									&& batteriesAboveMinimum.length > 0) {
 								NBTTagCompound tag = batteriesAboveMinimum[0]
 										.getTagCompound();
-								int batteryEv = tag.getInteger("EMEV");
-								tag.setInteger("EMEV", batteryEv
+								int batteryEv = tag.getInteger("EMAV");
+								tag.setInteger("EMAV", batteryEv
 										- flySecondCost);
 								player.capabilities.allowFlying = true;
 								return;
@@ -99,9 +99,9 @@ public class ItemFlyingRing extends Item {
 										&& i < batteriesAboveZero.length) {
 									NBTTagCompound tag = batteriesAboveZero[i]
 											.getTagCompound();
-									int batteryEv = tag.getInteger("EMEV");
+									int batteryEv = tag.getInteger("EMAV");
 									energyNeeded -= batteryEv;
-									tag.setInteger("EMEV", 0);
+									tag.setInteger("EMAV", 0);
 									i++;
 								}
 								if (energyNeeded > 0) {
@@ -124,10 +124,10 @@ public class ItemFlyingRing extends Item {
 							stackTag.setByte("EMUpdateTick", (byte) (tick + 1));
 						}
 					} else {
-						ItemStack[] batteries = EMInvUtils.getAllISInArray(
+						ItemStack[] batteries = AecInvUtils.getAllISInArray(
 								player.inventory.mainInventory,
-								AetherCraft.itemEnergyBattery.itemID);
-						ItemStack[] batteriesAboveZero = EMInvUtils
+								AetherCraft.itemAetherBattery.itemID);
+						ItemStack[] batteriesAboveZero = AecInvUtils
 								.getAllBatteriesWithEnergyAboveOrEqual(
 										batteries, 1);
 

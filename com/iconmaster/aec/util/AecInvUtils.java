@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class EMInvUtils {
+public class AecInvUtils {
 	public static ItemStack[] getAllISInInventory(IInventory inventory,
 			int itemId) {
 		if (inventory == null) {
@@ -49,11 +49,11 @@ public class EMInvUtils {
 		for (int i = 0; i < batteries.length; i++) {
 			ItemStack stack = batteries[i];
 			if (stack != null
-					&& stack.itemID == AetherCraft.itemEnergyBattery.itemID
+					&& stack.itemID == AetherCraft.itemAetherBattery.itemID
 					&& stack.hasTagCompound()) {
 				NBTTagCompound tag = stack.getTagCompound();
-				if (tag.hasKey("EMEV")
-						&& tag.getInteger("EMEV") >= aboveOrEqualEnergy) {
+				if (tag.hasKey("EMAV")
+						&& tag.getInteger("EMAV") >= aboveOrEqualEnergy) {
 					result.add(stack);
 				}
 			}

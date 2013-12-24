@@ -10,10 +10,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-public class EnergyManipulatorConfig {
+public class AetherManipulatorConfig {
 	private File file;
 
-	public EnergyManipulatorConfig(File configFile) {
+	public AetherManipulatorConfig(File configFile) {
 		this.file = configFile;
 		if (!this.file.exists()) {
 			try {
@@ -24,7 +24,7 @@ public class EnergyManipulatorConfig {
 		}
 	}
 
-	public void getAllEnergyValues(Map<String, Integer> ev) {
+	public void getAllAetherValues(Map<String, Integer> ev) {
 		String line = null;
 		String[] sbuf;
 		try {
@@ -44,10 +44,10 @@ public class EnergyManipulatorConfig {
 		}
 	}
 
-	public void saveEnergyValues(Map<String, Integer> currentConfigEV) {
+	public void saveAetherValues(Map<String, Integer> currentConfigAV) {
 		StringBuilder sb = new StringBuilder();
 
-		Set mapSet = (Set) currentConfigEV.entrySet();
+		Set mapSet = (Set) currentConfigAV.entrySet();
 		Iterator mapIterator = mapSet.iterator();
 		while (mapIterator.hasNext()) {
 			Map.Entry mapEntry = (Map.Entry) mapIterator.next();

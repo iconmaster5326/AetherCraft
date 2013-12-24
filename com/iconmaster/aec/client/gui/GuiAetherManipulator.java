@@ -21,22 +21,22 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.gui.ContainerEnergyManipulator;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyManipulator;
+import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiEnergyManipulator extends GuiContainer {
+public class GuiAetherManipulator extends GuiContainer {
 	private static final ResourceLocation gui_texture = new ResourceLocation(
 			"aec", "textures/gui/energyManipulatorGui.png");
-	private TileEntityEnergyManipulator te;
+	private TileEntityAetherManipulator te;
 
-	public GuiEnergyManipulator(InventoryPlayer player,
-			TileEntityEnergyManipulator tileEntity) {
-		super(new ContainerEnergyManipulator(player, tileEntity));
+	public GuiAetherManipulator(InventoryPlayer player,
+			TileEntityAetherManipulator tileEntity) {
+		super(new ContainerAetherManipulator(player, tileEntity));
 		this.xSize = 176;
 		this.ySize = 256;
 		this.te = tileEntity;
@@ -70,7 +70,7 @@ public class GuiEnergyManipulator extends GuiContainer {
 				Integer.toString(this.te.getCombinedEnergy())
 						+ " / "
 						+ Integer.toString(AetherCraft
-								.getEnergyValueByItemStack(this.te
+								.getAetherValueByItemStack(this.te
 										.getStackInSlot(0))), 118, 13, 0x55FF55);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
@@ -103,22 +103,22 @@ public class GuiEnergyManipulator extends GuiContainer {
 			}
 		}
 
-		boolean showEV = true;
+		boolean showAV = true;
 		if (!Boolean.parseBoolean(AetherCraft.getOptions("showevalways"))) {
 			if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
 					&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-				showEV = false;
+				showAV = false;
 			}
 		}
-		if (showEV && stack != null
-				&& stack.itemID != AetherCraft.itemEnergyBattery.itemID) {
-			int ev = AetherCraft.getEnergyValueByItemStack(stack);
+		if (showAV && stack != null
+				&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
+			int ev = AetherCraft.getAetherValueByItemStack(stack);
 			int ev1 = (int) (((float) ev)
 					* ((float) Integer.parseInt(AetherCraft
 							.getOptions("consumeprecission"))) / 100.0f);
 
-			list.add("\u00a72" + "TRANSMUTE EV: " + Integer.toString(ev));
-			list.add("\u00a79" + "CONSUME    EV: " + Integer.toString(ev1));
+			list.add("\u00a72" + "TRANSMUTE AV: " + Integer.toString(ev));
+			list.add("\u00a79" + "CONSUME    AV: " + Integer.toString(ev1));
 		}
 
 		if (list != null && stack != null) {

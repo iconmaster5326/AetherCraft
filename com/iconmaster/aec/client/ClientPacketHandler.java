@@ -7,8 +7,8 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyContainer;
-import com.iconmaster.aec.common.tileentity.TileEntityEnergyManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
@@ -39,7 +39,7 @@ public class ClientPacketHandler implements IPacketHandler {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
 			case 0:
-				TileEntityEnergyManipulator tem = (TileEntityEnergyManipulator) player.worldObj
+				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tem != null) {
@@ -47,7 +47,7 @@ public class ClientPacketHandler implements IPacketHandler {
 				}
 				break;
 			case 1:
-				TileEntityEnergyContainer tec = (TileEntityEnergyContainer) player.worldObj
+				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tec != null) {
@@ -68,7 +68,7 @@ public class ClientPacketHandler implements IPacketHandler {
 			byte transferTypeID = dis.readByte();
 			switch (transferTypeID) {
 			case AetherCraft.PACKET_TTID_CONFIG:
-				AetherCraft.setEnergyValuesMap((HashMap<String, Integer>) dis.readObject());
+				AetherCraft.setAetherValuesMap((HashMap<String, Integer>) dis.readObject());
 				AetherCraft.setOptionsMap((HashMap<String, String>) dis.readObject());
 				break;
 			}

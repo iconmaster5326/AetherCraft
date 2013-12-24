@@ -19,8 +19,7 @@ public class ConfigCommand implements ICommand {
 
 	public ConfigCommand() {
 		this.aliases = new ArrayList();
-		this.aliases.add("emconfig");
-		this.aliases.add("emcf");
+		this.aliases.add("aec");
 		this.tabCompletionOptions = new ArrayList();
 		this.tabCompletionOptions.add("reload");
 		this.tabCompletionOptions.add("addcurrent");
@@ -39,12 +38,12 @@ public class ConfigCommand implements ICommand {
 
 	@Override
 	public String getCommandName() {
-		return "emconfig";
+		return "aec";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender icommandsender) {
-		return EnumChatFormatting.RED + "/emconfig <command>";
+		return EnumChatFormatting.RED + "/aec <command>";
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class ConfigCommand implements ICommand {
 				ItemStack stack = ((EntityPlayerMP) icommandsender).inventory
 						.getCurrentItem();
 				if (stack != null) {
-					if (AetherCraft.addEVEntryToConfig(
+					if (AetherCraft.addAVEntryToConfig(
 							stack.getUnlocalizedName(),
 							Integer.parseInt(astring[1]))) {
 						// Chat Message
@@ -83,7 +82,7 @@ public class ConfigCommand implements ICommand {
 								+ EnumChatFormatting.GRAY
 								+ stack.getDisplayName()
 								+ EnumChatFormatting.GREEN
-								+ " successfully registered with an EV value of "
+								+ " successfully registered with an AV value of "
 								+ EnumChatFormatting.GRAY + astring[1]
 								+ EnumChatFormatting.GREEN + " :)");
 						icommandsender.sendChatToPlayer(cmc);
@@ -109,7 +108,7 @@ public class ConfigCommand implements ICommand {
 				boolean nothingChanged = true;
 				for (ItemStack is : stack) {
 					if (is != null) {
-						if (AetherCraft.addEVEntryToConfig(
+						if (AetherCraft.addAVEntryToConfig(
 								is.getUnlocalizedName(),
 								Integer.parseInt(astring[1]))) {
 							nothingChanged = false;
@@ -119,7 +118,7 @@ public class ConfigCommand implements ICommand {
 									+ EnumChatFormatting.GRAY
 									+ is.getDisplayName()
 									+ EnumChatFormatting.GREEN
-									+ " successfully registered with an EV value of "
+									+ " successfully registered with an AV value of "
 									+ EnumChatFormatting.GRAY + astring[1]
 									+ EnumChatFormatting.GREEN + " :)");
 							icommandsender.sendChatToPlayer(cmc);
@@ -144,7 +143,7 @@ public class ConfigCommand implements ICommand {
 			} else if (astring[0].equalsIgnoreCase("addrawentry")
 					&& astring.length >= 3) {
 				if (IntegerUtils.isInteger(astring[2])) {
-					if (AetherCraft.addEVEntryToConfig(astring[1],
+					if (AetherCraft.addAVEntryToConfig(astring[1],
 							Integer.parseInt(astring[2]))) {
 						// Chat Message
 						cmc = new ChatMessageComponent();
@@ -153,7 +152,7 @@ public class ConfigCommand implements ICommand {
 								+ EnumChatFormatting.GRAY
 								+ astring[1]
 								+ EnumChatFormatting.GREEN
-								+ " successfully registered with an EV value of "
+								+ " successfully registered with an AV value of "
 								+ EnumChatFormatting.GRAY + astring[2]
 								+ EnumChatFormatting.GREEN + " :)");
 						icommandsender.sendChatToPlayer(cmc);
@@ -174,7 +173,7 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("loadconfig")
 					&& astring.length >= 2) {
-				if (AetherCraft.loadEVConfig(astring[1])) {
+				if (AetherCraft.loadAVConfig(astring[1])) {
 					// Chat Message
 					cmc = new ChatMessageComponent();
 					cmc.addText(EnumChatFormatting.GREEN + "Configuration: "
@@ -199,7 +198,7 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("createconfig")
 					&& astring.length >= 2) {
-				if (AetherCraft.createNewEVConfig(astring[1])) {
+				if (AetherCraft.createNewAVConfig(astring[1])) {
 					// Chat Message
 					cmc = new ChatMessageComponent();
 					cmc.addText(EnumChatFormatting.GREEN + "Configuration: "
@@ -224,7 +223,7 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("saveconfig")) {
 				if (AetherCraft.getCurrentConfigFile() != null) {
-					AetherCraft.saveCurrentEVConfig();
+					AetherCraft.saveCurrentAVConfig();
 					// Chat Message
 					cmc = new ChatMessageComponent();
 					cmc.addText(EnumChatFormatting.GREEN
