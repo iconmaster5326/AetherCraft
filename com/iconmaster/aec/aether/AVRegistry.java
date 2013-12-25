@@ -1,6 +1,7 @@
 package com.iconmaster.aec.aether;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.util.List;
@@ -69,7 +70,7 @@ public class AVRegistry {
 	public static float getAV(ItemStack item) {
 		if (item==null) {return 0;}
 		if (item.itemID==Item.book.itemID) {
-			return 112*Float.parseFloat(AetherCraft.getOptions("evmultiplier")); //really hackish fix for books, which continue to act in a silly manner
+			return ((Float)values.get(Arrays.asList(Item.book.itemID,0)))*Float.parseFloat(AetherCraft.getOptions("evmultiplier")); //really hackish fix for books, which continue to act in a silly manner
 		}
 		Float av = (Float)values.get(UidUtils.getUID(item));
 		if (av == null) {
