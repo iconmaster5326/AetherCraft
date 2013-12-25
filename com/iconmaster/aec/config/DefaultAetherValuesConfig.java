@@ -15,23 +15,16 @@ public class DefaultAetherValuesConfig {
 		sb.append("tile.gravel=8" + s);
 		sb.append("tile.pumpkin=16" + s);
 		sb.append("tile.sapling.oak=48" + s);
-		sb.append("enchantment_21=1024" + s);
-		sb.append("enchantment_20=1024" + s);
 		sb.append("tile.hellsand=1" + s);
 		sb.append("item.minecartHopper=2592" + s);
 		sb.append("item.minecartTnt=1605" + s);
 		sb.append("tile.stoneMoss=16" + s);
 		sb.append("item.potatoPoisonous=32" + s);
-		sb.append("item.book=48" + s);
 		sb.append("tile.leaves.spruce=1" + s);
 		sb.append("tile.stonebricksmooth.default=1" + s);
 		sb.append("item.skull.char=8192" + s);
-		sb.append("enchantment_32=1024" + s);
 		sb.append("tile.flower=16" + s);
 		sb.append("tile.stonebricksmooth.mossy=1" + s);
-		sb.append("enchantment_35=1024" + s);
-		sb.append("enchantment_34=1024" + s);
-		sb.append("enchantment_33=1024" + s);
 		sb.append("item.redstone=16" + s);
 		sb.append("tile.log.jungle=16" + s);
 		sb.append("tile.deadbush=16" + s);
@@ -43,10 +36,7 @@ public class DefaultAetherValuesConfig {
 		sb.append("item.potato=32" + s);
 		sb.append("tile.obsidian=64" + s);
 		sb.append("item.chickenRaw=64" + s);
-		sb.append("enchantment_18=1024" + s);
 		sb.append("tile.stairsStone=1" + s);
-		sb.append("enchantment_17=1024" + s);
-		sb.append("enchantment_16=1024" + s);
 		sb.append("item.clay=8" + s);
 		sb.append("tile.quartzBlock.chiseled=128" + s);
 		sb.append("enchantment_19=1024" + s);
@@ -63,8 +53,6 @@ public class DefaultAetherValuesConfig {
 		sb.append("tile.tallgrass.fern=16" + s);
 		sb.append("item.dyePowder.black=32" + s);
 		sb.append("item.leather=64" + s);
-		sb.append("enchantment_48=1024" + s);
-		sb.append("enchantment_49=1024" + s);
 		sb.append("item.skull.creeper=8192" + s);
 		sb.append("tile.grass=1" + s);
 		sb.append("item.rottenFlesh=64" + s);
@@ -77,7 +65,6 @@ public class DefaultAetherValuesConfig {
 		sb.append("item.skull.zombie=8192" + s);
 		sb.append("enchantment_51=1024" + s);
 		sb.append("item.slimeball=64" + s);
-		sb.append("enchantment_50=1024" + s);
 		sb.append("item.leggingsChain=480" + s);
 		sb.append("item.diamond=8192" + s);
 		sb.append("item.skull.skeleton=8192" + s);
@@ -128,16 +115,8 @@ public class DefaultAetherValuesConfig {
 		sb.append("tile.cactus=32" + s);
 		sb.append("tile.leaves.birch=1" + s);
 		sb.append("tile.quartzBlock.lines=128" + s);
-		sb.append("enchantment_5=1024" + s);
-		sb.append("enchantment_4=1024" + s);
-		sb.append("enchantment_7=1024" + s);
 		sb.append("item.bucketWater=257" + s);
-		sb.append("enchantment_6=1024" + s);
-		sb.append("enchantment_1=1024" + s);
-		sb.append("enchantment_0=1024" + s);
 		sb.append("tile.whiteStone=1" + s);
-		sb.append("enchantment_3=1024" + s);
-		sb.append("enchantment_2=1024" + s);
 		sb.append("item.milk=776" + s);
 		sb.append("tile.waterlily=1" + s);
 		sb.append("item.speckledMelon=471" + s);
@@ -150,7 +129,12 @@ public class DefaultAetherValuesConfig {
 		sb.append("item.fishRaw=64" + s);
 		sb.append("item.netherquartz=32" + s);
 		sb.append("tile.ice=1" + s);
-
+		sb.append("item.book=112" + s);
+		sb.append("item.nameTag=256" + s);
+		sb.append("item.horsearmormetal=1536" + s);
+		sb.append("item.horsearmorgold=10240" + s);
+		sb.append("item.horsearmordiamond=40960" + s);
+		
 		try {
 			PrintWriter pw = new PrintWriter(configFile);
 			pw.print(sb.toString());

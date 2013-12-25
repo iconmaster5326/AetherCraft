@@ -14,7 +14,6 @@ import com.iconmaster.aec.util.UidUtils;
 public class AVRegistry {
 	private static HashMap values = new HashMap();
 	private static HashMap hardcoded = new HashMap();
-	private static HashMap blacklist = new HashMap();
 	private static HashMap unlocalizedNames = getAllNames();
 	
 	/**
@@ -65,12 +64,13 @@ public class AVRegistry {
 		ItemStack stack = getItemFromString(item);
 		if (stack == null) {return;}
 		hardcoded.put(UidUtils.getUID(stack),av);
-		if (av==0) {
-			blacklist.put(UidUtils.getUID(stack),true);
-		}
 	}
 	
 	public static float getAV(ItemStack item) {
+		if (item==null) {return 0;}
+		if (item.itemID==Item.book.itemID) {
+			return 112*Float.parseFloat(AetherCraft.getOptions("evmultiplier")); //really hackish fix for books, which continue to act in a silly manner
+		}
 		Float av = (Float)values.get(UidUtils.getUID(item));
 		if (av == null) {
 			return 0;
@@ -101,20 +101,12 @@ public class AVRegistry {
 		return hardcoded.get(UidUtils.getUID(item))!=null;
 	}
 	
-	public static boolean isBlacklisted(ItemStack item) {
-		return blacklist.get(UidUtils.getUID(item))!=null;
-	}
-	
 	public static HashMap getValueMap() {
 		return values;
 	}
 	
 	public static HashMap getValueHardcodedMap() {
 		return hardcoded;
-	}
-	
-	public static HashMap getBlacklistMap() {
-		return blacklist;
 	}
 	
 	public static ItemStack getItemFromString(String s) {

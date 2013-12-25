@@ -69,8 +69,8 @@ public class ItemFlyingRing extends Item {
 						byte tick = stackTag.getByte("EMUpdateTick");
 						if (tick >= 20) {
 							stackTag.setByte("EMUpdateTick", (byte) 0);
-							int flySecondCost = Integer
-									.parseInt(AetherCraft
+							float flySecondCost = Float
+									.parseFloat(AetherCraft
 											.getOptions("flycostpersecond"));
 
 							ItemStack[] batteries = AecInvUtils.getAllISInArray(
@@ -93,7 +93,7 @@ public class ItemFlyingRing extends Item {
 								return;
 							} else if (batteriesAboveZero != null
 									&& batteriesAboveZero.length > 0) {
-								int energyNeeded = flySecondCost;
+								float energyNeeded = flySecondCost;
 								int i = 0;
 								while (energyNeeded > 0
 										&& i < batteriesAboveZero.length) {

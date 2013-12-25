@@ -41,7 +41,7 @@ public class AecInvUtils {
 	}
 
 	public static ItemStack[] getAllBatteriesWithEnergyAboveOrEqual(
-			ItemStack[] batteries, int aboveOrEqualEnergy) {
+			ItemStack[] batteries, float flySecondCost) {
 		if (batteries == null) {
 			return null;
 		}
@@ -53,7 +53,7 @@ public class AecInvUtils {
 					&& stack.hasTagCompound()) {
 				NBTTagCompound tag = stack.getTagCompound();
 				if (tag.hasKey("EMAV")
-						&& tag.getFloat("EMAV") >= aboveOrEqualEnergy) {
+						&& tag.getFloat("EMAV") >= flySecondCost) {
 					result.add(stack);
 				}
 			}

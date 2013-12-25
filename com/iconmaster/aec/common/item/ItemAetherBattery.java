@@ -2,6 +2,8 @@ package com.iconmaster.aec.common.item;
 
 import java.util.List;
 
+import com.iconmaster.aec.util.NumberUtils;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -50,6 +52,6 @@ public class ItemAetherBattery extends Item {
 				ev = tag.getFloat("EMAV");
 			}
 		}
-		list.add("\u00a72" + "AV: " + ev);
+		list.add("\u00a72" + "AV: " + NumberUtils.display(ev));
 	}
 }

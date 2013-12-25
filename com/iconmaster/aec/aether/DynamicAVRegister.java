@@ -81,9 +81,13 @@ public class DynamicAVRegister {
 	}
 	
 	private static float getItemAV(ArrayList list) {
-		if (list == null) {
+		if (list == null || list.size() == 0) {
 			System.out.println("Failed: no input list!");
 			return 0;
+		}
+		ItemStack output = getOutput(list.get(0));
+		if (AVRegistry.isHardcoded(output)) {
+			return AVRegistry.getAbsoluteAV(output);
 		}
 		float av = Float.MAX_VALUE;
 		HashMap lookedUp = new HashMap();
