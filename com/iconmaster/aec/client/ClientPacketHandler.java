@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.HashMap;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
@@ -43,7 +44,7 @@ public class ClientPacketHandler implements IPacketHandler {
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tem != null) {
-					tem.recieveSync(dis.readInt());
+					tem.recieveSync(dis.readFloat());
 				}
 				break;
 			case 1:
@@ -51,7 +52,7 @@ public class ClientPacketHandler implements IPacketHandler {
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tec != null) {
-					tec.recieveSync(dis.readInt());
+					tec.recieveSync(dis.readFloat());
 				}
 				break;
 			}
@@ -68,7 +69,7 @@ public class ClientPacketHandler implements IPacketHandler {
 			byte transferTypeID = dis.readByte();
 			switch (transferTypeID) {
 			case AetherCraft.PACKET_TTID_CONFIG:
-				AetherCraft.setAetherValuesMap((HashMap<String, Integer>) dis.readObject());
+				AVRegistry.setValueMap(((HashMap) dis.readObject()));
 				AetherCraft.setOptionsMap((HashMap<String, String>) dis.readObject());
 				break;
 			}

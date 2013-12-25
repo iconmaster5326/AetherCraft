@@ -32,10 +32,10 @@ public class ItemAetherBattery extends Item {
 			EntityPlayer entityPlayer) {
 		if(!stack.hasTagCompound()){
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			tagCompound.setInteger("EMAV", 0);
+			tagCompound.setFloat("EMAV", 0);
 			stack.setTagCompound(tagCompound);
 		} else if(!stack.getTagCompound().hasKey("EMAV")){
-			stack.getTagCompound().setInteger("EMAV", 0);
+			stack.getTagCompound().setFloat("EMAV", 0);
 		}
 	}
 
@@ -43,11 +43,11 @@ public class ItemAetherBattery extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack,
 			EntityPlayer entityPlayer, List list, boolean advancedTooltip) {
-		int ev = 0;
+		float ev = 0;
 		if(stack.hasTagCompound()){
 			NBTTagCompound tag = stack.getTagCompound();
 			if(tag.hasKey("EMAV")){
-				ev = tag.getInteger("EMAV");
+				ev = tag.getFloat("EMAV");
 			}
 		}
 		list.add("\u00a72" + "AV: " + ev);

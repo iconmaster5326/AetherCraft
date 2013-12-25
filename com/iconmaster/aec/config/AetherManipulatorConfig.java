@@ -6,9 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import com.iconmaster.aec.aether.AVRegistry;
 
 public class AetherManipulatorConfig {
 	private File file;
@@ -24,7 +27,7 @@ public class AetherManipulatorConfig {
 		}
 	}
 
-	public void getAllAetherValues(Map<String, Integer> ev) {
+	public void getAllAetherValues() {
 		String line = null;
 		String[] sbuf;
 		try {
@@ -33,7 +36,7 @@ public class AetherManipulatorConfig {
 			while ((line = reader.readLine()) != null) {
 				if (!line.startsWith("#") && line.contains("=")) {
 					sbuf = line.split("=");
-					ev.put(sbuf[0], Integer.parseInt(sbuf[1]));
+					AVRegistry.setConfigAV(sbuf[0], Float.parseFloat(sbuf[1]));
 				}
 			}
 			reader.close();
@@ -44,7 +47,7 @@ public class AetherManipulatorConfig {
 		}
 	}
 
-	public void saveAetherValues(Map<String, Integer> currentConfigAV) {
+	public void saveAetherValues(HashMap<String, Float> currentConfigAV) {
 		StringBuilder sb = new StringBuilder();
 
 		Set mapSet = (Set) currentConfigAV.entrySet();
@@ -52,8 +55,8 @@ public class AetherManipulatorConfig {
 		while (mapIterator.hasNext()) {
 			Map.Entry mapEntry = (Map.Entry) mapIterator.next();
 			String keyValue = (String) mapEntry.getKey();
-			int value = (Integer) mapEntry.getValue();
-			sb.append(keyValue + "=" + Integer.toString(value) + System.getProperty("line.separator"));
+			float value = (Float) mapEntry.getValue();
+			sb.append(keyValue + "=" + Float.toString(value) + System.getProperty("line.separator"));
 		}
 		try {
 			this.file.delete();

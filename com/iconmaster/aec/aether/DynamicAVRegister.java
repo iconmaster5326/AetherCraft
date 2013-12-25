@@ -19,7 +19,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class DynamicAVRegister {
-	private static HashMap<String, Integer> values  = AetherCraft.getAetherValuesMap();
 	private static HashMap recipeList  = new HashMap();
 	private static int recursions; //really hackish crash preventer
 
@@ -40,7 +39,7 @@ public class DynamicAVRegister {
 					System.out.println("Found new recipe class: "+recipe.getClass());
 				}
 			} catch (NullPointerException e) {
-				System.out.println("Invalid recipe state!");
+				//System.out.println("Invalid recipe state!");
 				//avoiding crashes with MCPC+ since 2013!
 			}
 		}
@@ -81,23 +80,23 @@ public class DynamicAVRegister {
         
 	}
 	
-	private static int getItemAV(ArrayList list) {
+	private static float getItemAV(ArrayList list) {
 		if (list == null) {
 			System.out.println("Failed: no input list!");
 			return 0;
 		}
-		int av = Integer.MAX_VALUE;
+		float av = Float.MAX_VALUE;
 		HashMap lookedUp = new HashMap();
     	for (Object recipe : list) {
-    		int rav = getRecipeAV(recipe,lookedUp);
-    		if (rav != 0) {
+    		float rav = getRecipeAV(recipe,lookedUp);
+    		if (rav >= 0) {
     			av = Math.min(av,rav);
     		}
     	}
     	return av;
 	}
 
-	private static int getRecipeAV(Object recipe, HashMap lookedOver) {
+	private static float getRecipeAV(Object recipe, HashMap lookedOver) {
 		ItemStack output = getOutput(recipe);
 		if (output == null) { System.out.println("Failed: no output!"); return 0; }
 		System.out.println("Getting AV of "+getDebugName(output));
@@ -112,20 +111,19 @@ public class DynamicAVRegister {
 		
 		lookedOver.put(uid,true);
 		
-		int sum = 0;
+		float sum = 0;
 		for (Object input : inputs) {
 			ItemStack item = (ItemStack) input;
-			//if (item==null) { System.out.println("	Failed: input item was null!!"); return false; }
 			if (item != null) {
 				System.out.println("	Found component "+getDebugName(item));
 				
-				int av = AetherCraft.getAetherValueByItemStack(item);
 				if (lookedOver.get(UidUtils.getUID(item)) != null) {
 					//it's an infinite recursive recipe
 					System.out.println("	Failed: recursive recipe input!");
 					return 0;
 				}
-				if (av == 0) {
+				float av = 0;
+				if (!AVRegistry.isEntry(item)) {
 					System.out.println("		Looking up subrecipe... {");
 					
 					recursions++;
@@ -134,26 +132,29 @@ public class DynamicAVRegister {
 						System.out.println("	Failed: Automatic recursion detection triggered!");
 						return 0;
 					}
-					av = getItemAV((ArrayList) recipeList.get(UidUtils.getUID(item)));
-					if (av==0 || av==2147483647) {
+					
+					av = getItemAV((ArrayList)recipeList.get(UidUtils.getUID(item)));
+					
+					if (av==0 && !AVRegistry.isEntry(item)) {
 						System.out.println("		}");
 						System.out.println("	Failed: Geting subrecipe failed!");
 						return 0;
 					}
 					System.out.println("		}");
 				}
+				if (av==0) {av = AVRegistry.getAbsoluteAV(item);}
 				System.out.println("		Has AV of "+av);
 				sum += av;
 			}
 		}
-		
-		int oav = AetherCraft.getAetherValueByItemStack(output);	
-		if (oav==0) {
+		if (output.stackSize == 0) {output.stackSize = 1;}
+		if (!AVRegistry.isEntry(output)) {
 			System.out.println("	Adding an AV value of "+sum/output.stackSize);
-			values.put(output.itemID+(output.getHasSubtypes()?":"+output.getItemDamage():""),sum/output.stackSize);
+			AVRegistry.setAV(output,sum/output.stackSize);
 		} else {
+			float oav = AVRegistry.getAbsoluteAV(output);	
 			System.out.println("	Adding an AV value of "+Math.min(oav,sum/output.stackSize));
-			values.put(output.itemID+(output.getHasSubtypes()?":"+output.getItemDamage():""),Math.min(oav,sum/output.stackSize));
+			AVRegistry.setAV(output,Math.min(oav,sum/output.stackSize));
 		}
 		return sum/output.stackSize;
 	}

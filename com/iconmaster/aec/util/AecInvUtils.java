@@ -53,7 +53,7 @@ public class AecInvUtils {
 					&& stack.hasTagCompound()) {
 				NBTTagCompound tag = stack.getTagCompound();
 				if (tag.hasKey("EMAV")
-						&& tag.getInteger("EMAV") >= aboveOrEqualEnergy) {
+						&& tag.getFloat("EMAV") >= aboveOrEqualEnergy) {
 					result.add(stack);
 				}
 			}

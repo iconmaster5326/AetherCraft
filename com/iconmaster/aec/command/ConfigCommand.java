@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.util.IntegerUtils;
+import com.iconmaster.aec.util.NumberUtils;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -68,13 +68,13 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("addcurrent")
 					&& astring.length >= 2
-					&& IntegerUtils.isInteger(astring[1])) {
+					&& NumberUtils.isInteger(astring[1])) {
 				ItemStack stack = ((EntityPlayerMP) icommandsender).inventory
 						.getCurrentItem();
 				if (stack != null) {
 					if (AetherCraft.addAVEntryToConfig(
 							stack.getUnlocalizedName(),
-							Integer.parseInt(astring[1]))) {
+							Float.parseFloat(astring[1]))) {
 						// Chat Message
 						cmc = new ChatMessageComponent();
 						cmc.addText(EnumChatFormatting.GREEN
@@ -103,14 +103,14 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("addinventory")
 					&& astring.length >= 2
-					&& IntegerUtils.isInteger(astring[1])) {
+					&& NumberUtils.isInteger(astring[1])) {
 				ItemStack[] stack = ((EntityPlayerMP) icommandsender).inventory.mainInventory;
 				boolean nothingChanged = true;
 				for (ItemStack is : stack) {
 					if (is != null) {
 						if (AetherCraft.addAVEntryToConfig(
 								is.getUnlocalizedName(),
-								Integer.parseInt(astring[1]))) {
+								Float.parseFloat(astring[1]))) {
 							nothingChanged = false;
 							// Chat Message
 							cmc.addText(EnumChatFormatting.GREEN
@@ -142,9 +142,9 @@ public class ConfigCommand implements ICommand {
 				return;
 			} else if (astring[0].equalsIgnoreCase("addrawentry")
 					&& astring.length >= 3) {
-				if (IntegerUtils.isInteger(astring[2])) {
+				if (NumberUtils.isInteger(astring[2])) {
 					if (AetherCraft.addAVEntryToConfig(astring[1],
-							Integer.parseInt(astring[2]))) {
+							Float.parseFloat(astring[2]))) {
 						// Chat Message
 						cmc = new ChatMessageComponent();
 						cmc.addText(EnumChatFormatting.GREEN

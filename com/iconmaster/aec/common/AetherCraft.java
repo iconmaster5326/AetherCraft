@@ -5,6 +5,7 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
 import com.iconmaster.aec.client.ClientPacketHandler;
 import com.iconmaster.aec.command.ConfigCommand;
@@ -62,8 +63,7 @@ public class AetherCraft {
 	private static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
 
-	private static HashMap<String, Integer> currentConfigAV = new HashMap<String, Integer>();
-	private static HashMap<String, Integer> aetherValues = new HashMap<String, Integer>();
+	private static HashMap<String, Float> currentConfigAV = new HashMap<String, Float>();
 	private static HashMap<String, String> options = new HashMap<String, String>();
 
 	private static File configDir, forgeConfigFile, currentAVConfig;
@@ -118,160 +118,6 @@ public class AetherCraft {
 		event.registerServerCommand(new ConfigCommand());
 	}
 
-	public static int getAetherValueByItemStack(ItemStack stack) {
-		if (stack != null) {
-			// Aether Battery
-			if (stack.itemID == itemAetherBattery.itemID) {
-				if (!stack.hasTagCompound()) {
-					stack.setTagCompound(new NBTTagCompound());
-				}
-				int ev = 0;
-				NBTTagCompound tag = stack.getTagCompound();
-				if (tag.hasKey("EMAV")) {
-					ev = tag.getInteger("EMAV");
-				} else {
-					tag.setInteger("EMAV", 0);
-				}
-				return ev;
-			}
-
-			if (stack.getUnlocalizedName() != null) {
-				StringBuilder sb = new StringBuilder();
-				sb.append(stack.getUnlocalizedName());
-
-				// Unlocalized Name
-				if (aetherValues.containsKey(sb.toString())) {
-					if (stack.getItem().isItemTool(stack) && stack.itemID != Item.book.itemID) {
-						int extraEv = 0;
-						if (stack.isItemEnchanted()) {
-							NBTTagList tagList = stack.getEnchantmentTagList();
-							for (int i = 0; i < tagList.tagCount(); i++) {
-								NBTTagCompound tag = (NBTTagCompound) tagList
-										.tagAt(i);
-								short eid = tag.getShort("id");
-								short elvl = tag.getShort("lvl");
-								if (aetherValues.containsKey("enchantment_"
-										+ eid)) {
-									extraEv += aetherValues.get("enchantment_"
-											+ eid)
-											* elvl;
-								}
-							}
-						}
-						float a = (float) ((((float) aetherValues.get(sb
-								.toString()) / (float) stack.getMaxDamage())
-								* (float) (stack.getMaxDamage() - stack
-										.getItemDamage()) + extraEv) * Double
-								.parseDouble(getOptions("evmultiplier")));
-						if (a <= 0) {
-							return 0;
-						} else {
-							return (int) (a);
-						}
-					} else {
-						Integer result = (int) ((float) aetherValues.get(sb
-								.toString()) * Double
-								.parseDouble(getOptions("evmultiplier")));
-						return result != null ? result : 0;
-					}
-				}
-
-				// Item ID
-				else {
-					sb = new StringBuilder();
-					sb.append(Integer.toString(stack.itemID));
-					if (stack.getHasSubtypes()) {
-						sb.append(':');
-						sb.append(Integer.toString(stack.getItemDamage()));
-					}
-					if (aetherValues.containsKey(sb.toString())) {
-						if (stack.getItem().isItemTool(stack)) {
-							int extraAv = 0;
-							if (stack.isItemEnchanted()) {
-								NBTTagList tagList = stack
-										.getEnchantmentTagList();
-								for (int i = 0; i < tagList.tagCount(); i++) {
-									NBTTagCompound tag = (NBTTagCompound) tagList
-											.tagAt(i);
-									short eid = tag.getShort("id");
-									short elvl = tag.getShort("lvl");
-									if (aetherValues.containsKey("enchantment_"
-											+ eid)) {
-										extraAv += aetherValues
-												.get("enchantment_" + eid)
-												* elvl;
-									}
-								}
-							}
-							float a = (float) ((((float) aetherValues.get(sb
-									.toString()) / (float) stack.getMaxDamage())
-									* (float) (stack.getMaxDamage() - stack
-											.getItemDamage()) + extraAv) * Double
-									.parseDouble(getOptions("evmultiplier")));
-							if (a <= 0) {
-								return 0;
-							} else {
-								return (int) (a);
-							}
-						} else {
-							Integer result = (int) ((float) aetherValues.get(sb
-									.toString()) * Double
-									.parseDouble(getOptions("evmultiplier")));
-							return result != null ? result : 0;
-						}
-					} else {
-						sb = new StringBuilder();
-						sb.append(Integer.toString(stack.itemID));
-						if (aetherValues.containsKey(sb.toString())) {
-							if (stack.getItem().isItemTool(stack)) {
-								int extraAv = 0;
-								if (stack.isItemEnchanted()) {
-									NBTTagList tagList = stack
-											.getEnchantmentTagList();
-									for (int i = 0; i < tagList.tagCount(); i++) {
-										NBTTagCompound tag = (NBTTagCompound) tagList
-												.tagAt(i);
-										short eid = tag.getShort("id");
-										short elvl = tag.getShort("lvl");
-										if (aetherValues
-												.containsKey("enchantment_"
-														+ eid)) {
-											extraAv += aetherValues
-													.get("enchantment_" + eid)
-													* elvl;
-										}
-									}
-								}
-								float a = (float) ((((float) aetherValues
-										.get(sb.toString()) / (float) stack
-										.getMaxDamage())
-										* (float) (stack.getMaxDamage() - stack
-												.getItemDamage()) + extraAv) * Double
-										.parseDouble(getOptions("evmultiplier")));
-								if (a <= 0) {
-									return 0;
-								} else {
-									return (int) (a);
-								}
-							} else {
-								Integer result = (int) ((float) aetherValues
-										.get(sb.toString()) * Double
-										.parseDouble(getOptions("evmultiplier")));
-								return result != null ? result : 0;
-							}
-						} else {
-							return 0;
-						}
-					}
-				}
-			} else {
-				return 0;
-			}
-		} else {
-			return 0;
-		}
-	}
-
 	public static boolean doesFileExist(File fileDirectory, String file) {
 		File fileResult = new File(fileDirectory, file);
 		if (fileResult.exists()) {
@@ -297,7 +143,7 @@ public class AetherCraft {
 		}
 		AetherManipulatorConfig config = new AetherManipulatorConfig(new File(
 				configDir, DEFAULT_CONFIG_FILE));
-		config.getAllAetherValues(aetherValues);
+		config.getAllAetherValues();
 
 		// ------------------- PLUG-IN AETHER VALUE CONFIGS -------------------
 		File[] configFiles = configDir.listFiles(new FilenameFilter() {
@@ -309,7 +155,7 @@ public class AetherCraft {
 		for (File file : configFiles) {
 			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
 					file);
-			tempConfig.getAllAetherValues(aetherValues);
+			tempConfig.getAllAetherValues();
 		}
 
 		// ------------------- CONFIG -------------------
@@ -321,7 +167,7 @@ public class AetherCraft {
 		// INTEGER AND DOUBLE
 		options.put(
 				"consumeprecission",
-				Integer.toString(forgeConfig
+				Float.toString(forgeConfig
 						.get("options",
 								"consumeprecission",
 								100,
@@ -341,15 +187,15 @@ public class AetherCraft {
 				"emmaxstorage", 32768,
 				"How much aether an aether manipulator can store").getInt()));
 
-		options.put("ecmaxstorage", Integer.toString(forgeConfig.get("options",
+		options.put("ecmaxstorage", Float.toString(forgeConfig.get("options",
 				"ecmaxstorage", 131072,
 				"How much aether an aether container can store").getInt()));
 
-		options.put("ebatterymaxstorage", Integer.toString(forgeConfig.get(
+		options.put("ebatterymaxstorage", Float.toString(forgeConfig.get(
 				"options", "ebatterymaxstorage", 16384,
 				"How much aether an aether battery can store").getInt()));
 
-		options.put("flycostpersecond", Integer.toString(forgeConfig.get(
+		options.put("flycostpersecond", Float.toString(forgeConfig.get(
 				"options", "flycostpersecond", 8,
 				"How much AV the flying ring will drain per second.").getInt()));
 
@@ -412,9 +258,9 @@ public class AetherCraft {
 		forgeConfig.save();
 	}
 
-	public static boolean addAVEntryToConfig(String entry, int value) {
+	public static boolean addAVEntryToConfig(String entry, float l) {
 		if (currentAVConfig != null) {
-			currentConfigAV.put(entry, value);
+			currentConfigAV.put(entry, l);
 			return true;
 		} else {
 			return false;
@@ -425,7 +271,7 @@ public class AetherCraft {
 		File[] configFiles = configDir.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
-				if (name.equals("EMAV_" + config + ".cfg")) {
+				if (name.equals(config + ".cfg")) {
 					return true;
 				} else {
 					return false;
@@ -434,10 +280,10 @@ public class AetherCraft {
 		});
 		if (configFiles.length > 0) {
 			currentAVConfig = configFiles[0];
-			currentConfigAV = new HashMap<String, Integer>();
+			currentConfigAV = new HashMap<String, Float>();
 			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
 					configFiles[0]);
-			tempConfig.getAllAetherValues(currentConfigAV);
+			tempConfig.getAllAetherValues();
 			return true;
 		} else {
 			return false;
@@ -445,10 +291,10 @@ public class AetherCraft {
 	}
 
 	public static boolean createNewAVConfig(String config) {
-		File tempConfig = new File(configDir, "EMAV_" + config + ".cfg");
+		File tempConfig = new File(configDir, config + ".cfg");
 		if (!tempConfig.exists()) {
 			currentAVConfig = tempConfig;
-			currentConfigAV = new HashMap<String, Integer>();
+			currentConfigAV = new HashMap<String, Float>();
 			return true;
 		} else {
 			return false;
@@ -466,7 +312,7 @@ public class AetherCraft {
 	}
 
 	public static void unloadCurrentConfig() {
-		currentConfigAV = new HashMap<String, Integer>();
+		currentConfigAV = new HashMap<String, Float>();
 		currentAVConfig = null;
 	}
 
@@ -499,16 +345,8 @@ public class AetherCraft {
 		return output;
 	}
 
-	public static HashMap<String, Integer> getAetherValuesMap() {
-		return aetherValues;
-	}
-
 	public static HashMap<String, String> getOptionsMap() {
 		return options;
-	}
-
-	public static void setAetherValuesMap(HashMap<String, Integer> evm) {
-		aetherValues = evm;
 	}
 
 	public static void setOptionsMap(HashMap<String, String> om) {

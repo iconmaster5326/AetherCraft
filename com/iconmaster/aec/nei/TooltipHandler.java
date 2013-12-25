@@ -7,8 +7,10 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Keyboard;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.util.NumberUtils;
 
 import codechicken.nei.forge.IContainerTooltipHandler;
 
@@ -34,13 +36,11 @@ public class TooltipHandler implements IContainerTooltipHandler {
 			if (showAV
 					&& stack != null
 					&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
-				int ev = AetherCraft.getAetherValueByItemStack(stack);
-				int ev1 = (int) (((float) ev)
-						* ((float) Integer.parseInt(AetherCraft
-								.getOptions("consumeprecission"))) / 100.0f);
+				float ev = AVRegistry.getAV(stack);
+				float ev1 =  (float) ((float) (ev * Float.parseFloat(AetherCraft.getOptions("consumeprecission"))) / 100.0);
 
-				currenttip.add("\u00a72" + "TRANSMUTE AV: " + Integer.toString(ev));
-				currenttip.add("\u00a79" + "CONSUME    AV: " + Integer.toString(ev1));
+				currenttip.add("\u00a72" + "TRANSMUTE AV: " + NumberUtils.display(ev));
+				currenttip.add("\u00a79" + "CONSUME    AV: " + NumberUtils.display(ev1));
 			}
 		} else {
 			boolean showAV = true;
@@ -54,8 +54,8 @@ public class TooltipHandler implements IContainerTooltipHandler {
 			if (showAV
 					&& stack != null
 					&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
-				int ev = AetherCraft.getAetherValueByItemStack(stack);
-				currenttip.add("\u00a72" + "AV: " + Integer.toString(ev));
+				float ev = AVRegistry.getAV(stack);
+				currenttip.add("\u00a72" + "AV: " + NumberUtils.display(ev));
 			}
 		}
 		return currenttip;

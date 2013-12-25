@@ -22,7 +22,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 	public static final byte energyBlockType = 1;
 
 	private ItemStack[] inventory;
-	private int energy;
+	private float energy;
 	private int progress;
 
 	private boolean powered;
@@ -126,7 +126,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 				inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
-		this.energy = tagCompound.getInteger("Energy");
+		this.energy = tagCompound.getFloat("Energy");
 	}
 
 	@Override
@@ -146,13 +146,13 @@ public class TileEntityAetherContainer extends TileEntity implements
 		}
 
 		tagCompound.setTag("Inventory", itemList);
-		tagCompound.setInteger("Energy", this.energy);
+		tagCompound.setFloat("Energy", this.energy);
 	}
 
 	private void handleEnergy() {
-		int batteryMaxStorage = Integer.parseInt(AetherCraft
+		float batteryMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("ebatterymaxstorage"));
-		int ecMaxStorage = Integer.parseInt(AetherCraft
+		float ecMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("ecmaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
@@ -169,20 +169,20 @@ public class TileEntityAetherContainer extends TileEntity implements
 			}
 			NBTTagCompound tag = topStack.getTagCompound();
 			if (!tag.hasKey("EMAV")) {
-				tag.setInteger("EMAV", 0);
+				tag.setFloat("EMAV", 0);
 			}
-			int batteryEv = tag.getInteger("EMAV");
+			float batteryEv = tag.getFloat("EMAV");
 			if (batteryEv > batteryMaxStorage) {
 				batteryEv = batteryMaxStorage;
-				tag.setInteger("EMAV", batteryEv);
+				tag.setFloat("EMAV", batteryEv);
 			}
 			if (batteryEv > 0) {
 				if (this.energy + batteryEv <= ecMaxStorage) {
 					this.energy += batteryEv;
-					tag.setInteger("EMAV", 0);
+					tag.setFloat("EMAV", 0);
 					doneSomething = true;
 				} else {
-					tag.setInteger("EMAV", batteryEv - (ecMaxStorage
+					tag.setFloat("EMAV", batteryEv - (ecMaxStorage
 							- this.energy));
 					this.energy = ecMaxStorage;
 					doneSomething = true;
@@ -201,17 +201,17 @@ public class TileEntityAetherContainer extends TileEntity implements
 			}
 			NBTTagCompound tag = bottomStack.getTagCompound();
 			if (!tag.hasKey("EMAV")) {
-				tag.setInteger("EMAV", 0);
+				tag.setFloat("EMAV", 0);
 			}
-			int batteryEv = tag.getInteger("EMAV");
+			float batteryEv = tag.getFloat("EMAV");
 			if (batteryEv < batteryMaxStorage) {
 				if (batteryEv + this.energy <= batteryMaxStorage) {
-					tag.setInteger("EMAV", batteryEv + this.energy);
+					tag.setFloat("EMAV", batteryEv + this.energy);
 					this.energy = 0;
 					doneSomething = true;
 				} else {
 					this.energy -= batteryMaxStorage - batteryEv;
-					tag.setInteger("EMAV", batteryMaxStorage);
+					tag.setFloat("EMAV", batteryMaxStorage);
 					doneSomething = true;
 				}
 			}
@@ -241,7 +241,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 				outputStream.writeInt(this.xCoord);
 				outputStream.writeInt(this.yCoord);
 				outputStream.writeInt(this.zCoord);
-				outputStream.writeInt(this.energy);
+				outputStream.writeFloat(this.energy);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -258,13 +258,13 @@ public class TileEntityAetherContainer extends TileEntity implements
 		}
 	}
 
-	public void recieveSync(int par1energy) {
-		this.energy = par1energy;
+	public void recieveSync(float f) {
+		this.energy = f;
 	}
 
 	public void calculateProgress() {
 		this.progress = (int) ((float) this.energy
-				/ (float) Integer.parseInt(AetherCraft
+				/ (float) Float.parseFloat(AetherCraft
 						.getOptions("ecmaxstorage")) * 100.0f);
 		if (this.progress > 100) {
 			this.progress = 100;
@@ -310,15 +310,15 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public int addAether(int ev) {
-		int ecmaxstorage = Integer.parseInt(AetherCraft
+	public float addAether(float ev) {
+		float ecmaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("ecmaxstorage"));
 		if (this.energy + ev <= ecmaxstorage) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			int rest = ecmaxstorage - this.energy;
+			float rest = ecmaxstorage - this.energy;
 			this.energy = ecmaxstorage;
 			this.sync();
 			return rest;
@@ -326,26 +326,26 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public int extractAether(int ev) {
-		if (this.energy - ev >= 0) {
-			this.energy -= ev;
+	public float extractAether(float l) {
+		if (this.energy - l >= 0) {
+			this.energy -= l;
 			this.sync();
-			return ev;
+			return l;
 		}
-		int rest = ev - this.energy;
+		float rest = l - this.energy;
 		this.energy = 0;
 		this.sync();
 		return rest;
 	}
 
 	@Override
-	public void setAether(int ev) {
+	public void setAether(float ev) {
 		this.energy = ev;
 		this.sync();
 	}
 
 	@Override
-	public int getAether() {
+	public float getAether() {
 		return this.energy;
 	}
 }

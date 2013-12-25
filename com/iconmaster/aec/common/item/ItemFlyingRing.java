@@ -86,8 +86,8 @@ public class ItemFlyingRing extends Item {
 									&& batteriesAboveMinimum.length > 0) {
 								NBTTagCompound tag = batteriesAboveMinimum[0]
 										.getTagCompound();
-								int batteryEv = tag.getInteger("EMAV");
-								tag.setInteger("EMAV", batteryEv
+								float batteryEv = tag.getFloat("EMAV");
+								tag.setFloat("EMAV", batteryEv
 										- flySecondCost);
 								player.capabilities.allowFlying = true;
 								return;
@@ -99,9 +99,9 @@ public class ItemFlyingRing extends Item {
 										&& i < batteriesAboveZero.length) {
 									NBTTagCompound tag = batteriesAboveZero[i]
 											.getTagCompound();
-									int batteryEv = tag.getInteger("EMAV");
+									float batteryEv = tag.getFloat("EMAV");
 									energyNeeded -= batteryEv;
-									tag.setInteger("EMAV", 0);
+									tag.setFloat("EMAV", 0);
 									i++;
 								}
 								if (energyNeeded > 0) {

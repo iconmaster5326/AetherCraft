@@ -12,6 +12,8 @@ public class UidUtils {
 	 * @return
 	 */
 	public static List getUID(ItemStack item) {
+		if (item==null) {return null;}
+		//System.out.println("UID is "+item.itemID+" "+(item.getHasSubtypes() && !((Integer)item.getItemDamage()).equals(32767) ? item.getItemDamage() : 0));
 		return Arrays.asList(item.itemID,item.getHasSubtypes() && !((Integer)item.getItemDamage()).equals(32767) ? item.getItemDamage() : 0);
 	}
 	

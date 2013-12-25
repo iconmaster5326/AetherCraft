@@ -3,6 +3,7 @@ package com.iconmaster.aec.common.handler.network;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 
 import net.minecraft.network.INetworkManager;
@@ -23,7 +24,7 @@ public class ConnectionHandler implements IConnectionHandler {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
 			oos.writeByte(AetherCraft.PACKET_TTID_CONFIG);
-			oos.writeObject(AetherCraft.getAetherValuesMap());
+			oos.writeObject(AVRegistry.getValueMap());
 			oos.writeObject(AetherCraft.getOptionsMap());
 			oos.writeInt(2);
 		} catch (Exception ex) {

@@ -17,11 +17,13 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
+import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -49,7 +51,7 @@ public class GuiAetherContainer extends GuiContainer {
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRenderer.drawStringWithShadow(
-				"Energy: " + Integer.toString(this.te.getAether()), 34, 38,
+				"Energy: " + NumberUtils.display(this.te.getAether()), 34, 38,
 				0x55FF55);
 
 		int a = 68 - 16;
@@ -91,9 +93,9 @@ public class GuiAetherContainer extends GuiContainer {
 				.isKeyDown(Keyboard.KEY_RSHIFT))
 				&& stack != null
 				&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
-			int ev = AetherCraft.getAetherValueByItemStack(stack);
+			float ev = AVRegistry.getAV(stack);
 
-			list.add("\u00a72" + "AV: " + Integer.toString(ev));
+			list.add("\u00a72" + "AV: " + NumberUtils.display(ev));
 		}
 
 		if (list != null && stack != null) {

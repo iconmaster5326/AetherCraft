@@ -3,6 +3,7 @@ package com.iconmaster.aec.common.tileentity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.IAetherContainer;
 
@@ -23,7 +24,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	public static final byte energyBlockType = 0;
 
 	private ItemStack[] inventory;
-	private int energy;
+	private float energy;
 	private int progress;
 	private boolean powered;
 
@@ -136,7 +137,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			}
 		}
 
-		this.energy = tagCompound.getInteger("Energy");
+		this.energy = tagCompound.getFloat("Energy");
 	}
 
 	@Override
@@ -156,13 +157,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		}
 
 		tagCompound.setTag("Inventory", itemList);
-		tagCompound.setInteger("Energy", this.energy);
+		tagCompound.setFloat("Energy", this.energy);
 	}
 
 	private void handleEnergy() {
-		int batteryMaxStorage = Integer.parseInt(AetherCraft
+		float batteryMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("ebatterymaxstorage"));
-		int emMaxStorage = Integer.parseInt(AetherCraft
+		float emMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("emmaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
@@ -174,43 +175,41 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			// ------------------- Consuming -------------------
 			if (currentStack != null) {
 				if (topStack != null) {
-					if ((AetherCraft.getAetherValueByItemStack(topStack) > 0 || topStack.itemID == AetherCraft.itemAetherBattery.itemID)
-							&& AetherCraft
-									.getAetherValueByItemStack(currentStack) > 0
+					if ((AVRegistry.getAV(topStack) > 0 || topStack.itemID == AetherCraft.itemAetherBattery.itemID)
+							&& AVRegistry.getAV(currentStack) > 0
 							&& ((currentStack.itemID != AetherCraft.itemAetherBattery.itemID && currentStack.itemID != topStack.itemID) || (currentStack
 									.getHasSubtypes()
 									&& topStack.getHasSubtypes() && currentStack
 									.getItemDamage() != topStack
 									.getItemDamage()))) {
-						int stackEv = AetherCraft
-								.getAetherValueByItemStack(currentStack);
+						float stackEv = AVRegistry.getAV(currentStack);
 						if ((stackEv
-								* ((float) Integer.parseInt(AetherCraft
+								* ((float) Float.parseFloat(AetherCraft
 										.getOptions("consumeprecission"))) / 100.0f) <= this
 									.getFreeEnergySpace()) {
-							int ev = (int) (((float) stackEv)
-									* ((float) Integer
-											.parseInt(AetherCraft
+							float ev = (float) (((float) stackEv)
+									* ((float) Float
+											.parseFloat(AetherCraft
 													.getOptions("consumeprecission"))) / 100.0f);
+							//System.out.println("Consuming "+stackEv+" and getting "+ev);
 							this.addEnergyToConnectedAndSelf(ev);
 							this.decrStackSize(i, 1);
 							doneSomething = true;
 						}
 					}
 				} else {
-					if (AetherCraft
-							.getAetherValueByItemStack(currentStack) > 0
+					if (AVRegistry.getAV(currentStack) > 0
 							&& currentStack.itemID != AetherCraft.itemAetherBattery.itemID) {
-						int stackEv = AetherCraft
-								.getAetherValueByItemStack(currentStack);
+						float stackEv = AVRegistry.getAV(currentStack);
 						if ((stackEv
-								* ((float) Integer.parseInt(AetherCraft
+								* ((float) Float.parseFloat(AetherCraft
 										.getOptions("consumeprecission"))) / 100.0f) <= this
 									.getFreeEnergySpace()) {
-							int ev = (int) (((float) stackEv)
-									* ((float) Integer
-											.parseInt(AetherCraft
+							float ev = (((float) stackEv)
+									* ((float) Float
+											.parseFloat(AetherCraft
 													.getOptions("consumeprecission"))) / 100.0f);
+							//System.out.println("Consuming "+stackEv+" and getting "+ev);
 							this.addEnergyToConnectedAndSelf(ev);
 							this.decrStackSize(i, 1);
 							doneSomething = true;
@@ -220,17 +219,15 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			}
 			// ------------------- Transmuting -------------------
 			if (topStack != null
-					&& AetherCraft.getAetherValueByItemStack(topStack) > 0
-					&& this.getCombinedEnergy() >= AetherCraft
-							.getAetherValueByItemStack(topStack)
+					&& AVRegistry.getAV(topStack) > 0
+					&& this.getCombinedEnergy() >= AVRegistry.getAV(topStack)
 					&& topStack.itemID != AetherCraft.itemAetherBattery.itemID) {
 				int slot = this.getStackableSlot(topStack);
 
 				if (slot > 0) {
 					ItemStack newStack = this.getStackInSlot(slot);
 					newStack.stackSize++;
-					this.extractEnergyFromConnectedAndSelf(AetherCraft
-							.getAetherValueByItemStack(topStack));
+					this.extractEnergyFromConnectedAndSelf(AVRegistry.getAV(topStack));
 					doneSomething = true;
 				} else {
 					slot = this.getEmptySlot();
@@ -239,8 +236,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						ItemStack newStack = topStack.copy();
 						newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
-						this.extractEnergyFromConnectedAndSelf(AetherCraft
-								.getAetherValueByItemStack(topStack));
+						this.extractEnergyFromConnectedAndSelf(AVRegistry.getAV(topStack));
 						doneSomething = true;
 					}
 				}
@@ -260,16 +256,16 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		}
 	}
 
-	public boolean spaceForEnergy(int ev) {
+	public boolean spaceForEnergy(float ev) {
 		return this.getFreeEnergySpace() - ev >= 0;
 	}
 
-	public int getTotalEnergySpace() {
-		int emmaxstorage = Integer.parseInt(AetherCraft
+	public float getTotalEnergySpace() {
+		float emmaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("emmaxstorage"));
-		int ecmaxstorage = Integer.parseInt(AetherCraft
+		float ecmaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("ecmaxstorage"));
-		int totalSpace = emmaxstorage;
+		float totalSpace = emmaxstorage;
 		for (int i = 0; i < this.connectedSides.length; i++) {
 			if (this.connectedSides[i]) {
 				totalSpace += ecmaxstorage;
@@ -278,7 +274,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		return totalSpace;
 	}
 
-	public int getFreeEnergySpace() {
+	public float getFreeEnergySpace() {
 		return this.getTotalEnergySpace() - this.getCombinedEnergy();
 	}
 
@@ -306,7 +302,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				outputStream.writeInt(this.xCoord);
 				outputStream.writeInt(this.yCoord);
 				outputStream.writeInt(this.zCoord);
-				outputStream.writeInt(this.energy);
+				outputStream.writeFloat(this.energy);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -323,7 +319,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		}
 	}
 
-	public void recieveSync(int par1energy) {
+	public void recieveSync(float par1energy) {
 		this.energy = par1energy;
 	}
 
@@ -332,8 +328,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 		if (stack != null) {
 			this.progress = (int) ((float) this.getCombinedEnergy()
-					/ (float) AetherCraft
-							.getAetherValueByItemStack(stack) * 100.0f);
+					/ (float) AVRegistry.getAV(stack) * 100.0f);
 
 			if (this.progress > 100) {
 				this.progress = 100;
@@ -430,7 +425,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		return -1;
 	}
 
-	private int getConnectedECWithAVLowerOrEqual(int ev) {
+	private int getConnectedECWithAVLowerOrEqual(float l) {
 		for (int i = 0; i < this.connectedSides.length; i++) {
 			if (this.connectedSides[i]) {
 				switch (i) {
@@ -438,7 +433,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 0:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-									this.zCoord)).getAether() <= ev) {
+									this.zCoord)).getAether() <= l) {
 						return 0;
 					}
 					break;
@@ -446,7 +441,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 1:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-									this.zCoord)).getAether() <= ev) {
+									this.zCoord)).getAether() <= l) {
 						return 1;
 					}
 					break;
@@ -454,7 +449,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 2:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord - 1)).getAether() <= ev) {
+									this.zCoord - 1)).getAether() <= l) {
 						return 2;
 					}
 					break;
@@ -462,7 +457,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 3:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord + 1)).getAether() <= ev) {
+									this.zCoord + 1)).getAether() <= l) {
 						return 3;
 					}
 					break;
@@ -470,7 +465,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 4:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-									this.zCoord)).getAether() <= ev) {
+									this.zCoord)).getAether() <= l) {
 						return 4;
 					}
 					break;
@@ -478,7 +473,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				case 5:
 					if (((TileEntityAetherContainer) this.worldObj
 							.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-									this.zCoord)).getAether() <= ev) {
+									this.zCoord)).getAether() <= l) {
 						return 5;
 					}
 					break;
@@ -488,44 +483,44 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		return -1;
 	}
 
-	private int getConnectedECEnergy(int side) {
+	private float getConnectedECEnergy(int side) {
 		switch (side) {
 		// Bottom
 		case 0:
-			return this.worldObj.getBlockId(this.xCoord, this.yCoord - 1,
+			return (this.worldObj.getBlockId(this.xCoord, this.yCoord - 1,
 					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-							this.zCoord)).getAether() : 0;
+							this.zCoord)).getAether() : 0);
 			// Top
 		case 1:
-			return this.worldObj.getBlockId(this.xCoord, this.yCoord + 1,
+			return (this.worldObj.getBlockId(this.xCoord, this.yCoord + 1,
 					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-							this.zCoord)).getAether() : 0;
+							this.zCoord)).getAether() : 0);
 			// North
 		case 2:
-			return this.worldObj.getBlockId(this.xCoord, this.yCoord,
+			return (this.worldObj.getBlockId(this.xCoord, this.yCoord,
 					this.zCoord - 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord,
-							this.zCoord - 1)).getAether() : 0;
+							this.zCoord - 1)).getAether() : 0);
 			// South
 		case 3:
-			return this.worldObj.getBlockId(this.xCoord, this.yCoord,
+			return (this.worldObj.getBlockId(this.xCoord, this.yCoord,
 					this.zCoord + 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord, this.yCoord,
-							this.zCoord + 1)).getAether() : 0;
+							this.zCoord + 1)).getAether() : 0);
 			// West
 		case 4:
-			return this.worldObj.getBlockId(this.xCoord - 1, this.yCoord,
+			return (this.worldObj.getBlockId(this.xCoord - 1, this.yCoord,
 					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-							this.zCoord)).getAether() : 0;
+							this.zCoord)).getAether() : 0);
 			// East
 		case 5:
-			return this.worldObj.getBlockId(this.xCoord + 1, this.yCoord,
+			return (this.worldObj.getBlockId(this.xCoord + 1, this.yCoord,
 					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
 					.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-							this.zCoord)).getAether() : 0;
+							this.zCoord)).getAether() : 0);
 		default:
 			return 0;
 		}
@@ -588,14 +583,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		this.connectedSides[side] = connected;
 	}
 
-	public int addEnergyToConnectedECs(int ev) {
-		int rest = ev;
+	public float addEnergyToConnectedECs(float energy2) {
+		float rest = energy2;
 		TileEntityAetherContainer te;
 		int ec;
 		while (true) {
 			ec = this
-					.getConnectedECWithAVLowerOrEqual(Integer
-							.parseInt(AetherCraft
+					.getConnectedECWithAVLowerOrEqual(Float.parseFloat(AetherCraft
 									.getOptions("ecmaxstorage")) - 1);
 			if (ec == -1 || rest <= 0) {
 				this.sync();
@@ -660,13 +654,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		}
 	}
 
-	public int extractEnergyFromConnectedECs(int ev) {
-		int extracted = 0;
+	public float extractEnergyFromConnectedECs(float l) {
+		float extracted = 0;
 		TileEntityAetherContainer te;
 		int ec;
 		while (true) {
 			ec = this.getConnectedECWithAVHigherOrEqual(1);
-			if (ec == -1 || extracted >= ev) {
+			if (ec == -1 || extracted >= l) {
 				this.sync();
 				return extracted;
 			}
@@ -677,7 +671,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord, this.yCoord - 1,
 								this.zCoord);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			// Top
@@ -686,7 +680,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord, this.yCoord + 1,
 								this.zCoord);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			// North
@@ -695,7 +689,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord - 1);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			// South
@@ -704,7 +698,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord, this.yCoord,
 								this.zCoord + 1);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			// West
@@ -713,7 +707,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord - 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			// East
@@ -722,15 +716,15 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						.getBlockTileEntity(this.xCoord + 1, this.yCoord,
 								this.zCoord);
 				if (te != null) {
-					extracted += te.extractAether(ev - extracted);
+					extracted += te.extractAether(l - extracted);
 				}
 				break;
 			}
 		}
 	}
 
-	public int addEnergyToConnectedAndSelf(int ev) {
-		int rest = this.addEnergyToConnectedECs(ev);
+	public float addEnergyToConnectedAndSelf(float ev) {
+		float rest = this.addEnergyToConnectedECs(ev);
 		if (rest > 0) {
 			rest = this.addAether(rest);
 		}
@@ -738,10 +732,10 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		return rest;
 	}
 
-	public int extractEnergyFromConnectedAndSelf(int ev) {
-		int extracted = this.extractEnergyFromConnectedECs(ev);
-		if (extracted < ev) {
-			extracted += this.extractAether(ev - extracted);
+	public float extractEnergyFromConnectedAndSelf(float l) {
+		float extracted = this.extractEnergyFromConnectedECs(l);
+		if (extracted < l) {
+			extracted += this.extractAether(l - extracted);
 		}
 		this.sync();
 		return extracted;
@@ -756,15 +750,15 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	@Override
-	public int addAether(int ev) {
-		int emmaxstorage = Integer.parseInt(AetherCraft
+	public float addAether(float ev) {
+		float emmaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("emmaxstorage"));
 		if (this.energy + ev <= emmaxstorage) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			int rest = emmaxstorage - this.energy;
+			float rest = emmaxstorage - this.energy;
 			this.energy = emmaxstorage;
 			this.sync();
 			return rest;
@@ -772,36 +766,36 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	@Override
-	public int extractAether(int ev) {
-		if (this.energy - ev >= 0) {
-			this.energy -= ev;
+	public float extractAether(float l) {
+		if (this.energy - l >= 0) {
+			this.energy -= l;
 			this.sync();
-			return ev;
+			return l;
 		}
-		int rest = ev - this.energy;
+		float rest = l - this.energy;
 		this.energy = 0;
 		this.sync();
 		return rest;
 	}
 
 	@Override
-	public void setAether(int ev) {
+	public void setAether(float ev) {
 		this.energy = ev;
 		this.sync();
 	}
 
 	@Override
-	public int getAether() {
+	public float getAether() {
 		return this.energy;
 	}
 
-	public int getConnectedEnergy() {
+	public float getConnectedEnergy() {
 		return this.getConnectedECEnergy(0) + this.getConnectedECEnergy(1)
 				+ this.getConnectedECEnergy(2) + this.getConnectedECEnergy(3)
 				+ this.getConnectedECEnergy(4) + this.getConnectedECEnergy(5);
 	}
 
-	public int getCombinedEnergy() {
+	public float getCombinedEnergy() {
 		return this.getAether() + this.getConnectedEnergy();
 	}
 
@@ -812,7 +806,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				sides++;
 			}
 		}
-		int ecMaxStorage = Integer.parseInt(AetherCraft
+		float ecMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("ecmaxstorage"));
 		return this.getConnectedEnergy() >= (sides * ecMaxStorage);
 	}

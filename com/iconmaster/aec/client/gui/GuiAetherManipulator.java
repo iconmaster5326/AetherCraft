@@ -20,9 +20,11 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
+import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -51,7 +53,7 @@ public class GuiAetherManipulator extends GuiContainer {
 		this.fontRenderer.drawStringWithShadow("Internal Energy:", 9, 26,
 				0xFF0000);
 		this.fontRenderer.drawStringWithShadow(
-				Integer.toString(this.te.getAether()), 95, 26, 0x00FF00);
+				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
 
 		this.fontRenderer.drawStringWithShadow("Consume Precission:", 9, 38,
 				0xFF0000);
@@ -67,11 +69,9 @@ public class GuiAetherManipulator extends GuiContainer {
 
 		this.drawCenteredString(
 				this.fontRenderer,
-				Integer.toString(this.te.getCombinedEnergy())
+				NumberUtils.display(this.te.getCombinedEnergy())
 						+ " / "
-						+ Integer.toString(AetherCraft
-								.getAetherValueByItemStack(this.te
-										.getStackInSlot(0))), 118, 13, 0x55FF55);
+						+ NumberUtils.display(AVRegistry.getAV(this.te.getStackInSlot(0))), 118, 13, 0x55FF55);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
@@ -112,13 +112,13 @@ public class GuiAetherManipulator extends GuiContainer {
 		}
 		if (showAV && stack != null
 				&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
-			int ev = AetherCraft.getAetherValueByItemStack(stack);
-			int ev1 = (int) (((float) ev)
-					* ((float) Integer.parseInt(AetherCraft
+			float ev = AVRegistry.getAV(stack);
+			float ev1 = (float) (ev
+					* ((float) Float.parseFloat(AetherCraft
 							.getOptions("consumeprecission"))) / 100.0f);
 
-			list.add("\u00a72" + "TRANSMUTE AV: " + Integer.toString(ev));
-			list.add("\u00a79" + "CONSUME    AV: " + Integer.toString(ev1));
+			list.add("\u00a72" + "TRANSMUTE AV: " + NumberUtils.display(ev));
+			list.add("\u00a79" + "CONSUME    AV: " + NumberUtils.display(ev1));
 		}
 
 		if (list != null && stack != null) {
