@@ -115,9 +115,7 @@ public class AetherCraft {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		
-		AVConfigHandler.loadAllConfigFiles();
-		
-		DynamicAVRegister.addDynamicValues();
+		AVRegistry.reloadAllValues();
 		
 	}
 

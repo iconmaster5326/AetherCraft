@@ -10,12 +10,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.config.AVConfigHandler;
 import com.iconmaster.aec.util.UidUtils;
 
 import cpw.mods.fml.common.registry.GameData;
 
 public class AVRegistry {
-	private static HashMap values = new HashMap();
+	private static HashMap values ;
 	private static HashMap hardcoded = new HashMap();
 	private static HashMap unlocalizedNames = getAllNames();
 	
@@ -132,5 +133,15 @@ public class AVRegistry {
 
 	public static void setValueMap(HashMap map) {
 		values = map;
+	}
+	
+	/**Re-evaluates the entire value system, checking dynamic recipes and config files alike.
+	 */
+	public static void reloadAllValues() {
+		values = new HashMap();
+		
+		AVConfigHandler.loadAllConfigFiles();
+		DynamicAVRegister.addDynamicValues();
+		
 	}
 }

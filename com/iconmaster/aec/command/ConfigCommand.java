@@ -1,10 +1,8 @@
 package com.iconmaster.aec.command;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.util.NumberUtils;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -12,23 +10,29 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
+
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.config.AVConfig;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 
 public class ConfigCommand implements ICommand {
 	private List aliases, tabCompletionOptions;
+	private AVConfig config;
+	private String configName;
 
 	public ConfigCommand() {
 		this.aliases = new ArrayList();
 		this.aliases.add("aec");
 		this.tabCompletionOptions = new ArrayList();
+		this.tabCompletionOptions.add("name");
+		this.tabCompletionOptions.add("edit");
+		this.tabCompletionOptions.add("add");
+		this.tabCompletionOptions.add("save");
 		this.tabCompletionOptions.add("reload");
-		this.tabCompletionOptions.add("addcurrent");
-		this.tabCompletionOptions.add("addinventory");
-		this.tabCompletionOptions.add("addrawentry");
-		this.tabCompletionOptions.add("createconfig");
-		this.tabCompletionOptions.add("loadconfig");
-		this.tabCompletionOptions.add("saveconfig");
-		this.tabCompletionOptions.add("unloadconfig");
+		this.tabCompletionOptions.add("help");
+		this.tabCompletionOptions.add("discard");
 	}
 
 	@Override
@@ -55,230 +59,98 @@ public class ConfigCommand implements ICommand {
 	public void processCommand(ICommandSender icommandsender, String[] astring) {
 		ChatMessageComponent cmc = new ChatMessageComponent();
 		if (astring.length == 0) {
-			cmc.addText(EnumChatFormatting.RED + "Possible sub-commands for /aec: ");
+			cmc.addText(EnumChatFormatting.RED + "Type '/aec help' for usage help.");
 			icommandsender.sendChatToPlayer(cmc);
 			return;
 		} else {
-			ItemStack stack = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
-			if (astring[0].equalsIgnoreCase("name") && stack != null) {
-				String name = stack.getUnlocalizedName();
+			ItemStack item = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
+			if (astring[0].equalsIgnoreCase("name") && item != null) {
+				String name = item.getUnlocalizedName();
 				cmc = new ChatMessageComponent();
 				if (name==null) {
 					cmc.addText(EnumChatFormatting.RED  + "Item has no unlocalized name!");
 				} else {
-					cmc.addText(EnumChatFormatting.GREEN  + name);
+					cmc.addText(EnumChatFormatting.GREEN  + "The item's name is " + name);
 				}
 				icommandsender.sendChatToPlayer(cmc);
 				return;
+			} else if (astring[0].equalsIgnoreCase("edit")) {
+				if (astring.length < 2) {
+					cmc.addText(EnumChatFormatting.RED  + "Usage: /aec edit configname");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				if (config != null) {
+					cmc.addText(EnumChatFormatting.RED  + "Close "+configName+" with /aec save or /aec discard before you open a new one.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				configName = astring[1];
+				config = new AVConfig(new File(AetherCraft.getConfigDir(),configName+".cfg"));
+				cmc.addText(EnumChatFormatting.GREEN  + "Now editing the config file "+configName+".");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("add")) {
+				if (astring.length < 2) {
+					cmc.addText(EnumChatFormatting.RED  + "Usage: /aec add [item] av");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				if (config==null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				float av;
+				if (astring.length == 2) {
+					av = Float.parseFloat(astring[1]);
+				} else {
+					item = AVRegistry.getItemFromString(astring[1]);
+					av = Float.parseFloat(astring[2]);
+				}
+				if (item == null) {
+					cmc.addText(EnumChatFormatting.RED  + "Item specified not found!");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				config.addValue(item, av);
+				cmc.addText(EnumChatFormatting.GREEN + item.getUnlocalizedName() + " is now worth " + av + " AV.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("save")) {
+				if (config == null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				config.saveValues();
+				config = null;
+				cmc.addText(EnumChatFormatting.GREEN +configName+" has been saved. Use /aec reload to apply changes.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("reload")) {
+				if (config != null) {
+					cmc.addText(EnumChatFormatting.RED  + "The current config file has not yet been saved. Use /aec save or /aec discard first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				AVRegistry.reloadAllValues();
+				cmc.addText(EnumChatFormatting.GREEN +" All AV values have been updated.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("discard")) {
+				if (config == null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				config = null;
+				cmc.addText(EnumChatFormatting.GREEN +"The changes to "+configName+" have been discarded.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("help")) {
+				cmc.addText("To begin editing a custom AV config file, use /aec edit configname.\n");
+				cmc.addText("To add a custom AV value, use /aec add itemname av. The item name is optional; if omitted, it will use the item in your hand.\n");
+				cmc.addText("When you're done adding AV values to the file, call /aec save to save it to the file system.\n");
+				cmc.addText("If you aren't happy with your changes, use /aec discard to cancel them.\n");
+				cmc.addText("When you've saved you configs, use /aec reload to apply your changes.");
+				icommandsender.sendChatToPlayer(cmc);
 			}
-//			if (astring[0].equalsIgnoreCase("reload")) {
-//				AetherCraft.reloadConfigFiles();
-//				cmc = new ChatMessageComponent();
-//				cmc.addText(EnumChatFormatting.GREEN
-//						+ "Configurations Reloaded :)");
-//				icommandsender.sendChatToPlayer(cmc);
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("addcurrent")
-//					&& astring.length >= 2
-//					&& NumberUtils.isInteger(astring[1])) {
-//				ItemStack stack = ((EntityPlayerMP) icommandsender).inventory
-//						.getCurrentItem();
-//				if (stack != null) {
-//					if (AetherCraft.addAVEntryToConfig(
-//							stack.getUnlocalizedName(),
-//							Float.parseFloat(astring[1]))) {
-//						// Chat Message
-//						cmc = new ChatMessageComponent();
-//						cmc.addText(EnumChatFormatting.GREEN
-//								+ "Block/Item: "
-//								+ EnumChatFormatting.GRAY
-//								+ stack.getDisplayName()
-//								+ EnumChatFormatting.GREEN
-//								+ " successfully registered with an AV value of "
-//								+ EnumChatFormatting.GRAY + astring[1]
-//								+ EnumChatFormatting.GREEN + " :)");
-//						icommandsender.sendChatToPlayer(cmc);
-//					} else {
-//						// Chat Message
-//						cmc = new ChatMessageComponent();
-//						cmc.addText(EnumChatFormatting.RED
-//								+ "No configuration is loaded! Load or create one before performing this command.");
-//						icommandsender.sendChatToPlayer(cmc);
-//					}
-//				} else {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED
-//							+ "You must hold an item/block in your hand before performing this command.");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("addinventory")
-//					&& astring.length >= 2
-//					&& NumberUtils.isInteger(astring[1])) {
-//				ItemStack[] stack = ((EntityPlayerMP) icommandsender).inventory.mainInventory;
-//				boolean nothingChanged = true;
-//				for (ItemStack is : stack) {
-//					if (is != null) {
-//						if (AetherCraft.addAVEntryToConfig(
-//								is.getUnlocalizedName(),
-//								Float.parseFloat(astring[1]))) {
-//							nothingChanged = false;
-//							// Chat Message
-//							cmc.addText(EnumChatFormatting.GREEN
-//									+ "Block/Item: "
-//									+ EnumChatFormatting.GRAY
-//									+ is.getDisplayName()
-//									+ EnumChatFormatting.GREEN
-//									+ " successfully registered with an AV value of "
-//									+ EnumChatFormatting.GRAY + astring[1]
-//									+ EnumChatFormatting.GREEN + " :)");
-//							icommandsender.sendChatToPlayer(cmc);
-//						} else {
-//							// Chat Message
-//							cmc = new ChatMessageComponent();
-//							cmc.addText(EnumChatFormatting.RED
-//									+ "No configuration is loaded! Load or create one before performing this command.");
-//							icommandsender.sendChatToPlayer(cmc);
-//							return;
-//						}
-//					}
-//				}
-//				if (nothingChanged) {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED
-//							+ "You must have at least 1 item/block in your inventory before performing this command.");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("addrawentry")
-//					&& astring.length >= 3) {
-//				if (NumberUtils.isInteger(astring[2])) {
-//					if (AetherCraft.addAVEntryToConfig(astring[1],
-//							Float.parseFloat(astring[2]))) {
-//						// Chat Message
-//						cmc = new ChatMessageComponent();
-//						cmc.addText(EnumChatFormatting.GREEN
-//								+ "Entry: "
-//								+ EnumChatFormatting.GRAY
-//								+ astring[1]
-//								+ EnumChatFormatting.GREEN
-//								+ " successfully registered with an AV value of "
-//								+ EnumChatFormatting.GRAY + astring[2]
-//								+ EnumChatFormatting.GREEN + " :)");
-//						icommandsender.sendChatToPlayer(cmc);
-//					} else {
-//						// Chat Message
-//						cmc = new ChatMessageComponent();
-//						cmc.addText(EnumChatFormatting.RED
-//								+ "No configuration is loaded! Load or create one before performing this command.");
-//						icommandsender.sendChatToPlayer(cmc);
-//					}
-//				} else {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED
-//							+ "The last argument must be a number.");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("loadconfig")
-//					&& astring.length >= 2) {
-//				if (AetherCraft.loadAVConfig(astring[1])) {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.GREEN + "Configuration: "
-//							+ EnumChatFormatting.GRAY + astring[1]
-//							+ EnumChatFormatting.GREEN
-//							+ " got successfully loaded :)");
-//					icommandsender.sendChatToPlayer(cmc);
-//
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.DARK_RED
-//							+ " REMEMBER TO SAVE IT AFTERWARDS, OR IT WILL GET DESTROYED!");
-//					icommandsender.sendChatToPlayer(cmc);
-//				} else {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED + "Configuration: "
-//							+ EnumChatFormatting.GRAY + astring[1]
-//							+ EnumChatFormatting.RED + " doesn't exist!");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("createconfig")
-//					&& astring.length >= 2) {
-//				if (AetherCraft.createNewAVConfig(astring[1])) {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.GREEN + "Configuration: "
-//							+ EnumChatFormatting.GRAY + astring[1]
-//							+ EnumChatFormatting.GREEN
-//							+ " got successfully created :)");
-//					icommandsender.sendChatToPlayer(cmc);
-//
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.DARK_RED
-//							+ " REMEMBER TO SAVE IT AFTERWARDS, OR IT WILL GET DESTROYED!");
-//					icommandsender.sendChatToPlayer(cmc);
-//				} else {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED + "Configuration: "
-//							+ EnumChatFormatting.GRAY + astring[1]
-//							+ EnumChatFormatting.RED + " already exists!");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("saveconfig")) {
-//				if (AetherCraft.getCurrentConfigFile() != null) {
-//					AetherCraft.saveCurrentAVConfig();
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.GREEN
-//							+ "Configuration: "
-//							+ EnumChatFormatting.GRAY
-//							+ AetherCraft.getCurrentConfigFile()
-//									.getName() + EnumChatFormatting.GREEN
-//							+ " got successfully saved :)");
-//					icommandsender.sendChatToPlayer(cmc);
-//				} else {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED
-//							+ "No configuration is loaded!");
-//					icommandsender.sendChatToPlayer(cmc);
-//				}
-//				return;
-//			} else if (astring[0].equalsIgnoreCase("unloadconfig")) {
-//				if (AetherCraft.getCurrentConfigFile() == null) {
-//					// Chat Message
-//					cmc = new ChatMessageComponent();
-//					cmc.addText(EnumChatFormatting.RED
-//							+ "No configuration is loaded!");
-//					icommandsender.sendChatToPlayer(cmc);
-//					return;
-//				}
-//				String configName = AetherCraft.getCurrentConfigFile()
-//						.getName();
-//				AetherCraft.unloadCurrentConfig();
-//
-//				// Chat Message
-//				cmc = new ChatMessageComponent();
-//				cmc.addText(EnumChatFormatting.GREEN + "Configuration: "
-//						+ EnumChatFormatting.GRAY + configName
-//						+ EnumChatFormatting.GREEN
-//						+ " got successfully unloaded :)");
-//				icommandsender.sendChatToPlayer(cmc);
-//				return;
-//			}
-//			// Chat Message
-//			cmc = new ChatMessageComponent();
-//			cmc.addText(EnumChatFormatting.RED + "Invalid arguments!");
-//			icommandsender.sendChatToPlayer(cmc);
 		}
 	}
 
