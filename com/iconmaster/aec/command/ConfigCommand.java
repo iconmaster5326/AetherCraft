@@ -87,6 +87,7 @@ public class ConfigCommand implements ICommand {
 				}
 				configName = astring[1];
 				config = new AVConfig(new File(AetherCraft.getConfigDir(),configName+".cfg"));
+				config.loadValues();
 				cmc.addText(EnumChatFormatting.GREEN  + "Now editing the config file "+configName+".");
 				icommandsender.sendChatToPlayer(cmc);
 			} else if (astring[0].equalsIgnoreCase("add")) {

@@ -27,24 +27,28 @@ public class AVRegistry {
 	private static HashMap getAllNames() {
 		HashMap map = new HashMap();
 		for (int i=0;i<32000;i++) {
-			Item item = Item.itemsList[i];
-			if (item!=null) {
-				if (item.getHasSubtypes() &&!item.isItemTool(new ItemStack(item))) {
-					ArrayList li = new ArrayList();
-					item.getSubItems(item.itemID, null, li);
-					for (int j=0;j<=li.size()-1;j++) {
-						//System.out.println("WRITING "+item.getUnlocalizedName(new ItemStack(item,1,j)));
-						if (map.get(item.getUnlocalizedName(new ItemStack(item,1,j)))==null) {
-							map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
+			try {
+				Item item = Item.itemsList[i];
+				if (item!=null) {
+					if (item.getHasSubtypes() &&!item.isItemTool(new ItemStack(item))) {
+						ArrayList li = new ArrayList();
+						item.getSubItems(item.itemID, null, li);
+						for (int j=0;j<=li.size()-1;j++) {
+							//System.out.println("WRITING "+item.getUnlocalizedName(new ItemStack(item,1,j)));
+							if (map.get(item.getUnlocalizedName(new ItemStack(item,1,j)))==null) {
+								map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
+							}
 						}
+					} else if (item.getUnlocalizedName()!=null) {
+						//System.out.println("WRITING "+item.getUnlocalizedName());
+						map.put(item.getUnlocalizedName(),new ItemStack(item));
 					}
-				} else if (item.getUnlocalizedName()!=null) {
-					//System.out.println("WRITING "+item.getUnlocalizedName());
-					map.put(item.getUnlocalizedName(),new ItemStack(item));
-				}
+				} 
+			}catch (Exception e) {
+				System.out.println("[AEC] cauugh unandled exception: "+e);	
 			}
 		}
-		return map;
+	return map;
 	}
 	
 	public static void setAV(ItemStack item,float av) {
