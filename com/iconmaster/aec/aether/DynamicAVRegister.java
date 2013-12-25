@@ -107,11 +107,11 @@ public class DynamicAVRegister {
 		List uid = UidUtils.getUID(output);
 		ArrayList inputs = getInputs(recipe);
 		if (inputs == null || inputs.size() == 0) { System.out.println("	Failed: Inputs were empty!"); return 0; }
-		if (lookedOver.get(uid) != null) {
-			//it's an infinite recursive recipe
-			System.out.println("	Failed: recursive recipe output!");
-			return 0;
-		}
+//		if (lookedOver.get(uid) != null) {
+//			//it's an infinite recursive recipe
+//			System.out.println("	Failed: recursive recipe output!");
+//			return 0;
+//		}
 		
 		lookedOver.put(uid,true);
 		
@@ -121,11 +121,11 @@ public class DynamicAVRegister {
 			if (item != null) {
 				System.out.println("	Found component "+getDebugName(item));
 				
-				if (lookedOver.get(UidUtils.getUID(item)) != null) {
-					//it's an infinite recursive recipe
-					System.out.println("	Failed: recursive recipe input!");
-					return 0;
-				}
+//				if (lookedOver.get(UidUtils.getUID(item)) != null) {
+//					//it's an infinite recursive recipe
+//					System.out.println("	Failed: recursive recipe input!");
+//					return 0;
+//				}
 				float av = 0;
 				if (!AVRegistry.isEntry(item)) {
 					System.out.println("		Looking up subrecipe... {");
@@ -152,7 +152,7 @@ public class DynamicAVRegister {
 			}
 		}
 		if (output.stackSize == 0) {output.stackSize = 1;}
-		if (!AVRegistry.isEntry(output)) {
+		if (!AVRegistry.isEntry(output) || AVRegistry.getAbsoluteAV(output)==0) {
 			System.out.println("	Adding an AV value of "+sum/output.stackSize);
 			AVRegistry.setAV(output,sum/output.stackSize);
 		} else {
@@ -208,7 +208,14 @@ public class DynamicAVRegister {
 			if (input instanceof ArrayList) {
 				ArrayList s = (ArrayList)input;
 				if (s.size() == 0) {return null;}
-				ret.add(s.get(0));
+				for (Object entry : s) {
+					if (AVRegistry.getAV((ItemStack)entry)!=0) {
+						ret.add(entry);
+					}
+				}
+				if (ret.size()==0) {
+					ret.add(s.get(0));
+				}
 			} else {
 				ret.add(input);
 			}
