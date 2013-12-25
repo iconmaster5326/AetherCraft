@@ -129,7 +129,6 @@ public class DefaultAetherValuesConfig {
 		sb.append("item.fishRaw=64" + s);
 		sb.append("item.netherquartz=32" + s);
 		sb.append("tile.ice=1" + s);
-		sb.append("item.book=112" + s);
 		sb.append("item.nameTag=256" + s);
 		sb.append("item.horsearmormetal=1536" + s);
 		sb.append("item.horsearmorgold=10240" + s);
