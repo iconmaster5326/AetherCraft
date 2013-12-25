@@ -47,11 +47,11 @@ public class GuiAetherContainer extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		GL11.glDisable(GL11.GL_LIGHTING);
-		this.fontRenderer.drawString("Energy Container", 44, 5, 0x404040);
+		this.fontRenderer.drawString("Aether Container", 44, 5, 0x404040);
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRenderer.drawStringWithShadow(
-				"Energy: " + NumberUtils.display(this.te.getAether()), 34, 38,
+				"Aether: " + NumberUtils.display(this.te.getAether()), 34, 38,
 				0x55FF55);
 
 		int a = 68 - 16;

@@ -48,9 +48,9 @@ public class GuiAetherManipulator extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		GL11.glDisable(GL11.GL_LIGHTING);
-		this.fontRenderer.drawString("Energy Manipulator", 70, 3, 0x404040);
+		this.fontRenderer.drawString("Aether Manipulator", 70, 3, 0x404040);
 
-		this.fontRenderer.drawStringWithShadow("Internal Energy:", 9, 26,
+		this.fontRenderer.drawStringWithShadow("Internal Aether:", 9, 26,
 				0xFF0000);
 		this.fontRenderer.drawStringWithShadow(
 				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
