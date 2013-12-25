@@ -208,14 +208,16 @@ public class DynamicAVRegister {
 			if (input instanceof ArrayList) {
 				ArrayList s = (ArrayList)input;
 				if (s.size() == 0) {return null;}
+				float lav = Float.MAX_VALUE;
+				Object lentry = s.get(0);
 				for (Object entry : s) {
-					if (AVRegistry.getAV((ItemStack)entry)!=0) {
-						ret.add(entry);
+					float av = AVRegistry.getAV((ItemStack)entry);
+					if (av != 0 && av < lav) {
+						lav = av;
+						lentry = entry;
 					}
 				}
-				if (ret.size()==0) {
-					ret.add(s.get(0));
-				}
+				ret.add(lentry);
 			} else {
 				ret.add(input);
 			}
