@@ -12,6 +12,8 @@ import net.minecraft.item.ItemStack;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.UidUtils;
 
+import cpw.mods.fml.common.registry.GameData;
+
 public class AVRegistry {
 	private static HashMap values = new HashMap();
 	private static HashMap hardcoded = new HashMap();
@@ -25,7 +27,7 @@ public class AVRegistry {
 		HashMap map = new HashMap();
 		for (int i=0;i<32000;i++) {
 			Item item = Item.itemsList[i];
-			if (Item.itemsList[i]!=null && item.getUnlocalizedName()!=null) {
+			if (item!=null) {
 				if (item.getHasSubtypes() &&!item.isItemTool(new ItemStack(item))) {
 					ArrayList li = new ArrayList();
 					item.getSubItems(item.itemID, null, li);
@@ -35,7 +37,7 @@ public class AVRegistry {
 							map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
 						}
 					}
-				} else {
+				} else if (item.getUnlocalizedName()!=null) {
 					//System.out.println("WRITING "+item.getUnlocalizedName());
 					map.put(item.getUnlocalizedName(),new ItemStack(item));
 				}
@@ -61,10 +63,13 @@ public class AVRegistry {
 	 */
 	public static void setConfigAV(String item,float av) {
 		//System.out.println("Setting config of "+item+" to "+av);
+		setConfigAV(getItemFromString(item),av);
+	}
+	
+	public static void setConfigAV(ItemStack item, Float av) {
+		if (item== null) {return;}
 		setAV(item,av);
-		ItemStack stack = getItemFromString(item);
-		if (stack == null) {return;}
-		hardcoded.put(UidUtils.getUID(stack),av);
+		hardcoded.put(UidUtils.getUID(item),av);
 	}
 	
 	public static float getAV(ItemStack item) {
@@ -117,7 +122,10 @@ public class AVRegistry {
 			s = subs[0];
 			meta = Integer.parseInt(subs[1]);
 		}
-		if (unlocalizedNames.get(s)==null) {return null;}
+		if (unlocalizedNames.get(s)==null) {
+			System.out.println("Did not find name: "+s);
+			return null;
+		}
 		//System.out.println("	FOUND "+s);
 		return (ItemStack)unlocalizedNames.get(s);
 	}

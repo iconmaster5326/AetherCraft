@@ -23,6 +23,7 @@ public class UidUtils {
 	 * @return
 	 */
 	public static ItemStack getStackFromUid(List uid) {
+		if (uid == null) {return null;}
 		return new ItemStack((Integer)uid.get(0),1,(Integer)uid.get(1));
 	}
 }

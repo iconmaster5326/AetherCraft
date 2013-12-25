@@ -14,8 +14,8 @@ import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.handler.network.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
-import com.iconmaster.aec.config.DefaultAetherValuesConfig;
-import com.iconmaster.aec.config.AetherManipulatorConfig;
+import com.iconmaster.aec.config.DefaultAVConfig;
+import com.iconmaster.aec.config.AVConfigHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -66,13 +66,17 @@ public class AetherCraft {
 	private static HashMap<String, Float> currentConfigAV = new HashMap<String, Float>();
 	private static HashMap<String, String> options = new HashMap<String, String>();
 
-	private static File configDir, forgeConfigFile, currentAVConfig;
+	private static File configDir;
+
+	private static File forgeConfigFile;
+
+	private static File currentAVConfig;
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		//configDir = event.getSuggestedConfigurationFile().getParentFile();
 		configDir = new File(event.getModConfigurationDirectory(), "aec-values/");
-		configDir.mkdir();
+		getConfigDir().mkdir();
 		forgeConfigFile = event.getSuggestedConfigurationFile();
 
 		this.reloadConfigFiles();
@@ -110,7 +114,11 @@ public class AetherCraft {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
+		
+		AVConfigHandler.loadAllConfigFiles();
+		
 		DynamicAVRegister.addDynamicValues();
+		
 	}
 
 	@EventHandler
@@ -118,14 +126,7 @@ public class AetherCraft {
 		event.registerServerCommand(new ConfigCommand());
 	}
 
-	public static boolean doesFileExist(File fileDirectory, String file) {
-		File fileResult = new File(fileDirectory, file);
-		if (fileResult.exists()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+
 
 	public static String getOptions(String option) {
 		if (option != null && options.containsKey(option)) {
@@ -136,28 +137,7 @@ public class AetherCraft {
 	}
 
 	public static void reloadConfigFiles() {
-		// ------------------- AETHER VALUE CONFIGS -------------------
-		if (!doesFileExist(configDir, DEFAULT_CONFIG_FILE)) {
-			DefaultAetherValuesConfig.createDefaultEvConfigFile(new File(
-					configDir, DEFAULT_CONFIG_FILE));
-		}
-		AetherManipulatorConfig config = new AetherManipulatorConfig(new File(
-				configDir, DEFAULT_CONFIG_FILE));
-		config.getAllAetherValues();
-
-		// ------------------- PLUG-IN AETHER VALUE CONFIGS -------------------
-		File[] configFiles = configDir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				return name.endsWith(".cfg");
-			}
-		});
-		for (File file : configFiles) {
-			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
-					file);
-			tempConfig.getAllAetherValues();
-		}
-
+		
 		// ------------------- CONFIG -------------------
 		Configuration forgeConfig = new Configuration(forgeConfigFile);
 		forgeConfig.load();
@@ -258,68 +238,6 @@ public class AetherCraft {
 		forgeConfig.save();
 	}
 
-	public static boolean addAVEntryToConfig(String entry, float l) {
-		if (currentAVConfig != null) {
-			currentConfigAV.put(entry, l);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public static boolean loadAVConfig(final String config) {
-		File[] configFiles = configDir.listFiles(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				if (name.equals(config + ".cfg")) {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		});
-		if (configFiles.length > 0) {
-			currentAVConfig = configFiles[0];
-			currentConfigAV = new HashMap<String, Float>();
-			AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
-					configFiles[0]);
-			tempConfig.getAllAetherValues();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public static boolean createNewAVConfig(String config) {
-		File tempConfig = new File(configDir, config + ".cfg");
-		if (!tempConfig.exists()) {
-			currentAVConfig = tempConfig;
-			currentConfigAV = new HashMap<String, Float>();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public static void saveCurrentAVConfig() {
-		AetherManipulatorConfig tempConfig = new AetherManipulatorConfig(
-				currentAVConfig);
-		tempConfig.saveAetherValues(currentConfigAV);
-	}
-
-	public static File getCurrentConfigFile() {
-		return currentAVConfig;
-	}
-
-	public static void unloadCurrentConfig() {
-		currentConfigAV = new HashMap<String, Float>();
-		currentAVConfig = null;
-	}
-
-	public static boolean doesConfigExist(String config) {
-		return doesFileExist(configDir, "EMAV_" + config + ".cfg");
-	}
-
 	public static int[] stringToCraftingArray(String input) {
 		int[] output = new int[18];
 
@@ -351,5 +269,9 @@ public class AetherCraft {
 
 	public static void setOptionsMap(HashMap<String, String> om) {
 		options = om;
+	}
+
+	public static File getConfigDir() {
+		return configDir;
 	}
 }
