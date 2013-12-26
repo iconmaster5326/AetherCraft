@@ -100,6 +100,7 @@ public class AVConfig {
 	}
 	
 	public float getValue(ItemStack item) {
+		if (item == null) {return 0;}
 		return (Float) values.get(UidUtils.getUID(item));
 	}
 	
@@ -113,5 +114,9 @@ public class AVConfig {
 			Map.Entry entry = (Map.Entry) it.next();
 			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue());
 		}
+	}
+
+	public HashMap getValueMap() {
+		return values;
 	}
 }

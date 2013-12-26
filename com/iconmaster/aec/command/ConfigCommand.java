@@ -2,7 +2,10 @@ package com.iconmaster.aec.command;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -33,6 +36,8 @@ public class ConfigCommand implements ICommand {
 		this.tabCompletionOptions.add("reload");
 		this.tabCompletionOptions.add("help");
 		this.tabCompletionOptions.add("discard");
+		this.tabCompletionOptions.add("get");
+		this.tabCompletionOptions.add("dump");
 	}
 
 	@Override
@@ -150,6 +155,37 @@ public class ConfigCommand implements ICommand {
 				cmc.addText("When you're done adding AV values to the file, call /aec save to save it to the file system.\n");
 				cmc.addText("If you aren't happy with your changes, use /aec discard to cancel them.\n");
 				cmc.addText("When you've saved you configs, use /aec reload to apply your changes.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("get")) {
+				if (config == null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				if (astring.length >= 2) {
+					item = AVRegistry.getItemFromString(astring[1]);
+				}
+				if (!config.isEntry(item)) {
+					cmc.addText(EnumChatFormatting.RED+item.getUnlocalizedName()+" does not have an AV value set.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				float av = config.getValue(item);
+				cmc.addText(EnumChatFormatting.GREEN +item.getUnlocalizedName()+" is worth "+av+" AV.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("dump")) {
+				if (config == null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				HashMap values = config.getValueMap();
+				Iterator it = values.entrySet().iterator();
+				while (it.hasNext()) {
+					Map.Entry entry = (Map.Entry)it.next();
+					item = new ItemStack((Integer)((List)entry.getKey()).get(0),1,(Integer)((List)entry.getKey()).get(1));
+					cmc.addText(EnumChatFormatting.YELLOW+""+item.getUnlocalizedName()+"="+entry.getValue()+"\n");
+				}
 				icommandsender.sendChatToPlayer(cmc);
 			}
 		}
