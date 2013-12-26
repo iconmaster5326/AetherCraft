@@ -13,6 +13,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
@@ -208,7 +209,8 @@ public class DynamicAVRegister {
 		registerHandler(map,new OreDictionaryHandler(),OreDictionaryEntry.class);
 		if(Loader.isModLoaded("ThermalExpansion")) {
 			try {
-				registerHandler(map,new PulverizerHandler(),ModHelpers.getRecipePulverizer());
+				registerHandler(map,new PulverizerHandler(),ModHelpers.getTERecipeObject("Pulverizer"));
+				registerHandler(map,new InductionSmelterHandler(),ModHelpers.getTERecipeObject("Smelter"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
