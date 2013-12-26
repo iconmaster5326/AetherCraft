@@ -1,5 +1,5 @@
 <!-- nallar's BuildCraft ant build script edited for AetherCraft -->
-<project name="Minestuck" default="main">
+<project name="AetherCraft" default="main">
 	<property environment="env"/>
 	<!-- Properties -->
 
@@ -133,12 +133,12 @@
 
 		<!-- Copy classes -->
 		<copy todir="${classes.dir}/com">
-			<fileset dir="${mcp.dir}/reobf/minecraft/com" />
+			<fileset dir="${mcp.dir}/reobf/aec/com" />
 		</copy>
 
 		<!-- Copy resources -->
-		<copy todir="${classes.dir}/assets/minestuck">
-			<fileset dir="assets/minestuck" />
+		<copy todir="${classes.dir}/assets/aec">
+			<fileset dir="assets/aec" />
 		</copy>
 
 		<!-- Copy resources -->
