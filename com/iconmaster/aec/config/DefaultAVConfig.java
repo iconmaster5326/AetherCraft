@@ -118,7 +118,7 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("tile.quartzBlock.lines",128);
 		addValue("item.bucketWater",257);
 		addValue("tile.whiteStone",1);
-		addValue("item.milk",776);
+		addValue("item.milk",832);
 		addValue("tile.waterlily",1);
 		addValue("item.speckledMelon",471);
 		addValue("item.bucketLava",272);
@@ -135,5 +135,6 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("item.horsearmorgold",10240);
 		addValue("item.horsearmordiamond",40960);
 		addValue("373",1);
+		addValue("item.bucket",768);
 	}
 }
