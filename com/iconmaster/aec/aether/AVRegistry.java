@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.config.AVConfigHandler;
+import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.UidUtils;
 
 import cpw.mods.fml.common.registry.GameData;
@@ -31,12 +32,16 @@ public class AVRegistry {
 				Item item = Item.itemsList[i];
 				if (item!=null) {
 					if (item.getHasSubtypes() &&!item.isItemTool(new ItemStack(item))) {
-						ArrayList li = new ArrayList();
-						item.getSubItems(item.itemID, null, li);
-						for (int j=0;j<=li.size()-1;j++) {
+						//ArrayList li = new ArrayList();
+						//item.getSubItems(item.itemID, null, li);
+						for (int j=0;j<=2048/*li.size()-1*/;j++) {
 							//System.out.println("WRITING "+item.getUnlocalizedName(new ItemStack(item,1,j)));
-							if (map.get(item.getUnlocalizedName(new ItemStack(item,1,j)))==null) {
-								map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
+							try {
+								if (map.get(item.getUnlocalizedName(new ItemStack(item,1,j)))==null) {
+									map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
+								}
+							} catch (Exception e) {
+								
 							}
 						}
 					} else if (item.getUnlocalizedName()!=null) {
@@ -126,6 +131,9 @@ public class AVRegistry {
 			String[] subs = Pattern.compile("::").split(s);
 			s = subs[0];
 			meta = Integer.parseInt(subs[1]);
+		}
+		if (NumberUtils.isInteger(s)) {
+			return new ItemStack(Integer.parseInt(s),1,meta);
 		}
 		if (unlocalizedNames.get(s)==null) {
 			System.out.println("Did not find name: "+s);

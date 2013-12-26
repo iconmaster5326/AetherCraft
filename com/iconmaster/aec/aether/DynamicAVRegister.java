@@ -36,7 +36,7 @@ public class DynamicAVRegister {
 					}
 					((ArrayList) recipeList.get(uid)).add(recipe);
 				} else {
-					//System.out.println("Found new recipe class: "+recipe.getClass());
+					System.out.println("Found new recipe class: "+recipe.getClass());
 				}
 			} catch (NullPointerException e) {
 				//System.out.println("Invalid recipe state!");

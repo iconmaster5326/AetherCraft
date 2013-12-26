@@ -73,7 +73,7 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("tile.vine",1);
 		addValue("tile.sponge",1);
 		addValue("item.ingotIron",256);
-		addValue("item.ingotGold",4096);
+		addValue("item.ingotGold",2048);
 		addValue("item.saddle",256);
 		addValue("item.coal",128);
 		addValue("item.melon",16);
@@ -134,5 +134,6 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("item.horsearmormetal",1536);
 		addValue("item.horsearmorgold",10240);
 		addValue("item.horsearmordiamond",40960);
+		addValue("373",1);
 	}
 }
