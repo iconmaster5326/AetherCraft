@@ -21,7 +21,7 @@
 
 	<property name="mc.version"          value="1.6.4"/>
 	<property name="forge.version"       value="9.11.1.953"/>
-	<!-- <property name="mod.version"         value="0.0.7"/> -->
+	<property name="mod.version"         value="1.2.1"/>
 	<property name="mod.name"	         value="AetherCraft"/>
 
 	<property name="forge.name"          value="forge-${mc.version}-${forge.version}-src.zip"/>
@@ -109,7 +109,7 @@
 		<copy todir="${mcpsrc.dir}">
 			<fileset dir="${src.dir}"/>
 			<filterset>
-				<filter token="VERSION" value="${env.BUILD_NUMBER}"/>
+				<filter token="VERSION" value="${mod.version}.${env.BUILD_NUMBER}"/>
 			</filterset>
 		</copy>
 
@@ -159,7 +159,7 @@
 
 		<delete dir="${jar.dir}"/>
 		<mkdir dir="${jar.dir}"/>
-		<jar destfile="${jar.dir}/${mod.name}-${env.BUILD_NUMBER}.jar" basedir="${classes.dir}"/>
+		<jar destfile="${jar.dir}/${mod.name}-${mod.version}.${env.BUILD_NUMBER}.jar" basedir="${classes.dir}"/>
 
 	</target>
 
