@@ -9,11 +9,15 @@ import java.util.Map;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
+import com.iconmaster.aec.aether.recipe.SimpleIC2Recipe;
+import com.iconmaster.aec.aether.recipe.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
@@ -155,34 +159,6 @@ public class DynamicAVRegister {
 		return null;
 	}
 	
-	/**
-	 * Takes an input ArrayList and replaces the OreDict references with something more manageable.
-	 * @param inputs
-	 * @return
-	 */
-	private static ArrayList flattenInputs(ArrayList inputs) {
-		ArrayList ret = new ArrayList();
-		for (Object input : inputs) {
-			if (input instanceof ArrayList) {
-				ArrayList s = (ArrayList)input;
-				if (s.size() == 0) {return null;}
-				float lav = Float.MAX_VALUE;
-				Object lentry = s.get(0);
-				for (Object entry : s) {
-					float av = AVRegistry.getAV((ItemStack)entry);
-					if (av != 0 && av < lav) {
-						lav = av;
-						lentry = entry;
-					}
-				}
-				ret.add(lentry);
-			} else {
-				ret.add(input);
-			}
-		}
-		return ret;
-	}
-	
 	private static String getDebugName(ItemStack item) {
 		if (item.getUnlocalizedName() == null) {
 			return "ID "+((Integer)item.itemID).toString();
@@ -215,6 +191,63 @@ public class DynamicAVRegister {
 				e.printStackTrace();
 			}
 		}
+		if (Loader.isModLoaded("IC2")) {
+			registerHandler(map,new SimpleIC2RecipeHandler(),SimpleIC2Recipe.class);
+			try {
+				registerHandler(map,new IC2CraftingHandler("ic2.core.AdvRecipe"),Class.forName("ic2.core.AdvRecipe"));
+				registerHandler(map,new IC2CraftingHandler("ic2.core.AdvShapelessRecipe"),Class.forName("ic2.core.AdvShapelessRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return map;
+	}
+	
+	/**
+	 * Takes an input ArrayList and replaces the OreDict references with something more manageable.
+	 * @param inputs
+	 * @return
+	 */
+	public static ArrayList flattenInputs(ArrayList inputs) {
+		ArrayList ret = new ArrayList();
+		for (Object input : inputs) {
+			if (input instanceof ArrayList) {
+				ArrayList s = (ArrayList)input;
+				if (s.size() == 0) {return null;}
+				float lav = Float.MAX_VALUE;
+				Object lentry = s.get(0);
+				for (Object entry : s) {
+					float av = AVRegistry.getAV((ItemStack)entry);
+					if (av != 0 && av < lav) {
+						lav = av;
+						lentry = entry;
+					}
+				}
+				ret.add(lentry);
+			} else if (input instanceof String) {
+				ArrayList s = OreDictionary.getOres((String)input);
+				if (s.size() == 0) {return null;}
+				float lav = Float.MAX_VALUE;
+				Object lentry = s.get(0);
+				for (Object entry : s) {
+					float av = AVRegistry.getAV((ItemStack)entry);
+					if (av != 0 && av < lav) {
+						lav = av;
+						lentry = entry;
+					}
+				}
+				ret.add(lentry);
+			} else if (input instanceof ItemStack) {
+				ret.add(input);
+			} else {
+//				if (input == null) {
+//					System.out.println("[AEC] Object in list is null!");
+//				} else {
+//					System.out.println("[AEC] Object in list is a "+input.getClass());
+//				}
+				return null;
+			}
+		}
+		return ret;
 	}
 }
