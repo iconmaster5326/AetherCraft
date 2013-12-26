@@ -2,6 +2,7 @@ package com.iconmaster.aec.aether.recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import com.iconmaster.aec.aether.AVRegistry;
 
@@ -45,4 +46,6 @@ public class ShapelessOreRecipeHandler implements IDynamicAVRecipeHandler {
 		return ret;
 	}
 	
+	@Override
+	public void populateRecipeList(HashMap recipeList) {}
 }

@@ -2,6 +2,7 @@ package com.iconmaster.aec.aether.recipe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -19,4 +20,6 @@ public class ShapelessRecipeHandler implements IDynamicAVRecipeHandler {
 		return ((ShapelessRecipes)recipe).getRecipeOutput();
 	}
 
+	@Override
+	public void populateRecipeList(HashMap recipeList) {}
 }

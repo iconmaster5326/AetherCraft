@@ -31,51 +31,11 @@ public class DynamicAVRegister {
 
 	public static void addDynamicValues() {
 		//Put all the recipes in a map keyed by item ID. Value is an ArrayList of recipes that produce the item.
-		for (Object recipe : CraftingManager.getInstance().getRecipeList())
-		{
-			try
-			{
-				if (isValidRecipe(recipe)) {
-					ItemStack output = getOutput(recipe);
-					List uid = UidUtils.getUID(output);
-					if (recipeList.get(uid) == null) {
-						recipeList.put(uid, new ArrayList());
-					}
-					((ArrayList) recipeList.get(uid)).add(recipe);
-				} else {
-					System.out.println("Found new recipe class: "+recipe.getClass());
-				}
-			} catch (NullPointerException e) {
-				//System.out.println("Invalid recipe state!");
-				//avoiding crashes with MCPC+ since 2013!
-			}
+		Iterator it = handlers.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry)it.next();
+			((IDynamicAVRecipeHandler)pairs.getValue()).populateRecipeList(recipeList);
 		}
-		//put smelting recipes on the list too...
-		Iterator it = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
-        while (it.hasNext()) {
-        	Map.Entry pairs = (Map.Entry)it.next();
-        	AVSmeltingRecipe recipe = new AVSmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
-			ItemStack output = getOutput(recipe);
-			List uid = UidUtils.getUID(output);
-			if (recipeList.get(uid) == null) {
-				recipeList.put(uid, new ArrayList());
-			}
-			((ArrayList) recipeList.get(uid)).add(recipe);
-        }
-        
-        // AND meta-smelting. Hoo boy.
-		it = FurnaceRecipes.smelting().getMetaSmeltingList().entrySet().iterator();
-        while (it.hasNext()) {
-        	Map.Entry pairs = (Map.Entry)it.next();
-        	AVSmeltingRecipe recipe = new AVSmeltingRecipe(UidUtils.getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
-			ItemStack output = getOutput(recipe);
-			List uid = UidUtils.getUID(output);
-			if (recipeList.get(uid) == null) {
-				recipeList.put(uid, new ArrayList());
-			}
-			((ArrayList) recipeList.get(uid)).add(recipe);
-        }
-        	
 		
 		//Begin to add recipes to list. Recursively calls getRecipeAV.
 		it = recipeList.entrySet().iterator();
@@ -170,11 +130,11 @@ public class DynamicAVRegister {
 		return sum/output.stackSize;
 	}
 
-	private static boolean isValidRecipe(Object recipe) {
-		return recipe instanceof ShapedRecipes || recipe instanceof ShapelessRecipes || recipe instanceof ShapedOreRecipe || recipe instanceof ShapelessOreRecipe || recipe instanceof SmeltingRecipeHandler;
+	public static boolean isValidRecipe(Object recipe) {
+		return handlers.get(recipe.getClass()) != null;
 	}
 	
-	private static ArrayList getInputs(Object recipe) {
+	public static ArrayList getInputs(Object recipe) {
 		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
 		if (handler != null) {
 			//System.out.println("[AEC] inputs from "+recipe.getClass());
@@ -183,7 +143,7 @@ public class DynamicAVRegister {
 		return null;
 	}
 	
-	private static ItemStack getOutput(Object recipe) {
+	public static ItemStack getOutput(Object recipe) {
 		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
 		if (handler != null) {
 			return handler.getOutput(recipe);
@@ -228,16 +188,20 @@ public class DynamicAVRegister {
 	}
 	
 	public static void registerHandler(IDynamicAVRecipeHandler handler,Class recipeType) {
-		handlers .put(recipeType,handler);
+		registerHandler(handlers,handler,recipeType);
+	}
+	
+	public static void registerHandler(HashMap map,IDynamicAVRecipeHandler handler,Class recipeType) {
+		map.put(recipeType,handler);
 	}
 	
 	public static HashMap getDefaultHandlers() {
 		HashMap map = new HashMap();
-		map.put(ShapedRecipes.class,new ShapedRecipeHandler());
-		map.put(ShapelessRecipes.class,new ShapelessRecipeHandler());
-		map.put(ShapedOreRecipe.class,new ShapedOreRecipeHandler());
-		map.put(ShapelessOreRecipe.class,new ShapelessOreRecipeHandler());
-		map.put(AVSmeltingRecipe.class,new SmeltingRecipeHandler());
+		registerHandler(map,new ShapedRecipeHandler(),ShapedRecipes.class);
+		registerHandler(map,new ShapelessRecipeHandler(),ShapelessRecipes.class);
+		registerHandler(map,new ShapedOreRecipeHandler(),ShapedOreRecipe.class);
+		registerHandler(map,new ShapelessOreRecipeHandler(),ShapelessOreRecipe.class);
+		registerHandler(map,new SmeltingRecipeHandler(),AVSmeltingRecipe.class);
 		return map;
 	}
 }
