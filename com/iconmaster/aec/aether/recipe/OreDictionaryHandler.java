@@ -13,12 +13,12 @@ public class OreDictionaryHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
-		return null;
+		return ((OreDictionaryEntry)recipe).getInputs();
 	}
 
 	@Override
 	public ItemStack getOutput(Object recipe) {
-		return null;
+		return ((OreDictionaryEntry)recipe).getOutput();
 	}
 	
 	@Override

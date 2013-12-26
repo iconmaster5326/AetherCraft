@@ -47,8 +47,7 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("item.reeds",16);
 		addValue("item.string",12);
 		addValue("item.spiderEye",64);
-		addValue("tile.mushroom.brown",32);
-		addValue("tile.mushroom.red",32);
+		addValue("tile.mushroom",32);
 		addValue("item.yellowDust",128);
 		addValue("tile.clay",32);
 		addValue("item.helmetChain",360);
