@@ -15,7 +15,9 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import com.iconmaster.aec.aether.recipe.AVSmeltingRecipe;
+import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
+import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
+import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
@@ -201,7 +203,8 @@ public class DynamicAVRegister {
 		registerHandler(map,new ShapelessRecipeHandler(),ShapelessRecipes.class);
 		registerHandler(map,new ShapedOreRecipeHandler(),ShapedOreRecipe.class);
 		registerHandler(map,new ShapelessOreRecipeHandler(),ShapelessOreRecipe.class);
-		registerHandler(map,new SmeltingRecipeHandler(),AVSmeltingRecipe.class);
+		registerHandler(map,new SmeltingRecipeHandler(),SmeltingRecipe.class);
+		registerHandler(map,new OreDictionaryHandler(),OreDictionaryEntry.class);
 		return map;
 	}
 }

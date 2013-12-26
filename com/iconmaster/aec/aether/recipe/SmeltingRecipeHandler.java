@@ -16,12 +16,12 @@ public class SmeltingRecipeHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
-		return ((AVSmeltingRecipe)recipe).getInputs();
+		return ((SmeltingRecipe)recipe).getInputs();
 	}
 
 	@Override
 	public ItemStack getOutput(Object recipe) {
-		return ((AVSmeltingRecipe)recipe).getOutput();
+		return ((SmeltingRecipe)recipe).getOutput();
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class SmeltingRecipeHandler implements IDynamicAVRecipeHandler {
 		Iterator it = FurnaceRecipes.smelting().getSmeltingList().entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
-        	AVSmeltingRecipe recipe = new AVSmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
+        	SmeltingRecipe recipe = new SmeltingRecipe((Integer)pairs.getKey(),(ItemStack)pairs.getValue());
 			ItemStack output = DynamicAVRegister.getOutput(recipe);
 			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {
@@ -43,7 +43,7 @@ public class SmeltingRecipeHandler implements IDynamicAVRecipeHandler {
 		it = FurnaceRecipes.smelting().getMetaSmeltingList().entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
-        	AVSmeltingRecipe recipe = new AVSmeltingRecipe(UidUtils.getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
+        	SmeltingRecipe recipe = new SmeltingRecipe(UidUtils.getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
 			ItemStack output = DynamicAVRegister.getOutput(recipe);
 			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {

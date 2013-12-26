@@ -4,16 +4,16 @@ import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
 
-	public class AVSmeltingRecipe {
+	public class SmeltingRecipe {
 		private ItemStack input;
 		private ItemStack output;
 		
-		public AVSmeltingRecipe(Integer input, ItemStack output) {
+		public SmeltingRecipe(Integer input, ItemStack output) {
 			this.input = new ItemStack((int)input,1,0);
 			this.output = output;
 		}
 		
-		public AVSmeltingRecipe(ItemStack input, ItemStack output) {
+		public SmeltingRecipe(ItemStack input, ItemStack output) {
 			this.input = input;
 			this.output = output;
 		}
