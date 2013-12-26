@@ -1,30 +1,31 @@
 package com.iconmaster.aec.aether;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
-import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
-import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.aether.recipe.PulverizerHandler;
 import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
+import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
+import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
+
+import cpw.mods.fml.common.Loader;
 
 public class DynamicAVRegister {
 	private static HashMap recipeList  = new HashMap();
@@ -205,6 +206,13 @@ public class DynamicAVRegister {
 		registerHandler(map,new ShapelessOreRecipeHandler(),ShapelessOreRecipe.class);
 		registerHandler(map,new SmeltingRecipeHandler(),SmeltingRecipe.class);
 		registerHandler(map,new OreDictionaryHandler(),OreDictionaryEntry.class);
+		if(Loader.isModLoaded("ThermalExpansion")) {
+			try {
+				registerHandler(map,new PulverizerHandler(),ModHelpers.getRecipePulverizer());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		return map;
 	}
 }
