@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.util.UidUtils;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -18,9 +15,19 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.recipe.AVSmeltingRecipe;
+import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
+import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
+import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
+import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
+import com.iconmaster.aec.util.UidUtils;
+
 public class DynamicAVRegister {
 	private static HashMap recipeList  = new HashMap();
 	private static int recursions; //really hackish crash preventer
+	private static HashMap handlers = getDefaultHandlers();
 
 	public static void addDynamicValues() {
 		//Put all the recipes in a map keyed by item ID. Value is an ArrayList of recipes that produce the item.
@@ -164,35 +171,22 @@ public class DynamicAVRegister {
 	}
 
 	private static boolean isValidRecipe(Object recipe) {
-		return recipe instanceof ShapedRecipes || recipe instanceof ShapelessRecipes || recipe instanceof ShapedOreRecipe || recipe instanceof ShapelessOreRecipe || recipe instanceof AVSmeltingRecipe;
+		return recipe instanceof ShapedRecipes || recipe instanceof ShapelessRecipes || recipe instanceof ShapedOreRecipe || recipe instanceof ShapelessOreRecipe || recipe instanceof SmeltingRecipeHandler;
 	}
 	
 	private static ArrayList getInputs(Object recipe) {
-		if (recipe instanceof ShapedRecipes) {
-			return new ArrayList(Arrays.asList(((ShapedRecipes)recipe).recipeItems));
-		} else if (recipe instanceof ShapelessRecipes) {
-			return new ArrayList(((ShapelessRecipes)recipe).recipeItems);
-		} else if (recipe instanceof ShapedOreRecipe) {
-			return flattenInputs(new ArrayList(Arrays.asList(((ShapedOreRecipe)recipe).getInput())));
-		} else if (recipe instanceof ShapelessOreRecipe) {
-			return flattenInputs(((ShapelessOreRecipe)recipe).getInput());
-		} else if (recipe instanceof IDynamicAVRecipe) {
-			return ((IDynamicAVRecipe)recipe).getInputs();
+		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
+		if (handler != null) {
+			//System.out.println("[AEC] inputs from "+recipe.getClass());
+			return handler.getInputs(recipe);
 		}
 		return null;
 	}
 	
 	private static ItemStack getOutput(Object recipe) {
-		if (recipe instanceof ShapedRecipes) {
-			return ((ShapedRecipes)recipe).getRecipeOutput();
-		} else if (recipe instanceof ShapelessRecipes) {
-			return ((ShapelessRecipes)recipe).getRecipeOutput();
-		} else if (recipe instanceof ShapedOreRecipe) {
-			return ((ShapedOreRecipe)recipe).getRecipeOutput();
-		} else if (recipe instanceof ShapelessOreRecipe) {
-			return ((ShapelessOreRecipe)recipe).getRecipeOutput();
-		} else if (recipe instanceof IDynamicAVRecipe) {
-			return ((IDynamicAVRecipe)recipe).getOutput();
+		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
+		if (handler != null) {
+			return handler.getOutput(recipe);
 		}
 		return null;
 	}
@@ -231,5 +225,19 @@ public class DynamicAVRegister {
 		} else {
 			return item.getUnlocalizedName();
 		}
+	}
+	
+	public static void registerHandler(IDynamicAVRecipeHandler handler,Class recipeType) {
+		handlers .put(recipeType,handler);
+	}
+	
+	public static HashMap getDefaultHandlers() {
+		HashMap map = new HashMap();
+		map.put(ShapedRecipes.class,new ShapedRecipeHandler());
+		map.put(ShapelessRecipes.class,new ShapelessRecipeHandler());
+		map.put(ShapedOreRecipe.class,new ShapedOreRecipeHandler());
+		map.put(ShapelessOreRecipe.class,new ShapelessOreRecipeHandler());
+		map.put(AVSmeltingRecipe.class,new SmeltingRecipeHandler());
+		return map;
 	}
 }
