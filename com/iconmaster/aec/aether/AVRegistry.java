@@ -19,7 +19,7 @@ import cpw.mods.fml.common.registry.GameData;
 public class AVRegistry {
 	private static HashMap values ;
 	private static HashMap hardcoded = new HashMap();
-	private static HashMap unlocalizedNames = getAllNames();
+	private static HashMap unlocalizedNames ;
 	
 	/**
 	 * Returns a hash with keys of unlocalized names and values of <code>Item</code>s. Used in looking up items by config name.
@@ -152,6 +152,7 @@ public class AVRegistry {
 	public static void reloadAllValues() {
 		values = new HashMap();
 		
+		unlocalizedNames = getAllNames();
 		AVConfigHandler.loadAllConfigFiles();
 		DynamicAVRegister.addDynamicValues();
 		

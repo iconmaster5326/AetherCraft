@@ -115,12 +115,13 @@ public class AetherCraft {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		
-		AVRegistry.reloadAllValues();
+		//AVRegistry.reloadAllValues();
 		
 	}
 
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
+		AVRegistry.reloadAllValues(); //Just to make sure some mods last-minute regsistered stuff gets added
 		event.registerServerCommand(new ConfigCommand());
 	}
 
