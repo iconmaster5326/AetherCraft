@@ -133,7 +133,7 @@
 
 		<!-- Copy classes -->
 		<copy todir="${classes.dir}/com">
-			<fileset dir="${mcp.dir}/reobf/aec/com" />
+			<fileset dir="${mcp.dir}/reobf/minecraft/com" />
 		</copy>
 
 		<!-- Copy resources -->
