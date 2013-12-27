@@ -60,69 +60,10 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void addRecipes() {
-		int[] emrecipe = AetherCraft
-				.stringToCraftingArray(AetherCraft.getOptions("emrecipe"));
-		int[] ecrecipe = AetherCraft
-				.stringToCraftingArray(AetherCraft.getOptions("ecrecipe"));
-		int[] ebrecipe = AetherCraft
-				.stringToCraftingArray(AetherCraft
-						.getOptions("ebatteryrecipe"));
-
-		ItemStack[] emStack = AetherCraft
-				.craftingArrayToItemStack(emrecipe);
-		ItemStack[] ecStack = AetherCraft
-				.craftingArrayToItemStack(ecrecipe);
-		ItemStack[] ebStack = AetherCraft
-				.craftingArrayToItemStack(ebrecipe);
-
-		// Energy Manipulator
-		GameRegistry.addShapedRecipe(new ItemStack(
-				AetherCraft.blockAetherManipulator), "abc", "def", "ghi",
-				'a', emStack[0], 'b',
-				emStack[1], 'c', emStack[2], Character
-						.valueOf('d'), emStack[3], 'e',
-				emStack[4], 'f', emStack[5], Character
-						.valueOf('g'), emStack[6], 'h',
-				emStack[7], 'i', emStack[8]);
-
-		// Energy Container
-		GameRegistry.addShapedRecipe(new ItemStack(
-				AetherCraft.blockAetherContainer), "abc", "def", "ghi",
-				'a', ecStack[0], 'b',
-				ecStack[1], 'c', ecStack[2], Character
-						.valueOf('d'), ecStack[3], 'e',
-				ecStack[4], 'f', ecStack[5], Character
-						.valueOf('g'), ecStack[6], 'h',
-				ecStack[7], 'i', ecStack[8]);
-
-		// Energy Battery
-		GameRegistry.addShapedRecipe(new ItemStack(
-				AetherCraft.itemAetherBattery), "abc", "def", "ghi",
-				'a', ebStack[0], 'b',
-				ebStack[1], 'c', ebStack[2], Character
-						.valueOf('d'), ebStack[3], 'e',
-				ebStack[4], 'f', ebStack[5], Character
-						.valueOf('g'), ebStack[6], 'h',
-				ebStack[7], 'i', ebStack[8]);
-
-		// Flying Ring
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			int[] frrecipe = AetherCraft
-					.stringToCraftingArray(AetherCraft
-							.getOptions("flyingringrecipe"));
-
-			ItemStack[] frStack = AetherCraft
-					.craftingArrayToItemStack(frrecipe);
-
-			GameRegistry.addShapedRecipe(new ItemStack(
-					AetherCraft.itemFlyingRing), "abc", "def", "ghi",
-					'a', frStack[0], 'b',
-					frStack[1], 'c', frStack[2], Character
-							.valueOf('d'), frStack[3], 'e',
-					frStack[4], 'f', frStack[5], Character
-							.valueOf('g'), frStack[6], 'h',
-					frStack[7], 'i', frStack[8]);
-		}
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aba","cdc","efe",'a',Item.diamond,'b',Item.emerald,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Item.cauldron);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.diamond,'f',Block.obsidian);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing), "aba","c c","ada",'a',Item.ingotGold,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 	}
 
 	@Override

@@ -144,7 +144,7 @@ public class DynamicAVRegister {
 		Iterator it = handlers.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry pairs = (Map.Entry) it.next();
-			if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+			if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
 				return true;
 			}
 		}
@@ -160,7 +160,7 @@ public class DynamicAVRegister {
 			Iterator it = handlers.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pairs = (Map.Entry) it.next();
-				if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+				if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
 					return ((IDynamicAVRecipeHandler)pairs.getValue()).getInputs(recipe);
 				}
 			}
@@ -176,7 +176,7 @@ public class DynamicAVRegister {
 			Iterator it = handlers.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pairs = (Map.Entry) it.next();
-				if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+				if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
 					return ((IDynamicAVRecipeHandler)pairs.getValue()).getOutput(recipe);
 				}
 			}
@@ -227,8 +227,8 @@ public class DynamicAVRegister {
 		}
 		if (Loader.isModLoaded("AppliedEnergistics")) {
 			try {
-				registerHandler(map,new ShapedOreRecipeHandler(),Class.forName("appeng.recipes.AEShapedOreRecipe"));
-				registerHandler(map,new ShapelessOreRecipeHandler(),Class.forName("appeng.recipes.AEShapelessOreRecipe"));
+				//registerHandler(map,new ShapedOreRecipeHandler(),Class.forName("appeng.recipes.AEShapedOreRecipe"));
+				//registerHandler(map,new ShapelessOreRecipeHandler(),Class.forName("appeng.recipes.AEShapelessOreRecipe"));
 				registerHandler(map,new AECraftingHandler(),Class.forName("appeng.recipes.AEShapedQuartzRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();

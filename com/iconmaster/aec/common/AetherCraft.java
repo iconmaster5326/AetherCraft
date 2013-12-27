@@ -211,31 +211,6 @@ public class AetherCraft {
 				Boolean.toString(forgeConfig.get("options", "showevalways",
 						false, "").getBoolean(false)));
 
-		// CRAFTING RECIPES
-		options.put(
-				"emrecipe",
-				forgeConfig.get("options", "emrecipe",
-						"264:0,388:0,264:0,49:0,348:0,49:0,331:0,380:0,331:0",
-						"Top left to bottom right.").getString());
-		options.put(
-				"ecrecipe",
-				forgeConfig.get("options", "ecrecipe",
-						"264:0,388:0,264:0,49:0,89:0,49:0,264:0,388:0,264:0",
-						"Top left to bottom right.").getString());
-		options.put(
-				"ebatteryrecipe",
-				forgeConfig
-						.get("options",
-								"ebatteryrecipe",
-								"348:0,331:0,348:0,331:0,264:0,331:0,348:0,331:0,348:0",
-								"Top left to bottom right.").getString());
-		options.put(
-				"flyingringrecipe",
-				forgeConfig
-						.get("options",
-								"flyingringrecipe",
-								"401:0,288:0,401:0,264:0,399:0,264:0,401:0,288:0,401:0",
-								"Top left to bottom right.").getString());
 
 		// ------------------- REGISTER BLOCK/ITEM IDs -------------------
 		blockIds.add(forgeConfig.getBlock("aethermanipulator", 2690).getInt());
@@ -243,31 +218,6 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		forgeConfig.save();
-	}
-
-	public static int[] stringToCraftingArray(String input) {
-		int[] output = new int[18];
-
-		String[] s1 = input.split(",");
-		int nextIndex = 0;
-
-		for (String s2 : s1) {
-			String[] s3 = s2.split(":");
-			output[nextIndex] = Integer.parseInt(s3[0]);
-			output[nextIndex + 1] = Integer.parseInt(s3[1]);
-			nextIndex += 2;
-		}
-		return output;
-	}
-
-	public static ItemStack[] craftingArrayToItemStack(int[] input) {
-		ItemStack[] output = new ItemStack[9];
-		int index = 0;
-		for (int i = 0; i < input.length; i += 2) {
-			output[index] = new ItemStack(input[i], 1, input[i + 1]);
-			index++;
-		}
-		return output;
 	}
 
 	public static HashMap<String, String> getOptionsMap() {
