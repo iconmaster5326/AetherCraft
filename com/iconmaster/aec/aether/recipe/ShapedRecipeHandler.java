@@ -16,7 +16,7 @@ public class ShapedRecipeHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
-		return new ArrayList(Arrays.asList(((ShapedRecipes)recipe).recipeItems));
+		return DynamicAVRegister.flattenInputs(new ArrayList(Arrays.asList(((ShapedRecipes)recipe).recipeItems)));
 	}
 
 	@Override
