@@ -233,8 +233,8 @@ public class TileEntityAetherManipulator extends TileEntity implements
 					slot = this.getEmptySlot();
 
 					if (slot > 0) {
-						ItemStack newStack = topStack.copy();
-						newStack.stackSize = 1;
+						ItemStack newStack = new ItemStack(topStack.itemID,1,topStack.getItemDamage());
+						//newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
 						this.extractEnergyFromConnectedAndSelf(AVRegistry.getAV(topStack));
 						doneSomething = true;
