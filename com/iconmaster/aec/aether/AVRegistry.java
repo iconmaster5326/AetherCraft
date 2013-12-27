@@ -1,10 +1,8 @@
 package com.iconmaster.aec.aether;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.regex.Pattern;
-import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,8 +11,6 @@ import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.config.AVConfigHandler;
 import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.UidUtils;
-
-import cpw.mods.fml.common.registry.GameData;
 
 public class AVRegistry {
 	private static HashMap values ;

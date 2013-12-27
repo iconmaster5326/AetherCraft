@@ -20,9 +20,7 @@ import org.lwjgl.opengl.GL12;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
-import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;

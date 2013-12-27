@@ -1,4 +1,4 @@
-package com.iconmaster.aec.common;
+package com.iconmaster.aec.aether;
 
 public interface IAetherContainer {
 	public float addAether(float av);

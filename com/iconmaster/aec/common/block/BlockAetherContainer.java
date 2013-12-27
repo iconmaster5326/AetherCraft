@@ -2,15 +2,9 @@ package com.iconmaster.aec.common.block;
 
 import java.util.Random;
 
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -20,8 +14,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.storage.MapStorage;
+
+import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAetherContainer extends BlockContainer {
 	private Icon blockIconTop, blockIconBottom;

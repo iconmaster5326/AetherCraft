@@ -1,6 +1,5 @@
 package com.iconmaster.aec.aether.recipe;
 
-import ic2.api.recipe.IMachineRecipeManager;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeOutput;
 

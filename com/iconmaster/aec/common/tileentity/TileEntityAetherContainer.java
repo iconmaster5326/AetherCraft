@@ -3,9 +3,6 @@ package com.iconmaster.aec.common.tileentity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.IAetherContainer;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -13,6 +10,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+
+import com.iconmaster.aec.aether.IAetherContainer;
+import com.iconmaster.aec.aether.IAetherContainingItem;
+import com.iconmaster.aec.common.AetherCraft;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
@@ -126,7 +128,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 				inventory[slot] = ItemStack.loadItemStackFromNBT(tag);
 			}
 		}
-		this.energy = tagCompound.getFloat("Energy");
+		this.energy = tagCompound.getFloat("AV");
 	}
 
 	@Override
@@ -146,79 +148,29 @@ public class TileEntityAetherContainer extends TileEntity implements
 		}
 
 		tagCompound.setTag("Inventory", itemList);
-		tagCompound.setFloat("Energy", this.energy);
+		tagCompound.setFloat("AV", this.energy);
 	}
 
-	private void handleEnergy() {
-		float batteryMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("ebatterymaxstorage"));
+	private void handleAether() {
 		float ecMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("ecmaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack bottomStack = this.getStackInSlot(1);
-		boolean doneSomething = false;
 
 		// ------------------- Discharging - TOP SLOT -------------------
-		// Energy Battery
-		if (topStack != null
-				&& AetherCraft.itemAetherBattery != null
-				&& topStack.itemID == AetherCraft.itemAetherBattery.itemID) {
-			if (!topStack.hasTagCompound()) {
-				topStack.setTagCompound(new NBTTagCompound());
-			}
-			NBTTagCompound tag = topStack.getTagCompound();
-			if (!tag.hasKey("EMAV")) {
-				tag.setFloat("EMAV", 0);
-			}
-			float batteryEv = tag.getFloat("EMAV");
-			if (batteryEv > batteryMaxStorage) {
-				batteryEv = batteryMaxStorage;
-				tag.setFloat("EMAV", batteryEv);
-			}
-			if (batteryEv > 0) {
-				if (this.energy + batteryEv <= ecMaxStorage) {
-					this.energy += batteryEv;
-					tag.setFloat("EMAV", 0);
-					doneSomething = true;
-				} else {
-					tag.setFloat("EMAV", batteryEv - (ecMaxStorage
-							- this.energy));
-					this.energy = ecMaxStorage;
-					doneSomething = true;
-				}
-			}
+		if (topStack != null && topStack.getItem() instanceof IAetherContainingItem) {
+			float got =  ((IAetherContainingItem)topStack.getItem()).extractAether(topStack, ecMaxStorage - energy);
+			energy += got;
+			this.sync();
+
 		}
 
 		// ------------------- Charging - BOTTOM SLOT -------------------
-		// Energy Battery
-		if (bottomStack != null
-				&& AetherCraft.itemAetherBattery != null
-				&& bottomStack.itemID == AetherCraft.itemAetherBattery.itemID
-				&& this.energy > 0) {
-			if (!bottomStack.hasTagCompound()) {
-				bottomStack.setTagCompound(new NBTTagCompound());
-			}
-			NBTTagCompound tag = bottomStack.getTagCompound();
-			if (!tag.hasKey("EMAV")) {
-				tag.setFloat("EMAV", 0);
-			}
-			float batteryEv = tag.getFloat("EMAV");
-			if (batteryEv < batteryMaxStorage) {
-				if (batteryEv + this.energy <= batteryMaxStorage) {
-					tag.setFloat("EMAV", batteryEv + this.energy);
-					this.energy = 0;
-					doneSomething = true;
-				} else {
-					this.energy -= batteryMaxStorage - batteryEv;
-					tag.setFloat("EMAV", batteryMaxStorage);
-					doneSomething = true;
-				}
-			}
-		}
-		if (doneSomething) {
+		if (bottomStack != null && bottomStack.getItem() instanceof IAetherContainingItem) {
+			float rest = ((IAetherContainingItem)bottomStack.getItem()).addAether(bottomStack, this.energy);
+			this.energy = rest;
 			this.sync();
-			return;
 		}
 	}
 
@@ -227,7 +179,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 		this.calculateProgress();
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER
 				&& !this.powered) {
-			handleEnergy();
+			handleAether();
 		}
 	}
 
@@ -326,13 +278,13 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public float extractAether(float l) {
-		if (this.energy - l >= 0) {
-			this.energy -= l;
+	public float extractAether(float av) {
+		if (this.energy - av >= 0) {
+			this.energy -= av;
 			this.sync();
-			return l;
+			return av;
 		}
-		float rest = l - this.energy;
+		float rest = av - this.energy;
 		this.energy = 0;
 		this.sync();
 		return rest;

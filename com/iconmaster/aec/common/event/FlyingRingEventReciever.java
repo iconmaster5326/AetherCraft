@@ -1,11 +1,11 @@
 package com.iconmaster.aec.common.event;
 
-import com.iconmaster.aec.common.AetherCraft;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+
+import com.iconmaster.aec.common.AetherCraft;
 
 public class FlyingRingEventReciever {
 	@ForgeSubscribe(priority = EventPriority.LOWEST)

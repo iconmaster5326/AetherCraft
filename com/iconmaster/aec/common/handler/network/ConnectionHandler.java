@@ -3,15 +3,16 @@ package com.iconmaster.aec.common.handler.network;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.common.AetherCraft;
-
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
+
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.common.AetherCraft;
+
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.common.network.Player;

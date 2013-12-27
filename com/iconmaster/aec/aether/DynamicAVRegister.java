@@ -12,7 +12,6 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import buildcraft.api.recipes.AssemblyRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
@@ -20,8 +19,6 @@ import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
-import com.iconmaster.aec.aether.recipe.SimpleIC2Recipe;
-import com.iconmaster.aec.aether.recipe.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
@@ -29,6 +26,8 @@ import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
+import com.iconmaster.aec.aether.recipe.SimpleIC2Recipe;
+import com.iconmaster.aec.aether.recipe.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
 import com.iconmaster.aec.util.ModHelpers;
@@ -53,12 +52,12 @@ public class DynamicAVRegister {
         while (it.hasNext()) {
         	HashMap looked = new HashMap();
         	Map.Entry pairs = (Map.Entry)it.next();
-        	getItemAV(UidUtils.getStackFromUid((List) pairs.getKey()),looked);
+        	getItAV(UidUtils.getStackFromUid((List) pairs.getKey()),looked);
         }
         
 	}
 	
-	private static float getItemAV(ItemStack output,HashMap looked) {
+	private static float getItAV(ItemStack output,HashMap looked) {
 		if (AVRegistry.isHardcoded(output)) {
 			return AVRegistry.getAbsoluteAV(output);
 		}
@@ -106,7 +105,7 @@ public class DynamicAVRegister {
 						return 0;
 					}
 					looked.put(UidUtils.getUID(item),true);
-					av = getItemAV(item,looked);
+					av = getItAV(item,looked);
 					
 					if (av==0 && !AVRegistry.isEntry(item)) {
 //						System.out.println("		}");

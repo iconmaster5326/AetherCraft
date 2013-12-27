@@ -2,9 +2,10 @@ package com.iconmaster.aec.common.handler.tick;
 
 import java.util.EnumSet;
 
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.iconmaster.aec.common.AetherCraft;
 
-import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.IScheduledTickHandler;
 import cpw.mods.fml.common.TickType;
 

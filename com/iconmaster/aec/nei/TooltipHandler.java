@@ -7,12 +7,12 @@ import net.minecraft.item.ItemStack;
 
 import org.lwjgl.input.Keyboard;
 
+import codechicken.nei.forge.IContainerTooltipHandler;
+
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
-
-import codechicken.nei.forge.IContainerTooltipHandler;
 
 public class TooltipHandler implements IContainerTooltipHandler {
 	@Override

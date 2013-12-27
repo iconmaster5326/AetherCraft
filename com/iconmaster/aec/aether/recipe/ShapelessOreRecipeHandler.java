@@ -1,16 +1,12 @@
 package com.iconmaster.aec.aether.recipe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.DynamicAVRegister;
-
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import com.iconmaster.aec.aether.DynamicAVRegister;
 
 public class ShapelessOreRecipeHandler implements IDynamicAVRecipeHandler {
 

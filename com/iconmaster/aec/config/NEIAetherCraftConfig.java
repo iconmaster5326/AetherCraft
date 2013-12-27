@@ -1,13 +1,10 @@
 package com.iconmaster.aec.config;
 
-import org.lwjgl.input.Keyboard;
+import codechicken.nei.api.IConfigureNEI;
+import codechicken.nei.forge.GuiContainerManager;
 
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.nei.TooltipHandler;
-
-import codechicken.nei.api.API;
-import codechicken.nei.api.IConfigureNEI;
-import codechicken.nei.forge.GuiContainerManager;
 
 public class NEIAetherCraftConfig implements IConfigureNEI {
 	private static boolean isNeiLoaded = false;

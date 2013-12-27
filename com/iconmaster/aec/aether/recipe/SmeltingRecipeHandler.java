@@ -6,11 +6,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.util.UidUtils;
-
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+
+import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.util.UidUtils;
 
 public class SmeltingRecipeHandler implements IDynamicAVRecipeHandler {
 

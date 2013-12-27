@@ -2,12 +2,9 @@ package com.iconmaster.aec.aether.recipe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.minecraft.item.ItemStack;
-
 import buildcraft.api.recipes.AssemblyRecipe;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;

@@ -8,12 +8,9 @@ import java.util.List;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.input.Keyboard;
@@ -69,7 +66,7 @@ public class GuiAetherManipulator extends GuiContainer {
 
 		this.drawCenteredString(
 				this.fontRenderer,
-				NumberUtils.display(this.te.getCombinedEnergy())
+				NumberUtils.display(this.te.getCombinedAether())
 						+ " / "
 						+ NumberUtils.display(AVRegistry.getAV(this.te.getStackInSlot(0))), 118, 13, 0x55FF55);
 
