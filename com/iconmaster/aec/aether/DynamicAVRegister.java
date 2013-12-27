@@ -13,6 +13,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
@@ -139,7 +140,15 @@ public class DynamicAVRegister {
 	}
 
 	public static boolean isValidRecipe(Object recipe) {
-		return handlers.get(recipe.getClass()) != null;
+		if (handlers.get(recipe.getClass()) != null) {return true;}
+		Iterator it = handlers.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pairs = (Map.Entry) it.next();
+			if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public static ArrayList getInputs(Object recipe) {
@@ -147,6 +156,14 @@ public class DynamicAVRegister {
 		if (handler != null) {
 			//System.out.println("[AEC] inputs from "+recipe.getClass());
 			return handler.getInputs(recipe);
+		} else {
+			Iterator it = handlers.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry) it.next();
+				if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+					return ((IDynamicAVRecipeHandler)pairs.getValue()).getInputs(recipe);
+				}
+			}
 		}
 		return null;
 	}
@@ -155,6 +172,14 @@ public class DynamicAVRegister {
 		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
 		if (handler != null) {
 			return handler.getOutput(recipe);
+		} else {
+			Iterator it = handlers.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry) it.next();
+				if (pairs.getKey().getClass().isAssignableFrom(recipe.getClass())) {
+					return ((IDynamicAVRecipeHandler)pairs.getValue()).getOutput(recipe);
+				}
+			}
 		}
 		return null;
 	}
@@ -196,6 +221,15 @@ public class DynamicAVRegister {
 			try {
 				registerHandler(map,new IC2CraftingHandler("ic2.core.AdvRecipe"),Class.forName("ic2.core.AdvRecipe"));
 				registerHandler(map,new IC2CraftingHandler("ic2.core.AdvShapelessRecipe"),Class.forName("ic2.core.AdvShapelessRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("AppliedEnergistics")) {
+			try {
+				registerHandler(map,new ShapedOreRecipeHandler(),Class.forName("appeng.recipes.AEShapedOreRecipe"));
+				registerHandler(map,new ShapelessOreRecipeHandler(),Class.forName("appeng.recipes.AEShapelessOreRecipe"));
+				registerHandler(map,new AECraftingHandler(),Class.forName("appeng.recipes.AEShapedQuartzRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -245,7 +279,7 @@ public class DynamicAVRegister {
 //				} else {
 //					System.out.println("[AEC] Object in list is a "+input.getClass());
 //				}
-				return null;
+//				return null;
 			}
 		}
 		return ret;
