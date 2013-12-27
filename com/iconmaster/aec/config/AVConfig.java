@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
@@ -71,9 +72,16 @@ public class AVConfig {
 				//System.out.println("Saving to file. Name is "+keyValue);
 				float value = (Float) mapEntry.getValue();
 				String name= keyValue.getUnlocalizedName();
-				if (name!=null) {
-					sb.append(name + "=" + Float.toString(value) + System.getProperty("line.separator"));
+				if (AVRegistry.getItemFromString(name)==null) {
+					name = Item.itemsList[keyValue.itemID].getUnlocalizedName();
+					if (name!=null) {
+						name += "::"+keyValue.getItemDamage();
+					}
+					if (name == null || AVRegistry.getItemFromString(name)==null) {
+						name = ""+keyValue.itemID+"::"+keyValue.getItemDamage();
+					}
 				}
+				sb.append(name + "=" + Float.toString(value) + System.getProperty("line.separator"));
 			} else {
 				//System.out.println("Not Saving to file. key is"+mapEntry.getKey());
 			}
