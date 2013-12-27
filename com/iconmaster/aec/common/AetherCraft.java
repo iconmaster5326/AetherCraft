@@ -19,6 +19,7 @@ import com.iconmaster.aec.config.AVConfigHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,6 +36,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkMod.SidedPacketHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = "AetherCraft", name = "AetherCraft", version = "@VERSION@")
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {
@@ -71,6 +73,12 @@ public class AetherCraft {
 	private static File forgeConfigFile;
 
 	private static File currentAVConfig;
+	
+	 public static CreativeTabs tabAetherCraft  = new CreativeTabs("aetherCraft") {
+         public ItemStack getIconItemStack() {
+                 return new ItemStack(blockAetherManipulator, 1, 0);
+         }
+	 };
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -109,7 +117,7 @@ public class AetherCraft {
 		proxy.registerTickHandlers();
 		proxy.registerEventHandlers();
 		
-		
+		LanguageRegistry.instance().addStringLocalization("itemGroup.aetherCraft", "en_US", "AetherCraft");
 	}
 	
 	@EventHandler

@@ -28,9 +28,9 @@ public class BlockAetherContainer extends BlockContainer {
 
 	public BlockAetherContainer(int id, Material material) {
 		super(id, material);
-        this.setCreativeTab(CreativeTabs.tabBlock);
         this.setHardness(1.5f);
         this.setUnlocalizedName("aec.aetherContainer");
+        this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 
 	@Override

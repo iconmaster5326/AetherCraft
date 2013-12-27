@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 public class ItemFlyingRing extends Item {
 	public ItemFlyingRing(int id) {
 		super(id);
-		this.setCreativeTab(CreativeTabs.tabTools);
 		this.setUnlocalizedName("aec.flyingRing");
 		this.setMaxStackSize(1);
+		 this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 
 	@Override

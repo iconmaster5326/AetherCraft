@@ -2,6 +2,7 @@ package com.iconmaster.aec.common.item;
 
 import java.util.List;
 
+import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.relauncher.Side;
@@ -18,9 +19,9 @@ import net.minecraft.world.World;
 public class ItemAetherBattery extends Item {
 	public ItemAetherBattery(int id) {
 		super(id);
-		this.setCreativeTab(CreativeTabs.tabMisc);
         this.setUnlocalizedName("aec.aetherBattery");
         this.setMaxStackSize(1);
+        this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 
 	@Override
