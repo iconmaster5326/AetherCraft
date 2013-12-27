@@ -108,6 +108,7 @@
 		<copy todir="${mcpsrc.dir}">
 			<fileset dir="com"/>
 			<fileset dir="ic2"/>
+			<fileset dir="buildcraft"/>
 			<filterset>
 				<filter token="VERSION" value="${mod.version}.${env.BUILD_NUMBER}"/>
 			</filterset>
@@ -138,6 +139,9 @@
 		<copy todir="${classes.dir}/ic2">
 			<fileset dir="${mcp.dir}/reobf/minecraft/ic2" />
 		</copy>
+		<copy todir="${classes.dir}/buildcraft">
+			<fileset dir="${mcp.dir}/reobf/minecraft/buildcraft" />
+		</copy>
 
 		<!-- Copy resources -->
 		<copy todir="${classes.dir}/assets/aec">
@@ -155,6 +159,7 @@
 		<!-- Reset src dir to post-forge-install state -->
 		<delete dir="${mcpsrc.dir}/com"/>
 		<delete dir="${mcpsrc.dir}/ic2"/>
+		<delete dir="${mcpsrc.dir}/buildcraft"/>
 
 	</target>
 

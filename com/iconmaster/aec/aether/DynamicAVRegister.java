@@ -13,7 +13,10 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import buildcraft.api.recipes.AssemblyRecipe;
+
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
+import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
@@ -227,6 +230,9 @@ public class DynamicAVRegister {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		if (Loader.isModLoaded("BuildCraft|Core")) {
+			registerHandler(map,new AssemblyRecipeHandler(),AssemblyRecipe.class);
 		}
 		return map;
 	}
