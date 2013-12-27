@@ -57,7 +57,7 @@ public class GuiAetherContainer extends GuiContainer {
 		int a = 68 - 16;
 		float b = (100 - this.te.getProgress()) / 100.0f;
 		this.drawGradientRect(148, (int) (16.0f + (a * b)), 164, 68,
-				0x99FF00FF, 0xFF2CCDB1);
+				0xFF16FF00,0x990EA600);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}

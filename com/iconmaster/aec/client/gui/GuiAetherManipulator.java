@@ -65,7 +65,7 @@ public class GuiAetherManipulator extends GuiContainer {
 		this.drawGradientRect(68, 11, 68 + this.te.getProgress(), 17,
 				0x00404040, 0xFF2CCDB1);
 		this.drawGradientRect(68, 17, 68 + this.te.getProgress(), 22,
-				0xFF2CCDB1, 0x0040FF40);
+				0xFF16FF00,0x990EA600);
 
 		this.drawCenteredString(
 				this.fontRenderer,
