@@ -27,7 +27,7 @@ public class TooltipHandler implements IContainerTooltipHandler {
 		if (gui instanceof GuiAetherManipulator) {
 			boolean showAV = true;
 			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("showevalways"))) {
+					.getOptions("showavalways"))) {
 				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
 						&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 					showAV = false;
@@ -37,7 +37,7 @@ public class TooltipHandler implements IContainerTooltipHandler {
 					&& stack != null
 					&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
 				float ev = AVRegistry.getAV(stack);
-				float ev1 =  (float) ((float) (ev * Float.parseFloat(AetherCraft.getOptions("consumeprecission"))) / 100.0);
+				float ev1 =  (float) ((float) (ev * Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0);
 
 				currenttip.add("\u00a72" + "TRANSMUTE AV: " + NumberUtils.display(ev));
 				currenttip.add("\u00a79" + "CONSUME    AV: " + NumberUtils.display(ev1));
@@ -45,7 +45,7 @@ public class TooltipHandler implements IContainerTooltipHandler {
 		} else {
 			boolean showAV = true;
 			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("showevalways"))) {
+					.getOptions("showavalways"))) {
 				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
 						&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 					showAV = false;

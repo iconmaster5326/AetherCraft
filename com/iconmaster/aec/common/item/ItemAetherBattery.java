@@ -49,7 +49,7 @@ public class ItemAetherBattery extends Item implements IAetherContainingItem {
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		float max = Float.parseFloat(AetherCraft.getOptions("ebatterymaxstorage"));
+		float max = Float.parseFloat(AetherCraft.getOptions("abatterymaxstorage"));
 		float has = stack.getTagCompound().getFloat("AV");
 		if (has + av > max) {
 			this.setAether(stack,max);

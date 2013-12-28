@@ -52,11 +52,11 @@ public class GuiAetherManipulator extends GuiContainer {
 		this.fontRenderer.drawStringWithShadow(
 				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
 
-		this.fontRenderer.drawStringWithShadow("Consume Precission:", 9, 38,
+		this.fontRenderer.drawStringWithShadow("Consume Precision:", 9, 38,
 				0xFF0000);
 		this.fontRenderer.drawStringWithShadow(
 				(int) (Double.parseDouble(AetherCraft
-						.getOptions("consumeprecission"))) + "%", 112, 38,
+						.getOptions("consumeprecision"))) + "%", 112, 38,
 				0x00FF00);
 
 		this.drawGradientRect(68, 11, 68 + this.te.getProgress(), 17,
@@ -101,7 +101,7 @@ public class GuiAetherManipulator extends GuiContainer {
 		}
 
 		boolean showAV = true;
-		if (!Boolean.parseBoolean(AetherCraft.getOptions("showevalways"))) {
+		if (!Boolean.parseBoolean(AetherCraft.getOptions("showavalways"))) {
 			if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
 					&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				showAV = false;
@@ -112,7 +112,7 @@ public class GuiAetherManipulator extends GuiContainer {
 			float ev = AVRegistry.getAV(stack);
 			float ev1 = (float) (ev
 					* ((float) Float.parseFloat(AetherCraft
-							.getOptions("consumeprecission"))) / 100.0f);
+							.getOptions("consumeprecision"))) / 100.0f);
 
 			list.add("\u00a72" + "TRANSMUTE AV: " + NumberUtils.display(ev));
 			list.add("\u00a79" + "CONSUME    AV: " + NumberUtils.display(ev1));

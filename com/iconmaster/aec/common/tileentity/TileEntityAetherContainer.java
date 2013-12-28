@@ -153,7 +153,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 
 	private void handleAether() {
 		float ecMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("ecmaxstorage"));
+				.getOptions("acmaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack bottomStack = this.getStackInSlot(1);
@@ -217,7 +217,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 	public void calculateProgress() {
 		this.progress = (int) ((float) this.energy
 				/ (float) Float.parseFloat(AetherCraft
-						.getOptions("ecmaxstorage")) * 100.0f);
+						.getOptions("acmaxstorage")) * 100.0f);
 		if (this.progress > 100) {
 			this.progress = 100;
 		}
@@ -263,15 +263,15 @@ public class TileEntityAetherContainer extends TileEntity implements
 
 	@Override
 	public float addAether(float ev) {
-		float ecmaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("ecmaxstorage"));
-		if (this.energy + ev <= ecmaxstorage) {
+		float acmaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("acmaxstorage"));
+		if (this.energy + ev <= acmaxstorage) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			float rest = ecmaxstorage - this.energy;
-			this.energy = ecmaxstorage;
+			float rest = acmaxstorage - this.energy;
+			this.energy = acmaxstorage;
 			this.sync();
 			return rest;
 		}

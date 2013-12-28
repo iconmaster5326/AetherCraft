@@ -162,9 +162,9 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	private void handleAether() {
 		float batteryMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("ebatterymaxstorage"));
+				.getOptions("abatterymaxstorage"));
 		float emMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("emmaxstorage"));
+				.getOptions("ammaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
@@ -185,12 +185,12 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						float stackEv = AVRegistry.getAV(currentStack);
 						if ((stackEv
 								* ((float) Float.parseFloat(AetherCraft
-										.getOptions("consumeprecission"))) / 100.0f) <= this
+										.getOptions("consumeprecision"))) / 100.0f) <= this
 									.getFreeAetherSpace()) {
 							float ev = (float) (((float) stackEv)
 									* ((float) Float
 											.parseFloat(AetherCraft
-													.getOptions("consumeprecission"))) / 100.0f);
+													.getOptions("consumeprecision"))) / 100.0f);
 							//System.out.println("Consuming "+stackEv+" and getting "+ev);
 							this.addAetherToConnectedAndSelf(ev);
 							this.decrStackSize(i, 1);
@@ -203,12 +203,12 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						float stackEv = AVRegistry.getAV(currentStack);
 						if ((stackEv
 								* ((float) Float.parseFloat(AetherCraft
-										.getOptions("consumeprecission"))) / 100.0f) <= this
+										.getOptions("consumeprecision"))) / 100.0f) <= this
 									.getFreeAetherSpace()) {
 							float ev = (((float) stackEv)
 									* ((float) Float
 											.parseFloat(AetherCraft
-													.getOptions("consumeprecission"))) / 100.0f);
+													.getOptions("consumeprecision"))) / 100.0f);
 							//System.out.println("Consuming "+stackEv+" and getting "+ev);
 							this.addAetherToConnectedAndSelf(ev);
 							this.decrStackSize(i, 1);
@@ -261,14 +261,14 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	public float getTotalAetherSpace() {
-		float emmaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("emmaxstorage"));
-		float ecmaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("ecmaxstorage"));
-		float totalSpace = emmaxstorage;
+		float ammaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("ammaxstorage"));
+		float acmaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("acmaxstorage"));
+		float totalSpace = ammaxstorage;
 		for (int i = 0; i < this.connectedSides.length; i++) {
 			if (this.connectedSides[i]) {
-				totalSpace += ecmaxstorage;
+				totalSpace += acmaxstorage;
 			}
 		}
 		return totalSpace;
@@ -590,7 +590,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		while (true) {
 			ec = this
 					.getConnectedECWithAVLowerOrEqual(Float.parseFloat(AetherCraft
-									.getOptions("ecmaxstorage")) - 1);
+									.getOptions("acmaxstorage")) - 1);
 			if (ec == -1 || rest <= 0) {
 				this.sync();
 				return rest;
@@ -751,15 +751,15 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	@Override
 	public float addAether(float ev) {
-		float emmaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("emmaxstorage"));
-		if (this.energy + ev <= emmaxstorage) {
+		float ammaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("ammaxstorage"));
+		if (this.energy + ev <= ammaxstorage) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			float rest = emmaxstorage - this.energy;
-			this.energy = emmaxstorage;
+			float rest = ammaxstorage - this.energy;
+			this.energy = ammaxstorage;
 			this.sync();
 			return rest;
 		}
@@ -807,7 +807,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			}
 		}
 		float ecMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("ecmaxstorage"));
+				.getOptions("acmaxstorage"));
 		return this.getConnectedAether() >= (sides * ecMaxStorage);
 	}
 

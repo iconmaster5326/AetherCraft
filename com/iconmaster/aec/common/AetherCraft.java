@@ -148,33 +148,33 @@ public class AetherCraft {
 
 		// INTEGER AND DOUBLE
 		options.put(
-				"consumeprecission",
+				"consumeprecision",
 				Float.toString(forgeConfig
 						.get("options",
-								"consumeprecission",
+								"consumeprecision",
 								100,
 								"How much of the AV an Aether Manipulator will consume (in percentage without the %, range 0-100)")
 						.getInt()));
 
 		options.put(
-				"evmultiplier",
+				"avmultiplier",
 				Double.toString(forgeConfig
 						.get("options",
-								"evmultiplier",
+								"avmultiplier",
 								1.0,
-								"Easily ramp up the AVs with this multiplier, added to comphensate for consumeprecission changing values for stone and such to 0 (decimal number)")
+								"Easily ramp up the AVs with this multiplier, added to comphensate for consumeprecision changing values for stone and such to 0 (decimal number)")
 						.getDouble(1.0)));
 
-		options.put("emmaxstorage", Integer.toString(forgeConfig.get("options",
-				"emmaxstorage", 32768,
+		options.put("ammaxstorage", Integer.toString(forgeConfig.get("options",
+				"ammaxstorage", 32768,
 				"How much aether an aether manipulator can store").getInt()));
 
-		options.put("ecmaxstorage", Float.toString(forgeConfig.get("options",
-				"ecmaxstorage", 131072,
+		options.put("acmaxstorage", Float.toString(forgeConfig.get("options",
+				"acmaxstorage", 131072,
 				"How much aether an aether container can store").getInt()));
 
-		options.put("ebatterymaxstorage", Float.toString(forgeConfig.get(
-				"options", "ebatterymaxstorage", 16384,
+		options.put("abatterymaxstorage", Float.toString(forgeConfig.get(
+				"options", "aabatterymaxstorage", 16384,
 				"How much aether an aether battery can store").getInt()));
 
 		options.put("flycostpersecond", Float.toString(forgeConfig.get(
@@ -202,8 +202,8 @@ public class AetherCraft {
 						true, "").getBoolean(true)));
 
 		options.put(
-				"showevalways",
-				Boolean.toString(forgeConfig.get("options", "showevalways",
+				"showavalways",
+				Boolean.toString(forgeConfig.get("options", "showavalways",
 						false, "").getBoolean(false)));
 
 
