@@ -11,8 +11,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 
-import com.iconmaster.aec.aether.IAetherContainer;
-import com.iconmaster.aec.aether.IAetherContainingItem;
+import com.iconmaster.aec.aether.IAetherStorage;
+import com.iconmaster.aec.aether.IAetherStorageItem;
 import com.iconmaster.aec.common.AetherCraft;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -20,7 +20,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherContainer extends TileEntity implements
-		IInventory, IAetherContainer {
+		IInventory, IAetherStorage {
 	public static final byte energyBlockType = 1;
 
 	private ItemStack[] inventory;
@@ -159,16 +159,16 @@ public class TileEntityAetherContainer extends TileEntity implements
 		ItemStack bottomStack = this.getStackInSlot(1);
 
 		// ------------------- Discharging - TOP SLOT -------------------
-		if (topStack != null && topStack.getItem() instanceof IAetherContainingItem) {
-			float got =  ((IAetherContainingItem)topStack.getItem()).extractAether(topStack, ecMaxStorage - energy);
+		if (topStack != null && topStack.getItem() instanceof IAetherStorageItem) {
+			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, ecMaxStorage - energy);
 			energy += got;
 			this.sync();
 
 		}
 
 		// ------------------- Charging - BOTTOM SLOT -------------------
-		if (bottomStack != null && bottomStack.getItem() instanceof IAetherContainingItem) {
-			float rest = ((IAetherContainingItem)bottomStack.getItem()).addAether(bottomStack, this.energy);
+		if (bottomStack != null && bottomStack.getItem() instanceof IAetherStorageItem) {
+			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, this.energy);
 			this.energy = rest;
 			this.sync();
 		}
@@ -270,7 +270,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 			this.sync();
 			return 0;
 		} else {
-			float rest = acmaxstorage - this.energy;
+			float rest = (this.energy + ev) - acmaxstorage;
 			this.energy = acmaxstorage;
 			this.sync();
 			return rest;

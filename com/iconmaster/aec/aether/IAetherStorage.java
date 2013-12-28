@@ -1,6 +1,6 @@
 package com.iconmaster.aec.aether;
 
-public interface IAetherContainer {
+public interface IAetherStorage {
 	public float addAether(float av);
 
 	public float extractAether(float av);

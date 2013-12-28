@@ -9,14 +9,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
-import com.iconmaster.aec.aether.IAetherContainingItem;
+import com.iconmaster.aec.aether.IAetherStorageItem;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAetherBattery extends Item implements IAetherContainingItem {
+public class ItemAetherBattery extends Item implements IAetherStorageItem {
 	public ItemAetherBattery(int id) {
 		super(id);
         this.setUnlocalizedName("aec.aetherBattery");

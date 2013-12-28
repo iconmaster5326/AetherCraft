@@ -12,7 +12,9 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
 
 import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.IAetherContainer;
+import com.iconmaster.aec.aether.AetherNetwork;
+import com.iconmaster.aec.aether.IAetherStorage;
+import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.common.AetherCraft;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -20,7 +22,7 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherManipulator extends TileEntity implements
-		ISidedInventory, IAetherContainer {
+		ISidedInventory, IAetherStorage {
 	public static final byte energyBlockType = 0;
 
 	private ItemStack[] inventory;
@@ -161,10 +163,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	private void handleAether() {
-		float batteryMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("abatterymaxstorage"));
-		float emMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("ammaxstorage"));
+		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
@@ -173,76 +172,58 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			currentStack = this.getStackInSlot(i);
 
 			// ------------------- Consuming -------------------
-			if (currentStack != null) {
-				if (topStack != null) {
-					if ((AVRegistry.getAV(topStack) > 0 || topStack.itemID == AetherCraft.itemAetherBattery.itemID)
-							&& AVRegistry.getAV(currentStack) > 0
-							&& ((currentStack.itemID != AetherCraft.itemAetherBattery.itemID && currentStack.itemID != topStack.itemID) || (currentStack
-									.getHasSubtypes()
-									&& topStack.getHasSubtypes() && currentStack
-									.getItemDamage() != topStack
-									.getItemDamage()))) {
-						float stackEv = AVRegistry.getAV(currentStack);
-						if ((stackEv
-								* ((float) Float.parseFloat(AetherCraft
-										.getOptions("consumeprecision"))) / 100.0f) <= this
-									.getFreeAetherSpace()) {
-							float ev = (float) (((float) stackEv)
-									* ((float) Float
-											.parseFloat(AetherCraft
-													.getOptions("consumeprecision"))) / 100.0f);
-							//System.out.println("Consuming "+stackEv+" and getting "+ev);
-							this.addAetherToConnectedAndSelf(ev);
-							this.decrStackSize(i, 1);
-							doneSomething = true;
-						}
-					}
-				} else {
-					if (AVRegistry.getAV(currentStack) > 0
-							&& currentStack.itemID != AetherCraft.itemAetherBattery.itemID) {
-						float stackEv = AVRegistry.getAV(currentStack);
-						if ((stackEv
-								* ((float) Float.parseFloat(AetherCraft
-										.getOptions("consumeprecision"))) / 100.0f) <= this
-									.getFreeAetherSpace()) {
-							float ev = (((float) stackEv)
-									* ((float) Float
-											.parseFloat(AetherCraft
-													.getOptions("consumeprecision"))) / 100.0f);
-							//System.out.println("Consuming "+stackEv+" and getting "+ev);
-							this.addAetherToConnectedAndSelf(ev);
-							this.decrStackSize(i, 1);
-							doneSomething = true;
-						}
+			if (canConsume(currentStack)) {
+				float stackEv = AVRegistry.getAV(currentStack);
+				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
+				System.out.println("Consuming...");
+				if (stackEv+getAether()>emMaxStorage) {
+					//System.out.println("Has more aether than we can hold!");
+					float orig = extractAether(stackEv);
+					float left = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, orig);
+					if (left > 0) {
+						//System.out.println("Could not transfer!");
+						addAether(left);
+						this.sync();
+						return;
 					}
 				}
+				//System.out.println("Transferred!");
+				this.addAether(stackEv);
+				this.decrStackSize(i, 1);
+				doneSomething = true;
 			}
-			// ------------------- Transmuting -------------------
-			if (topStack != null
-					&& AVRegistry.getAV(topStack) > 0
-					&& this.getCombinedAether() >= AVRegistry.getAV(topStack)
-					&& topStack.itemID != AetherCraft.itemAetherBattery.itemID) {
+
+			// ------------------- Creating -------------------
+			if (canProduce(topStack)) {
 				int slot = this.getStackableSlot(topStack);
 
 				if (slot > 0) {
 					ItemStack newStack = this.getStackInSlot(slot);
 					newStack.stackSize++;
-					this.extractAetherFromConnectedAndSelf(AVRegistry.getAV(topStack));
+					this.extractAether(AVRegistry.getAV(topStack));
 					doneSomething = true;
 				} else {
 					slot = this.getEmptySlot();
 
 					if (slot > 0) {
+						float av = AVRegistry.getAV(topStack);
+						if (getAether() - av < 0) {
+							float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av);
+							if (got < av) {
+								this.sync();
+								return;
+							}
+						} else {
+							this.extractAether(av);
+						}
+						
 						ItemStack newStack = new ItemStack(topStack.itemID,1,topStack.getItemDamage());
 						//newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
-						this.extractAetherFromConnectedAndSelf(AVRegistry.getAV(topStack));
+						
 						doneSomething = true;
 					}
 				}
-			}
-			if (this.energy > 0 && !this.isAllConnectedECsFilled()) {
-				this.transferAetherFromSelfToConnected();
 			}
 			if (!Boolean.parseBoolean(AetherCraft
 					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
@@ -254,28 +235,6 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			this.sync();
 			return;
 		}
-	}
-
-	public boolean spaceForAether(float ev) {
-		return this.getFreeAetherSpace() - ev >= 0;
-	}
-
-	public float getTotalAetherSpace() {
-		float ammaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("ammaxstorage"));
-		float acmaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("acmaxstorage"));
-		float totalSpace = ammaxstorage;
-		for (int i = 0; i < this.connectedSides.length; i++) {
-			if (this.connectedSides[i]) {
-				totalSpace += acmaxstorage;
-			}
-		}
-		return totalSpace;
-	}
-
-	public float getFreeAetherSpace() {
-		return this.getTotalAetherSpace() - this.getCombinedAether();
 	}
 
 	public void setPoweredState(boolean state) {
@@ -327,7 +286,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		ItemStack stack = this.getStackInSlot(0);
 
 		if (stack != null) {
-			this.progress = (int) ((float) this.getCombinedAether()
+			this.progress = (int) ((float) this.getAether()
 					/ (float) AVRegistry.getAV(stack) * 100.0f);
 
 			if (this.progress > 100) {
@@ -365,388 +324,6 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			}
 		}
 		return -1;
-	}
-
-	private int getConnectedECWithAVHigherOrEqual(int ev) {
-		for (int i = 0; i < this.connectedSides.length; i++) {
-			if (this.connectedSides[i]) {
-				switch (i) {
-				// Bottom
-				case 0:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-									this.zCoord)).getAether() >= ev) {
-						return 0;
-					}
-					break;
-				// Top
-				case 1:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-									this.zCoord)).getAether() >= ev) {
-						return 1;
-					}
-					break;
-				// North
-				case 2:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord - 1)).getAether() >= ev) {
-						return 2;
-					}
-					break;
-				// South
-				case 3:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord + 1)).getAether() >= ev) {
-						return 3;
-					}
-					break;
-				// West
-				case 4:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-									this.zCoord)).getAether() >= ev) {
-						return 4;
-					}
-					break;
-				// East
-				case 5:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-									this.zCoord)).getAether() >= ev) {
-						return 5;
-					}
-					break;
-				}
-			}
-		}
-		return -1;
-	}
-
-	private int getConnectedECWithAVLowerOrEqual(float l) {
-		for (int i = 0; i < this.connectedSides.length; i++) {
-			if (this.connectedSides[i]) {
-				switch (i) {
-				// Bottom
-				case 0:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-									this.zCoord)).getAether() <= l) {
-						return 0;
-					}
-					break;
-				// Top
-				case 1:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-									this.zCoord)).getAether() <= l) {
-						return 1;
-					}
-					break;
-				// North
-				case 2:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord - 1)).getAether() <= l) {
-						return 2;
-					}
-					break;
-				// South
-				case 3:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord, this.yCoord,
-									this.zCoord + 1)).getAether() <= l) {
-						return 3;
-					}
-					break;
-				// West
-				case 4:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-									this.zCoord)).getAether() <= l) {
-						return 4;
-					}
-					break;
-				// East
-				case 5:
-					if (((TileEntityAetherContainer) this.worldObj
-							.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-									this.zCoord)).getAether() <= l) {
-						return 5;
-					}
-					break;
-				}
-			}
-		}
-		return -1;
-	}
-
-	private float getConnectedECAether(int side) {
-		switch (side) {
-		// Bottom
-		case 0:
-			return (this.worldObj.getBlockId(this.xCoord, this.yCoord - 1,
-					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-							this.zCoord)).getAether() : 0);
-			// Top
-		case 1:
-			return (this.worldObj.getBlockId(this.xCoord, this.yCoord + 1,
-					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-							this.zCoord)).getAether() : 0);
-			// North
-		case 2:
-			return (this.worldObj.getBlockId(this.xCoord, this.yCoord,
-					this.zCoord - 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord, this.yCoord,
-							this.zCoord - 1)).getAether() : 0);
-			// South
-		case 3:
-			return (this.worldObj.getBlockId(this.xCoord, this.yCoord,
-					this.zCoord + 1) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord, this.yCoord,
-							this.zCoord + 1)).getAether() : 0);
-			// West
-		case 4:
-			return (this.worldObj.getBlockId(this.xCoord - 1, this.yCoord,
-					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-							this.zCoord)).getAether() : 0);
-			// East
-		case 5:
-			return (this.worldObj.getBlockId(this.xCoord + 1, this.yCoord,
-					this.zCoord) == AetherCraft.blockAetherContainer.blockID ? ((TileEntityAetherContainer) this.worldObj
-					.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-							this.zCoord)).getAether() : 0);
-		default:
-			return 0;
-		}
-	}
-
-	public void updateConnectedSides() {
-		// Bottom
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord - 1, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[0] = true;
-		} else {
-			this.connectedSides[0] = false;
-		}
-		// Top
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord + 1, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[1] = true;
-		} else {
-			this.connectedSides[1] = false;
-		}
-		// North
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord - 1) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[2] = true;
-		} else {
-			this.connectedSides[2] = false;
-		}
-		// South
-		if (this.worldObj.getBlockId(this.xCoord, this.yCoord, this.zCoord + 1) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[3] = true;
-		} else {
-			this.connectedSides[3] = false;
-		}
-		// West
-		if (this.worldObj.getBlockId(this.xCoord - 1, this.yCoord, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[4] = true;
-		} else {
-			this.connectedSides[4] = false;
-		}
-		// East
-		if (this.worldObj.getBlockId(this.xCoord + 1, this.yCoord, this.zCoord) == AetherCraft.blockAetherContainer.blockID) {
-			this.connectedSides[5] = true;
-		} else {
-			this.connectedSides[5] = false;
-		}
-	}
-
-	public boolean[] getConnectedSides() {
-		return this.connectedSides;
-	}
-
-	public boolean getConnectedSide(int side) {
-		return this.connectedSides[side];
-	}
-
-	public void setConnectedSides(boolean[] cs) {
-		if (cs != null && cs.length == 6) {
-			this.connectedSides = cs;
-		}
-	}
-
-	public void setConnectedSide(boolean connected, int side) {
-		this.connectedSides[side] = connected;
-	}
-
-	public float addAetherToConnectedECs(float energy2) {
-		float rest = energy2;
-		TileEntityAetherContainer te;
-		int ec;
-		while (true) {
-			ec = this
-					.getConnectedECWithAVLowerOrEqual(Float.parseFloat(AetherCraft
-									.getOptions("acmaxstorage")) - 1);
-			if (ec == -1 || rest <= 0) {
-				this.sync();
-				return rest;
-			}
-			switch (ec) {
-			// Bottom
-			case 0:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-								this.zCoord);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			// Top
-			case 1:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-								this.zCoord);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			// North
-			case 2:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord,
-								this.zCoord - 1);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			// South
-			case 3:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord,
-								this.zCoord + 1);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			// West
-			case 4:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-								this.zCoord);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			// East
-			case 5:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-								this.zCoord);
-				if (te != null) {
-					rest -= rest - te.addAether(rest);
-				}
-				break;
-			}
-		}
-	}
-
-	public float extractAetherFromConnectedECs(float l) {
-		float extracted = 0;
-		TileEntityAetherContainer te;
-		int ec;
-		while (true) {
-			ec = this.getConnectedECWithAVHigherOrEqual(1);
-			if (ec == -1 || extracted >= l) {
-				this.sync();
-				return extracted;
-			}
-			switch (ec) {
-			// Bottom
-			case 0:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord - 1,
-								this.zCoord);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			// Top
-			case 1:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord + 1,
-								this.zCoord);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			// North
-			case 2:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord,
-								this.zCoord - 1);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			// South
-			case 3:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord, this.yCoord,
-								this.zCoord + 1);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			// West
-			case 4:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord - 1, this.yCoord,
-								this.zCoord);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			// East
-			case 5:
-				te = (TileEntityAetherContainer) this.worldObj
-						.getBlockTileEntity(this.xCoord + 1, this.yCoord,
-								this.zCoord);
-				if (te != null) {
-					extracted += te.extractAether(l - extracted);
-				}
-				break;
-			}
-		}
-	}
-
-	public float addAetherToConnectedAndSelf(float ev) {
-		float rest = this.addAetherToConnectedECs(ev);
-		if (rest > 0) {
-			rest = this.addAether(rest);
-		}
-		this.sync();
-		return rest;
-	}
-
-	public float extractAetherFromConnectedAndSelf(float l) {
-		float extracted = this.extractAetherFromConnectedECs(l);
-		if (extracted < l) {
-			extracted += this.extractAether(l - extracted);
-		}
-		this.sync();
-		return extracted;
-	}
-
-	/*
-	 * Convenience method
-	 */
-	public void transferAetherFromSelfToConnected() {
-		this.energy = this.addAetherToConnectedECs(this.energy);
-		this.sync();
 	}
 
 	@Override
@@ -787,28 +364,6 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	@Override
 	public float getAether() {
 		return this.energy;
-	}
-
-	public float getConnectedAether() {
-		return this.getConnectedECAether(0) + this.getConnectedECAether(1)
-				+ this.getConnectedECAether(2) + this.getConnectedECAether(3)
-				+ this.getConnectedECAether(4) + this.getConnectedECAether(5);
-	}
-
-	public float getCombinedAether() {
-		return this.getAether() + this.getConnectedAether();
-	}
-
-	public boolean isAllConnectedECsFilled() {
-		short sides = 0;
-		for (int i = 0; i < this.connectedSides.length; i++) {
-			if (this.connectedSides[i]) {
-				sides++;
-			}
-		}
-		float ecMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("acmaxstorage"));
-		return this.getConnectedAether() >= (sides * ecMaxStorage);
 	}
 
 	@Override
@@ -861,5 +416,31 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			}
 		}
 		return false;
+	}
+	
+	public float getPossibleAether() {
+		return getAether() + AetherNetwork.getStoredAV(worldObj, xCoord, yCoord, zCoord);
+	}
+	
+	public boolean canConsume(ItemStack currentStack) {
+		ItemStack topStack = this.getStackInSlot(0);
+		if (currentStack == null) {
+			return false;
+		}
+		if (topStack != null && currentStack.itemID == topStack.itemID && currentStack.getItemDamage() == topStack.getItemDamage()) {
+			return false;
+		}
+		float av = AVRegistry.getAV(currentStack);
+		if (av<=0 ) {
+			return false;
+		}
+//		if (getAether()+av>Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))) {
+//			return false;
+//		}
+		return true;
+	}
+	public boolean canProduce(ItemStack currentItem) {
+		float av = AVRegistry.getAV(currentItem);
+		return av>0 && av<=getPossibleAether();
 	}
 }

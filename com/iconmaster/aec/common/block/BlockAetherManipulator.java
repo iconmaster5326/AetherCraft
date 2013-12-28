@@ -15,13 +15,14 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAetherManipulator extends BlockContainer {
+public class BlockAetherManipulator extends BlockContainer implements IAetherTransfer {
 	private Icon blockIconTop, blockIconBottom;
 
 	public BlockAetherManipulator(int id, Material material) {
@@ -103,7 +104,6 @@ public class BlockAetherManipulator extends BlockContainer {
 					.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
-				tileEntity.updateConnectedSides();
 			}
 		}
 	}
@@ -135,7 +135,6 @@ public class BlockAetherManipulator extends BlockContainer {
 					.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
-				tileEntity.updateConnectedSides();
 			}
 		}
 	}

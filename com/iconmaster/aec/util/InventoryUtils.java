@@ -7,7 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-import com.iconmaster.aec.aether.IAetherContainingItem;
+import com.iconmaster.aec.aether.IAetherStorageItem;
 import com.iconmaster.aec.common.AetherCraft;
 
 public class InventoryUtils {
@@ -16,8 +16,8 @@ public class InventoryUtils {
 		float av = 0;
 		for (int i=0;i<=inv.getSizeInventory()-1;i++) {
 			ItemStack item = inv.getStackInSlot(i);
-			if (item != null && (item.getItem() instanceof IAetherContainingItem)) {
-				av += ((IAetherContainingItem)item.getItem()).getAether(item);
+			if (item != null && (item.getItem() instanceof IAetherStorageItem)) {
+				av += ((IAetherStorageItem)item.getItem()).getAether(item);
 			}
 		}
 		return av;
@@ -27,8 +27,8 @@ public class InventoryUtils {
 		float left = av;
 		for (int i=0;i<=inv.getSizeInventory()-1;i++) {
 			ItemStack item = inv.getStackInSlot(i);
-			if (left > 0 && item != null && (item.getItem() instanceof IAetherContainingItem)) {
-				left -= ((IAetherContainingItem)item.getItem()).extractAether(item,left);
+			if (left > 0 && item != null && (item.getItem() instanceof IAetherStorageItem)) {
+				left -= ((IAetherStorageItem)item.getItem()).extractAether(item,left);
 			}
 		}
 		return av-left;

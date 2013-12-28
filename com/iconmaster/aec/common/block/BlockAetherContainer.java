@@ -15,13 +15,14 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAetherContainer extends BlockContainer {
+public class BlockAetherContainer extends BlockContainer implements IAetherTransfer {
 	private Icon blockIconTop, blockIconBottom;
 
 	public BlockAetherContainer(int id, Material material) {

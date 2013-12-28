@@ -66,7 +66,7 @@ public class GuiAetherManipulator extends GuiContainer {
 
 		this.drawCenteredString(
 				this.fontRenderer,
-				NumberUtils.display(this.te.getCombinedAether())
+				NumberUtils.display(this.te.getPossibleAether())
 						+ " / "
 						+ NumberUtils.display(AVRegistry.getAV(this.te.getStackInSlot(0))), 118, 13, 0x55FF55);
 
