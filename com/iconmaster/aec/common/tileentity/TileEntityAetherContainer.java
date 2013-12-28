@@ -154,13 +154,15 @@ public class TileEntityAetherContainer extends TileEntity implements
 	private void handleAether() {
 		float ecMaxStorage = Float.parseFloat(AetherCraft
 				.getOptions("acmaxstorage"));
+		float chargeRate = Float.parseFloat(AetherCraft
+				.getOptions("chargerate"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack bottomStack = this.getStackInSlot(1);
 
 		// ------------------- Discharging - TOP SLOT -------------------
 		if (topStack != null && topStack.getItem() instanceof IAetherStorageItem) {
-			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, ecMaxStorage - energy);
+			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, Math.min(ecMaxStorage - energy,chargeRate));
 			energy += got;
 			this.sync();
 
@@ -168,8 +170,8 @@ public class TileEntityAetherContainer extends TileEntity implements
 
 		// ------------------- Charging - BOTTOM SLOT -------------------
 		if (bottomStack != null && bottomStack.getItem() instanceof IAetherStorageItem) {
-			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, this.energy);
-			this.energy = rest;
+			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, Math.min(this.energy,chargeRate));
+			this.energy -= Math.min(this.energy,chargeRate)-rest;
 			this.sync();
 		}
 	}

@@ -180,6 +180,10 @@ public class AetherCraft {
 		options.put("flycostpersecond", Float.toString(forgeConfig.get(
 				"options", "flycostpersecond", 8,
 				"How much AV the flying ring will drain per second.").getInt()));
+		
+		options.put("chargerate", Integer.toString(forgeConfig.get("options",
+				"chargerate", 128,
+				"How fast aether batteries placed in an aether container charge").getInt()));
 
 		// BOOLEAN
 		options.put(

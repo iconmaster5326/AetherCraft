@@ -32,7 +32,7 @@ public class SideUtils {
 					x = 1;
 					break;
 			}
-			System.out.println("Side was "+side+". Selected offsets are "+x+" "+y+" "+z);
+			//System.out.println("Side was "+side+". Selected offsets are "+x+" "+y+" "+z);
 		}
 		
 		public int getOffsetX(int x) {

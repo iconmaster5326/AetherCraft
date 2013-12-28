@@ -28,7 +28,7 @@ public class AetherNetwork {
 			//System.out.println("Adding "+left);
 			left = ((IAetherStorage)device).addAether(left);
 		}
-		System.out.println("Returning "+left);
+		//System.out.println("Returning "+left);
 		return left;
 	}
 		
@@ -51,9 +51,9 @@ public class AetherNetwork {
 	
 	public static ArrayList getAllConnectedDevices(World world, int x, int y, int z,ArrayList a,HashMap been) {
 		been.put(encodeCoords(x,y,z),true);
-		System.out.println("Visiting "+x+" "+y+" "+z);
+		//System.out.println("Visiting "+x+" "+y+" "+z);
 		for (int side : SideUtils.allSides) {
-			System.out.println("SIDE "+side);
+			//System.out.println("SIDE "+side);
 			SideUtils.Offset off = new SideUtils.Offset(side);
 			int ofx = off.getOffsetX(x);
 			int ofy = off.getOffsetY(y);
@@ -62,7 +62,7 @@ public class AetherNetwork {
 			if (been.get(encodeCoords(ofx,ofy,ofz))==null && block instanceof IAetherTransfer) {
 				getAllConnectedDevices(world,ofx,ofy,ofz,a,been);
 				if (world.getBlockTileEntity(ofx, ofy, ofz)!= null && world.getBlockTileEntity(ofx, ofy, ofz) instanceof IAetherStorage) {
-					System.out.println("Got a machine");
+					//System.out.println("Got a machine");
 					a.add(world.getBlockTileEntity(ofx, ofy, ofz));
 				}
 			}

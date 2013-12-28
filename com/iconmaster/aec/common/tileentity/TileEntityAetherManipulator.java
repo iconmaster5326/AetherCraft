@@ -175,7 +175,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			if (canConsume(currentStack)) {
 				float stackEv = AVRegistry.getAV(currentStack);
 				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
-				System.out.println("Consuming...");
+				//System.out.println("Consuming...");
 				if (stackEv+getAether()>emMaxStorage) {
 					//System.out.println("Has more aether than we can hold!");
 					float orig = extractAether(stackEv);
