@@ -18,6 +18,8 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.IConsumeBehavior;
+import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
@@ -108,13 +110,22 @@ public class GuiAetherManipulator extends GuiContainer {
 			}
 		}
 		if (showAV && stack != null) {
-			float ev = AVRegistry.getAV(stack);
-			float ev1 = (float) (ev
-					* ((float) Float.parseFloat(AetherCraft
-							.getOptions("consumeprecision"))) / 100.0f);
+			float ev,ev1;
+			System.out.println("Showing tooltip for "+stack.getClass());
+			if (stack.getItem() instanceof IConsumeBehavior) {
+				ev1 = ((IConsumeBehavior)stack.getItem()).getConsumeAV(stack);
+			} else {
+				ev1 = AVRegistry.getAV(stack);
+			}
+			if (stack.getItem() instanceof IProduceBehavior) {
+				ev = ((IProduceBehavior)stack.getItem()).getProduceAV(stack);
+			} else {
+				ev = AVRegistry.getAV(stack);
+			}
+			ev1 *= ((float) Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0f;
 
-			list.add("\u00a72" + "TRANSMUTE AV: " + NumberUtils.display(ev));
-			list.add("\u00a79" + "CONSUME    AV: " + NumberUtils.display(ev1));
+			list.add("\u00a72" + "PRODUCE AV: " + NumberUtils.display(ev));
+			list.add("\u00a79" + "CONSUME AV: " + NumberUtils.display(ev1));
 		}
 
 		if (list != null && stack != null) {

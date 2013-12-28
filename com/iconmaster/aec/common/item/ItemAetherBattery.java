@@ -4,19 +4,22 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IAetherStorageItem;
+import com.iconmaster.aec.aether.IConsumeBehavior;
+import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemAetherBattery extends Item implements IAetherStorageItem {
+public class ItemAetherBattery extends Item implements IAetherStorageItem, IProduceBehavior, IConsumeBehavior {
 	public ItemAetherBattery(int id) {
 		super(id);
         this.setUnlocalizedName("aec.aetherBattery");
@@ -41,7 +44,7 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem {
 				ev = tag.getFloat("AV");
 			}
 		}
-		list.add("\u00a72" + "AV: " + NumberUtils.display(ev));
+		list.add("\u00a72" + "STORED AV: " + NumberUtils.display(ev));
 	}
 
 	@Override
@@ -85,5 +88,29 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem {
 	public float getAether(ItemStack stack) {
 		if (!stack.hasTagCompound()) {return 0;}
 		return stack.getTagCompound().getFloat("AV");
+	}
+
+	@Override
+	public float getConsumeAV(ItemStack stack) {
+		//System.out.println(AVRegistry.getAV(stack)+getAether(stack));
+		return AVRegistry.getAV(stack)+getAether(stack);
+	}
+
+	@Override
+	public ItemStack consume(ItemStack stack, ItemStack[] inv) {
+		return null;
+	}
+
+	@Override
+	public float getProduceAV(ItemStack stack) {
+		//System.out.println(AVRegistry.getAV(stack)+getAether(stack));
+		return AVRegistry.getAV(stack)+getAether(stack);
+	}
+
+	@Override
+	public ItemStack produce(ItemStack stack, ItemStack[] inv) {
+		ItemStack copy = stack.copy();
+		setAether(copy, getAether(stack));
+		return copy;
 	}
 }

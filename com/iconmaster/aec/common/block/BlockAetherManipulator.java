@@ -164,4 +164,9 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 	public TileEntity createNewTileEntity(World world) {
 		return new TileEntityAetherManipulator();
 	}
+	
+	@Override
+	public boolean canTransferAV(World world, int x, int y, int z, int sideFrom) {
+		return true;
+	}
 }

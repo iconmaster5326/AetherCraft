@@ -14,7 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IAetherTransfer;
+import com.iconmaster.aec.aether.IConsumeBehavior;
+import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -174,7 +175,12 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 			// ------------------- Consuming -------------------
 			if (canConsume(currentStack)) {
-				float stackEv = AVRegistry.getAV(currentStack);
+				float stackEv;
+				if (currentStack.getItem() instanceof IConsumeBehavior) {
+					stackEv = ((IConsumeBehavior)currentStack.getItem()).getConsumeAV(currentStack);
+				} else {
+					stackEv = AVRegistry.getAV(currentStack);
+				}
 				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
 				//System.out.println("Consuming...");
 				if (stackEv+getAether()>emMaxStorage) {
@@ -192,14 +198,36 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				
 				if (!failed) {
 					this.addAether(stackEv);
-					this.decrStackSize(i, 1);
+					if (currentStack.getItem() instanceof IConsumeBehavior) {
+						ItemStack output =  ((IConsumeBehavior)currentStack.getItem()).consume(currentStack,inventory);
+						if (output == null) {
+							this.decrStackSize(i, 1);
+						} else {
+							int slot = this.getStackableSlot(output);
+							if (slot > 0) {
+								ItemStack newStack = this.getStackInSlot(slot);
+								newStack.stackSize++;
+							} else {
+								slot = this.getEmptySlot();
+								//newStack.stackSize = 1;
+								this.setInventorySlotContents(slot, output);
+							}
+						}
+					} else {
+						this.decrStackSize(i, 1);
+					}
 					doneSomething = true;
 				}
 			}
 
-			// ------------------- Creating -------------------
+			// ------------------- Producing -------------------
 			if (canProduce(topStack)) {
-				float av = AVRegistry.getAV(topStack);
+				float av;
+				if (topStack.getItem() instanceof IProduceBehavior) {
+					av = ((IProduceBehavior)topStack.getItem()).getProduceAV(topStack);
+				} else {
+					av = AVRegistry.getAV(topStack);
+				}
 				if (getAether() - av < 0) {
 					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
 					if (got < av-getAether()) {
@@ -214,14 +242,20 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				}
 				
 				if (!failed) {
+					ItemStack newStack = null;
+					if (topStack.getItem() instanceof IProduceBehavior) {
+						newStack = ((IProduceBehavior)topStack.getItem()).produce(topStack,this.inventory);
+					}
 					int slot = this.getStackableSlot(topStack);
 					if (slot > 0) {
-						ItemStack newStack = this.getStackInSlot(slot);
+						newStack = this.getStackInSlot(slot);
 						newStack.stackSize++;
 						doneSomething = true;
 					} else {
 						slot = this.getEmptySlot();
-						ItemStack newStack = new ItemStack(topStack.itemID,1,topStack.getItemDamage());
+						if (newStack == null) {
+							newStack = new ItemStack(topStack.itemID,1,topStack.getItemDamage());
+						}
 						//newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
 					}

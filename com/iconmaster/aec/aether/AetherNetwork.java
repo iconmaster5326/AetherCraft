@@ -60,7 +60,7 @@ public class AetherNetwork {
 			int ofz = off.getOffsetZ(z);
 			Block block = SideUtils.getBlockFromSide(ofx,ofy,ofz, world, side);
 			if (been.get(encodeCoords(ofx,ofy,ofz))==null && block instanceof IAetherTransfer) {
-				getAllConnectedDevices(world,ofx,ofy,ofz,a,been);
+				if (((IAetherTransfer)block).canTransferAV(world, ofx, ofy, ofz, side)) {getAllConnectedDevices(world,ofx,ofy,ofz,a,been);}
 				if (world.getBlockTileEntity(ofx, ofy, ofz)!= null && world.getBlockTileEntity(ofx, ofy, ofz) instanceof IAetherStorage) {
 					//System.out.println("Got a machine");
 					a.add(world.getBlockTileEntity(ofx, ofy, ofz));

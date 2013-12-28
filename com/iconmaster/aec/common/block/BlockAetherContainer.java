@@ -175,4 +175,9 @@ public class BlockAetherContainer extends BlockContainer implements IAetherTrans
 			}
 		}
 	}
+	
+	@Override
+	public boolean canTransferAV(World world, int x, int y, int z, int sideFrom) {
+		return true;
+	}
 }
