@@ -169,6 +169,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		ItemStack currentStack;
 		boolean doneSomething = false;
 		for (int i = 1; i < this.getSizeInventory(); i++) {
+			boolean failed = false;
 			currentStack = this.getStackInSlot(i);
 
 			// ------------------- Consuming -------------------
@@ -184,46 +185,49 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						//System.out.println("Could not transfer!");
 						addAether(left);
 						this.sync();
-						return;
+						failed = true;
 					}
 				}
 				//System.out.println("Transferred!");
-				this.addAether(stackEv);
-				this.decrStackSize(i, 1);
-				doneSomething = true;
+				
+				if (!failed) {
+					this.addAether(stackEv);
+					this.decrStackSize(i, 1);
+					doneSomething = true;
+				}
 			}
 
 			// ------------------- Creating -------------------
 			if (canProduce(topStack)) {
-				int slot = this.getStackableSlot(topStack);
-
-				if (slot > 0) {
-					ItemStack newStack = this.getStackInSlot(slot);
-					newStack.stackSize++;
-					this.extractAether(AVRegistry.getAV(topStack));
-					doneSomething = true;
+				float av = AVRegistry.getAV(topStack);
+				if (getAether() - av < 0) {
+					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
+					if (got < av-getAether()) {
+						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, got);
+						doneSomething = true;
+						failed = true;
+					} else {
+						this.setAether(0);
+					}
 				} else {
-					slot = this.getEmptySlot();
-
+					this.extractAether(av);
+				}
+				
+				if (!failed) {
+					int slot = this.getStackableSlot(topStack);
 					if (slot > 0) {
-						float av = AVRegistry.getAV(topStack);
-						if (getAether() - av < 0) {
-							float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av);
-							if (got < av) {
-								this.sync();
-								return;
-							}
-						} else {
-							this.extractAether(av);
-						}
-						
+						ItemStack newStack = this.getStackInSlot(slot);
+						newStack.stackSize++;
+						doneSomething = true;
+					} else {
+						slot = this.getEmptySlot();
 						ItemStack newStack = new ItemStack(topStack.itemID,1,topStack.getItemDamage());
 						//newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
-						
-						doneSomething = true;
 					}
 				}
+				
+				doneSomething = true;
 			}
 			if (!Boolean.parseBoolean(AetherCraft
 					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
@@ -303,6 +307,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	public int getStackableSlot(ItemStack cStack) {
 		ItemStack stack;
+		if (cStack == null) {return 1;}
 		for (int i = 1; i < this.inventory.length; i++) {
 			stack = this.getStackInSlot(i);
 
@@ -441,6 +446,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 	public boolean canProduce(ItemStack currentItem) {
 		float av = AVRegistry.getAV(currentItem);
+		if (this.getStackableSlot(currentItem)<=0 && this.getEmptySlot() <=0) {return false;}
 		return av>0 && av<=getPossibleAether();
 	}
 }

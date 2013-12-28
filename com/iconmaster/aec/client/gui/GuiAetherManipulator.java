@@ -107,8 +107,7 @@ public class GuiAetherManipulator extends GuiContainer {
 				showAV = false;
 			}
 		}
-		if (showAV && stack != null
-				&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
+		if (showAV && stack != null) {
 			float ev = AVRegistry.getAV(stack);
 			float ev1 = (float) (ev
 					* ((float) Float.parseFloat(AetherCraft

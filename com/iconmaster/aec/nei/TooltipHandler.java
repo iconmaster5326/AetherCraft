@@ -34,8 +34,7 @@ public class TooltipHandler implements IContainerTooltipHandler {
 				}
 			}
 			if (showAV
-					&& stack != null
-					&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
+					&& stack != null) {
 				float ev = AVRegistry.getAV(stack);
 				float ev1 =  (float) ((float) (ev * Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0);
 
@@ -52,8 +51,7 @@ public class TooltipHandler implements IContainerTooltipHandler {
 				}
 			}
 			if (showAV
-					&& stack != null
-					&& stack.itemID != AetherCraft.itemAetherBattery.itemID) {
+					&& stack != null) {
 				float ev = AVRegistry.getAV(stack);
 				currenttip.add("\u00a72" + "AV: " + NumberUtils.display(ev));
 			}
