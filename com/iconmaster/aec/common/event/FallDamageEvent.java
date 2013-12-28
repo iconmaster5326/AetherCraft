@@ -7,16 +7,13 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import com.iconmaster.aec.common.AetherCraft;
 
-public class FlyingRingEventReciever {
+public class FallDamageEvent {
 	@ForgeSubscribe(priority = EventPriority.LOWEST)
 	public void LivingHurtEventHandler(LivingFallEvent event) {
 		if (event.entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
-			if (player.inventory
-					.hasItem(AetherCraft.itemFlyingRing.itemID)) {
-				if (event.isCancelable()) {
+			if (player.inventory.hasItem(AetherCraft.itemFlyingRing.itemID) && event.isCancelable()) {
 					event.setCanceled(true);
-				}
 			}
 		}
 	}

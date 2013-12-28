@@ -112,7 +112,7 @@ public class DynamicAVRegister {
 //						System.out.println("	Failed: Geting subrecipe failed!");
 						return 0;
 					}
-					System.out.println("		}");
+					//System.out.println("		}");
 				}
 				if (av<=0) {av = AVRegistry.getAbsoluteAV(item);}
 				if (av<=0) {

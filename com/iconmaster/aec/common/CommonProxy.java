@@ -10,18 +10,15 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.iconmaster.aec.client.gui.GuiAetherContainer;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
-import com.iconmaster.aec.common.event.FlyingRingEventReciever;
+import com.iconmaster.aec.common.event.FallDamageEvent;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
-import com.iconmaster.aec.common.handler.tick.FlyingRingTickHandler;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 public class CommonProxy implements IGuiHandler {
 	public void registerRenderInformation() {
@@ -101,16 +98,13 @@ public class CommonProxy implements IGuiHandler {
 		return null;
 	}
 
-	public void registerTickHandlers() {
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			TickRegistry.registerScheduledTickHandler(
-					new FlyingRingTickHandler(), Side.SERVER);
-		}
+	public void registerHandlers() {
+
 	}
 
 	public void registerEventHandlers() {
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			MinecraftForge.EVENT_BUS.register(new FlyingRingEventReciever());
+			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
 	}
 }

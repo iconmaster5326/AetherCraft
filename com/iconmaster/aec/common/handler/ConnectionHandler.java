@@ -1,4 +1,4 @@
-package com.iconmaster.aec.common.handler.network;
+package com.iconmaster.aec.common.handler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectOutputStream;

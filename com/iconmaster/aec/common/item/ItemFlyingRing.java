@@ -1,17 +1,22 @@
 package com.iconmaster.aec.common.item;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.InventoryUtils;
 
+import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -35,6 +40,7 @@ public class ItemFlyingRing extends Item {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack stack, EntityPlayer player) {
+		System.out.println("RING WAS DROPPED LOCALLY");
 		deactivateRing(stack,player);
 		return super.onDroppedByPlayer(stack, player);
 	}
@@ -73,6 +79,23 @@ public class ItemFlyingRing extends Item {
 		stack.setItemDamage(0);
 		player.capabilities.allowFlying = false;
 		player.capabilities.isFlying = false;
+		
+//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//		DataOutputStream outputStream = new DataOutputStream(bos);
+//
+//		try {
+//			outputStream.writeInt(0);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		Packet250CustomPayload packet = new Packet250CustomPayload();
+//		packet.channel = "AecFlyRing";
+//		packet.data = bos.toByteArray();
+//		packet.length = bos.size();
+//		PacketDispatcher.sendPacketToServer(packet);
+		
+		player.sendPlayerAbilities();
 	}
 	
 	public boolean canRingFunction(ItemStack stack,EntityPlayer player) {

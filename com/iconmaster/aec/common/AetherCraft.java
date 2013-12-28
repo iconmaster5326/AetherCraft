@@ -16,7 +16,7 @@ import com.iconmaster.aec.client.ClientPacketHandler;
 import com.iconmaster.aec.command.ConfigCommand;
 import com.iconmaster.aec.common.block.BlockAetherContainer;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
-import com.iconmaster.aec.common.handler.network.ConnectionHandler;
+import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 
@@ -109,7 +109,7 @@ public class AetherCraft {
 		proxy.registerBlocks();
 		proxy.addNames();
 		proxy.addRecipes();
-		proxy.registerTickHandlers();
+		proxy.registerHandlers();
 		proxy.registerEventHandlers();
 		
 		LanguageRegistry.instance().addStringLocalization("itemGroup.aetherCraft", "en_US", "AetherCraft");
