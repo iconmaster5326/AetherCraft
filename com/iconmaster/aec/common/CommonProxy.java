@@ -36,6 +36,8 @@ public class CommonProxy implements IGuiHandler {
 				"energyManipulator");
 		GameRegistry.registerBlock(AetherCraft.blockAetherContainer,
 				"energyContainer");
+		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,
+				"energyConduit");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,
 				"energyBattery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -49,6 +51,8 @@ public class CommonProxy implements IGuiHandler {
 				"Aether Manipulator");
 		LanguageRegistry.addName(AetherCraft.blockAetherContainer,
 				"Aether Container");
+		LanguageRegistry.addName(AetherCraft.blockAetherConduit,
+				"Aether Conduit");
 		LanguageRegistry.addName(AetherCraft.itemAetherBattery,
 				"Aether Battery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -60,6 +64,7 @@ public class CommonProxy implements IGuiHandler {
 	public void addRecipes() {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aba","cdc","efe",'a',Item.diamond,'b',Item.emerald,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Item.cauldron);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.diamond,'f',Block.obsidian);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,6,0), "aaa","bbb","aaa",'a',Block.obsidian,'b',new ItemStack(Item.dyePowder,1,4));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing), "aba","c c","ada",'a',Item.ingotGold,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 	}

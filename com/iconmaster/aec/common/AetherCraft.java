@@ -13,7 +13,9 @@ import net.minecraftforge.common.Configuration;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.client.ClientPacketHandler;
+import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.command.ConfigCommand;
+import com.iconmaster.aec.common.block.BlockAetherConduit;
 import com.iconmaster.aec.common.block.BlockAetherContainer;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
@@ -54,6 +56,7 @@ public class AetherCraft {
 
 	public static Block blockAetherManipulator;
 	public static Block blockAetherContainer;
+	public static Block blockAetherConduit;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 
@@ -94,6 +97,8 @@ public class AetherCraft {
 				Material.rock).setLightValue(0.3f);
 		blockAetherContainer = new BlockAetherContainer(blockIds.get(1),
 				Material.rock).setLightValue(0.2f);
+		blockAetherConduit = new BlockAetherConduit(blockIds.get(2),
+				Material.rock).setLightValue(0.2f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
 
@@ -111,7 +116,7 @@ public class AetherCraft {
 		proxy.addRecipes();
 		proxy.registerHandlers();
 		proxy.registerEventHandlers();
-		
+		ClientProxy.setCustomRenderers();
 		LanguageRegistry.instance().addStringLocalization("itemGroup.aetherCraft", "en_US", "AetherCraft");
 	}
 	
@@ -214,6 +219,7 @@ public class AetherCraft {
 		// ------------------- REGISTER BLOCK/ITEM IDs -------------------
 		blockIds.add(forgeConfig.getBlock("aethermanipulator", 2690).getInt());
 		blockIds.add(forgeConfig.getBlock("aethercontainer", 2691).getInt());
+		blockIds.add(forgeConfig.getBlock("aetherconduit", 2692).getInt());
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		forgeConfig.save();
