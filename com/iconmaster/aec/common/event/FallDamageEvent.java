@@ -1,6 +1,7 @@
 package com.iconmaster.aec.common.event;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.EventPriority;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -12,7 +13,7 @@ public class FallDamageEvent {
 	public void LivingHurtEventHandler(LivingFallEvent event) {
 		if (event.entityLiving instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) event.entityLiving;
-			if (player.inventory.hasItem(AetherCraft.itemFlyingRing.itemID) && event.isCancelable()) {
+			if (player.inventory.hasItemStack(new ItemStack(AetherCraft.itemFlyingRing.itemID,1,1)) && event.isCancelable()) {
 					event.setCanceled(true);
 			}
 		}
