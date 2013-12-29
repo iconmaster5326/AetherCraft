@@ -281,12 +281,15 @@ public class TileEntityAetherContainer extends TileEntity implements
 
 	@Override
 	public float extractAether(float av) {
+		//System.out.println("Got "+av+" AV.");
 		if (this.energy - av >= 0) {
+			//System.out.println("Had enough AV. Returning "+av+" AV.");
 			this.energy -= av;
 			this.sync();
 			return av;
 		}
-		float rest = av - this.energy;
+		float rest = this.energy;
+		//System.out.println("Did not have enough AV. Returning "+rest+" AV.");
 		this.energy = 0;
 		this.sync();
 		return rest;

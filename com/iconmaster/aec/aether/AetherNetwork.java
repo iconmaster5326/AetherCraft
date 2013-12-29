@@ -22,13 +22,14 @@ public class AetherNetwork {
 	}
 	
 	public static float sendAV(World world,int x,int y,int z,float av) {
-	float left = av;
-			ArrayList devices = getAllConnectedDevices(world,x,y,z);
+		float left = av;
+		ArrayList devices = getAllConnectedDevices(world,x,y,z);
 		for (Object device : devices) {
 			//System.out.println("Adding "+left);
 			left = ((IAetherStorage)device).addAether(left);
+			//System.out.println("Left is "+left);
 		}
-		//System.out.println("Returning "+left);
+		//System.out.println("Requested "+av+". Returning "+left);
 		return left;
 	}
 		
@@ -38,8 +39,9 @@ public class AetherNetwork {
 		for (Object device : devices) {
 			//System.out.println("Extraxcting "+(av-got));
 			got += ((IAetherStorage)device).extractAether(av-got);
+			//System.out.println("Got is now "+(got));
 		}
-		//System.out.println("Returning "+(got));
+		//System.out.println("Requested "+av+". Returning "+got);
 		return got;
 	}
 	
@@ -51,14 +53,14 @@ public class AetherNetwork {
 	
 	public static ArrayList getAllConnectedDevices(World world, int x, int y, int z,ArrayList a,HashMap been) {
 		been.put(encodeCoords(x,y,z),true);
-		//System.out.println("Visiting "+x+" "+y+" "+z);
+		////System.out.println("Visiting "+x+" "+y+" "+z);
 		for (int side : SideUtils.allSides) {
-			//System.out.println("SIDE "+side);
+			////System.out.println("SIDE "+side);
 			SideUtils.Offset off = new SideUtils.Offset(side);
 			int ofx = off.getOffsetX(x);
 			int ofy = off.getOffsetY(y);
 			int ofz = off.getOffsetZ(z);
-			Block block = SideUtils.getBlockFromSide(ofx,ofy,ofz, world, side);
+			Block block = SideUtils.getBlockFromSide(x,y,z, world, side);
 			if (been.get(encodeCoords(ofx,ofy,ofz))==null && block instanceof IAetherTransfer) {
 				if (((IAetherTransfer)block).canTransferAV(world, ofx, ofy, ofz, side)) {getAllConnectedDevices(world,ofx,ofy,ofz,a,been);}
 				if (world.getBlockTileEntity(ofx, ofy, ofz)!= null && world.getBlockTileEntity(ofx, ofy, ofz) instanceof IAetherStorage) {

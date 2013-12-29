@@ -3,6 +3,7 @@ package com.iconmaster.aec.common.tileentity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -33,6 +34,8 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	// 0 = Bottom, 1 = Top, 2 = North, 3 = South, 4 = East, 5 = West
 	private boolean connectedSides[];
+
+	private boolean db = false;
 
 	public TileEntityAetherManipulator() {
 		inventory = new ItemStack[55];
@@ -164,6 +167,8 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	private void handleAether() {
+		if (db ) {return;}
+		db = true;
 		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
@@ -182,22 +187,21 @@ public class TileEntityAetherManipulator extends TileEntity implements
 					stackEv = AVRegistry.getAV(currentStack);
 				}
 				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
-				//System.out.println("Consuming...");
+				//System.out.println("Consuming... ");
 				if (stackEv+getAether()>emMaxStorage) {
 					//System.out.println("Has more aether than we can hold!");
-					float orig = extractAether(stackEv);
-					float left = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, orig);
+					float left = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv);
 					if (left > 0) {
 						//System.out.println("Could not transfer!");
-						addAether(left);
-						this.sync();
+						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-left);
 						failed = true;
 					}
+				} else {
+					energy += stackEv;
 				}
-				//System.out.println("Transferred!");
+				//System.out.println("Done Consuming! ");
 				
 				if (!failed) {
-					this.addAether(stackEv);
 					if (currentStack.getItem() instanceof IConsumeBehavior) {
 						ItemStack output =  ((IConsumeBehavior)currentStack.getItem()).consume(currentStack,inventory);
 						if (output == null) {
@@ -222,6 +226,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 			// ------------------- Producing -------------------
 			if (canProduce(topStack)) {
+				//System.out.println("Producing...");
 				float av;
 				if (topStack.getItem() instanceof IProduceBehavior) {
 					av = ((IProduceBehavior)topStack.getItem()).getProduceAV(topStack);
@@ -229,18 +234,20 @@ public class TileEntityAetherManipulator extends TileEntity implements
 					av = AVRegistry.getAV(topStack);
 				}
 				if (getAether() - av < 0) {
+					//System.out.println("Not enough AV!");
 					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
 					if (got < av-getAether()) {
+						//System.out.println("Couldn't get enough!");
 						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, got);
-						doneSomething = true;
 						failed = true;
 					} else {
-						this.setAether(0);
+						this.energy = 0;
 					}
 				} else {
-					this.extractAether(av);
+					energy -= av;
 				}
 				
+				//System.out.println("Done Producing!");
 				if (!failed) {
 					ItemStack newStack = null;
 					if (topStack.getItem() instanceof IProduceBehavior) {
@@ -263,16 +270,20 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				
 				doneSomething = true;
 			}
+			
 			if (!Boolean.parseBoolean(AetherCraft
 					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
 				this.sync();
+				db = false;
 				return;
 			}
 		}
 		if (doneSomething) {
 			this.sync();
+			db = false;
 			return;
 		}
+		db = false;
 	}
 
 	public void setPoweredState(boolean state) {
@@ -324,7 +335,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		ItemStack stack = this.getStackInSlot(0);
 
 		if (stack != null) {
-			this.progress = (int) ((float) this.getAether()
+			this.progress = (int) ((float) this.getPossibleAether()
 					/ (float) AVRegistry.getAV(stack) * 100.0f);
 
 			if (this.progress > 100) {
@@ -382,13 +393,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 	}
 
 	@Override
-	public float extractAether(float l) {
-		if (this.energy - l >= 0) {
-			this.energy -= l;
+	public float extractAether(float av) {
+		if (this.energy - av >= 0) {
+			this.energy -= av;
 			this.sync();
-			return l;
+			return av;
 		}
-		float rest = l - this.energy;
+		float rest = av - this.energy;
 		this.energy = 0;
 		this.sync();
 		return rest;

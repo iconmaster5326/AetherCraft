@@ -38,7 +38,6 @@ public class TooltipHandler implements IContainerTooltipHandler {
 			if (showAV
 					&& stack != null) {
 				float ev,ev1;
-				System.out.println("Showing tooltip for "+stack.getClass());
 				if (stack.getItem() instanceof IConsumeBehavior) {
 					ev1 = ((IConsumeBehavior)stack.getItem()).getConsumeAV(stack);
 				} else {
