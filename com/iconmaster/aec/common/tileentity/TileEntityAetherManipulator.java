@@ -190,12 +190,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				//System.out.println("Consuming... ");
 				if (stackEv+getAether()>emMaxStorage) {
 					//System.out.println("Has more aether than we can hold!");
-					float left = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv-getAether());
-					if (left > 0) {
+					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-emMaxStorage);
+					if (!canSend) {
 						//System.out.println("Could not transfer!");
-						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-getAether()-left);
+						//AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-getAether()-left);
 						failed = true;
 					} else {
+						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-emMaxStorage);
 						energy = emMaxStorage;
 					}
 				} else {
@@ -237,12 +238,13 @@ public class TileEntityAetherManipulator extends TileEntity implements
 				}
 				if (getAether() - av < 0) {
 					//System.out.println("Not enough AV!");
-					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
-					if (got < av-getAether()) {
+					boolean canGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
+					if (!canGet) {
 						//System.out.println("Couldn't get enough!");
-						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, got);
+						//AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, got);
 						failed = true;
 					} else {
+						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
 						this.energy = 0;
 					}
 				} else {
@@ -268,9 +270,11 @@ public class TileEntityAetherManipulator extends TileEntity implements
 						//newStack.stackSize = 1;
 						this.setInventorySlotContents(slot, newStack);
 					}
+					
+					doneSomething = true;
 				}
 				
-				doneSomething = true;
+				
 			}
 			
 			if (!Boolean.parseBoolean(AetherCraft
@@ -380,15 +384,15 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	@Override
 	public float addAether(float ev) {
-		float acmaxstorage = Float.parseFloat(AetherCraft
+		float ammaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("ammaxstorage"));
-		if (this.energy + ev <= acmaxstorage) {
+		if (this.energy + ev <= ammaxstorage) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			float rest = (this.energy + ev) - acmaxstorage;
-			this.energy = acmaxstorage;
+			float rest = (this.energy + ev) - ammaxstorage;
+			this.energy = ammaxstorage;
 			this.sync();
 			return rest;
 		}
@@ -409,16 +413,42 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		this.sync();
 		return rest;
 	}
-	
-	@Override
-	public void setAether(float ev) {
-		this.energy = ev;
-		this.sync();
-	}
 
 	@Override
 	public float getAether() {
 		return this.energy;
+	}
+	
+	@Override
+	public float tryAddAether(float ev) {
+		float ammaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("ammaxstorage"));
+		if (this.energy + ev <= ammaxstorage) {
+			//this.energy += ev;
+			//this.sync();
+			return 0;
+		} else {
+			float rest = (this.energy + ev) - ammaxstorage;
+			//this.energy = ammaxstorage;
+			//this.sync();
+			return rest;
+		}
+	}
+
+	@Override
+	public float tryExtractAether(float av) {
+		//System.out.println("Got "+av+" AV.");
+		if (this.energy - av >= 0) {
+			//System.out.println("Had enough AV. Returning "+av+" AV.");
+			//this.energy -= av;
+			//this.sync();
+			return av;
+		}
+		float rest = this.energy;
+		//System.out.println("Did not have enough AV. Returning "+rest+" AV.");
+		//this.energy = 0;
+		//this.sync();
+		return rest;
 	}
 
 	@Override

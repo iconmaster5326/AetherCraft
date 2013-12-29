@@ -7,7 +7,11 @@ public interface IAetherStorageItem {
 
 	public float extractAether(ItemStack stack,float av);
 
-	public void setAether(ItemStack stack,float av);
+	//public void setAether(ItemStack stack,float av);
 
 	public float getAether(ItemStack stack);
+	
+	public float tryAddAether(ItemStack stack, float av);
+	
+	public float tryExtractAether(ItemStack stack, float av);
 }

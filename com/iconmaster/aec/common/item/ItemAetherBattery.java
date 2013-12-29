@@ -76,7 +76,6 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem, IProd
 		return av;
 	}
 
-	@Override
 	public void setAether(ItemStack stack, float av) {
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
@@ -112,5 +111,34 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem, IProd
 		ItemStack copy = stack.copy();
 		setAether(copy, getAether(stack));
 		return copy;
+	}
+
+	@Override
+	public float tryAddAether(ItemStack stack, float av) {
+		if (!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		float max = Float.parseFloat(AetherCraft.getOptions("abatterymaxstorage"));
+		float has = stack.getTagCompound().getFloat("AV");
+		if (has + av > max) {
+			//this.setAether(stack,max);
+			return (has+av)-max;
+		}
+		//this.setAether(stack,has+av);
+		return 0;
+	}
+
+	@Override
+	public float tryExtractAether(ItemStack stack, float av) {
+		if (!stack.hasTagCompound()) {
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		float has = stack.getTagCompound().getFloat("AV");
+		if (has - av < 0) {
+			//this.setAether(stack,0);
+			return has;
+		}
+		//this.setAether(stack,has-av);
+		return av;
 	}
 }

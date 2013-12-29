@@ -296,13 +296,39 @@ public class TileEntityAetherContainer extends TileEntity implements
 	}
 
 	@Override
-	public void setAether(float ev) {
-		this.energy = ev;
-		this.sync();
+	public float getAether() {
+		return this.energy;
+	}
+	
+	@Override
+	public float tryAddAether(float ev) {
+		float acmaxstorage = Float.parseFloat(AetherCraft
+				.getOptions("acmaxstorage"));
+		if (this.energy + ev <= acmaxstorage) {
+			//this.energy += ev;
+			//this.sync();
+			return 0;
+		} else {
+			float rest = (this.energy + ev) - acmaxstorage;
+			//this.energy = acmaxstorage;
+			//this.sync();
+			return rest;
+		}
 	}
 
 	@Override
-	public float getAether() {
-		return this.energy;
+	public float tryExtractAether(float av) {
+		//System.out.println("Got "+av+" AV.");
+		if (this.energy - av >= 0) {
+			//System.out.println("Had enough AV. Returning "+av+" AV.");
+			//this.energy -= av;
+			//this.sync();
+			return av;
+		}
+		float rest = this.energy;
+		//System.out.println("Did not have enough AV. Returning "+rest+" AV.");
+		//this.energy = 0;
+		//this.sync();
+		return rest;
 	}
 }
