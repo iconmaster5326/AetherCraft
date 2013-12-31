@@ -76,4 +76,9 @@ public class BlockAetherConduit extends Block implements IAetherTransfer {
 	public boolean canConnect(int blockId) {
 		return (Block.blocksList [blockId] instanceof IAetherTransfer);
 	}
+	
+	@Override
+	public float getMaxTransferAV(World world, int x,int y,int z,int side) {
+		return Float.MAX_VALUE;
+	}
 }

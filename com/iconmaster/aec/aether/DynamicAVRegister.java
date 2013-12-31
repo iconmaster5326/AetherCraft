@@ -230,8 +230,6 @@ public class DynamicAVRegister {
 		}
 		if (Loader.isModLoaded("AppliedEnergistics")) {
 			try {
-				//registerHandler(map,new ShapedOreRecipeHandler(),Class.forName("appeng.recipes.AEShapedOreRecipe"));
-				//registerHandler(map,new ShapelessOreRecipeHandler(),Class.forName("appeng.recipes.AEShapelessOreRecipe"));
 				registerHandler(map,new AECraftingHandler(),Class.forName("appeng.recipes.AEShapedQuartzRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();

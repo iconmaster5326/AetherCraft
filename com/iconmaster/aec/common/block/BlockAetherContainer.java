@@ -180,4 +180,9 @@ public class BlockAetherContainer extends BlockContainer implements IAetherTrans
 	public boolean canTransferAV(World world, int x, int y, int z, int sideFrom) {
 		return true;
 	}
+	
+	@Override
+	public float getMaxTransferAV(World world, int x,int y,int z,int side) {
+		return Float.MAX_VALUE;
+	}
 }
