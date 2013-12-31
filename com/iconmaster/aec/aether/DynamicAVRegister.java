@@ -13,7 +13,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-import buildcraft.api.recipes.AssemblyRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
@@ -236,7 +235,11 @@ public class DynamicAVRegister {
 			}
 		}
 		if (Loader.isModLoaded("BuildCraft|Core")) {
-			registerHandler(map,new AssemblyRecipeHandler(),AssemblyRecipe.class);
+			try {
+				registerHandler(map,new AssemblyRecipeHandler(),Class.forName("buildcraft.api.recipes.AssemblyRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return map;
 	}

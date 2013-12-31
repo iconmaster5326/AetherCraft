@@ -25,7 +25,7 @@ import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherManipulator extends TileEntity implements
 		ISidedInventory, IAetherStorage {
-	public static final byte energyBlockType = 0;
+	public static final byte energyBlockType = AetherCraft.GUI_ID_MANIPULATOR;
 
 	private ItemStack[] inventory;
 	private float energy;

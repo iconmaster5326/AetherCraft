@@ -8,12 +8,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.iconmaster.aec.client.gui.GuiAetherCondenser;
 import com.iconmaster.aec.client.gui.GuiAetherContainer;
+import com.iconmaster.aec.client.gui.GuiAetherExtractor;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.common.event.FallDamageEvent;
+import com.iconmaster.aec.common.gui.ContainerAetherCondenser;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
+import com.iconmaster.aec.common.gui.ContainerAetherExtractor;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -29,17 +35,25 @@ public class CommonProxy implements IGuiHandler {
 				"gra.tileentityem");
 		GameRegistry.registerTileEntity(TileEntityAetherContainer.class,
 				"gra.tileentityec");
+		GameRegistry.registerTileEntity(TileEntityAetherExtractor.class,
+				"aec.extractor");
+		GameRegistry.registerTileEntity(TileEntityAetherCondenser.class,
+				"aec.condenser");
 	}
 
 	public void registerBlocks() {
 		GameRegistry.registerBlock(AetherCraft.blockAetherManipulator,
-				"energyManipulator");
+				"aetherManipulator");
 		GameRegistry.registerBlock(AetherCraft.blockAetherContainer,
-				"energyContainer");
+				"aetherContainer");
 		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,
-				"energyConduit");
+				"aetherConduit");
+		GameRegistry.registerBlock(AetherCraft.blockAetherExtractor,
+				"aetherExtractor");
+		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,
+				"aetherCondenser");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,
-				"energyBattery");
+				"aetherBattery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,
 					"flyingRing");
@@ -53,6 +67,10 @@ public class CommonProxy implements IGuiHandler {
 				"Aether Container");
 		LanguageRegistry.addName(AetherCraft.blockAetherConduit,
 				"Aether Conduit");
+		LanguageRegistry.addName(AetherCraft.blockAetherExtractor,
+				"Aether Extractor");
+		LanguageRegistry.addName(AetherCraft.blockAetherCondenser,
+				"Aether Condenser");
 		LanguageRegistry.addName(AetherCraft.itemAetherBattery,
 				"Aether Battery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -74,14 +92,14 @@ public class CommonProxy implements IGuiHandler {
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 
-		if (tileEntity instanceof TileEntityAetherManipulator
-				&& ID == AetherCraft.GUI_ID_EM) {
-			return new ContainerAetherManipulator(player.inventory,
-					(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer
-				&& ID == AetherCraft.GUI_ID_EC) {
-			return new ContainerAetherContainer(player.inventory,
-					(TileEntityAetherContainer) tileEntity);
+		if (tileEntity instanceof TileEntityAetherManipulator && ID == AetherCraft.GUI_ID_MANIPULATOR) {
+			return new ContainerAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherContainer && ID == AetherCraft.GUI_ID_CONTAINER) {
+			return new ContainerAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherExtractor && ID == AetherCraft.GUI_ID_EXTRACTOR) {
+			return new ContainerAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
+			return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
 		}
 		return null;
 	}
@@ -91,14 +109,14 @@ public class CommonProxy implements IGuiHandler {
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getBlockTileEntity(x, y, z);
 
-		if (tileEntity instanceof TileEntityAetherManipulator
-				&& ID == AetherCraft.GUI_ID_EM) {
-			return new GuiAetherManipulator(player.inventory,
-					(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer
-				&& ID == AetherCraft.GUI_ID_EC) {
-			return new GuiAetherContainer(player.inventory,
-					(TileEntityAetherContainer) tileEntity);
+		if (tileEntity instanceof TileEntityAetherManipulator && ID == AetherCraft.GUI_ID_MANIPULATOR) {
+			return new GuiAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherContainer && ID == AetherCraft.GUI_ID_CONTAINER) {
+			return new GuiAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherExtractor && ID == AetherCraft.GUI_ID_EXTRACTOR) {
+			return new GuiAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
+			return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
 		}
 		return null;
 	}

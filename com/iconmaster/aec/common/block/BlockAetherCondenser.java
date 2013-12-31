@@ -17,18 +17,19 @@ import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockAetherManipulator extends BlockContainer implements IAetherTransfer {
+public class BlockAetherCondenser extends BlockContainer implements IAetherTransfer {
 	private Icon blockIconTop, blockIconBottom;
 
-	public BlockAetherManipulator(int id, Material material) {
+	public BlockAetherCondenser(int id, Material material) {
 		super(id, material);
 		this.setHardness(1.5f);
-        this.setUnlocalizedName("aec.aetherManipulator");
+        this.setUnlocalizedName("aec.aetherCondenser");
         this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 
@@ -86,9 +87,9 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.blockIcon = iconRegister
-				.registerIcon("aec:aetherManipulatorSide");
+				.registerIcon("aec:aetherCondenserSide");
 		this.blockIconTop = iconRegister
-				.registerIcon("aec:aetherManipulatorTop");
+				.registerIcon("aec:aetherCondenserTop");
 		this.blockIconBottom = iconRegister
 				.registerIcon("aec:aetherManipulatorBottom");
 	}
@@ -100,8 +101,7 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 	public void onBlockAdded(World world, int x, int y, int z) {
 		if (!world.isRemote) {
 			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-			TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
-					.getBlockTileEntity(x, y, z);
+			TileEntityAetherCondenser tileEntity = (TileEntityAetherCondenser) world.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
 			}
@@ -115,8 +115,7 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
     public void updateTick(World world, int x, int y, int z, Random random)
     {
 		boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-		TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
-				.getBlockTileEntity(x, y, z);
+		TileEntityAetherCondenser tileEntity = (TileEntityAetherCondenser) world.getBlockTileEntity(x, y, z);
 		if (tileEntity != null) {
 			tileEntity.setPoweredState(state);
 		}
@@ -131,8 +130,7 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 	public void onNeighborBlockChange(World world, int x, int y, int z, int par5) {
 		if (!world.isRemote) {
 			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-			TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
-					.getBlockTileEntity(x, y, z);
+			TileEntityAetherCondenser tileEntity = (TileEntityAetherCondenser) world.getBlockTileEntity(x, y, z);
 			if (tileEntity != null) {
 				tileEntity.setPoweredState(state);
 			}
@@ -142,14 +140,13 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z,
 			EntityPlayer player, int par6, float par7, float par8, float par9) {
-		TileEntityAetherManipulator tileEntity = (TileEntityAetherManipulator) world
-				.getBlockTileEntity(x, y, z);
+		TileEntityAetherCondenser tileEntity = (TileEntityAetherCondenser) world.getBlockTileEntity(x, y, z);
 
 		if (tileEntity == null || player.isSneaking()) {
 			return false;
 		}
 
-		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_MANIPULATOR, world, x, y, z);
+		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_CONDENSER, world, x, y, z);
 		return true;
 	}
 
@@ -162,7 +159,7 @@ public class BlockAetherManipulator extends BlockContainer implements IAetherTra
 
 	@Override
 	public TileEntity createNewTileEntity(World world) {
-		return new TileEntityAetherManipulator();
+		return new TileEntityAetherCondenser();
 	}
 	
 	@Override

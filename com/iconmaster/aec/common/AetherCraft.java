@@ -15,8 +15,10 @@ import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.client.ClientPacketHandler;
 import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.command.ConfigCommand;
+import com.iconmaster.aec.common.block.BlockAetherCondenser;
 import com.iconmaster.aec.common.block.BlockAetherConduit;
 import com.iconmaster.aec.common.block.BlockAetherContainer;
+import com.iconmaster.aec.common.block.BlockAetherExtractor;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
@@ -44,8 +46,10 @@ public class AetherCraft {
 	public static final String VERSION = "@VERSION@";
 
 	public static final String DEFAULT_CONFIG_FILE = "default.cfg";
-	public static final int GUI_ID_EM = 0;
-	public static final int GUI_ID_EC = 1;
+	public static final int GUI_ID_MANIPULATOR = 0;
+	public static final int GUI_ID_CONTAINER = 1;
+	public static final int GUI_ID_EXTRACTOR = 2;
+	public static final int GUI_ID_CONDENSER = 3;
 	public static final byte PACKET_TTID_CONFIG = 0;
 
 	@Instance("AetherCraft")
@@ -57,6 +61,8 @@ public class AetherCraft {
 	public static Block blockAetherManipulator;
 	public static Block blockAetherContainer;
 	public static Block blockAetherConduit;
+	public static Block blockAetherExtractor;
+	public static Block blockAetherCondenser;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 
@@ -93,11 +99,15 @@ public class AetherCraft {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderInformation();
 		// Blocks
-		blockAetherManipulator = new BlockAetherManipulator(blockIds.get(0),
+		blockAetherManipulator  = new BlockAetherManipulator(blockIds.get(0),
 				Material.rock).setLightValue(0.3f);
-		blockAetherContainer = new BlockAetherContainer(blockIds.get(1),
+		blockAetherContainer  = new BlockAetherContainer(blockIds.get(1),
 				Material.rock).setLightValue(0.2f);
-		blockAetherConduit = new BlockAetherConduit(blockIds.get(2),
+		blockAetherConduit  = new BlockAetherConduit(blockIds.get(2),
+				Material.rock).setLightValue(0.2f);
+		blockAetherExtractor = new BlockAetherExtractor(blockIds.get(3),
+				Material.rock).setLightValue(0.2f);
+		blockAetherCondenser = new BlockAetherCondenser(blockIds.get(4),
 				Material.rock).setLightValue(0.2f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
@@ -220,6 +230,8 @@ public class AetherCraft {
 		blockIds.add(forgeConfig.getBlock("aethermanipulator", 2690).getInt());
 		blockIds.add(forgeConfig.getBlock("aethercontainer", 2691).getInt());
 		blockIds.add(forgeConfig.getBlock("aetherconduit", 2692).getInt());
+		blockIds.add(forgeConfig.getBlock("aetherextractor", 2693).getInt());
+		blockIds.add(forgeConfig.getBlock("aethercondenser", 2694).getInt());
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		forgeConfig.save();

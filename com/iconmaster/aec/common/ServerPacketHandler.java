@@ -8,7 +8,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
+import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -32,7 +34,7 @@ public class ServerPacketHandler implements IPacketHandler {
 		try {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
-			case 0:
+			case AetherCraft.GUI_ID_MANIPULATOR:
 				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
@@ -40,13 +42,25 @@ public class ServerPacketHandler implements IPacketHandler {
 					tem.sync();
 				}
 				break;
-			case 1:
+			case AetherCraft.GUI_ID_CONTAINER:
 				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tec != null) {
 					tec.sync();
 				}
+			case AetherCraft.GUI_ID_EXTRACTOR:
+				TileEntityAetherExtractor tea = (TileEntityAetherExtractor) player.worldObj
+				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+					if (tea != null) {
+						tea.sync();
+					}
+			case AetherCraft.GUI_ID_CONDENSER:
+				TileEntityAetherCondenser tec2 = (TileEntityAetherCondenser) player.worldObj
+				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+					if (tec2 != null) {
+						tec2.sync();
+					}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

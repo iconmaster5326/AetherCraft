@@ -12,7 +12,9 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -40,7 +42,7 @@ public class ClientPacketHandler implements IPacketHandler {
 		try {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
-			case 0:
+			case AetherCraft.GUI_ID_MANIPULATOR:
 				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
@@ -48,12 +50,28 @@ public class ClientPacketHandler implements IPacketHandler {
 					tem.recieveSync(dis.readFloat());
 				}
 				break;
-			case 1:
+			case AetherCraft.GUI_ID_CONTAINER:
 				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
 						.getBlockTileEntity(dis.readInt(), dis.readInt(),
 								dis.readInt());
 				if (tec != null) {
 					tec.recieveSync(dis.readFloat());
+				}
+				break;
+			case AetherCraft.GUI_ID_EXTRACTOR:
+				TileEntityAetherExtractor tea = (TileEntityAetherExtractor) player.worldObj
+						.getBlockTileEntity(dis.readInt(), dis.readInt(),
+								dis.readInt());
+				if (tea != null) {
+					tea.recieveSync(dis.readFloat());
+				}
+				break;
+			case AetherCraft.GUI_ID_CONDENSER:
+				TileEntityAetherCondenser tec2 = (TileEntityAetherCondenser) player.worldObj
+						.getBlockTileEntity(dis.readInt(), dis.readInt(),
+								dis.readInt());
+				if (tec2 != null) {
+					tec2.recieveSync(dis.readFloat());
 				}
 				break;
 			}
