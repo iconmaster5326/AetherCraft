@@ -185,7 +185,7 @@ public class AetherCraft {
 				"How much aether an aether manipulator can store").getInt()));
 
 		options.put("acmaxstorage", Float.toString(forgeConfig.get("options",
-				"acmaxstorage", 131072,
+				"acmaxstorage", 65536,
 				"How much aether an aether container can store").getInt()));
 
 		options.put("abatterymaxstorage", Float.toString(forgeConfig.get(

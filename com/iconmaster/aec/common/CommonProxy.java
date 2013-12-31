@@ -82,7 +82,7 @@ public class CommonProxy implements IGuiHandler {
 	public void addRecipes() {
 		//GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aba","cdc","efe",'a',Item.diamond,'b',Item.emerald,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Item.cauldron);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aaa","bcd","aaa",'a',Block.obsidian,'b',AetherCraft.blockAetherExtractor,'c',AetherCraft.blockAetherConduit,'d',AetherCraft.blockAetherCondenser);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.diamond,'f',Block.obsidian);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Block.obsidian);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,4,0), "aaa","bbb","aaa",'a',Block.obsidian,'b',new ItemStack(Item.dyePowder,1,4));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor), "aba","cdc","aaa",'a',Block.obsidian,'c',Item.diamond,'b',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.emerald,'c',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
