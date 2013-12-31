@@ -17,6 +17,7 @@ import buildcraft.api.recipes.AssemblyRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
+import com.iconmaster.aec.aether.recipe.CrucibleHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
@@ -32,6 +33,7 @@ import com.iconmaster.aec.aether.recipe.SimpleIC2Recipe;
 import com.iconmaster.aec.aether.recipe.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.TransposerHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
@@ -211,6 +213,8 @@ public class DynamicAVRegister {
 			try {
 				registerHandler(map,new PulverizerHandler(),ModHelpers.getTERecipeObject("Pulverizer"));
 				registerHandler(map,new InductionSmelterHandler(),ModHelpers.getTERecipeObject("Smelter"));
+				registerHandler(map,new CrucibleHandler(),ModHelpers.getTERecipeObject("Crucible"));
+				registerHandler(map,new TransposerHandler(),ModHelpers.getTERecipeObject("Transposer"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

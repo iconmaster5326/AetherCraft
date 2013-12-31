@@ -132,5 +132,8 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("item.horsearmordiamond",40960);
 		addValue("373",1);
 		addValue("item.bucket",768);
+		addValue("tile.water",.0001f);
+		addValue("tile.lava",.001f);
+		
 	}
 }
