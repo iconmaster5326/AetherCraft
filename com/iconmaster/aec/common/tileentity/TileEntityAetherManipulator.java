@@ -37,6 +37,8 @@ public class TileEntityAetherManipulator extends TileEntity implements
 
 	private boolean db = false;
 
+	private boolean polled = false;
+
 	public TileEntityAetherManipulator() {
 		inventory = new ItemStack[55];
 		connectedSides = new boolean[6];
@@ -326,9 +328,7 @@ public class TileEntityAetherManipulator extends TileEntity implements
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllAround(this.xCoord,
-						this.yCoord, this.zCoord, 7,
-						this.worldObj.provider.dimensionId, packet);
+				PacketDispatcher.sendPacketToAllPlayers(packet);
 			}
 		}
 	}
@@ -412,11 +412,6 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		this.energy = 0;
 		this.sync();
 		return rest;
-	}
-
-	@Override
-	public float getAether() {
-		return this.energy;
 	}
 	
 	@Override
@@ -528,5 +523,35 @@ public class TileEntityAetherManipulator extends TileEntity implements
 		float av = AVRegistry.getAV(currentItem);
 		if (this.getStackableSlot(currentItem)<=0 && this.getEmptySlot() <=0) {return false;}
 		return av>0 && av<=getPossibleAether();
+	}
+
+	@Override
+	public float getAether() {
+		//System.out.println("Returning "+this.energy);
+		if (!polled) {
+			requestSync();
+			polled = true;
+		}
+		return this.energy;
+	}
+
+	public void requestSync() {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		DataOutputStream outputStream = new DataOutputStream(bos);
+	
+		try {
+			outputStream.writeByte(this.energyBlockType);
+			outputStream.writeInt(this.xCoord);
+			outputStream.writeInt(this.yCoord);
+			outputStream.writeInt(this.zCoord);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		packet.channel = "AecReq";
+		packet.data = bos.toByteArray();
+		packet.length = bos.size();
+		PacketDispatcher.sendPacketToServer(packet);
 	}
 }

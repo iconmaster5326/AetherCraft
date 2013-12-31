@@ -29,6 +29,8 @@ public class TileEntityAetherContainer extends TileEntity implements
 
 	private boolean powered;
 
+	private boolean polled = false;
+
 	public TileEntityAetherContainer() {
 		inventory = new ItemStack[2];
 	}
@@ -205,9 +207,7 @@ public class TileEntityAetherContainer extends TileEntity implements
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllAround(this.xCoord,
-						this.yCoord, this.zCoord, 8,
-						this.worldObj.provider.dimensionId, packet);
+				PacketDispatcher.sendPacketToAllPlayers(packet);
 			}
 		}
 	}
@@ -294,11 +294,6 @@ public class TileEntityAetherContainer extends TileEntity implements
 		this.sync();
 		return rest;
 	}
-
-	@Override
-	public float getAether() {
-		return this.energy;
-	}
 	
 	@Override
 	public float tryAddAether(float ev) {
@@ -330,5 +325,35 @@ public class TileEntityAetherContainer extends TileEntity implements
 		//this.energy = 0;
 		//this.sync();
 		return rest;
+	}
+
+	@Override
+	public float getAether() {
+		//System.out.println("Returning "+this.energy);
+		if (!polled) {
+			requestSync();
+			polled = true;
+		}
+		return this.energy;
+	}
+
+	public void requestSync() {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		DataOutputStream outputStream = new DataOutputStream(bos);
+	
+		try {
+			outputStream.writeByte(this.energyBlockType);
+			outputStream.writeInt(this.xCoord);
+			outputStream.writeInt(this.yCoord);
+			outputStream.writeInt(this.zCoord);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		packet.channel = "AecReq";
+		packet.data = bos.toByteArray();
+		packet.length = bos.size();
+		PacketDispatcher.sendPacketToServer(packet);
 	}
 }

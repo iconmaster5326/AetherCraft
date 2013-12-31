@@ -31,9 +31,11 @@ public class TileEntityAetherCondenser extends TileEntity implements
 	private float energy;
 	private int progress;
 	private boolean powered;
-	private float max;
+	public float max;
 
 	private boolean db = false;
+
+	private boolean polled = false;
 
 	public TileEntityAetherCondenser() {
 		max = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2;
@@ -269,9 +271,7 @@ public class TileEntityAetherCondenser extends TileEntity implements
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllAround(this.xCoord,
-						this.yCoord, this.zCoord, 7,
-						this.worldObj.provider.dimensionId, packet);
+				PacketDispatcher.sendPacketToAllPlayers(packet);
 			}
 		}
 	}
@@ -335,12 +335,6 @@ public class TileEntityAetherCondenser extends TileEntity implements
 		this.sync();
 		return rest;
 	}
-
-	@Override
-	public float getAether() {
-		//System.out.println("Returning "+this.energy);
-		return this.energy;
-	}
 	
 	@Override
 	public float tryAddAether(float ev) {
@@ -377,7 +371,7 @@ public class TileEntityAetherCondenser extends TileEntity implements
 	}
 
 	public void calculateProgress() {
-		this.progress = (int) ((this.energy/max)*100);
+		this.progress = (int) ((this.getAether()/max)*100);
 		if (this.progress > 100) {
 			this.progress = 100;
 		}
@@ -443,5 +437,35 @@ public class TileEntityAetherCondenser extends TileEntity implements
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public float getAether() {
+		//System.out.println("Returning "+this.energy);
+		if (!polled) {
+			requestSync();
+			polled = true;
+		}
+		return this.energy;
+	}
+
+	public void requestSync() {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		DataOutputStream outputStream = new DataOutputStream(bos);
+	
+		try {
+			outputStream.writeByte(this.energyBlockType);
+			outputStream.writeInt(this.xCoord);
+			outputStream.writeInt(this.yCoord);
+			outputStream.writeInt(this.zCoord);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		packet.channel = "AecReq";
+		packet.data = bos.toByteArray();
+		packet.length = bos.size();
+		PacketDispatcher.sendPacketToServer(packet);
 	}
 }

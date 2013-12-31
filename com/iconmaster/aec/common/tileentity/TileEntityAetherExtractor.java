@@ -32,6 +32,7 @@ public class TileEntityAetherExtractor extends TileEntity implements
 	private int progress;
 	private boolean powered;
 	private float max;
+	private boolean polled = false;
 
 	private boolean db = false;
 
@@ -193,7 +194,7 @@ public class TileEntityAetherExtractor extends TileEntity implements
 						energy = max;
 					}
 				} else {
-					System.out.println("Has "+energy+". Adding "+stackEv);
+					//System.out.println("Has "+energy+". Adding "+stackEv);
 					energy += stackEv;
 				}
 				//System.out.println("Done Consuming! ");
@@ -268,9 +269,7 @@ public class TileEntityAetherExtractor extends TileEntity implements
 			packet.data = bos.toByteArray();
 			packet.length = bos.size();
 			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllAround(this.xCoord,
-						this.yCoord, this.zCoord, 7,
-						this.worldObj.provider.dimensionId, packet);
+				PacketDispatcher.sendPacketToAllPlayers(packet);
 			}
 		}
 	}
@@ -338,6 +337,10 @@ public class TileEntityAetherExtractor extends TileEntity implements
 	@Override
 	public float getAether() {
 		//System.out.println("Returning "+this.energy);
+		if (!polled) {
+			requestSync();
+			polled = true;
+		}
 		return this.energy;
 	}
 	
@@ -418,5 +421,25 @@ public class TileEntityAetherExtractor extends TileEntity implements
 
 	public int getProgress() {
 		return this.progress;
+	}
+	
+	public void requestSync() {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		DataOutputStream outputStream = new DataOutputStream(bos);
+
+		try {
+			outputStream.writeByte(this.energyBlockType);
+			outputStream.writeInt(this.xCoord);
+			outputStream.writeInt(this.yCoord);
+			outputStream.writeInt(this.zCoord);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Packet250CustomPayload packet = new Packet250CustomPayload();
+		packet.channel = "AecReq";
+		packet.data = bos.toByteArray();
+		packet.length = bos.size();
+		PacketDispatcher.sendPacketToServer(packet);
 	}
 }

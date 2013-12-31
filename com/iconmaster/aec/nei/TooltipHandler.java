@@ -12,9 +12,10 @@ import codechicken.nei.forge.IContainerTooltipHandler;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
-import com.iconmaster.aec.client.gui.GuiAetherManipulator;
+import com.iconmaster.aec.client.gui.AetherCraftGui;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
+import com.iconmaster.aec.util.TooltipUtils;
 
 public class TooltipHandler implements IContainerTooltipHandler {
 	@Override
@@ -26,52 +27,19 @@ public class TooltipHandler implements IContainerTooltipHandler {
 	@Override
 	public List<String> handleItemTooltip(GuiContainer gui, ItemStack stack,
 			List<String> currenttip) {
-		if (gui instanceof GuiAetherManipulator) {
-			boolean showAV = true;
-			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("showavalways"))) {
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
-						&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-					showAV = false;
-				}
+		if (gui instanceof AetherCraftGui) {
+			AetherCraftGui agui = (AetherCraftGui)gui;
+			if (agui.standardTooltip) {
+				TooltipUtils.displayStandardTooltip(stack, currenttip);
 			}
-			if (showAV
-					&& stack != null) {
-				float ev,ev1;
-				if (stack.getItem() instanceof IConsumeBehavior) {
-					ev1 = ((IConsumeBehavior)stack.getItem()).getConsumeAV(stack);
-				} else {
-					ev1 = AVRegistry.getAV(stack);
-				}
-				if (stack.getItem() instanceof IProduceBehavior) {
-					ev = ((IProduceBehavior)stack.getItem()).getProduceAV(stack);
-				} else {
-					ev = AVRegistry.getAV(stack);
-				}
-				ev1 *= ((float) Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0f;
-
-				currenttip.add("\u00a72" + "PRODUCE AV: " + NumberUtils.display(ev));
-				currenttip.add("\u00a79" + "CONSUME AV: " + NumberUtils.display(ev1));
+			if (agui.consumeTooltip) {
+				TooltipUtils.displayConsumeTooltip(stack, currenttip);
+			}
+			if (agui.produceTooltip) {
+				TooltipUtils.displayProduceTooltip(stack, currenttip);
 			}
 		} else {
-			boolean showAV = true;
-			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("showavalways"))) {
-				if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)
-						&& !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
-					showAV = false;
-				}
-			}
-			if (showAV
-					&& stack != null) {
-				float ev;
-				if (stack.getItem() instanceof IConsumeBehavior) {
-					ev = ((IConsumeBehavior)stack.getItem()).getConsumeAV(stack);
-				} else {
-					ev = AVRegistry.getAV(stack);
-				}
-				currenttip.add("\u00a72" + "AV: " + NumberUtils.display(ev));
-			}
+			TooltipUtils.displayStandardTooltip(stack, currenttip);
 		}
 		return currenttip;
 	}
