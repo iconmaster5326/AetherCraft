@@ -35,9 +35,8 @@ import net.minecraft.item.ItemStack;
 			List list = input.getInputs();
 			if (list.size() != 0) {
 				ItemStack item = (ItemStack) list.get(0);
-				for (int i=1;i<=input.getAmount();i++) {
-					a.add(item);
-				}
+				item.stackSize = input.getAmount();
+				a.add(item);
 			}
 			return a;
 		}

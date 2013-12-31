@@ -9,6 +9,7 @@ import java.util.Map;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
@@ -16,6 +17,7 @@ import buildcraft.api.recipes.AssemblyRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
+import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
@@ -105,7 +107,7 @@ public class DynamicAVRegister {
 						return 0;
 					}
 					looked.put(UidUtils.getUID(item),true);
-					av = getItAV(item,looked);
+					av = getItAV(item,looked)*item.stackSize;
 					
 					if (av==0 && !AVRegistry.isEntry(item)) {
 //						System.out.println("		}");
@@ -114,7 +116,7 @@ public class DynamicAVRegister {
 					}
 					//System.out.println("		}");
 				}
-				if (av<=0) {av = AVRegistry.getAbsoluteAV(item);}
+				if (av<=0) {av = AVRegistry.getAbsoluteAV(item)*item.stackSize;}
 				if (av<=0) {
 //					System.out.println("Failed: No AV at all!"); 
 					return 0;
@@ -204,6 +206,7 @@ public class DynamicAVRegister {
 		registerHandler(map,new ShapelessOreRecipeHandler(),ShapelessOreRecipe.class);
 		registerHandler(map,new SmeltingRecipeHandler(),SmeltingRecipe.class);
 		registerHandler(map,new OreDictionaryHandler(),OreDictionaryEntry.class);
+		registerHandler(map,new FluidContainerHandler(),FluidContainerData.class);
 		if(Loader.isModLoaded("ThermalExpansion")) {
 			try {
 				registerHandler(map,new PulverizerHandler(),ModHelpers.getTERecipeObject("Pulverizer"));

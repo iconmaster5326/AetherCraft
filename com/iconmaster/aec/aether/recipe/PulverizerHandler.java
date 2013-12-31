@@ -27,9 +27,7 @@ public class PulverizerHandler implements IDynamicAVRecipeHandler {
 		if (input == null) {
 			return null;
 		}
-		for (int i=1;i<=input.stackSize;i++) {
-			a.add(input);
-		}
+		a.add(input);
 		return a;
 	}
 

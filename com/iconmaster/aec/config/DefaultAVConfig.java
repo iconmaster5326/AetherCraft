@@ -112,12 +112,12 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("tile.cactus",32);
 		addValue("tile.leaves.birch",1);
 		addValue("tile.quartzBlock.lines",128);
-		addValue("item.bucketWater",257);
+		//addValue("item.bucketWater",257);
 		addValue("tile.whiteStone",1);
 		addValue("item.milk",832);
 		addValue("tile.waterlily",1);
 		addValue("item.speckledMelon",471);
-		addValue("item.bucketLava",272);
+		//addValue("item.bucketLava",272);
 		addValue("tile.glass",1);
 		addValue("tile.log.birch",16);
 		addValue("item.chestplateChain",540);

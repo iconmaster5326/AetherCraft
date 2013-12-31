@@ -30,15 +30,11 @@ public class InductionSmelterHandler implements IDynamicAVRecipeHandler {
 		if (input == null) {
 			return a;
 		}
-		for (int i=1;i<=input.stackSize;i++) {
-			a.add(input);
-		}
+		a.add(input);
 		if (input2 == null) {
 			return a;
 		}
-		for (int i=1;i<=input2.stackSize;i++) {
-			a.add(input2);
-		}
+		a.add(input2);
 		return a;
 	}
 
