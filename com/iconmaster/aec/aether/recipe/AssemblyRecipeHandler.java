@@ -15,19 +15,29 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
-		for (Object input : ((AssemblyRecipe)recipe).input) {
-			a.add(input);
+		try {
+			for (Object input : ((AssemblyRecipe)recipe).input) {
+				a.add(input);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return a;
 	}
 
 	@Override
 	public ItemStack getOutput(Object recipe) {
-		return ((AssemblyRecipe)recipe).output;
+		try {
+			return ((AssemblyRecipe)recipe).output;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
+		try {
 	      for (AssemblyRecipe recipe : AssemblyRecipe.assemblyRecipes) {
 				ItemStack output = DynamicAVRegister.getOutput(recipe);
 				List uid = UidUtils.getUID(output);
@@ -36,5 +46,8 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 				}
 				((ArrayList) recipeList.get(uid)).add(recipe);
 	      }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

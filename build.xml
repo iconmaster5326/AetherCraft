@@ -136,12 +136,12 @@
 		<copy todir="${classes.dir}/com">
 			<fileset dir="${mcp.dir}/reobf/minecraft/com" />
 		</copy>
-		<copy todir="${classes.dir}/ic2">
+		<!-- <copy todir="${classes.dir}/ic2">
 			<fileset dir="${mcp.dir}/reobf/minecraft/ic2" />
 		</copy>
 		<copy todir="${classes.dir}/buildcraft">
 			<fileset dir="${mcp.dir}/reobf/minecraft/buildcraft" />
-		</copy>
+		</copy> -->
 
 		<!-- Copy resources -->
 		<copy todir="${classes.dir}/assets/aec">
