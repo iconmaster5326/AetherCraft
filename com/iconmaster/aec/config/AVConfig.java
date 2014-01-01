@@ -122,6 +122,10 @@ public class AVConfig {
 			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue());
 		}
 	}
+	
+	public void deleteValue(ItemStack item) {
+		values.remove(UidUtils.getUID(item));
+	}
 
 	public HashMap getValueMap() {
 		return values;

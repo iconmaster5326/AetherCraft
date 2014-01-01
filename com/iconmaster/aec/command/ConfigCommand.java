@@ -38,6 +38,7 @@ public class ConfigCommand implements ICommand {
 		this.tabCompletionOptions.add("discard");
 		this.tabCompletionOptions.add("get");
 		this.tabCompletionOptions.add("dump");
+		this.tabCompletionOptions.add("del");
 	}
 
 	@Override
@@ -186,6 +187,18 @@ public class ConfigCommand implements ICommand {
 					item = new ItemStack((Integer)((List)entry.getKey()).get(0),1,(Integer)((List)entry.getKey()).get(1));
 					cmc.addText(EnumChatFormatting.YELLOW+""+item.getUnlocalizedName()+"="+entry.getValue()+"\n");
 				}
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("del")) {
+				if (config == null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				if (astring.length >= 2) {
+					item = AVRegistry.getItemFromString(astring[1]);
+				}
+				config.deleteValue(item);
+				cmc.addText(EnumChatFormatting.GREEN +"The AV pairing for "+item.getUnlocalizedName()+" has been removed.");
 				icommandsender.sendChatToPlayer(cmc);
 			}
 		}
