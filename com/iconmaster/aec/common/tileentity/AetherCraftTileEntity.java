@@ -251,6 +251,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 
 	@Override
 	public float addAether(float ev) {
+		if (ev==0) {return 0;}
 		float ammaxstorage = Float.parseFloat(AetherCraft
 				.getOptions("ammaxstorage"));
 		if (this.energy + ev <= ammaxstorage) {
@@ -260,13 +261,13 @@ public class AetherCraftTileEntity extends TileEntity implements
 		} else {
 			float rest = (this.energy + ev) - ammaxstorage;
 			this.energy = ammaxstorage;
-			this.sync();
 			return rest;
 		}
 	}
 
 	@Override
 	public float extractAether(float av) {
+		if (av==0 || energy==0) {return 0;}
 		//System.out.println("Got "+av+" AV.");
 		if (this.energy - av >= 0) {
 			//System.out.println("Had enough AV. Returning "+av+" AV.");

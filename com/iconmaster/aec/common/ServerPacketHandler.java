@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
+import com.iconmaster.aec.common.tileentity.AetherCraftTileEntity;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
@@ -35,39 +36,11 @@ public class ServerPacketHandler implements IPacketHandler {
 		try {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
-			case AetherCraft.GUI_ID_MANIPULATOR:
-				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tem != null) {
-					tem.sync();
+				default:
+				AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+				if (te != null) {
+					te.sync();
 				}
-				break;
-			case AetherCraft.GUI_ID_CONTAINER:
-				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tec != null) {
-					tec.sync();
-				}
-			case AetherCraft.GUI_ID_EXTRACTOR:
-				TileEntityAetherExtractor tea = (TileEntityAetherExtractor) player.worldObj
-				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
-					if (tea != null) {
-						tea.sync();
-					}
-			case AetherCraft.GUI_ID_CONDENSER:
-				TileEntityAetherCondenser tec2 = (TileEntityAetherCondenser) player.worldObj
-				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
-					if (tec2 != null) {
-						tec2.sync();
-					}
-			case AetherCraft.GUI_ID_INFUSER:
-				TileEntityAetherInfuser tei = (TileEntityAetherInfuser) player.worldObj
-				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
-					if (tei != null) {
-						tei.sync();
-					}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

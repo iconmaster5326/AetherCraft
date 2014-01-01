@@ -12,6 +12,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.common.tileentity.AetherCraftTileEntity;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
@@ -43,46 +44,17 @@ public class ClientPacketHandler implements IPacketHandler {
 		try {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
-			case AetherCraft.GUI_ID_MANIPULATOR:
-				TileEntityAetherManipulator tem = (TileEntityAetherManipulator) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tem != null) {
-					tem.recieveSync(dis.readFloat());
-				}
-				break;
-			case AetherCraft.GUI_ID_CONTAINER:
-				TileEntityAetherContainer tec = (TileEntityAetherContainer) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tec != null) {
-					tec.recieveSync(dis.readFloat());
-				}
-				break;
-			case AetherCraft.GUI_ID_EXTRACTOR:
-				TileEntityAetherExtractor tea = (TileEntityAetherExtractor) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tea != null) {
-					tea.recieveSync(dis.readFloat());
-				}
-				break;
-			case AetherCraft.GUI_ID_CONDENSER:
-				TileEntityAetherCondenser tec2 = (TileEntityAetherCondenser) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tec2 != null) {
-					tec2.recieveSync(dis.readFloat());
-				}
-				break;
 			case AetherCraft.GUI_ID_INFUSER:
-				TileEntityAetherInfuser tei = (TileEntityAetherInfuser) player.worldObj
-						.getBlockTileEntity(dis.readInt(), dis.readInt(),
-								dis.readInt());
-				if (tei != null) {
-					tei.recieveSync(dis.readFloat());
+				TileEntityAetherInfuser ti = (TileEntityAetherInfuser) player.worldObj.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+				if (ti != null) {
+					ti.recieveSync(dis.readFloat(),dis.readFloat());
 				}
 				break;
+			default:
+				AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+				if (te != null) {
+					te.recieveSync(dis.readFloat());
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

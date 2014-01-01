@@ -55,13 +55,13 @@ public class GuiAetherInfuser extends AetherCraftGui {
 		this.fontRenderer.drawStringWithShadow("Aether: "+NumberUtils.display(this.te.getAether()), 30, 58,0x00FF00);
 		
 		if (InfuserRegistry.getOutputAV(this.te.getStackInSlot(0)) != 0) {
-			int percent = Math.min((int) ((te.getPossibleAether() / InfuserRegistry.getOutputAV(this.te.getStackInSlot(0)))*100),100);
+			int percent = Math.min((int) ((te.infused / InfuserRegistry.getOutputAV(this.te.getStackInSlot(0)))*100),100);
 			this.drawRect(41, 16, 41 + percent, 24,0xFF32FF00);
 		}
 		
 		this.drawCenteredString(
 				this.fontRenderer,
-				NumberUtils.display(this.te.getPossibleAether())
+				NumberUtils.display(te.infused)
 						+ " / "
 						+ NumberUtils.display(InfuserRegistry.getOutputAV(this.te.getStackInSlot(0))), 41+50, 16, 0x55FF55);
 

@@ -8,6 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.client.gui.GuiAetherCondenser;
 import com.iconmaster.aec.client.gui.GuiAetherContainer;
 import com.iconmaster.aec.client.gui.GuiAetherExtractor;
@@ -61,6 +62,8 @@ public class CommonProxy implements IGuiHandler {
 				"aetherInfuser");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,
 				"aetherBattery");
+		GameRegistry.registerItem(AetherCraft.itemInfused,
+				"infusedIngot");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,
 					"flyingRing");
@@ -82,6 +85,8 @@ public class CommonProxy implements IGuiHandler {
 				"Aether Infuser");
 		LanguageRegistry.addName(AetherCraft.itemAetherBattery,
 				"Aether Battery");
+		LanguageRegistry.addName(AetherCraft.itemInfused,
+				"Infused Ingot");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			LanguageRegistry.addName(AetherCraft.itemFlyingRing,
 					"Flying Ring");
@@ -97,6 +102,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.emerald,'c',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing), "aba","c c","ada",'a',Item.ingotGold,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
+
+		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), new ItemStack(AetherCraft.itemInfused,1,0));
 	}
 
 	@Override

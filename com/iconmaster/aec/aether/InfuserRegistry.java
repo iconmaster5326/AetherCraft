@@ -46,6 +46,9 @@ public class InfuserRegistry {
 	 * @return
 	 */
 	public static float getOutputAV(ItemStack input) {
-		return AVRegistry.getAV((ItemStack) recipes.get(UidUtils.getUID(input)))*3;
+		if (recipes.get(UidUtils.getUID(input))== null) {
+			return 0;
+		}
+		return AVRegistry.getAV(input)*3;
 	}
 }
