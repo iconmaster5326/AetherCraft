@@ -4,7 +4,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-
+/**
+ * Use this class to encode/decode ItemStacks for HashMap use.
+ * @author iconmaster
+ *
+ */
 public class UidUtils {
 	/**
 	 * Gets the List you can use to put a ItemStack in a hash.

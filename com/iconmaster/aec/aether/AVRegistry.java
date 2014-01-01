@@ -12,6 +12,11 @@ import com.iconmaster.aec.config.AVConfigHandler;
 import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.UidUtils;
 
+/**
+ * A class that holds item-AV pairings for all items.
+ * @author iconmaster
+ *
+ */
 public class AVRegistry {
 	private static HashMap values ;
 	private static HashMap hardcoded = new HashMap();
@@ -52,10 +57,20 @@ public class AVRegistry {
 	return map;
 	}
 	
+	/**
+	 * Sets the AV of a given ItemStack.
+	 * @param item
+	 * @param av
+	 */
 	public static void setAV(ItemStack item,float av) {
 		values.put(UidUtils.getUID(item),av);
 	}
 
+	/**
+	 * Sets the AV of an item given by it's configuration file (i.e. unlocalized) name.
+	 * @param item
+	 * @param av
+	 */
 	public static void setAV(String item,float av) {
 		ItemStack stack = getItemFromString(item);
 		if (stack == null) {return;}
@@ -72,12 +87,22 @@ public class AVRegistry {
 		setConfigAV(getItemFromString(item),av);
 	}
 	
+	/**
+	 * A variant of setAV used only in setting the AV of things defined in config files. Makes sure that these values are not overriden by the dynamic register.
+	 * @param item
+	 * @param av
+	 */
 	public static void setConfigAV(ItemStack item, Float av) {
 		if (item== null) {return;}
 		setAV(item,av);
 		hardcoded.put(UidUtils.getUID(item),av);
 	}
 	
+	/**
+	 * Given an ItemStack, returns its AV. Returns 0 if there's no pairing for the item.
+	 * @param item
+	 * @return
+	 */
 	public static float getAV(ItemStack item) {
 		if (item==null) {return 0;}
 		if (item.itemID==Item.book.itemID) {
@@ -95,6 +120,11 @@ public class AVRegistry {
 		}
 	}
 	
+	/**
+	 * Given an ItemStack, returns its AV. Does not take into account tool durability. Returns 0 if there's no pairing for the item.
+	 * @param item
+	 * @return
+	 */
 	public static float getAbsoluteAV(ItemStack item) {
 		Float av = (Float)values.get(UidUtils.getUID(item));
 		if (av == null) {
@@ -105,22 +135,45 @@ public class AVRegistry {
 		}
 	}
 	
+	/**
+	 * Returns true if an item has an AV pairing.
+	 * @param item
+	 * @return
+	 */
 	public static boolean isEntry(ItemStack item) {
 		return values.get(UidUtils.getUID(item))!=null;
 	}
 	
+	/**
+	 * Returns true if an item was given an AV via config file.
+	 * @param item
+	 * @return
+	 */
 	public static boolean isHardcoded(ItemStack item) {
 		return hardcoded.get(UidUtils.getUID(item))!=null;
 	}
 	
+	/**
+	 * Returns the map of AVs. Keys are item UIDs, values are floats.
+	 * @return
+	 */
 	public static HashMap getValueMap() {
 		return values;
 	}
 	
+	/**
+	 * Returns the map of hardcoded items. Keys are item UIDs, values do not matter.
+	 * @return
+	 */
 	public static HashMap getValueHardcodedMap() {
 		return hardcoded;
 	}
 	
+	/**
+	 * Given a string, returns the ItemStack that the item represents. Used in configuration files.
+	 * @param s
+	 * @return
+	 */
 	public static ItemStack getItemFromString(String s) {
 		int meta = 0;
 		if (s.contains("::")) {
@@ -139,6 +192,10 @@ public class AVRegistry {
 		return (ItemStack)unlocalizedNames.get(s);
 	}
 
+	/**
+	 * Sets the AV value map. Please don't mess with this.
+	 * @param map
+	 */
 	public static void setValueMap(HashMap map) {
 		values = map;
 	}

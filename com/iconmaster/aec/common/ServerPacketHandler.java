@@ -11,6 +11,7 @@ import net.minecraft.network.packet.Packet250CustomPayload;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IPacketHandler;
@@ -60,6 +61,12 @@ public class ServerPacketHandler implements IPacketHandler {
 				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
 					if (tec2 != null) {
 						tec2.sync();
+					}
+			case AetherCraft.GUI_ID_INFUSER:
+				TileEntityAetherInfuser tei = (TileEntityAetherInfuser) player.worldObj
+				.getBlockTileEntity(dis.readInt(), dis.readInt(),dis.readInt());
+					if (tei != null) {
+						tei.sync();
 					}
 			}
 		} catch (IOException e) {

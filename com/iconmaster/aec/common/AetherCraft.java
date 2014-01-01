@@ -19,6 +19,7 @@ import com.iconmaster.aec.common.block.BlockAetherCondenser;
 import com.iconmaster.aec.common.block.BlockAetherConduit;
 import com.iconmaster.aec.common.block.BlockAetherContainer;
 import com.iconmaster.aec.common.block.BlockAetherExtractor;
+import com.iconmaster.aec.common.block.BlockAetherInfuser;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
@@ -50,6 +51,8 @@ public class AetherCraft {
 	public static final int GUI_ID_CONTAINER = 1;
 	public static final int GUI_ID_EXTRACTOR = 2;
 	public static final int GUI_ID_CONDENSER = 3;
+	public static final int GUI_ID_INFUSER = 4;
+	
 	public static final byte PACKET_TTID_CONFIG = 0;
 
 	@Instance("AetherCraft")
@@ -63,6 +66,7 @@ public class AetherCraft {
 	public static Block blockAetherConduit;
 	public static Block blockAetherExtractor;
 	public static Block blockAetherCondenser;
+	public static Block blockAetherInfuser;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 
@@ -108,6 +112,8 @@ public class AetherCraft {
 		blockAetherExtractor = new BlockAetherExtractor(blockIds.get(3),
 				Material.rock).setLightValue(0.2f);
 		blockAetherCondenser = new BlockAetherCondenser(blockIds.get(4),
+				Material.rock).setLightValue(0.2f);
+		blockAetherInfuser = new BlockAetherInfuser(blockIds.get(5),
 				Material.rock).setLightValue(0.2f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
@@ -232,6 +238,7 @@ public class AetherCraft {
 		blockIds.add(forgeConfig.getBlock("aetherconduit", 2692).getInt());
 		blockIds.add(forgeConfig.getBlock("aetherextractor", 2693).getInt());
 		blockIds.add(forgeConfig.getBlock("aethercondenser", 2694).getInt());
+		blockIds.add(forgeConfig.getBlock("aetherinfuser", 2695).getInt());
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		forgeConfig.save();

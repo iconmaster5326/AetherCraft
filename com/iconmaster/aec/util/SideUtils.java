@@ -3,9 +3,22 @@ package com.iconmaster.aec.util;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
+/**
+ * This class is a set of utilities concerning sided blocks.
+ * @author iconmaster
+ *
+ */
 public class SideUtils {
+	/**
+	 * A list of all sides of a block.
+	 */
 	public static int[] allSides = new int[] {0,1,2,3,4,5};
 	
+	/**
+	 * An object representing a sided offset. Call the getOfset methods to offset coords by a sided value.
+	 * @author iconmaster
+	 *
+	 */
 	public static class Offset {
 		private int x = 0;
 		private int y = 0;
@@ -48,12 +61,26 @@ public class SideUtils {
 		}
 	}
 	
+	/**
+	 * Returns the block to the given side of a given coord.
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param world
+	 * @param side
+	 * @return
+	 */
 	public static Block getBlockFromSide(int x, int y, int z, World world,int side) {
 		
 		Offset off = new Offset(side);
 		return Block.blocksList[world.getBlockId(off.getOffsetX(x), off.getOffsetY(y), off.getOffsetZ(z))];
 	}
 	
+	/**
+	 * Given a side, returns the opposite side.
+	 * @param side
+	 * @return
+	 */
 	public static int getOppositeSide(int side) {
 		switch(side) {
 		case(0):

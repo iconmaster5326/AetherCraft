@@ -12,8 +12,17 @@ import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
 
+/**
+ * This class is a set of utilities having to do with tooltips. Call from GUIs to get AV tooltips.
+ * @author iconmaster
+ *
+ */
 public class TooltipUtils {
 	
+	/**
+	 * Returns whether or not a tooltip should be shown at this time.
+	 * @return
+	 */
 	public static boolean showTip() {
 		boolean showAV = true;
 		if (!Boolean.parseBoolean(AetherCraft.getOptions("showavalways"))) {

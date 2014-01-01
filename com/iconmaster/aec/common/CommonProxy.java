@@ -11,15 +11,18 @@ import net.minecraftforge.common.MinecraftForge;
 import com.iconmaster.aec.client.gui.GuiAetherCondenser;
 import com.iconmaster.aec.client.gui.GuiAetherContainer;
 import com.iconmaster.aec.client.gui.GuiAetherExtractor;
+import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.common.event.FallDamageEvent;
 import com.iconmaster.aec.common.gui.ContainerAetherCondenser;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
 import com.iconmaster.aec.common.gui.ContainerAetherExtractor;
+import com.iconmaster.aec.common.gui.ContainerAetherInfuser;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -39,6 +42,8 @@ public class CommonProxy implements IGuiHandler {
 				"aec.extractor");
 		GameRegistry.registerTileEntity(TileEntityAetherCondenser.class,
 				"aec.condenser");
+		GameRegistry.registerTileEntity(TileEntityAetherInfuser.class,
+				"aec.infuser");
 	}
 
 	public void registerBlocks() {
@@ -52,6 +57,8 @@ public class CommonProxy implements IGuiHandler {
 				"aetherExtractor");
 		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,
 				"aetherCondenser");
+		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,
+				"aetherInfuser");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,
 				"aetherBattery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -71,6 +78,8 @@ public class CommonProxy implements IGuiHandler {
 				"Aether Extractor");
 		LanguageRegistry.addName(AetherCraft.blockAetherCondenser,
 				"Aether Condenser");
+		LanguageRegistry.addName(AetherCraft.blockAetherInfuser,
+				"Aether Infuser");
 		LanguageRegistry.addName(AetherCraft.itemAetherBattery,
 				"Aether Battery");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -103,6 +112,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
 			return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
+			return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
 		}
 		return null;
 	}
@@ -120,6 +131,8 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
 			return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
+			return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
 		}
 		return null;
 	}

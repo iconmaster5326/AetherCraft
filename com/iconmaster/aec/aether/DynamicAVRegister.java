@@ -38,10 +38,18 @@ import com.iconmaster.aec.util.UidUtils;
 
 import cpw.mods.fml.common.Loader;
 
+/**
+ * This class is called when dynamic AV values are assigned.
+ * @author iconmaster
+ *
+ */
 public class DynamicAVRegister {
 	private static HashMap recipeList  = new HashMap();
 	private static HashMap handlers = getDefaultHandlers();
 
+	/**
+	 * Assigns all items with recipes dynamic AVs.
+	 */
 	public static void addDynamicValues() {
 		//Put all the recipes in a map keyed by item ID. Value is an ArrayList of recipes that produce the item.
 		Iterator it = handlers.entrySet().iterator();
@@ -55,12 +63,12 @@ public class DynamicAVRegister {
         while (it.hasNext()) {
         	HashMap looked = new HashMap();
         	Map.Entry pairs = (Map.Entry)it.next();
-        	getItAV(UidUtils.getStackFromUid((List) pairs.getKey()),looked);
+        	getItemAV(UidUtils.getStackFromUid((List) pairs.getKey()),looked);
         }
         
 	}
 	
-	private static float getItAV(ItemStack output,HashMap looked) {
+	private static float getItemAV(ItemStack output,HashMap looked) {
 		if (AVRegistry.isHardcoded(output)) {
 			return AVRegistry.getAbsoluteAV(output);
 		}
@@ -108,7 +116,7 @@ public class DynamicAVRegister {
 						return 0;
 					}
 					looked.put(UidUtils.getUID(item),true);
-					av = getItAV(item,looked)*item.stackSize;
+					av = getItemAV(item,looked)*item.stackSize;
 					
 					if (av==0 && !AVRegistry.isEntry(item)) {
 //						System.out.println("		}");
@@ -150,6 +158,11 @@ public class DynamicAVRegister {
 		return false;
 	}
 	
+	/**
+	 * Given a recipe, returns the ArrayList of inputs that were used to make it.
+	 * @param recipe
+	 * @return
+	 */
 	public static ArrayList getInputs(Object recipe) {
 		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
 		if (handler != null) {
@@ -167,6 +180,11 @@ public class DynamicAVRegister {
 		return null;
 	}
 	
+	/**
+	 * Given a recipe, returns the item that is its output.
+	 * @param recipe
+	 * @return
+	 */
 	public static ItemStack getOutput(Object recipe) {
 		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
 		if (handler != null) {
@@ -191,6 +209,11 @@ public class DynamicAVRegister {
 		}
 	}
 	
+	/**
+	 *  Registers a new dynamic recipe handler, given a handler object and the class that the handler should be called on when the register encounters a recipe of given class.
+	 * @param handler
+	 * @param recipeType
+	 */
 	public static void registerHandler(IDynamicAVRecipeHandler handler,Class recipeType) {
 		registerHandler(handlers,handler,recipeType);
 	}

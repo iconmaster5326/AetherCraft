@@ -10,8 +10,18 @@ import com.iconmaster.aec.util.SideUtils;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
+/**
+ * A set of classes that deal with transferring Aether across devices.
+ * @author iconmaster
+ *
+ */
 public class AetherNetwork {
 	
+	/**
+	 * A class used internally by the lookup function. Lists both a device and the maximum amount of Aether that can be used with it.
+	 * @author iconmaster
+	 *
+	 */
 	public static class DeviceData {
 		public float maxAV;
 		public IAetherStorage device;
@@ -22,6 +32,14 @@ public class AetherNetwork {
 		}
 	}
 	
+	/**
+	 * Given the coordinates of a network start, returns the amount of AV stored in the network that can be retrieved.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
 	public static float getStoredAV(World world,int x,int y,int z) {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		float av = 0;
@@ -31,6 +49,15 @@ public class AetherNetwork {
 		return av;
 	}
 	
+	/**
+	 * Attempts to send AV into the network at the given coords. Returns the amount of AV that was not sent successfully; this will be greater than 0 if the network could not hold all the Aether put into it.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param av
+	 * @return
+	 */
 	public static float sendAV(World world,int x,int y,int z,float av) {
 		float left = av;
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
@@ -43,6 +70,15 @@ public class AetherNetwork {
 		return left;
 	}
 		
+	/**
+	 * Attempts to retrieve AV from the network at the given coords. Returns the amount received in actuality; this will be less than what you passed to it if there wasn't enough Aether in the network.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param av
+	 * @return
+	 */
 	public static float requestAV(World world,int x,int y,int z,float av) {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		float got = 0;
@@ -55,6 +91,15 @@ public class AetherNetwork {
 		return got;
 	}
 	
+	/**
+	 * like <code>sendAV</code>, but only checks the result of the operation and does not affect any devices. Use this to see if putting AV in the network is possible.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param av
+	 * @return
+	 */
 	public static boolean canSendAV(World world, int x,int y,int z,float av) {
 		float left = av;
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
@@ -67,6 +112,15 @@ public class AetherNetwork {
 		return left==0;
 	}
 	
+	/**
+	 * Like <code>requestAV</code>, but only checks the result of the operation and does not affect any devices. Use to see if there is enough AV in the network.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param av
+	 * @return
+	 */
 	public static boolean canRequestAV(World world,int x,int y,int z,float av) {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		float got = 0;
@@ -79,6 +133,14 @@ public class AetherNetwork {
 		return got==av;
 	}
 	
+	/**
+	 * Returns an <code>ArrayList</code> of <code>DeviceData</code>s that correspond to devices on the network at the given coords.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
 	public static ArrayList<DeviceData> getAllConnectedDevices(World world, int x, int y, int z) {
 		ArrayList a = new ArrayList();
 		HashMap been = new HashMap();

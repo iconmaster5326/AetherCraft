@@ -19,10 +19,24 @@ import com.iconmaster.aec.util.TooltipUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;
 
+/**
+ * This is the base class for AetherCraft GUIs. Extend this class to get AV tooltip functionality in your GUI.
+ * @author iconmaster
+ *
+ */
 public class AetherCraftGui extends GuiContainer {
 	
+	/**
+	 * Whether or not it displays standard AV tooltips. Set this to false if you're using another tooltip type.
+	 */
 	public boolean standardTooltip = true;
+	/**
+	 * Whether or not it displays consume AV tooltips. Set this to true if your device consumes items.
+	 */
 	public boolean produceTooltip = false;
+	/**
+	 * Whether or not it displays produce AV tooltips. Set this to true if your device produces items.
+	 */
 	public boolean consumeTooltip = false;
 
 	public AetherCraftGui(Container par1Container) {
