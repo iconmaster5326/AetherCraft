@@ -21,6 +21,8 @@ import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
+import com.iconmaster.aec.aether.recipe.InfuserHandler;
+import com.iconmaster.aec.aether.recipe.InfuserRecipe;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
@@ -231,6 +233,7 @@ public class DynamicAVRegister {
 		registerHandler(map,new SmeltingRecipeHandler(),SmeltingRecipe.class);
 		registerHandler(map,new OreDictionaryHandler(),OreDictionaryEntry.class);
 		registerHandler(map,new FluidContainerHandler(),FluidContainerData.class);
+		registerHandler(map,new InfuserHandler(),InfuserRecipe.class);
 		if(Loader.isModLoaded("ThermalExpansion")) {
 			try {
 				registerHandler(map,new PulverizerHandler(),ModHelpers.getTERecipeObject("Pulverizer"));
