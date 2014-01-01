@@ -11,6 +11,7 @@
 	<property name="libs.dir"            value="${download.dir}/libs"/>
 
 	<property name="classes.dir"         value="${build.dir}/classes"/>
+	<property name="dev.dir"             value="${build.dir}/dev"/>
 	<property name="jar.dir"             value="${build.dir}/dist"/>
 
 	<property name="forge.dir"           value="${build.dir}/forge"/>
@@ -20,7 +21,7 @@
 
 	<property name="mc.version"          value="1.6.4"/>
 	<property name="forge.version"       value="9.11.1.953"/>
-	<property name="mod.version"         value="1.2.5"/>
+	<property name="mod.version"         value="1.2.6"/>
 	<property name="mod.name"	         value="AetherCraft"/>
 
 	<property name="forge.name"          value="forge-${mc.version}-${forge.version}-src.zip"/>
@@ -105,6 +106,7 @@
 		<delete dir="bin/" />
 		<delete dir="${classes.dir}"/>
 		<mkdir dir="${classes.dir}"/>
+		<mkdir dir="${dev.dir}"/>
 
 		<copy todir="${mcpsrc.dir}">
 			<fileset dir="com"/>
@@ -123,6 +125,25 @@
 			<arg value="runtime/recompile.py"/>
 		</exec>
 
+		<!-- copy dev assets -->
+
+		<copy todir="${dev.dir}/com">
+			<fileset dir="${mcp.dir}/bin/minecraft/com"/>
+			<filterset>
+				<filter token="VERSION" value="${mod.version}.${env.BUILD_NUMBER}"/>
+			</filterset>
+		</copy>
+
+		<copy file="mcmod.info" todir="${dev.dir}">
+			<filterset>
+				<filter token="VERSION" value="${mod.version}.${env.BUILD_NUMBER}"/>
+			</filterset>
+		</copy>
+
+		<copy todir="${dev.dir}/assets/aec">
+			<fileset dir="assets/aec" />
+		</copy>
+
 		<!-- Reobfuscate -->
 		<exec dir="${mcp.dir}" executable="cmd" osfamily="windows">
 			<arg line="/c reobfuscate_srg.bat"/>
@@ -136,9 +157,6 @@
 		<copy todir="${classes.dir}/com">
 			<fileset dir="${mcp.dir}/reobf/minecraft/com" />
 		</copy>
-		<!-- <copy todir="${classes.dir}/ic2">
-			<fileset dir="${mcp.dir}/reobf/minecraft/ic2" />
-		</copy> -->
 
 		<!-- Copy resources -->
 		<copy todir="${classes.dir}/assets/aec">
@@ -165,6 +183,8 @@
 		<delete dir="${jar.dir}"/>
 		<mkdir dir="${jar.dir}"/>
 		<jar destfile="${jar.dir}/${mod.name}-${mod.version}.${env.BUILD_NUMBER}.jar" basedir="${classes.dir}"/>
+		<jar destfile="${jar.dir}/${mod.name}-dev-${mod.version}.${env.BUILD_NUMBER}.jar" basedir="${dev.dir}"/>
+		<delete dir="${dev.dir}"/>
 
 	</target>
 
