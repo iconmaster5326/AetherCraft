@@ -21,6 +21,7 @@ import com.iconmaster.aec.common.block.BlockAetherContainer;
 import com.iconmaster.aec.common.block.BlockAetherExtractor;
 import com.iconmaster.aec.common.block.BlockAetherInfuser;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
+import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
@@ -68,11 +69,12 @@ public class AetherCraft {
 	public static Block blockAetherExtractor;
 	public static Block blockAetherCondenser;
 	public static Block blockAetherInfuser;
+	public static Block blockInfused;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 	public static Item itemInfused;
 
-	private static ArrayList<Integer> blockIds = new ArrayList<Integer>();
+	static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
 
 	private static HashMap<String, Float> currentConfigAV = new HashMap<String, Float>();
@@ -108,15 +110,17 @@ public class AetherCraft {
 		blockAetherManipulator  = new BlockAetherManipulator(blockIds.get(0),
 				Material.rock).setLightValue(0.3f);
 		blockAetherContainer  = new BlockAetherContainer(blockIds.get(1),
-				Material.rock).setLightValue(0.2f);
+				Material.rock).setLightValue(0.3f);
 		blockAetherConduit  = new BlockAetherConduit(blockIds.get(2),
 				Material.rock).setLightValue(0.2f);
 		blockAetherExtractor = new BlockAetherExtractor(blockIds.get(3),
-				Material.rock).setLightValue(0.2f);
+				Material.rock).setLightValue(0.3f);
 		blockAetherCondenser = new BlockAetherCondenser(blockIds.get(4),
-				Material.rock).setLightValue(0.2f);
+				Material.rock).setLightValue(0.3f);
 		blockAetherInfuser = new BlockAetherInfuser(blockIds.get(5),
-				Material.rock).setLightValue(0.2f);
+				Material.rock).setLightValue(0.3f);
+		blockInfused = new BlockInfused(blockIds.get(6),
+				Material.rock).setLightValue(0.7f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
 		
@@ -243,6 +247,7 @@ public class AetherCraft {
 		blockIds.add(forgeConfig.getBlock("aetherextractor", 2693).getInt());
 		blockIds.add(forgeConfig.getBlock("aethercondenser", 2694).getInt());
 		blockIds.add(forgeConfig.getBlock("aetherinfuser", 2695).getInt());
+		blockIds.add(forgeConfig.getBlock("infusedblock", 2696).getInt());
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());
