@@ -16,36 +16,82 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 {
-
+    double low = 4.0d/16;
+    double high = 12.0d/16;
+    
+	    
     @Override
     public void renderInventoryBlock(Block tile, int metadata, int modelID, RenderBlocks renderer)
     {
             BlockAetherConduit block = (BlockAetherConduit)tile;
 
             Tessellator tessellator = Tessellator.instance;
-            Icon icon;
+            Icon icon = block.icon[metadata].getTop();
 
-            icon = block.getIcon(0, metadata);
-
-            double minX = icon.getMinU();
-            double maxX = icon.getMaxU();
-            double minY = icon.getMinV();
-            double maxY = icon.getMaxV();
+            double minXCenter = icon.getMinU();
+            double maxXCenter = icon.getMaxU();
+            double minYCenter = icon.getMinV();
+            double maxYCenter = icon.getMaxV();
 
             double offset = 0.001D;
 
-            double xMin = 0, xMax = 1;
-            double yMin = 0, yMax = 1;
-            double zMid = 0.5;
+ 
+    	
+    	    double x=0,y=0,z=0;
+    	    
+    	    double xMin = x;
+    	    double xLow = x + low;
+    	    double xHigh = x + high;
+    	    double xMax = x + 1;
+    	
+    	    double zMin = z;
+    	    double zLow = z + low;
+    	    double zHigh = z + high;
+    	    double zMax = z + 1;
+    	
+    	    double yMin = y;
+    	    double yLow = y + low;
+    	    double yHigh = y + high;
+    	    double yMax = y + 1;
 
             GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 
             tessellator.startDrawingQuads();
 
-            tessellator.addVertexWithUV(xMin, yMax, zMid, minX, minY);
-            tessellator.addVertexWithUV(xMin, yMin, zMid, minX, maxY);
-            tessellator.addVertexWithUV(xMax, yMin, zMid, maxX, maxY);
-            tessellator.addVertexWithUV(xMax, yMax, zMid, maxX, minY);
+//            tessellator.addVertexWithUV(xMin, yMax, zMid, minX, minY);
+//            tessellator.addVertexWithUV(xMin, yMin, zMid, minX, maxY);
+//            tessellator.addVertexWithUV(xMax, yMin, zMid, maxX, maxY);
+//            tessellator.addVertexWithUV(xMax, yMax, zMid, maxX, minY);
+            
+    		tessellator.addVertexWithUV(xHigh, yLow, zLow, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zLow, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yLow, zLow, maxXCenter, minYCenter);
+			
+			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zHigh, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yLow, zHigh, maxXCenter, minYCenter);
+			
+			tessellator.addVertexWithUV(xLow, yLow, zHigh, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow, yLow, zLow, maxXCenter, minYCenter);
+			
+			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh, yLow, zLow, maxXCenter, minYCenter);
+			
+			tessellator.addVertexWithUV(xLow,yLow, zHigh, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh,yLow, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh,yLow, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow,yLow, zLow, maxXCenter, minYCenter);
+			
+			tessellator.addVertexWithUV(xLow,yHigh, zHigh, minXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh,yHigh, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh,yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow,yHigh, zLow, maxXCenter, minYCenter);
 
             tessellator.draw();
 
@@ -68,8 +114,8 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 	    }
 	    else
 	    {
-	            iconCenter = block.centerIcon;
-	            iconSide = block.sideIcon;
+	            iconCenter = block.icon[metadata].getTop();
+	            iconSide = block.icon[metadata].getSide();
 	    }
 	
 	    double minXCenter = iconCenter.getMinU();
@@ -82,9 +128,6 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 	    double minYSide = iconSide.getMinV();
 	    double maxYSide = iconSide.getMaxV();
 	    
-	    double low = 4.0d/16;
-	    double high = 12.0d/16;
-	
 	    double xMin = x;
 	    double xLow = x + low;
 	    double xHigh = x + high;
@@ -340,7 +383,7 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
   
   @Override
   public boolean shouldRender3DInInventory() {
-          return false;
+          return true;
   }
 
 	@Override

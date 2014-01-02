@@ -52,7 +52,7 @@ public class CommonProxy implements IGuiHandler {
 	public void registerBlocks() {
 		GameRegistry.registerBlock(AetherCraft.blockAetherManipulator,ItemAetherCraftBlock.class,"aetherManipulator");
 		GameRegistry.registerBlock(AetherCraft.blockAetherContainer,ItemAetherCraftBlock.class,"aetherContainer");
-		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,"aetherConduit");
+		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,ItemAetherCraftBlock.class,"aetherConduit");
 		GameRegistry.registerBlock(AetherCraft.blockAetherExtractor,ItemAetherCraftBlock.class,"aetherExtractor");
 		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,ItemAetherCraftBlock.class,"aetherCondenser");
 		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,ItemAetherCraftBlock.class,"aetherInfuser");
@@ -67,7 +67,7 @@ public class CommonProxy implements IGuiHandler {
 	public void addNames() {
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "Aether Manipulator");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,0), "Aether Container");
-		LanguageRegistry.addName(AetherCraft.blockAetherConduit, "Aether Conduit");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherConduit,1,0), "Aether Conduit");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,0),"Aether Extractor");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,0),"Aether Condenser");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,0),"Aether Infuser");
@@ -76,7 +76,7 @@ public class CommonProxy implements IGuiHandler {
 		
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "Infused Manipulator");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,1), "Infused Container");
-		//LanguageRegistry.addName(AetherCraft.blockAetherConduit, "Infused Conduit");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherConduit,1,1), "Infused Conduit");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,1),"Infused Extractor");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,1),"Infused Condenser");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,1),"Aether Catalyzer");
@@ -99,9 +99,9 @@ public class CommonProxy implements IGuiHandler {
 		
 		ItemStack infusedIngot = new ItemStack(AetherCraft.itemInfused,1,0);
 		ItemStack aetheralFoci = new ItemStack(AetherCraft.itemInfused,1,1);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "aaa","bcd","aaa",'a',infusedIngot,'b',new ItemStack(AetherCraft.blockAetherExtractor,1,1),'c',new ItemStack(AetherCraft.blockAetherConduit,1,0),'d',new ItemStack(AetherCraft.blockAetherCondenser,1,1));
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "aaa","bcd","aaa",'a',infusedIngot,'b',new ItemStack(AetherCraft.blockAetherExtractor,1,1),'c',new ItemStack(AetherCraft.blockAetherConduit,1,1),'d',new ItemStack(AetherCraft.blockAetherCondenser,1,1));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer,1,1), "aba","cdc","efe",'a',Item.emerald,'b',infusedIngot,'c',infusedIngot,'d',Block.glowStone,'e',Item.glowstone,'f',infusedIngot);
-		//GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,4,1), "aaa","bbb","aaa",'a',infusedIngot,'b',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,8,1), "aaa","bbb","aaa",'a',infusedIngot,'b',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,1), "aba","cdc","aaa",'a',infusedIngot,'c',Item.emerald,'b',Block.blockLapis,'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',aetheralFoci,'c',Block.blockLapis,'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',Item.emerald,'c',aetheralFoci,'d',Block.glowStone);

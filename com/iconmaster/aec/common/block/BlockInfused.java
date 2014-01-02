@@ -7,6 +7,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.IAetherTransfer;
@@ -46,4 +47,9 @@ public class BlockInfused extends Block {
     {
         return par1;
     }
+    
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		return new ItemStack(this,1,world.getBlockMetadata(x, y, z));
+	}
 }

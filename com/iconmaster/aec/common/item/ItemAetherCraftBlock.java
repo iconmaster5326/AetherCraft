@@ -1,18 +1,12 @@
 package com.iconmaster.aec.common.item;
 
-import java.util.List;
-
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 
 import com.iconmaster.aec.common.AetherCraft;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import com.iconmaster.aec.common.block.BlockAetherConduit;
 
 public class ItemAetherCraftBlock extends ItemBlock {
 	public ItemAetherCraftBlock(int id) {
@@ -32,4 +26,15 @@ public class ItemAetherCraftBlock extends ItemBlock {
 	public String getUnlocalizedName(ItemStack item) {
 		return getUnlocalizedName()+"."+item.getItemDamage();
 	}
+	
+	@Override
+	public Icon getIcon(ItemStack stack, int pass) {
+		 ItemAetherCraftBlock blockStack = (ItemAetherCraftBlock) stack.getItem();
+		 Block block = Block.blocksList[blockStack.getBlockID()];
+		 if (block instanceof BlockAetherConduit) {
+			 return block.getIcon(0, stack.getItemDamage());
+		 }
+		 return super.getIcon(stack, pass);
+	}
+	
 }
