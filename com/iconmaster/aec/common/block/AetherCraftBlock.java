@@ -145,7 +145,7 @@ public class AetherCraftBlock extends BlockContainer implements IAetherTransfer 
 	@Override
 	public float getMaxTransferAV(World world, int x,int y,int z,int side) {
 		int meta = world.getBlockMetadata(x, y, z);
-		return Float.MAX_VALUE;
+		return (float) ((Float.parseFloat(AetherCraft.getOptions("flowrate")))*(Math.pow(2,meta*2)));
 	}
 	
     @Override

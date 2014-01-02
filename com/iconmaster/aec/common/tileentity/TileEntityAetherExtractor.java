@@ -129,7 +129,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 	@Override
 	public void calcMax() {
 		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage")))*(Math.pow(2,getMetadata()*2)));
+			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
 		}
 	}
 }

@@ -213,6 +213,10 @@ public class AetherCraft {
 		options.put("chargerate", Integer.toString(forgeConfig.get("options",
 				"chargerate", 128,
 				"How fast aether batteries placed in an aether container charge").getInt()));
+		
+		options.put("flowrate", Integer.toString(forgeConfig.get("options",
+				"flowrate", 8192,
+				"How much AV a basic Conduit can transfer maximum.").getInt()));
 
 		// BOOLEAN
 		options.put(

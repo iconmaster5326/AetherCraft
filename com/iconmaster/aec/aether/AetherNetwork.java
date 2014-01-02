@@ -63,7 +63,7 @@ public class AetherNetwork {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		for (DeviceData device : devices) {
 			//System.out.println("Adding "+left);
-			left = device.device.addAether(Math.min(left,device.maxAV));
+			left = device.device.addAether(Math.min(left,device.maxAV))+Math.max(0,left-device.maxAV);
 			//System.out.println("Left is "+left);
 		}
 		//System.out.println("Requested "+av+". Returning "+left);
@@ -105,7 +105,7 @@ public class AetherNetwork {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		for (DeviceData device : devices) {
 			//System.out.println("[c] Adding "+left);
-			left = device.device.tryAddAether(Math.min(left,device.maxAV));
+			left = device.device.tryAddAether(Math.min(left,device.maxAV))+Math.max(0,left-device.maxAV);
 			//System.out.println("[c] Left is "+left);
 		}
 		//System.out.println("[c] Requested "+av+". Left is "+left+". Returning "+(left==0));
