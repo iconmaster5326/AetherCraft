@@ -3,20 +3,14 @@ package com.iconmaster.aec.common.tileentity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
-import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IConsumeBehavior;
-import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 
@@ -29,8 +23,8 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	public float infused = 0;
 
 	public TileEntityAetherInfuser() {
+		super();
 		energyBlockType = AetherCraft.GUI_ID_INFUSER;
-		max = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2;
 		inventory = new ItemStack[2];
 	}
 
@@ -74,6 +68,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 
 	@Override
 	public void calculateProgress() {
+		calcMax();
 		progress = (int) ((energy / max)*100);
 		if (progress > 100) {
 			progress = 100;
@@ -144,5 +139,12 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	public void writeToNBT(NBTTagCompound tagCompound) {
 		super.writeToNBT(tagCompound);
 		tagCompound.setFloat("infused", this.infused);
+	}
+	
+	@Override
+	public void calcMax() {
+		if (max == 0) {
+			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage")))*(Math.pow(2,getMetadata()*2)));
+		}
 	}
 }

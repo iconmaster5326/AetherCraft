@@ -1,34 +1,21 @@
 package com.iconmaster.aec.common.tileentity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 		ISidedInventory, IAetherStorage {
 
 	public TileEntityAetherCondenser() {
+		super();
 		energyBlockType = AetherCraft.GUI_ID_CONDENSER;
-		max = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2;
 		inventory = new ItemStack[9];
 	}
 
@@ -112,6 +99,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 
 	@Override
 	public void calculateProgress() {
+		calcMax();
 		this.progress = (int) ((this.getAether()/max)*100);
 		if (this.progress > 100) {
 			this.progress = 100;
@@ -168,5 +156,12 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void calcMax() {
+		if (max == 0) {
+			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage")))*(Math.pow(2,getMetadata()*2)));
+		}
 	}
 }

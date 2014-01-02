@@ -20,6 +20,7 @@ import com.iconmaster.aec.common.gui.ContainerAetherContainer;
 import com.iconmaster.aec.common.gui.ContainerAetherExtractor;
 import com.iconmaster.aec.common.gui.ContainerAetherInfuser;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
+import com.iconmaster.aec.common.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.common.item.ItemBlockInfused;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
@@ -49,73 +50,62 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerBlocks() {
-		GameRegistry.registerBlock(AetherCraft.blockAetherManipulator,
-				"aetherManipulator");
-		GameRegistry.registerBlock(AetherCraft.blockAetherContainer,
-				"aetherContainer");
-		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,
-				"aetherConduit");
-		GameRegistry.registerBlock(AetherCraft.blockAetherExtractor,
-				"aetherExtractor");
-		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,
-				"aetherCondenser");
-		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,
-				"aetherInfuser");
-		GameRegistry.registerBlock(AetherCraft.blockInfused,
-				ItemBlockInfused.class,"blockInfused");
-		GameRegistry.registerItem(AetherCraft.itemAetherBattery,
-				"aetherBattery");
-		GameRegistry.registerItem(AetherCraft.itemInfused,
-				"infusedIngot");
+		GameRegistry.registerBlock(AetherCraft.blockAetherManipulator,ItemAetherCraftBlock.class,"aetherManipulator");
+		GameRegistry.registerBlock(AetherCraft.blockAetherContainer,ItemAetherCraftBlock.class,"aetherContainer");
+		GameRegistry.registerBlock(AetherCraft.blockAetherConduit,"aetherConduit");
+		GameRegistry.registerBlock(AetherCraft.blockAetherExtractor,ItemAetherCraftBlock.class,"aetherExtractor");
+		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,ItemAetherCraftBlock.class,"aetherCondenser");
+		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,ItemAetherCraftBlock.class,"aetherInfuser");
+		GameRegistry.registerBlock(AetherCraft.blockInfused,ItemBlockInfused.class,"blockInfused");
+		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
+		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			GameRegistry.registerItem(AetherCraft.itemFlyingRing,
-					"flyingRing");
+			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}
 	}
 
 	public void addNames() {
-		LanguageRegistry.addName(AetherCraft.blockAetherManipulator,
-				"Aether Manipulator");
-		LanguageRegistry.addName(AetherCraft.blockAetherContainer,
-				"Aether Container");
-		LanguageRegistry.addName(AetherCraft.blockAetherConduit,
-				"Aether Conduit");
-		LanguageRegistry.addName(AetherCraft.blockAetherExtractor,
-				"Aether Extractor");
-		LanguageRegistry.addName(AetherCraft.blockAetherCondenser,
-				"Aether Condenser");
-		LanguageRegistry.addName(AetherCraft.blockAetherInfuser,
-				"Aether Infuser");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,0),
-				"Infused Block");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,1),
-				"Infused Brick");
-		LanguageRegistry.addName(AetherCraft.itemAetherBattery,
-				"Aether Battery");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,0),
-				"Infused Ingot");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "Aether Manipulator");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,0), "Aether Container");
+		LanguageRegistry.addName(AetherCraft.blockAetherConduit, "Aether Conduit");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,0),"Aether Extractor");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,0),"Aether Condenser");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,0),"Aether Infuser");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,0),"Infused Block");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,1),"Infused Brick");
+		
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "Infused Manipulator");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,1), "Infused Container");
+		//LanguageRegistry.addName(AetherCraft.blockAetherConduit, "Infused Conduit");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,1),"Infused Extractor");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,1),"Infused Condenser");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,1),"Aether Catalyzer");
+		
+		LanguageRegistry.addName(AetherCraft.itemAetherBattery,"Aether Battery");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,0),"Infused Ingot");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,1),"Aetheral Foci");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			LanguageRegistry.addName(AetherCraft.itemFlyingRing,
-					"Flying Ring");
+			LanguageRegistry.addName(AetherCraft.itemFlyingRing,"Flying Ring");
 		}
 	}
 
 	public void addRecipes() {
-		//GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aba","cdc","efe",'a',Item.diamond,'b',Item.emerald,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Item.cauldron);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator), "aaa","bcd","aaa",'a',Block.obsidian,'b',AetherCraft.blockAetherExtractor,'c',AetherCraft.blockAetherConduit,'d',AetherCraft.blockAetherCondenser);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Block.obsidian);
+		//GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "aba","cdc","efe",'a',Item.diamond,'b',Item.emerald,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Item.cauldron);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "aaa","bcd","aaa",'a',Block.obsidian,'b',AetherCraft.blockAetherExtractor,'c',AetherCraft.blockAetherConduit,'d',AetherCraft.blockAetherCondenser);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer,1,0), "aba","cdc","efe",'a',Item.diamond,'b',Block.obsidian,'c',Block.obsidian,'d',Block.glowStone,'e',Item.redstone,'f',Block.obsidian);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,4,0), "aaa","bbb","aaa",'a',Block.obsidian,'b',new ItemStack(Item.dyePowder,1,4));
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor), "aba","cdc","aaa",'a',Block.obsidian,'c',Item.diamond,'b',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.emerald,'c',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.diamond,'c',Item.emerald,'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,0), "aba","cdc","aaa",'a',Block.obsidian,'c',Item.diamond,'b',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,0), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.emerald,'c',new ItemStack(Item.dyePowder,1,4),'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,0), "aba","cdc","aaa",'a',Block.obsidian,'b',Item.diamond,'c',Item.emerald,'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,1,0), "aaa","aaa","aaa",'a',new ItemStack(AetherCraft.itemInfused,1,0));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,4,1), "aa","aa",'a',new ItemStack(AetherCraft.blockInfused,1,0));
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,0), new ItemStack(AetherCraft.blockInfused,1,0));
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,0), new ItemStack(AetherCraft.blockInfused,1,1));
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing), "aba","c c","ada",'a',Item.ingotGold,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,0), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing,1,0), "aba","c c","ada",'a',Item.ingotGold,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 
 		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), new ItemStack(AetherCraft.itemInfused,1,0));
+		InfuserRegistry.addRecipe(new ItemStack(Item.diamond), new ItemStack(AetherCraft.itemInfused,1,1));
 	}
 
 	@Override

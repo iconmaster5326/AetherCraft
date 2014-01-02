@@ -108,17 +108,17 @@ public class AetherCraft {
 		proxy.registerRenderInformation();
 		// Blocks
 		blockAetherManipulator  = new BlockAetherManipulator(blockIds.get(0),
-				Material.rock).setLightValue(0.3f);
+				Material.rock,"Manipulator").setLightValue(0.3f);
 		blockAetherContainer  = new BlockAetherContainer(blockIds.get(1),
-				Material.rock).setLightValue(0.3f);
+				Material.rock,"Container").setLightValue(0.3f);
 		blockAetherConduit  = new BlockAetherConduit(blockIds.get(2),
 				Material.rock).setLightValue(0.2f);
 		blockAetherExtractor = new BlockAetherExtractor(blockIds.get(3),
-				Material.rock).setLightValue(0.3f);
+				Material.rock,"Extractor").setLightValue(0.3f);
 		blockAetherCondenser = new BlockAetherCondenser(blockIds.get(4),
-				Material.rock).setLightValue(0.3f);
+				Material.rock,"Condenser").setLightValue(0.3f);
 		blockAetherInfuser = new BlockAetherInfuser(blockIds.get(5),
-				Material.rock).setLightValue(0.3f);
+				Material.rock,"Infuser").setLightValue(0.3f);
 		blockInfused = new BlockInfused(blockIds.get(6),
 				Material.rock).setLightValue(0.7f);
 		// Items

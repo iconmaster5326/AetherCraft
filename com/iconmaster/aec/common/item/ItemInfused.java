@@ -14,10 +14,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemInfused extends Item {
-	public Icon[] icons = new Icon[1];
+	public Icon[] icons = new Icon[2];
 	public ItemInfused(int id) {
 		super(id);
-        this.setUnlocalizedName("aec.infusedIngot");
+        this.setUnlocalizedName("aec.infused");
         this.setMaxStackSize(64);
         this.setHasSubtypes(true);
         this.setCreativeTab(AetherCraft.tabAetherCraft);
@@ -27,6 +27,7 @@ public class ItemInfused extends Item {
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
 		this.icons[0] = iconRegister.registerIcon("aec:itemInfusedIngot");
+		this.icons[1] = iconRegister.registerIcon("aec:itemAetheralFoci");
 	}
 	
 	@Override
@@ -38,6 +39,7 @@ public class ItemInfused extends Item {
 	@Override
 	public void getSubItems(int par1,CreativeTabs tab,List list) {
 		list.add(new ItemStack(this,1,0));
+		list.add(new ItemStack(this,1,1));
 	}
 	
 	@Override

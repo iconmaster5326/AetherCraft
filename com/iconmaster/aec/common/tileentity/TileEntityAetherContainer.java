@@ -1,28 +1,18 @@
 package com.iconmaster.aec.common.tileentity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.IAetherStorageItem;
 import com.iconmaster.aec.common.AetherCraft;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-
 public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 		IInventory, IAetherStorage {
 
 	public TileEntityAetherContainer() {
+		super();
 		energyBlockType = AetherCraft.GUI_ID_CONTAINER;
 		inventory = new ItemStack[2];
 	}
@@ -34,8 +24,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 	@Override
 	public void handleAether() {
-		float ecMaxStorage = Float.parseFloat(AetherCraft
-				.getOptions("acmaxstorage"));
+		calcMax();
 		float chargeRate = Float.parseFloat(AetherCraft
 				.getOptions("chargerate"));
 
@@ -44,7 +33,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 		// ------------------- Discharging - TOP SLOT -------------------
 		if (topStack != null && topStack.getItem() instanceof IAetherStorageItem) {
-			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, Math.min(ecMaxStorage - energy,chargeRate));
+			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, Math.min(max - energy,chargeRate));
 			energy += got;
 			this.sync();
 
@@ -60,11 +49,17 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 	@Override
 	public void calculateProgress() {
-		this.progress = (int) ((float) this.energy
-				/ (float) Float.parseFloat(AetherCraft
-						.getOptions("acmaxstorage")) * 100.0f);
+		calcMax();
+		this.progress = (int) ((this.energy / max) * 100.0f);
 		if (this.progress > 100) {
 			this.progress = 100;
+		}
+	}
+	
+	@Override
+	public void calcMax() {
+		if (max == 0) {
+			max = (float) ((Float.parseFloat(AetherCraft.getOptions("acmaxstorage")))*(Math.pow(2,getMetadata()*2)));
 		}
 	}
 }

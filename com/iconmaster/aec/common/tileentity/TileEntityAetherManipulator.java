@@ -1,16 +1,8 @@
 package com.iconmaster.aec.common.tileentity;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
@@ -19,13 +11,10 @@ import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.relauncher.Side;
-
 public class TileEntityAetherManipulator extends AetherCraftTileEntity implements
 		ISidedInventory, IAetherStorage {
 	public TileEntityAetherManipulator() {
+		super();
 		energyBlockType = AetherCraft.GUI_ID_MANIPULATOR;
 		inventory = new ItemStack[55];
 	}
@@ -36,8 +25,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 	}
 
 	public void handleAether() {
-		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"));
-
+		calcMax();
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
 		boolean doneSomething = false;
@@ -55,16 +43,16 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 				}
 				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
 				//System.out.println("Consuming... ");
-				if (stackEv+getAether()>emMaxStorage) {
+				if (stackEv+getAether()>max) {
 					//System.out.println("Has more aether than we can hold!");
-					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-emMaxStorage);
+					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-max);
 					if (!canSend) {
 						//System.out.println("Could not transfer!");
 						//AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-getAether()-left);
 						failed = true;
 					} else {
-						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-emMaxStorage);
-						energy = emMaxStorage;
+						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-max);
+						energy = max;
 					}
 				} else {
 					energy += stackEv;
@@ -221,5 +209,12 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void calcMax() {
+		if (max == 0) {
+			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage")))*(Math.pow(2,getMetadata()*2)));
+		}
 	}
 }

@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
@@ -252,15 +253,15 @@ public class AetherCraftTileEntity extends TileEntity implements
 	@Override
 	public float addAether(float ev) {
 		if (ev==0) {return 0;}
-		float ammaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("ammaxstorage"));
-		if (this.energy + ev <= ammaxstorage) {
+		calcMax();
+		if (this.energy + ev <= max) {
 			this.energy += ev;
 			this.sync();
 			return 0;
 		} else {
-			float rest = (this.energy + ev) - ammaxstorage;
-			this.energy = ammaxstorage;
+			float rest = (this.energy + ev) - max;
+			this.energy = max;
+			this.sync();
 			return rest;
 		}
 	}
@@ -284,16 +285,12 @@ public class AetherCraftTileEntity extends TileEntity implements
 	
 	@Override
 	public float tryAddAether(float ev) {
-		float ammaxstorage = Float.parseFloat(AetherCraft
-				.getOptions("ammaxstorage"));
-		if (this.energy + ev <= ammaxstorage) {
-			//this.energy += ev;
-			//this.sync();
+		if (ev==0) {return 0;}
+		calcMax();
+		if (this.energy + ev <= max) {
 			return 0;
 		} else {
-			float rest = (this.energy + ev) - ammaxstorage;
-			//this.energy = ammaxstorage;
-			//this.sync();
+			float rest = (this.energy + ev) - max;
 			return rest;
 		}
 	}
@@ -381,5 +378,13 @@ public class AetherCraftTileEntity extends TileEntity implements
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
 		PacketDispatcher.sendPacketToServer(packet);
+	}
+	
+	public int getMetadata() {
+		return this.worldObj.getBlockMetadata(this.xCoord,this.yCoord,this.zCoord);
+	}
+
+	public void calcMax() {
+		
 	}
 }
