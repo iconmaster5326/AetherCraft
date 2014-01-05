@@ -62,4 +62,28 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 			max = (float) ((Float.parseFloat(AetherCraft.getOptions("acmaxstorage")))*(Math.pow(2,getMetadata()*2)));
 		}
 	}
+	
+	@Override
+	public int[] getAccessibleSlotsFromSide(int side) {
+		int[] result;
+		switch (side) {
+		// Bottom
+		case 1:
+			return new int[] {1};
+		case 0:
+			return new int[] {0};
+		default:
+			return new int[] {0,1};
+		}
+	}
+
+	@Override
+	public boolean canInsertItem(int slot, ItemStack stack, int side) {
+		return slot != 1;
+	}
+
+	@Override
+	public boolean canExtractItem(int slot, ItemStack stack, int side) {
+		return slot != 0;
+	}
 }

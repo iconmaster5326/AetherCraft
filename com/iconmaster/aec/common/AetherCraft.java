@@ -21,6 +21,7 @@ import com.iconmaster.aec.common.block.BlockAetherContainer;
 import com.iconmaster.aec.common.block.BlockAetherExtractor;
 import com.iconmaster.aec.common.block.BlockAetherInfuser;
 import com.iconmaster.aec.common.block.BlockAetherManipulator;
+import com.iconmaster.aec.common.block.BlockAetherReconstructor;
 import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
@@ -54,6 +55,7 @@ public class AetherCraft {
 	public static final int GUI_ID_EXTRACTOR = 2;
 	public static final int GUI_ID_CONDENSER = 3;
 	public static final int GUI_ID_INFUSER = 4;
+	public static final int GUI_ID_RECONSTRUCTOR = 5;
 	
 	public static final byte PACKET_TTID_CONFIG = 0;
 
@@ -69,6 +71,7 @@ public class AetherCraft {
 	public static Block blockAetherExtractor;
 	public static Block blockAetherCondenser;
 	public static Block blockAetherInfuser;
+	public static Block blockAetherReconstructor;
 	public static Block blockInfused;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
@@ -119,6 +122,8 @@ public class AetherCraft {
 				Material.rock,"Condenser").setLightValue(0.3f);
 		blockAetherInfuser = new BlockAetherInfuser(blockIds.get(5),
 				Material.rock,"Infuser").setLightValue(0.3f);
+		blockAetherReconstructor = new BlockAetherReconstructor(blockIds.get(7),
+				Material.rock,"Reconstructor").setLightValue(0.3f);
 		blockInfused = new BlockInfused(blockIds.get(6),
 				Material.rock).setLightValue(0.7f);
 		// Items
@@ -252,6 +257,7 @@ public class AetherCraft {
 		blockIds.add(forgeConfig.getBlock("aethercondenser", 2694).getInt());
 		blockIds.add(forgeConfig.getBlock("aetherinfuser", 2695).getInt());
 		blockIds.add(forgeConfig.getBlock("infusedblock", 2696).getInt());
+		blockIds.add(forgeConfig.getBlock("aetherreconstructor", 2697).getInt());
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());

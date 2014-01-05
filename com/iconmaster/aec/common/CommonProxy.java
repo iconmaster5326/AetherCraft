@@ -14,12 +14,14 @@ import com.iconmaster.aec.client.gui.GuiAetherContainer;
 import com.iconmaster.aec.client.gui.GuiAetherExtractor;
 import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
+import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
 import com.iconmaster.aec.common.event.FallDamageEvent;
 import com.iconmaster.aec.common.gui.ContainerAetherCondenser;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
 import com.iconmaster.aec.common.gui.ContainerAetherExtractor;
 import com.iconmaster.aec.common.gui.ContainerAetherInfuser;
 import com.iconmaster.aec.common.gui.ContainerAetherManipulator;
+import com.iconmaster.aec.common.gui.ContainerAetherReconstructor;
 import com.iconmaster.aec.common.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.common.item.ItemBlockInfused;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
@@ -27,6 +29,7 @@ import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
+import com.iconmaster.aec.common.tileentity.TileEntityAetherReconstructor;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -47,6 +50,8 @@ public class CommonProxy implements IGuiHandler {
 				"aec.condenser");
 		GameRegistry.registerTileEntity(TileEntityAetherInfuser.class,
 				"aec.infuser");
+		GameRegistry.registerTileEntity(TileEntityAetherReconstructor.class,
+				"aec.reconstructor");
 	}
 
 	public void registerBlocks() {
@@ -56,6 +61,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerBlock(AetherCraft.blockAetherExtractor,ItemAetherCraftBlock.class,"aetherExtractor");
 		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,ItemAetherCraftBlock.class,"aetherCondenser");
 		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,ItemAetherCraftBlock.class,"aetherInfuser");
+		GameRegistry.registerBlock(AetherCraft.blockAetherReconstructor,ItemAetherCraftBlock.class,"aetherReconstructor");
 		GameRegistry.registerBlock(AetherCraft.blockInfused,ItemBlockInfused.class,"blockInfused");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
@@ -71,6 +77,8 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,0),"Aether Extractor");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,0),"Aether Condenser");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,0),"Aether Infuser");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherReconstructor,1,0),"Aether Reconstructor");
+		
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,0),"Infused Block");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,1),"Infused Brick");
 		
@@ -106,7 +114,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,1), "aba","cdc","aaa",'a',infusedIngot,'c',Item.emerald,'b',Block.blockLapis,'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',aetheralFoci,'c',Block.blockLapis,'d',Block.glowStone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',Item.emerald,'c',aetheralFoci,'d',Block.glowStone);
-
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherReconstructor,1,0), "aba","cdc","aaa",'a',Block.obsidian,'b',aetheralFoci,'c',infusedIngot,'d',Block.glowStone);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,1,0), "aaa","aaa","aaa",'a',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,4,1), "aa","aa",'a',new ItemStack(AetherCraft.blockInfused,1,0));
@@ -116,8 +124,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,1),"aba","bcb","aba",'a',Block.glass,'b',new ItemStack(AetherCraft.itemAetherBattery,1,0),'c',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing,1,0), "aba","c c","ada",'a',infusedIngot,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 
-		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), new ItemStack(AetherCraft.itemInfused,1,0));
-		InfuserRegistry.addRecipe(new ItemStack(Item.diamond), new ItemStack(AetherCraft.itemInfused,1,1));
+		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), infusedIngot);
+		InfuserRegistry.addRecipe(new ItemStack(Item.diamond), aetheralFoci);
 	}
 
 	@Override
@@ -135,6 +143,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
 			return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherReconstructor && ID == AetherCraft.GUI_ID_RECONSTRUCTOR) {
+			return new ContainerAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
 		}
 		return null;
 	}
@@ -154,6 +164,8 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
 			return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetherReconstructor && ID == AetherCraft.GUI_ID_RECONSTRUCTOR) {
+			return new GuiAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
 		}
 		return null;
 	}

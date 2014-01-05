@@ -83,19 +83,21 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 		// Bottom
 		case 1:
 			return new int[] {1};
-		default:
+		case 0:
 			return new int[] {0};
+		default:
+			return new int[] {0,1};
 		}
 	}
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		return slot == 0;
+		return slot != 1;
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return slot == 1;
+		return slot != 0;
 	}
 	
 	@Override

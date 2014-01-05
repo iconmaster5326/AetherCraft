@@ -313,7 +313,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 
 	@Override
 	public int[] getAccessibleSlotsFromSide(int side) {
-		return SideUtils.allSides;
+		return new int[0];
 	}
 
 	@Override
