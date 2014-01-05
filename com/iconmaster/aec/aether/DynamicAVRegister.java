@@ -18,6 +18,8 @@ import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.CrucibleHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
+import com.iconmaster.aec.aether.recipe.ForestryBottlerHandler;
+import com.iconmaster.aec.aether.recipe.ForestryCraftingRecipeHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
@@ -263,6 +265,13 @@ public class DynamicAVRegister {
 		if (Loader.isModLoaded("BuildCraft|Core")) {
 			try {
 				registerHandler(map,new AssemblyRecipeHandler(),Class.forName("buildcraft.api.recipes.AssemblyRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("Forestry")) {
+			try {
+				registerHandler(map,new ForestryCraftingRecipeHandler(),Class.forName("forestry.core.interfaces.IDescriptiveRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
