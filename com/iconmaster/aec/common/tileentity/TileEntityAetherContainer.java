@@ -25,8 +25,8 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 	@Override
 	public void handleAether() {
 		calcMax();
-		float chargeRate = Float.parseFloat(AetherCraft
-				.getOptions("chargerate"));
+		float chargeRate = (float) (Float.parseFloat(AetherCraft
+				.getOptions("chargerate"))*Math.pow(2,getMetadata()*2));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack bottomStack = this.getStackInSlot(1);
