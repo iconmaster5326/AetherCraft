@@ -81,7 +81,8 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,1),"Infused Condenser");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,1),"Aether Catalyzer");
 		
-		LanguageRegistry.addName(AetherCraft.itemAetherBattery,"Aether Battery");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.itemAetherBattery,1,0),"Aether Battery");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.itemAetherBattery,1,1),"Aether Cell");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,0),"Infused Ingot");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,1),"Aetheral Foci");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -112,6 +113,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,0), new ItemStack(AetherCraft.blockInfused,1,0));
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,0), new ItemStack(AetherCraft.blockInfused,1,1));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,0), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,1),"aba","bcb","aba",'a',Block.glass,'b',new ItemStack(AetherCraft.itemAetherBattery,1,0),'c',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing,1,0), "aba","c c","ada",'a',infusedIngot,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 
 		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), new ItemStack(AetherCraft.itemInfused,1,0));
