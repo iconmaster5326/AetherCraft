@@ -43,7 +43,7 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 						if (got != 0) {sync();}
 					}
 				}
-				if (!failed) {
+				if (!failed && av != 0) {
 					tool.setItemDamage(tool.getItemDamage()-1);
 					sync();
 				}
