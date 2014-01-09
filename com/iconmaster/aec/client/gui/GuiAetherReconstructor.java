@@ -36,7 +36,7 @@ public class GuiAetherReconstructor extends AetherCraftGui {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		GL11.glDisable(GL11.GL_LIGHTING);
-		this.fontRenderer.drawString("Aether Reonstructor", 44, 5, 0x404040);
+		this.fontRenderer.drawString("Aether Reconstructor", 44, 5, 0x404040);
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRenderer.drawStringWithShadow("Aether: "+NumberUtils.display(this.te.getAether()), 30, 58,0x00FF00);

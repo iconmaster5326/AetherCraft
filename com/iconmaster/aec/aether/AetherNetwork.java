@@ -163,6 +163,7 @@ public class AetherNetwork {
 					getAllConnectedDevices(world,ofx,ofy,ofz,nav,a,been);
 				}
 				if (world.getBlockTileEntity(ofx, ofy, ofz)!= null && world.getBlockTileEntity(ofx, ofy, ofz) instanceof IAetherStorage) {
+					//System.out.println("Got a device");
 					a.add(new DeviceData((IAetherStorage) world.getBlockTileEntity(ofx, ofy, ofz),nav));
 				}
 			}

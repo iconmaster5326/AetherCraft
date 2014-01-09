@@ -4,6 +4,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.IAetherStorageItem;
 import com.iconmaster.aec.common.AetherCraft;
@@ -33,8 +34,14 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 		// ------------------- Discharging - TOP SLOT -------------------
 		if (topStack != null && topStack.getItem() instanceof IAetherStorageItem) {
-			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, Math.min(max - energy,chargeRate));
-			energy += got;
+			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, chargeRate);
+			if (energy+got > max) {
+				energy = max;
+				float rest = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, energy+got-max);
+				((IAetherStorageItem)topStack.getItem()).addAether(topStack, rest);
+			} else {
+				energy += got;
+			}
 			this.sync();
 
 		}
@@ -42,7 +49,13 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 		// ------------------- Charging - BOTTOM SLOT -------------------
 		if (bottomStack != null && bottomStack.getItem() instanceof IAetherStorageItem) {
 			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, Math.min(this.energy,chargeRate));
-			this.energy -= Math.min(this.energy,chargeRate)-rest;
+			float drawn = Math.min(this.energy,chargeRate);
+			if (chargeRate > this.energy ) {
+				float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, chargeRate-energy);
+				this.energy = got;
+			} else {
+				this.energy -= drawn-rest;
+			}
 			this.sync();
 		}
 	}
