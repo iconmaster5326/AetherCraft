@@ -34,7 +34,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 			currentStack = this.getStackInSlot(i);
 
 			// ------------------- Consuming -------------------
-			if (canConsume(currentStack)) {
+			if (canConsume(null,currentStack)) {
 				float stackEv;
 				if (currentStack.getItem() instanceof IConsumeBehavior) {
 					stackEv = ((IConsumeBehavior)currentStack.getItem()).getConsumeAV(currentStack);

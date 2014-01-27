@@ -41,6 +41,10 @@ public class AetherCraftTileEntity extends TileEntity implements
 	public float max;
 	
 	protected boolean polled = false;
+	/**
+	 * Set this to false is you don't want the 0th slot to be considered as valid in getStackableSlot and getEmptySlot.
+	 */
+	protected boolean use0 = true;
 
 	public AetherCraftTileEntity() {
 		
@@ -227,7 +231,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 	public int getStackableSlot(ItemStack cStack) {
 		ItemStack stack;
 		if (cStack == null) {return 1;}
-		for (int i = 1; i < this.inventory.length; i++) {
+		for (int i = use0  ? 0 : 1; i < this.inventory.length; i++) {
 			stack = this.getStackInSlot(i);
 
 			if (stack != null && stack.isItemEqual(cStack)
@@ -241,7 +245,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 
 	public int getEmptySlot() {
 		ItemStack stack;
-		for (int i = 1; i < this.inventory.length; i++) {
+		for (int i = use0 ? 0 : 1; i < this.inventory.length; i++) {
 			stack = this.getStackInSlot(i);
 			if (stack == null) {
 				return i;
@@ -330,8 +334,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 		return getAether() + AetherNetwork.getStoredAV(worldObj, xCoord, yCoord, zCoord);
 	}
 	
-	public boolean canConsume(ItemStack currentStack) {
-		ItemStack topStack = this.getStackInSlot(0);
+	public boolean canConsume(ItemStack topStack, ItemStack currentStack) {
 		if (currentStack == null) {
 			return false;
 		}

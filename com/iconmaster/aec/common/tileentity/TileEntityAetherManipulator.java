@@ -15,6 +15,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 		ISidedInventory, IAetherStorage {
 	public TileEntityAetherManipulator() {
 		super();
+		use0 = false;
 		energyBlockType = AetherCraft.GUI_ID_MANIPULATOR;
 		inventory = new ItemStack[55];
 	}
@@ -34,7 +35,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 			currentStack = this.getStackInSlot(i);
 
 			// ------------------- Consuming -------------------
-			if (canConsume(currentStack)) {
+			if (canConsume(topStack,currentStack)) {
 				float stackEv;
 				if (currentStack.getItem() instanceof IConsumeBehavior) {
 					stackEv = ((IConsumeBehavior)currentStack.getItem()).getConsumeAV(currentStack);
