@@ -353,7 +353,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 	@Override
 	public float getAether() {
 		//System.out.println("Returning "+this.energy);
-		if (!polled) {
+		if (!polled && FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
 			requestSync();
 			polled = true;
 		}
