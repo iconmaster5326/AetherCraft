@@ -28,6 +28,8 @@ public class ConnectionHandler implements IConnectionHandler {
 			oos.writeObject(AVRegistry.getValueMap());
 			oos.writeObject(AetherCraft.getOptionsMap());
 			oos.writeInt(2);
+			oos.flush();
+			oos.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
