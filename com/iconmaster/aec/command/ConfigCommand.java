@@ -208,13 +208,9 @@ public class ConfigCommand implements ICommand {
 	public boolean canCommandSenderUseCommand(ICommandSender icommandsender) {
 		if (FMLCommonHandler.instance().getEffectiveSide().isServer()) {
 			if (icommandsender instanceof EntityPlayerMP) {
-				return true;
+				return icommandsender.canCommandSenderUseCommand(2, this.getCommandName());
 			} else {
-				// Chat Message
-				ChatMessageComponent cmc = new ChatMessageComponent();
-				cmc.addText(EnumChatFormatting.RED
-						+ "This command must be executed by a player, not from the console!");
-				icommandsender.sendChatToPlayer(cmc);
+				return true;
 			}
 		}
 		return false;
