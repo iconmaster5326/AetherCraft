@@ -27,8 +27,11 @@ public class ClientPacketHandler implements IPacketHandler {
 	public void onPacketData(INetworkManager manager,
 			Packet250CustomPayload packet, Player player) {
 		EntityPlayer sender = (EntityPlayer) player;
-		DataInputStream data = new DataInputStream(new ByteArrayInputStream(
-				packet.data));
+		if (packet.data == null) {
+			System.out.println("[AEC] ERROR: Packet's data was null!");
+			return;
+		}
+		DataInputStream data = new DataInputStream(new ByteArrayInputStream(packet.data));
 
 		if (packet.channel.equals("Aec")) {
 			handlePacket(packet, sender);
@@ -39,8 +42,7 @@ public class ClientPacketHandler implements IPacketHandler {
 	}
 
 	private void handlePacket(Packet250CustomPayload packet, EntityPlayer player) {
-		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(
-				packet.data));
+		DataInputStream dis = new DataInputStream(new ByteArrayInputStream(packet.data));
 		try {
 			byte energyBlockType = dis.readByte();
 			switch (energyBlockType) {
@@ -64,8 +66,7 @@ public class ClientPacketHandler implements IPacketHandler {
 	private void handleTransferPacket(Packet250CustomPayload packet,
 			EntityPlayer player) {
 		try {
-			ObjectInputStream dis = new ObjectInputStream(new ByteArrayInputStream(
-					packet.data));
+			ObjectInputStream dis = new ObjectInputStream(new ByteArrayInputStream(packet.data));
 			byte transferTypeID = dis.readByte();
 			switch (transferTypeID) {
 			case AetherCraft.PACKET_TTID_CONFIG:
