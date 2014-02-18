@@ -69,8 +69,11 @@ public class ClientPacketHandler implements IPacketHandler {
 			byte transferTypeID = dis.readByte();
 			switch (transferTypeID) {
 			case AetherCraft.PACKET_TTID_CONFIG:
-				AVRegistry.setValueMap(((HashMap) dis.readObject()));
+				HashMap stringValues = (HashMap) dis.readObject();
 				AetherCraft.setOptionsMap((HashMap<String, String>) dis.readObject());
+				
+				AVRegistry.reloadClientValues(stringValues);
+				
 				break;
 			}
 		} catch (IOException e) {

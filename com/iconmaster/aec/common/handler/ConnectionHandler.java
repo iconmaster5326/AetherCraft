@@ -10,8 +10,8 @@ import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
 
-import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.config.AVConfigHandler;
 
 import cpw.mods.fml.common.network.IConnectionHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
@@ -25,7 +25,7 @@ public class ConnectionHandler implements IConnectionHandler {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
 			oos.writeByte(AetherCraft.PACKET_TTID_CONFIG);
-			oos.writeObject(AVRegistry.getValueMap());
+			oos.writeObject(AVConfigHandler.getNetworkConfigMap());
 			oos.writeObject(AetherCraft.getOptionsMap());
 			oos.writeInt(2);
 			oos.flush();

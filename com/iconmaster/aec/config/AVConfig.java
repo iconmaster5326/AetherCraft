@@ -21,6 +21,9 @@ import com.iconmaster.aec.util.UidUtils;
 public class AVConfig {
 	private File file;
 	private HashMap values;
+	private HashMap valueStrings;
+	
+	protected AVConfig() {}
 	
 	public AVConfig(File file) {
 		this.file = file;
@@ -32,6 +35,7 @@ public class AVConfig {
 			}
 		}
 		this.values = new HashMap();
+		this.valueStrings = new HashMap();
 	}
 	
 	public File getFile() {
@@ -99,6 +103,7 @@ public class AVConfig {
 	}
 	
 	public void addValue(String s, float av) {
+		valueStrings.put(s,av);
 		addValue(AVRegistry.getItemFromString(s),av);
 	}
 	
@@ -129,5 +134,9 @@ public class AVConfig {
 
 	public HashMap getValueMap() {
 		return values;
+	}
+	
+	public HashMap getValueStrings() {
+		return valueStrings;
 	}
 }

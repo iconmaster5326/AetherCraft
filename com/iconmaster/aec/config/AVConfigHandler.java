@@ -2,7 +2,10 @@ package com.iconmaster.aec.config;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
 
 public class AVConfigHandler {
@@ -38,6 +41,15 @@ public class AVConfigHandler {
 		}
 	}
 	
+	public static void loadNetworkConfigFile(HashMap stringValues) {
+		for (Object entry : stringValues.entrySet().toArray()) {
+			String item = (String) ((Entry)entry).getKey();
+			float av = (Float) ((Entry)entry).getValue();
+			
+			AVRegistry.setConfigAV(item,av);
+		}
+	}
+	
 	public static boolean doesFileExist(File fileDirectory, String file) {
 		File fileResult = new File(fileDirectory, file);
 		if (fileResult.exists()) {
@@ -45,5 +57,22 @@ public class AVConfigHandler {
 		} else {
 			return false;
 		}
+	}
+
+	public static HashMap getNetworkConfigMap() {
+		HashMap allStrings  = new HashMap();
+		File dir = AetherCraft.getConfigDir();
+		File[] configFiles = dir.listFiles(new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return name.endsWith(".cfg");
+			}
+		});
+		for (File file : configFiles) {
+			AVConfig config = new AVConfig(file);
+			config.loadValues();
+			allStrings.putAll(config.getValueStrings());
+		}
+		return allStrings;
 	}
 }

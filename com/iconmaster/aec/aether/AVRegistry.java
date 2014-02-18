@@ -210,4 +210,13 @@ public class AVRegistry {
 		DynamicAVRegister.addDynamicValues();
 		
 	}
+	
+	public static void reloadClientValues(HashMap stringValues) {
+		values = new HashMap();
+		
+		unlocalizedNames = getAllNames();
+		AVConfigHandler.loadNetworkConfigFile(stringValues);
+		DynamicAVRegister.addDynamicValues();
+		
+	}
 }
