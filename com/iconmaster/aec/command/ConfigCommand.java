@@ -69,7 +69,10 @@ public class ConfigCommand implements ICommand {
 			icommandsender.sendChatToPlayer(cmc);
 			return;
 		} else {
-			ItemStack item = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
+			ItemStack item = null;
+			if (icommandsender instanceof EntityPlayerMP) {
+				item = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
+			}
 			if (astring[0].equalsIgnoreCase("name") && item != null) {
 				String name = item.getUnlocalizedName();
 				cmc = new ChatMessageComponent();
