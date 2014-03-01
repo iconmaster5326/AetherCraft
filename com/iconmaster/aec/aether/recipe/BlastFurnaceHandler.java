@@ -53,7 +53,7 @@ public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
 		 Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
 		Object inputObj = Class.forName("mods.railcraft.api.crafting.RailcraftCraftingManager").getField("blastFurnace").get(null);
 		Object list = inputObj.getClass().getMethod("getRecipes").invoke(inputObj);
-	    int length = Array.getLength(list);
+	    int length = list instanceof List ? ((List)list).size():Array.getLength(list);
 	    for (int i = 0; i < length; i ++) {
 	        Object recipe = Array.get(list, i);
 			Object inputObj2 = recipeClass.cast(recipe);
