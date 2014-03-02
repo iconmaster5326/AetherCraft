@@ -222,7 +222,15 @@ public class AetherCraft {
 		options.put("flowrate", Integer.toString(forgeConfig.get("options",
 				"flowrate", 8192,
 				"How much AV a basic Conduit can transfer maximum.").getInt()));
-
+		
+		options.put("rfperav", Double.toString(forgeConfig.get("options",
+				"rfperav", 0.0,
+				"How much RF aether extractors use to extract one AV.").getDouble(0.0)));
+		
+		options.put("maxrf", Integer.toString(forgeConfig.get("options",
+				"maxrf", 32000,
+				"How much RF aether extractors can contain.").getInt()));
+		
 		// BOOLEAN
 		options.put(
 				"instantconsume",
