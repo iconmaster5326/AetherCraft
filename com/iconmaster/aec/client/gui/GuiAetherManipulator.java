@@ -55,17 +55,22 @@ public class GuiAetherManipulator extends AetherCraftGui {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		this.fontRenderer.drawString("Aether Manipulator", 70, 3, 0x404040);
 
-		this.fontRenderer.drawStringWithShadow("Internal Aether:", 9, 26,
-				0xFF0000);
-		this.fontRenderer.drawStringWithShadow(
-				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
+//		this.fontRenderer.drawStringWithShadow("Internal Aether:", 9, 26,
+//				0xFF0000);
+//		this.fontRenderer.drawStringWithShadow(
+//				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
+		
+		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 9, 26,0x00FF00);
 
-		this.fontRenderer.drawStringWithShadow("Consume Precision:", 9, 38,
-				0xFF0000);
-		this.fontRenderer.drawStringWithShadow(
-				(int) (Double.parseDouble(AetherCraft
-						.getOptions("consumeprecision"))) + "%", 112, 38,
-				0x00FF00);
+//		this.fontRenderer.drawStringWithShadow("Consume Precision:", 9, 38,
+//				0xFF0000);
+//		this.fontRenderer.drawStringWithShadow(
+//				(int) (Double.parseDouble(AetherCraft
+//						.getOptions("consumeprecision"))) + "%", 112, 38,
+//				0x00FF00);
+		
+		te.calcMax();
+		this.fontRenderer.drawStringWithShadow("Precision: "+((int)(Double.parseDouble(AetherCraft.getOptions("consumeprecision"))))+"%", 9, 38,0x00FF00);
 
 		this.drawGradientRect(68, 11, 68 + this.te.getProgress(), 17,
 				0x00404040, 0xFF2CCDB1);

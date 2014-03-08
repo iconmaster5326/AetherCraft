@@ -55,7 +55,7 @@ public class GuiAetherExtractor extends AetherCraftGui {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		this.fontRenderer.drawString("Aether Extractor", 84, 4, 0x404040);
 
-		this.fontRenderer.drawStringWithShadow("Aether: "+NumberUtils.display(this.te.getAether()), 54, 58,0x00FF00);
+		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.max), 54, 58,0x00FF00);
 
 		this.fontRenderer.drawStringWithShadow("Precision: "+(int) (Double.parseDouble(AetherCraft.getOptions("consumeprecision"))) + "%", 54,68,0x00FF00);
 		

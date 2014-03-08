@@ -55,7 +55,7 @@ public class GuiAetherCondenser extends AetherCraftGui {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		this.fontRenderer.drawString("Aether Condenser", 9, 4, 0x404040);
 
-		this.fontRenderer.drawStringWithShadow("Aether: "+NumberUtils.display(this.te.getAether()), 30, 58,0x00FF00);
+		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
 		
 		if (AVRegistry.getAV(this.te.getStackInSlot(0)) != 0) {
 			int percent = Math.min((int) ((te.getPossibleAether() / AVRegistry.getAV(this.te.getStackInSlot(0)))*100),100);

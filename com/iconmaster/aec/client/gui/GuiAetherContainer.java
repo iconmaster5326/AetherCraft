@@ -49,7 +49,7 @@ public class GuiAetherContainer extends AetherCraftGui {
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRenderer.drawStringWithShadow(
-				"Aether: " + NumberUtils.display(this.te.getAether()), 34, 38,
+				"AV: " + NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 34, 38,
 				0x55FF55);
 
 		int a = 68 - 16;

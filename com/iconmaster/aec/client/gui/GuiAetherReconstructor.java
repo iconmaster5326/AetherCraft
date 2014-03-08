@@ -39,7 +39,7 @@ public class GuiAetherReconstructor extends AetherCraftGui {
 		this.fontRenderer.drawString("Aether Reconstructor", 44, 5, 0x404040);
 		this.fontRenderer.drawString("Inventory", 7, 72, 0x404040);
 
-		this.fontRenderer.drawStringWithShadow("Aether: "+NumberUtils.display(this.te.getAether()), 30, 58,0x00FF00);
+		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
 		
 		float cost = 0;
 		if (te.getStackInSlot(0) != null && te.getStackInSlot(0).isItemDamaged()) {
