@@ -15,6 +15,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 
 	public TileEntityAetherCondenser() {
 		super();
+		this.use0 = false;
 		energyBlockType = AetherCraft.GUI_ID_CONDENSER;
 		inventory = new ItemStack[9];
 	}
@@ -44,16 +45,17 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 				} else {
 					av = AVRegistry.getAV(topStack);
 				}
+				
 				if (getAether() - av < 0) {
-					//System.out.println("Not enough AV!");
-					boolean canGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
-					if (!canGet) {
-						//System.out.println("Couldn't get enough!");
-						//AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, got);
-						failed = true;
+					calcMax();
+					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
+					if (willGet) {
+						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
+						energy = 0;
 					} else {
-						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-getAether());
-						this.energy = 0;
+						float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(av-energy,max-energy));
+						energy += got;
+						failed = true;
 					}
 				} else {
 					energy -= av;

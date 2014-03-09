@@ -48,7 +48,6 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max);
 					if (!canSend) {
 						//System.out.println("Could not transfer!");
-						//AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-energy-left);
 						failed = true;
 					} else {
 						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max);
