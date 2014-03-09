@@ -57,6 +57,9 @@ public class GuiAetherCondenser extends AetherCraftGui {
 
 		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
 		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 30, 70,0x00FF00);
+		
 		if (AVRegistry.getAV(this.te.getStackInSlot(0)) != 0) {
 			int percent = Math.min((int) ((te.getPossibleAether() / AVRegistry.getAV(this.te.getStackInSlot(0)))*100),100);
 			this.drawRect(30, 16, 30 + percent, 24,0xFF32FF00);
@@ -87,6 +90,13 @@ public class GuiAetherCondenser extends AetherCraftGui {
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+		
+		ItemStack topStack = te.getStackInSlot(0);
+		float av = AVRegistry.getAV(topStack);
+		te.calcLimit();
+		if (topStack != null && (av<=0 || av>te.limit)) {
+			this.drawGradientRect(x+38, y+33, x+38+16, y+33+16,0x88FF0000,0x88FF0000);
+		}
 	}
 
 	private void requestSync() {

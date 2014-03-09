@@ -41,6 +41,9 @@ public class GuiAetherReconstructor extends AetherCraftGui {
 
 		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
 		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 110, 58,0x00FF00);
+		
 		float cost = 0;
 		if (te.getStackInSlot(0) != null && te.getStackInSlot(0).isItemDamaged()) {
 			cost = AVRegistry.getAbsoluteAV(te.getStackInSlot(0))/te.getStackInSlot(0).getMaxDamage();

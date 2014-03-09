@@ -51,6 +51,9 @@ public class GuiAetherContainer extends AetherCraftGui {
 		this.fontRenderer.drawStringWithShadow(
 				"AV: " + NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 34, 38,
 				0x55FF55);
+		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 34, 50,0x00FF00);
 
 		int a = 68 - 16;
 		float b = (100 - this.te.getProgress()) / 100.0f;

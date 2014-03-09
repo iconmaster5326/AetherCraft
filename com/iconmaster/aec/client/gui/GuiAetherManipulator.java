@@ -69,6 +69,9 @@ public class GuiAetherManipulator extends AetherCraftGui {
 //						.getOptions("consumeprecision"))) + "%", 112, 38,
 //				0x00FF00);
 		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 100, 38,0x00FF00);
+		
 		te.calcMax();
 		this.fontRenderer.drawStringWithShadow("Precision: "+((int)(Double.parseDouble(AetherCraft.getOptions("consumeprecision"))))+"%", 9, 38,0x00FF00);
 
@@ -94,6 +97,13 @@ public class GuiAetherManipulator extends AetherCraftGui {
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+		
+		ItemStack topStack = te.getStackInSlot(0);
+		float av = AVRegistry.getAV(topStack);
+		te.calcLimit();
+		if (topStack != null && (av<=0 || av>te.limit)) {
+			this.drawGradientRect(x+8, y+6, x+8+16, y+6+16,0x88FF0000,0x88FF0000);
+		}
 	}
 
 	private void requestSync() {

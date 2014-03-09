@@ -59,6 +59,9 @@ public class GuiAetherExtractor extends AetherCraftGui {
 
 		this.fontRenderer.drawStringWithShadow("Precision: "+(int) (Double.parseDouble(AetherCraft.getOptions("consumeprecision"))) + "%", 54,68,0x00FF00);
 		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 54, 20,0x00FF00);
+		
 		int a = 68 - 16;
 		float b = (100 - this.te.getProgress()) / 100.0f;
 		this.drawGradientRect(148, (int) (16.0f + (a * b)), 164, 68,

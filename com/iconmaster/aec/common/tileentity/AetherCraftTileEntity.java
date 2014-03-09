@@ -3,6 +3,7 @@ package com.iconmaster.aec.common.tileentity;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
@@ -16,6 +17,7 @@ import net.minecraft.world.World;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
+import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.common.AetherCraft;
@@ -39,6 +41,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 	protected int progress;
 	protected boolean powered;
 	public float max;
+	public float limit;
 	
 	protected boolean polled = false;
 	/**
@@ -335,6 +338,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 	}
 	
 	public boolean canConsume(ItemStack topStack, ItemStack currentStack) {
+		calcLimit();
 		if (currentStack == null) {
 			return false;
 		}
@@ -342,15 +346,16 @@ public class AetherCraftTileEntity extends TileEntity implements
 			return false;
 		}
 		float av = AVRegistry.getAV(currentStack);
-		if (av<=0 ) {
+		if (av<=0 || av>limit) {
 			return false;
 		}
 		return true;
 	}
 	public boolean canProduce(ItemStack currentItem) {
+		calcLimit();
 		float av = AVRegistry.getAV(currentItem);
 		if (this.getStackableSlot(currentItem)<=0 && this.getEmptySlot() <=0) {return false;}
-		return av>0 && av<=getPossibleAether();
+		return av>0 && av<=getPossibleAether() && av<=limit;
 	}
 
 	@Override
@@ -389,5 +394,15 @@ public class AetherCraftTileEntity extends TileEntity implements
 
 	public void calcMax() {
 		
+	}
+	
+	public void calcLimit() {
+		if (limit!=0) {return;}
+		int id = worldObj.getBlockId(this.xCoord,this.yCoord,this.zCoord);
+		Block block = Block.blocksList[id];
+		if (block!=null && block instanceof IAetherTransfer) {
+			IAetherTransfer at = (IAetherTransfer)block;
+			limit = at.getMaxTransferAV(worldObj, xCoord, yCoord, zCoord, -1);
+		}
 	}
 }

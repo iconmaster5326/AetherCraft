@@ -54,6 +54,9 @@ public class GuiAetherInfuser extends AetherCraftGui {
 
 		this.fontRenderer.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
 		
+		te.calcLimit();
+		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 30, 70,0x00FF00);
+		
 		if (InfuserRegistry.getOutputAV(this.te.getStackInSlot(0)) != 0) {
 			int percent = Math.min((int) ((te.infused / InfuserRegistry.getOutputAV(this.te.getStackInSlot(0)))*100),100);
 			this.drawRect(41, 16, 41 + percent, 24,0xFF32FF00);
