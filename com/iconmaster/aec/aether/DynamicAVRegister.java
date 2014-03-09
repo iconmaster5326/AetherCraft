@@ -29,6 +29,7 @@ import com.iconmaster.aec.aether.recipe.InfuserRecipe;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
+import com.iconmaster.aec.aether.recipe.RollingMachineHandler;
 import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
@@ -281,6 +282,7 @@ public class DynamicAVRegister {
 			try {
 				registerHandler(map,new BlastFurnaceHandler(),Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe"));
 				registerHandler(map,new CokeOvenHandler(),Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe"));
+				registerHandler(map,new RollingMachineHandler(),RollingMachineHandler.class); //the second argument is a dummy; rolling machine recipes extends ShapedRecipe
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
