@@ -65,6 +65,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerBlock(AetherCraft.blockInfused,ItemBlockInfused.class,"blockInfused");
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
+		GameRegistry.registerItem(AetherCraft.dummy,"dummy");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}

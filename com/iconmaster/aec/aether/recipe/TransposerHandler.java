@@ -28,8 +28,11 @@ public class TransposerHandler implements IDynamicAVRecipeHandler {
 			
 			FluidStack fluid = (FluidStack) recipeClass.cast(recipe).getClass().getMethod("getFluid").invoke(inputObj);
 			int bid = fluid.getFluid().getBlockID();
-			if (bid == -1) {return null;}
-			input2 = new ItemStack(bid,fluid.amount,0);
+			if (bid == -1) {
+				input2 = AVRegistry.createFluidStack(fluid.getFluid(), fluid.amount);
+			} else {
+				input2 = new ItemStack(bid,fluid.amount,0);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

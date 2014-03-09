@@ -25,6 +25,7 @@ import com.iconmaster.aec.common.block.BlockAetherReconstructor;
 import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
+import com.iconmaster.aec.common.item.ItemDummy;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.common.item.ItemInfused;
 
@@ -76,6 +77,7 @@ public class AetherCraft {
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 	public static Item itemInfused;
+	public static Item dummy;
 
 	static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -128,8 +130,8 @@ public class AetherCraft {
 				Material.rock).setLightValue(0.7f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
-		
 		itemInfused = new ItemInfused(itemIds.get(2));
+		dummy = new ItemDummy(itemIds.get(3));
 
 		// Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -261,6 +263,7 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());
+		itemIds.add(forgeConfig.getItem("dummy", 2703).getInt());
 		forgeConfig.save();
 	}
 

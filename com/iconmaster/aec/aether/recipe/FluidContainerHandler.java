@@ -20,8 +20,11 @@ public class FluidContainerHandler implements IDynamicAVRecipeHandler {
 		FluidContainerData data = (FluidContainerData)recipe;
 		a.add(data.emptyContainer);
 		int bid = data.fluid.getFluid().getBlockID();
-		if (bid == -1) {return null;}
-		a.add(new ItemStack(bid,1000,0));
+		if (bid == -1) {
+			a.add(AVRegistry.createFluidStack(data.fluid.getFluid(), data.fluid.amount));
+		} else {
+			a.add(new ItemStack(bid,data.fluid.amount,0));
+		}
 		return a;
 	}
 

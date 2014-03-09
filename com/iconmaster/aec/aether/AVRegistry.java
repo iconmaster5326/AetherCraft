@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.Fluid;
 
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.config.AVConfigHandler;
@@ -21,6 +22,8 @@ public class AVRegistry {
 	private static HashMap values ;
 	private static HashMap hardcoded = new HashMap();
 	private static HashMap unlocalizedNames ;
+	private static int usedMetas = 0;
+	private static HashMap fluids = new HashMap();
 	
 	/**
 	 * Returns a hash with keys of unlocalized names and values of <code>Item</code>s. Used in looking up items by config name.
@@ -219,4 +222,41 @@ public class AVRegistry {
 		DynamicAVRegister.addDynamicValues();
 		
 	}
+	
+	/**
+	 * Returns a new dummy item worth the given AV. Used in some dynamic calculations.
+	 */
+	public static ItemStack newDummy(float av) {
+		ItemStack dummy = newDummy();
+		setAV(dummy,av);
+		return dummy;
+	}
+	
+	public static ItemStack newDummy() {
+		ItemStack dummy = new ItemStack(AetherCraft.dummy,1,usedMetas);
+		usedMetas++;
+		return dummy;
+	}
+	
+	public static void setAV(Fluid fluid,float av) {
+		ItemStack stack = newDummy(av);
+		fluids.put(fluid, stack);
+		setAV(stack,av);
+	}
+	
+	public static float getAV(Fluid fluid) {
+		ItemStack stack = (ItemStack) fluids.get(fluid);
+		return getAV(stack);
+	}
+	
+	public static ItemStack createFluidStack(Fluid fluid,int mb) {
+		ItemStack stack = (ItemStack) fluids.get(fluid);
+		if (stack==null) {
+			stack = newDummy();
+			fluids.put(fluid,stack);
+		}
+		ItemStack newStack = new ItemStack(stack.itemID,mb,stack.getItemDamage());
+		return newStack;
+	}
+
 }
