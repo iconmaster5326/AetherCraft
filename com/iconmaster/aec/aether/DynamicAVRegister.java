@@ -17,6 +17,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.BlastFurnaceHandler;
+import com.iconmaster.aec.aether.recipe.CokeOvenHandler;
 import com.iconmaster.aec.aether.recipe.CrucibleHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.ForestryCraftingRecipeHandler;
@@ -279,6 +280,7 @@ public class DynamicAVRegister {
 		if (Loader.isModLoaded("Railcraft")) {
 			try {
 				registerHandler(map,new BlastFurnaceHandler(),Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe"));
+				registerHandler(map,new CokeOvenHandler(),Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
