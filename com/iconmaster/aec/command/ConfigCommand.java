@@ -16,9 +16,11 @@ import net.minecraft.util.EnumChatFormatting;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.config.AVConfig;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class ConfigCommand implements ICommand {
 	private List aliases, tabCompletionOptions;
@@ -144,6 +146,8 @@ public class ConfigCommand implements ICommand {
 				AVRegistry.reloadAllValues();
 				cmc.addText(EnumChatFormatting.GREEN +" All AV values have been updated.");
 				icommandsender.sendChatToPlayer(cmc);
+				
+				PacketDispatcher.sendPacketToAllPlayers(ConnectionHandler.getTransferPacket());
 			} else if (astring[0].equalsIgnoreCase("discard")) {
 				if (config == null) {
 					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");

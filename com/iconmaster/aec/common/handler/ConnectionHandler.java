@@ -19,8 +19,11 @@ import cpw.mods.fml.common.network.Player;
 
 public class ConnectionHandler implements IConnectionHandler {
 	@Override
-	public void playerLoggedIn(Player player, NetHandler netHandler,
-			INetworkManager manager) {
+	public void playerLoggedIn(Player player, NetHandler netHandler,INetworkManager manager) {
+		PacketDispatcher.sendPacketToPlayer(getTransferPacket(), (Player) player);
+	}
+
+	public static Packet250CustomPayload getTransferPacket() {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
@@ -37,7 +40,7 @@ public class ConnectionHandler implements IConnectionHandler {
 		packet.channel = "AecTrans";
 		packet.data = bos.toByteArray();
 		packet.length = bos.size();
-		PacketDispatcher.sendPacketToPlayer(packet, (Player) player);
+		return packet;
 	}
 
 	@Override
