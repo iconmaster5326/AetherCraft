@@ -17,8 +17,13 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.BlastFurnaceHandler;
+import com.iconmaster.aec.aether.recipe.BottlerHandler;
+import com.iconmaster.aec.aether.recipe.CarpenterHandler;
 import com.iconmaster.aec.aether.recipe.CokeOvenHandler;
 import com.iconmaster.aec.aether.recipe.CrucibleHandler;
+import com.iconmaster.aec.aether.recipe.FabricatorHandler;
+import com.iconmaster.aec.aether.recipe.FabricatorSmeltingHandler;
+import com.iconmaster.aec.aether.recipe.FermenterHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.ForestryCraftingRecipeHandler;
 import com.iconmaster.aec.aether.recipe.IC2CraftingHandler;
@@ -26,6 +31,7 @@ import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InductionSmelterHandler;
 import com.iconmaster.aec.aether.recipe.InfuserHandler;
 import com.iconmaster.aec.aether.recipe.InfuserRecipe;
+import com.iconmaster.aec.aether.recipe.MoistenerHandler;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
 import com.iconmaster.aec.aether.recipe.PulverizerHandler;
@@ -38,6 +44,7 @@ import com.iconmaster.aec.aether.recipe.SimpleIC2Recipe;
 import com.iconmaster.aec.aether.recipe.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.StillHandler;
 import com.iconmaster.aec.aether.recipe.TransposerHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
@@ -274,6 +281,14 @@ public class DynamicAVRegister {
 		if (Loader.isModLoaded("Forestry")) {
 			try {
 				registerHandler(map,new ForestryCraftingRecipeHandler(),Class.forName("forestry.core.interfaces.IDescriptiveRecipe"));
+				
+				registerHandler(map,new BottlerHandler(),Class.forName("forestry.factory.gadgets.MachineBottler$Recipe"));
+				registerHandler(map,new CarpenterHandler(),Class.forName("forestry.factory.gadgets.MachineCarpenter$Recipe"));
+				registerHandler(map,new FabricatorHandler(),Class.forName("forestry.factory.gadgets.MachineFabricator$Recipe"));
+				registerHandler(map,new FabricatorSmeltingHandler(),Class.forName("forestry.factory.gadgets.MachineFabricator$Smelting"));
+				registerHandler(map,new FermenterHandler(),Class.forName("forestry.factory.gadgets.MachineFermenter$Recipe"));
+				registerHandler(map,new StillHandler(),Class.forName("forestry.factory.gadgets.MachineStill$Recipe"));
+				registerHandler(map,new MoistenerHandler(),Class.forName("forestry.factory.gadgets.MachineMoistener$Recipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
