@@ -80,7 +80,7 @@ public class AVConfig {
 					if (name!=null) {
 						name += "::"+keyValue.getItemDamage();
 					}
-					if (name == null || AVRegistry.getItemFromString(name)==null) {
+					if (name == null || AVRegistry.getItemFromString(name)==null || AVRegistry.getItemFromString(name).getHasSubtypes()) {
 						name = ""+keyValue.itemID+"::"+keyValue.getItemDamage();
 					}
 				}
