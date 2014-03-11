@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.te3;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -7,34 +7,28 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
-public class InductionSmelterHandler implements IDynamicAVRecipeHandler {
+public class PulverizerHandler implements IDynamicAVRecipeHandler {
 	
-	private Class recipeClass = ModHelpers.getTERecipeObject("Smelter");
+	private Class recipeClass = ModHelpers.getTERecipeObject("Pulverizer");
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		ItemStack input = null;
-		ItemStack input2 = null;
 		try {
 			Object inputObj = recipeClass.cast(recipe);
-			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getPrimaryInput").invoke(inputObj);
-			Object inputObj2 = recipeClass.cast(recipe);
-			input2 = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getSecondaryInput").invoke(inputObj);
+			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (input == null) {
-			return a;
+			return null;
 		}
 		a.add(input);
-		if (input2 == null) {
-			return a;
-		}
-		a.add(input2);
 		return a;
 	}
 
@@ -56,7 +50,7 @@ public class InductionSmelterHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		Class inputObj = (Class.forName("thermalexpansion.util.crafting.SmelterManager"));
+		Class inputObj = (Class.forName("thermalexpansion.util.crafting.PulverizerManager"));
 		Object list = inputObj.getMethod("getRecipeList").invoke(inputObj);
 	    int length = Array.getLength(list);
 	    for (int i = 0; i < length; i ++) {

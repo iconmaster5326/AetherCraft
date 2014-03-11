@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.railcraft;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -7,18 +7,19 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
+import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
-public class PulverizerHandler implements IDynamicAVRecipeHandler {
-	
-	private Class recipeClass = ModHelpers.getTERecipeObject("Pulverizer");
+public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		ItemStack input = null;
 		try {
+			Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
 			Object inputObj = recipeClass.cast(recipe);
 			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
 		} catch (Exception e) {
@@ -35,8 +36,9 @@ public class PulverizerHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
+			Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
 			Object inputObj = recipeClass.cast(recipe);
-			output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getPrimaryOutput").invoke(inputObj);
+			output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getOutput").invoke(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,13 +51,12 @@ public class PulverizerHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		Class inputObj = (Class.forName("thermalexpansion.util.crafting.PulverizerManager"));
-		Object list = inputObj.getMethod("getRecipeList").invoke(inputObj);
-	    int length = Array.getLength(list);
-	    for (int i = 0; i < length; i ++) {
-	        Object recipe = Array.get(list, i);
+		 Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
+		Object inputObj = Class.forName("mods.railcraft.api.crafting.RailcraftCraftingManager").getField("blastFurnace").get(null);
+		List list = (List)inputObj.getClass().getMethod("getRecipes").invoke(inputObj);
+	    for (Object recipe : list) {
 			Object inputObj2 = recipeClass.cast(recipe);
-			ItemStack output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getPrimaryOutput").invoke(inputObj2);
+			ItemStack output = DynamicAVRegister.getOutput(recipe);
 			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {
 				recipeList.put(uid, new ArrayList());

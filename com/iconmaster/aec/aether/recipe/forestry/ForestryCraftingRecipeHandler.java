@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.forestry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
 public class ForestryCraftingRecipeHandler implements IDynamicAVRecipeHandler {

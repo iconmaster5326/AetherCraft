@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.forestry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,16 +9,19 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
-public class StillHandler implements IDynamicAVRecipeHandler {
+public class BottlerHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
+		ItemStack input = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
+			input = (ItemStack) recipeClass.cast(recipe).getClass().getField("can").get(inputObj);
 			
 			ItemStack fluid;
 			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("input").get(inputObj));
@@ -32,6 +35,10 @@ public class StillHandler implements IDynamicAVRecipeHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if (input == null) {
+			return null;
+		}
+		a.add(input);
 		return a;
 	}
 
@@ -39,29 +46,23 @@ public class StillHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
-
-			ItemStack fluid;
-			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("output").get(inputObj));
-			int bid = fstack.getFluid().getBlockID();
-			if (bid == -1) {
-				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
-			} else {
-				fluid = new ItemStack(bid,fstack.amount,0);
-			}
-			return fluid;
+			output = (ItemStack) (ItemStack) recipeClass.cast(recipe).getClass().getField("bottled").get(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		if (output == null) {
+			return null;
+		}
+		return output;
 	}
 	
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		 Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
-		List list = (List) Class.forName("forestry.factory.gadgets.MachineStill$RecipeManager").getField("recipes").get(null);
+		 Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
+		List list = (List) Class.forName("forestry.factory.gadgets.MachineBottler$RecipeManager").getField("recipes").get(null);
 	    for (Object recipe : list) {
 			Object inputObj2 = recipeClass.cast(recipe);
 			ItemStack output = DynamicAVRegister.getOutput(recipe);

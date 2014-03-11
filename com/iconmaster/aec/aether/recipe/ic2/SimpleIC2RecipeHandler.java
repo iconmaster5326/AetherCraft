@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.ic2;
 
 import ic2.api.recipe.IMachineRecipeManager;
 import ic2.api.recipe.IRecipeInput;
@@ -14,6 +14,7 @@ import java.util.Map;
 import net.minecraft.item.ItemStack;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
 public class SimpleIC2RecipeHandler implements IDynamicAVRecipeHandler {

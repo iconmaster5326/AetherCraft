@@ -1,36 +1,27 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.railcraft;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 
-import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
-public class BottlerHandler implements IDynamicAVRecipeHandler {
+public class CokeOvenHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		ItemStack input = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
+			Class recipeClass = Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe");
 			Object inputObj = recipeClass.cast(recipe);
-			input = (ItemStack) recipeClass.cast(recipe).getClass().getField("can").get(inputObj);
-			
-			ItemStack fluid;
-			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("input").get(inputObj));
-			int bid = fstack.getFluid().getBlockID();
-			if (bid == -1) {
-				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
-			} else {
-				fluid = new ItemStack(bid,fstack.amount,0);
-			}
-			a.add(fluid);
+			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -45,9 +36,9 @@ public class BottlerHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
+			Class recipeClass = Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe");
 			Object inputObj = recipeClass.cast(recipe);
-			output = (ItemStack) (ItemStack) recipeClass.cast(recipe).getClass().getField("bottled").get(inputObj);
+			output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getOutput").invoke(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -60,8 +51,9 @@ public class BottlerHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		 Class recipeClass = Class.forName("forestry.factory.gadgets.MachineBottler$Recipe");
-		List list = (List) Class.forName("forestry.factory.gadgets.MachineBottler$RecipeManager").getField("recipes").get(null);
+		 Class recipeClass = Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe");
+		Object inputObj = Class.forName("mods.railcraft.api.crafting.RailcraftCraftingManager").getField("cokeOven").get(null);
+		List list = (List)inputObj.getClass().getMethod("getRecipes").invoke(inputObj);
 	    for (Object recipe : list) {
 			Object inputObj2 = recipeClass.cast(recipe);
 			ItemStack output = DynamicAVRegister.getOutput(recipe);

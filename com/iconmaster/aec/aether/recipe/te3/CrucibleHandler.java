@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.te3;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -10,30 +10,21 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
-public class TransposerHandler implements IDynamicAVRecipeHandler {
+public class CrucibleHandler implements IDynamicAVRecipeHandler {
 	
-	private Class recipeClass = ModHelpers.getTERecipeObject("Transposer");
+	private Class recipeClass = ModHelpers.getTERecipeObject("Crucible");
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		ItemStack input = null;
-		ItemStack input2 = null;
 		try {
 			Object inputObj = recipeClass.cast(recipe);
 			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
-			
-			FluidStack fluid = (FluidStack) recipeClass.cast(recipe).getClass().getMethod("getFluid").invoke(inputObj);
-			int bid = fluid.getFluid().getBlockID();
-			if (bid == -1) {
-				input2 = AVRegistry.createFluidStack(fluid.getFluid(), fluid.amount);
-			} else {
-				input2 = new ItemStack(bid,fluid.amount,0);
-			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -41,30 +32,33 @@ public class TransposerHandler implements IDynamicAVRecipeHandler {
 			return null;
 		}
 		a.add(input);
-		a.add(input2);
 		return a;
 	}
 
 	@Override
 	public ItemStack getOutput(Object recipe) {
-		ItemStack output = null;
+		FluidStack output = null;
 		try {
 			Object inputObj = recipeClass.cast(recipe);
-			output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getOutput").invoke(inputObj);
+			output = (FluidStack) recipeClass.cast(recipe).getClass().getMethod("getOutput").invoke(inputObj);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		if (output == null) {
 			return null;
 		}
-		return output;
+		ItemStack fluid;
+		int bid = output.getFluid().getBlockID();
+		if (bid == -1) {return null;}
+		fluid = new ItemStack(bid,output.amount,0);
+		return fluid;
 	}
 	
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		Class inputObj = (Class.forName("thermalexpansion.util.crafting.TransposerManager"));
-		Object list = inputObj.getMethod("getFillRecipeList").invoke(inputObj);
+		Class inputObj = (Class.forName("thermalexpansion.util.crafting.CrucibleManager"));
+		Object list = inputObj.getMethod("getRecipeList").invoke(inputObj);
 	    int length = Array.getLength(list);
 	    for (int i = 0; i < length; i ++) {
 	        Object recipe = Array.get(list, i);

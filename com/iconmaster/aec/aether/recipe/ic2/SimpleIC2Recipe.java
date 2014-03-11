@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.ic2;
 
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeOutput;

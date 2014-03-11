@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.forestry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,21 +9,20 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
-public class FermenterHandler implements IDynamicAVRecipeHandler {
+public class StillHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
-		ItemStack input = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineFermenter$Recipe");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
-			input = (ItemStack) recipeClass.cast(recipe).getClass().getField("resource").get(inputObj);
 			
 			ItemStack fluid;
-			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("liquid").get(inputObj));
+			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("input").get(inputObj));
 			int bid = fstack.getFluid().getBlockID();
 			if (bid == -1) {
 				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
@@ -34,9 +33,6 @@ public class FermenterHandler implements IDynamicAVRecipeHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (input != null) {
-			a.add(input);
-		}
 		return a;
 	}
 
@@ -44,7 +40,7 @@ public class FermenterHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineFermenter$Recipe");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
 
 			ItemStack fluid;
@@ -65,8 +61,8 @@ public class FermenterHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		 Class recipeClass = Class.forName("forestry.factory.gadgets.MachineFermenter$Recipe");
-		List list = (List) Class.forName("forestry.factory.gadgets.MachineFermenter$RecipeManager").getField("recipes").get(null);
+		 Class recipeClass = Class.forName("forestry.factory.gadgets.MachineStill$Recipe");
+		List list = (List) Class.forName("forestry.factory.gadgets.MachineStill$RecipeManager").getField("recipes").get(null);
 	    for (Object recipe : list) {
 			Object inputObj2 = recipeClass.cast(recipe);
 			ItemStack output = DynamicAVRegister.getOutput(recipe);

@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.te3;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -6,21 +6,35 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
+import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
-public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
+public class TransposerHandler implements IDynamicAVRecipeHandler {
+	
+	private Class recipeClass = ModHelpers.getTERecipeObject("Transposer");
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		ItemStack input = null;
+		ItemStack input2 = null;
 		try {
-			Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
 			Object inputObj = recipeClass.cast(recipe);
 			input = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
+			
+			FluidStack fluid = (FluidStack) recipeClass.cast(recipe).getClass().getMethod("getFluid").invoke(inputObj);
+			int bid = fluid.getFluid().getBlockID();
+			if (bid == -1) {
+				input2 = AVRegistry.createFluidStack(fluid.getFluid(), fluid.amount);
+			} else {
+				input2 = new ItemStack(bid,fluid.amount,0);
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,6 +42,7 @@ public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
 			return null;
 		}
 		a.add(input);
+		a.add(input2);
 		return a;
 	}
 
@@ -35,7 +50,6 @@ public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
-			Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
 			Object inputObj = recipeClass.cast(recipe);
 			output = (ItemStack) recipeClass.cast(recipe).getClass().getMethod("getOutput").invoke(inputObj);
 		} catch (Exception e) {
@@ -50,10 +64,11 @@ public class BlastFurnaceHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		 Class recipeClass = Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe");
-		Object inputObj = Class.forName("mods.railcraft.api.crafting.RailcraftCraftingManager").getField("blastFurnace").get(null);
-		List list = (List)inputObj.getClass().getMethod("getRecipes").invoke(inputObj);
-	    for (Object recipe : list) {
+		Class inputObj = (Class.forName("thermalexpansion.util.crafting.TransposerManager"));
+		Object list = inputObj.getMethod("getFillRecipeList").invoke(inputObj);
+	    int length = Array.getLength(list);
+	    for (int i = 0; i < length; i ++) {
+	        Object recipe = Array.get(list, i);
 			Object inputObj2 = recipeClass.cast(recipe);
 			ItemStack output = DynamicAVRegister.getOutput(recipe);
 			List uid = UidUtils.getUID(output);
