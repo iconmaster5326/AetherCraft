@@ -22,6 +22,7 @@ import com.iconmaster.aec.aether.recipe.InfuserHandler;
 import com.iconmaster.aec.aether.recipe.InfuserRecipe;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
+import com.iconmaster.aec.aether.recipe.RefineryHandler;
 import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
@@ -277,6 +278,7 @@ public class DynamicAVRegister {
 		if (Loader.isModLoaded("BuildCraft|Core")) {
 			try {
 				registerHandler(map,new AssemblyRecipeHandler(),Class.forName("buildcraft.api.recipes.AssemblyRecipe"));
+				registerHandler(map,new RefineryHandler(),Class.forName("buildcraft.api.recipes.RefineryRecipes$Recipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
