@@ -28,6 +28,9 @@ import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.dartcraft.DartCraftingHandler;
+import com.iconmaster.aec.aether.recipe.dartcraft.DartGrindingHandler;
+import com.iconmaster.aec.aether.recipe.dartcraft.DartShapelessCraftingHandler;
 import com.iconmaster.aec.aether.recipe.forestry.BottlerHandler;
 import com.iconmaster.aec.aether.recipe.forestry.CarpenterHandler;
 import com.iconmaster.aec.aether.recipe.forestry.FabricatorHandler;
@@ -298,6 +301,15 @@ public class DynamicAVRegister {
 				registerHandler(map,new BlastFurnaceHandler(),Class.forName("mods.railcraft.api.crafting.IBlastFurnaceRecipe"));
 				registerHandler(map,new CokeOvenHandler(),Class.forName("mods.railcraft.api.crafting.ICokeOvenRecipe"));
 				registerHandler(map,new RollingMachineHandler(),RollingMachineHandler.class); //the second argument is a dummy; rolling machine recipes extends ShapedRecipe
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("DartCraft")) {
+			try {
+				registerHandler(map,new DartCraftingHandler(),Class.forName("bluedart.core.recipes.ShapedDartCrafting"));
+				registerHandler(map,new DartShapelessCraftingHandler(),Class.forName("bluedart.core.recipes.MisshapenDartCrafting"));
+				registerHandler(map,new DartGrindingHandler(),Class.forName("bluedart.api.recipe.IForceGrindRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
