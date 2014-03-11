@@ -179,7 +179,11 @@ public class AVRegistry {
 	 */
 	public static ItemStack getItemFromString(String s) {
 		int meta = 0;
-		if (s.contains("::")) {
+		if (s.contains("::*")) {
+			String subs[] = Pattern.compile(Pattern.quote("::*")).split(s);
+			s = subs[0];
+			meta =  Integer.parseInt(subs[1]);
+		} else if (s.contains("::")) {
 			String[] subs = Pattern.compile("::").split(s);
 			s = subs[0];
 			meta = Integer.parseInt(subs[1]);

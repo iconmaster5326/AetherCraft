@@ -17,7 +17,7 @@ public class MoistenerHandler implements IDynamicAVRecipeHandler {
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineMoistener$Smelting");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineMoistener$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
 	
 			ItemStack input = (ItemStack) inputObj.getClass().getField("resource").get(inputObj);
@@ -33,7 +33,7 @@ public class MoistenerHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public ItemStack getOutput(Object recipe) {
 		try {
-			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineMoistener$Smelting");
+			Class recipeClass = Class.forName("forestry.factory.gadgets.MachineMoistener$Recipe");
 			Object inputObj = recipeClass.cast(recipe);
 			
 			ItemStack output = (ItemStack) inputObj.getClass().getField("product").get(inputObj);

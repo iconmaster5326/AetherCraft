@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -104,7 +105,17 @@ public class AVConfig {
 	
 	public void addValue(String s, float av) {
 		valueStrings.put(s,av);
-		addValue(AVRegistry.getItemFromString(s),av);
+		if (s.contains("::*")) {
+			String[] subs = Pattern.compile(Pattern.quote("::*")).split(s);
+			Integer metas = Integer.parseInt(subs[1]);
+			if (metas != null) {
+				for (int i=0;i<=metas;i++) {
+					addValue(subs[0],av);
+				}
+			}
+		} else {
+			addValue(AVRegistry.getItemFromString(s),av);
+		}
 	}
 	
 	public void addValue(ItemStack item, float av) {
