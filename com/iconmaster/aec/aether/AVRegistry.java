@@ -179,11 +179,7 @@ public class AVRegistry {
 	 */
 	public static ItemStack getItemFromString(String s) {
 		int meta = 0;
-		if (s.contains("::*")) {
-			String subs[] = Pattern.compile(Pattern.quote("::*")).split(s);
-			s = subs[0];
-			meta =  Integer.parseInt(subs[1]);
-		} else if (s.contains("::")) {
+		if (s.contains("::")) {
 			String[] subs = Pattern.compile("::").split(s);
 			s = subs[0];
 			meta = Integer.parseInt(subs[1]);
@@ -192,7 +188,7 @@ public class AVRegistry {
 			return new ItemStack(Integer.parseInt(s),1,meta);
 		}
 		if (unlocalizedNames.get(s)==null) {
-			System.out.println("Did not find name: "+s);
+			//System.out.println("Did not find name: "+s);
 			return null;
 		}
 		//System.out.println("	FOUND "+s);

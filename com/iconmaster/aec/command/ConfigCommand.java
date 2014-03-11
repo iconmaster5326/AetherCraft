@@ -34,6 +34,7 @@ public class ConfigCommand implements ICommand {
 		this.tabCompletionOptions.add("name");
 		this.tabCompletionOptions.add("edit");
 		this.tabCompletionOptions.add("add");
+		this.tabCompletionOptions.add("addall");
 		this.tabCompletionOptions.add("save");
 		this.tabCompletionOptions.add("reload");
 		this.tabCompletionOptions.add("help");
@@ -206,6 +207,29 @@ public class ConfigCommand implements ICommand {
 				}
 				config.deleteValue(item);
 				cmc.addText(EnumChatFormatting.GREEN +"The AV pairing for "+item.getUnlocalizedName()+" has been removed.");
+				icommandsender.sendChatToPlayer(cmc);
+			} else if (astring[0].equalsIgnoreCase("addall")) {
+				if (astring.length < 3) {
+					cmc.addText(EnumChatFormatting.RED  + "Usage: /aec addall av meta-to");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				if (config==null) {
+					cmc.addText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				float av = Float.parseFloat(astring[1]);
+				int metaTo =  Integer.parseInt(astring[2]);
+				if (item == null) {
+					cmc.addText(EnumChatFormatting.RED  + "Item specified not found!");
+					icommandsender.sendChatToPlayer(cmc);
+					return;
+				}
+				for (int i=0;i<=metaTo;i++) {
+					config.addValue(new ItemStack(item.itemID,1,i), av);
+				}
+				cmc.addText(EnumChatFormatting.GREEN +"The subvalues of "+ item.getUnlocalizedName() + " are now worth " + av + " AV.");
 				icommandsender.sendChatToPlayer(cmc);
 			}
 		}

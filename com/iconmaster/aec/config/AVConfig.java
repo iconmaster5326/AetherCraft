@@ -81,9 +81,12 @@ public class AVConfig {
 					if (name!=null) {
 						name += "::"+keyValue.getItemDamage();
 					}
-					if (name == null || AVRegistry.getItemFromString(name)==null || AVRegistry.getItemFromString(name).getHasSubtypes()) {
+					if (name == null || AVRegistry.getItemFromString(name)==null) {
 						name = ""+keyValue.itemID+"::"+keyValue.getItemDamage();
 					}
+				}
+				if (AVRegistry.getItemFromString(name).getHasSubtypes()) {
+					name+="::"+keyValue.getItemDamage();
 				}
 				sb.append(name + "=" + Float.toString(value) + System.getProperty("line.separator"));
 			} else {
@@ -105,17 +108,7 @@ public class AVConfig {
 	
 	public void addValue(String s, float av) {
 		valueStrings.put(s,av);
-		if (s.contains("::*")) {
-			String[] subs = Pattern.compile(Pattern.quote("::*")).split(s);
-			Integer metas = Integer.parseInt(subs[1]);
-			if (metas != null) {
-				for (int i=0;i<=metas;i++) {
-					addValue(subs[0],av);
-				}
-			}
-		} else {
-			addValue(AVRegistry.getItemFromString(s),av);
-		}
+		addValue(AVRegistry.getItemFromString(s),av);
 	}
 	
 	public void addValue(ItemStack item, float av) {
