@@ -16,6 +16,7 @@ import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
+import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.aether.recipe.InfuserHandler;
@@ -312,6 +313,13 @@ public class DynamicAVRegister {
 				registerHandler(map,new DartCraftingHandler(),Class.forName("bluedart.core.recipes.ShapedDartCrafting"));
 				registerHandler(map,new DartShapelessCraftingHandler(),Class.forName("bluedart.core.recipes.MisshapenDartCrafting"));
 				registerHandler(map,new DartGrindingHandler(),Class.forName("bluedart.api.recipe.IForceGrindRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("arsmagica2")) {
+			try {
+				registerHandler(map,new EssenseRefinerHandler(),Class.forName("am2.blocks.RecipeEssenceRefiner"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

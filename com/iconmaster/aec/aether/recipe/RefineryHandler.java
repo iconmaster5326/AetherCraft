@@ -31,14 +31,17 @@ public class RefineryHandler implements IDynamicAVRecipeHandler {
 			}
 			a.add(fluid);
 			
+			fstack = null;
 			fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("ingredient2").get(inputObj));
-			bid = fstack.getFluid().getBlockID();
-			if (bid == -1) {
-				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
-			} else {
-				fluid = new ItemStack(bid,fstack.amount,0);
+			if (fstack != null) {
+				bid = fstack.getFluid().getBlockID();
+				if (bid == -1) {
+					fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
+				} else {
+					fluid = new ItemStack(bid,fstack.amount,0);
+				}
+				a.add(fluid);
 			}
-			a.add(fluid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
