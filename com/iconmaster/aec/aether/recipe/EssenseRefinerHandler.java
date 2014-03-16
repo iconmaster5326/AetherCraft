@@ -17,7 +17,7 @@ public class EssenseRefinerHandler implements IDynamicAVRecipeHandler {
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		try {
-			Class recipeClass = Class.forName("am2.blocks.RecipeEssenceRefiner");
+			Class recipeClass = Class.forName("am2.items.RecipeArsMagica");
 			Object inputObj = recipeClass.cast(recipe);
 			Object[] items = (Object[]) recipeClass.cast(recipe).getClass().getMethod("getRecipeItems").invoke(inputObj);
 			for (Object item : items) {
@@ -32,7 +32,7 @@ public class EssenseRefinerHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public ItemStack getOutput(Object recipe) {
 		try {
-			Class recipeClass = Class.forName("am2.blocks.RecipeEssenceRefiner");
+			Class recipeClass = Class.forName("am2.items.RecipeArsMagica");
 			Object inputObj = recipeClass.cast(recipe);
 			ItemStack item = (ItemStack) inputObj.getClass().getMethod("getOutput").invoke(inputObj);
 			return item;
@@ -46,7 +46,7 @@ public class EssenseRefinerHandler implements IDynamicAVRecipeHandler {
 	public void populateRecipeList(HashMap recipeList) {
 		Class recipeClass;
 		try {
-			recipeClass = Class.forName("am2.blocks.RecipeEssenceRefiner");
+			recipeClass = Class.forName("am2.items.RecipeArsMagica");
 			Object inputObj = Class.forName("am2.blocks.RecipesEssenceRefiner").getMethod("essenceRefinement").invoke(null);
 			Map list = (Map)inputObj.getClass().getMethod("GetRecipeList").invoke(inputObj);
 		    for (Object recipe : list.values()) {

@@ -319,7 +319,7 @@ public class DynamicAVRegister {
 		}
 		if (Loader.isModLoaded("arsmagica2")) {
 			try {
-				registerHandler(map,new EssenseRefinerHandler(),Class.forName("am2.blocks.RecipeEssenceRefiner"));
+				registerHandler(map,new EssenseRefinerHandler(),Class.forName("am2.items.RecipeArsMagica"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
