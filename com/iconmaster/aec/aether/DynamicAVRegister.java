@@ -47,6 +47,11 @@ import com.iconmaster.aec.aether.recipe.ic2.SimpleIC2RecipeHandler;
 import com.iconmaster.aec.aether.recipe.railcraft.BlastFurnaceHandler;
 import com.iconmaster.aec.aether.recipe.railcraft.CokeOvenHandler;
 import com.iconmaster.aec.aether.recipe.railcraft.RollingMachineHandler;
+import com.iconmaster.aec.aether.recipe.tcon.AlloyHandler;
+import com.iconmaster.aec.aether.recipe.tcon.CastingHandler;
+import com.iconmaster.aec.aether.recipe.tcon.DetailingHandler;
+import com.iconmaster.aec.aether.recipe.tcon.DryingHandler;
+import com.iconmaster.aec.aether.recipe.tcon.TConSmeltingHandler;
 import com.iconmaster.aec.aether.recipe.te3.CrucibleHandler;
 import com.iconmaster.aec.aether.recipe.te3.InductionSmelterHandler;
 import com.iconmaster.aec.aether.recipe.te3.PulverizerHandler;
@@ -320,6 +325,17 @@ public class DynamicAVRegister {
 		if (Loader.isModLoaded("arsmagica2")) {
 			try {
 				registerHandler(map,new EssenseRefinerHandler(),Class.forName("am2.items.RecipeArsMagica"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("TConstruct")) {
+			try {
+				registerHandler(map,new TConSmeltingHandler(),TConSmeltingHandler.TConSmeltingEntry.class);
+				registerHandler(map,new AlloyHandler(),Class.forName("tconstruct.library.crafting.AlloyMix"));
+				registerHandler(map,new CastingHandler(),Class.forName("tconstruct.library.crafting.CastingRecipe"));
+				registerHandler(map,new DetailingHandler(),Class.forName("tconstruct.library.crafting.Detailing$DetailInput"));
+				//registerHandler(map,new DryingHandler(),Class.forName("tconstruct.library.crafting.DryingRackRecipes$DryingRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
