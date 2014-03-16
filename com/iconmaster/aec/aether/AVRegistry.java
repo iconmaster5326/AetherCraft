@@ -178,21 +178,35 @@ public class AVRegistry {
 	 * @return
 	 */
 	public static ItemStack getItemFromString(String s) {
-		int meta = 0;
+		Integer meta = null;
+		
 		if (s.contains("::")) {
-			String[] subs = Pattern.compile("::").split(s);
+			String[] subs = Pattern.compile(Pattern.quote("::")).split(s);
 			s = subs[0];
 			meta = Integer.parseInt(subs[1]);
+			//System.out.println("[AEC] :: case detected. String is"+s+". Meta is "+meta);
 		}
+		
 		if (NumberUtils.isInteger(s)) {
-			return new ItemStack(Integer.parseInt(s),1,meta);
+			if (meta != null) {
+				return new ItemStack(Integer.parseInt(s),1,meta);
+			}	else {
+				return new ItemStack(Integer.parseInt(s),1,0);
+			}
 		}
+		
 		if (unlocalizedNames.get(s)==null) {
-			//System.out.println("Did not find name: "+s);
+			//System.out.println("[AEC] Did not find name: "+s);
 			return null;
 		}
-		//System.out.println("	FOUND "+s);
-		return (ItemStack)unlocalizedNames.get(s);
+		
+		//System.out.println("[AEC] Found name: "+s);
+		ItemStack result = (ItemStack)unlocalizedNames.get(s);
+		if (meta != null) {
+			return new ItemStack(result.itemID,result.stackSize,meta);
+		} else {
+			return result;
+		}
 	}
 
 	/**
