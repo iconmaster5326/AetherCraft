@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemInfused extends Item {
-	public Icon[] icons = new Icon[2];
+	public Icon[] icons = new Icon[3];
 	public ItemInfused(int id) {
 		super(id);
         this.setUnlocalizedName("aec.infused");
@@ -28,6 +28,7 @@ public class ItemInfused extends Item {
 	public void registerIcons(IconRegister iconRegister) {
 		this.icons[0] = iconRegister.registerIcon("aec:itemInfusedIngot");
 		this.icons[1] = iconRegister.registerIcon("aec:itemAetheralFoci");
+		this.icons[2] = iconRegister.registerIcon("aec:itemInfusedRod");
 	}
 	
 	@Override
@@ -40,6 +41,7 @@ public class ItemInfused extends Item {
 	public void getSubItems(int par1,CreativeTabs tab,List list) {
 		list.add(new ItemStack(this,1,0));
 		list.add(new ItemStack(this,1,1));
+		list.add(new ItemStack(this,1,2));
 	}
 	
 	@Override

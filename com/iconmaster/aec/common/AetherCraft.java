@@ -26,8 +26,11 @@ import com.iconmaster.aec.common.block.BlockAetherManipulator;
 import com.iconmaster.aec.common.block.BlockAetherReconstructor;
 import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
+import com.iconmaster.aec.common.item.ItemAetherAxe;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
 import com.iconmaster.aec.common.item.ItemAetherPickaxe;
+import com.iconmaster.aec.common.item.ItemAetherShovel;
+import com.iconmaster.aec.common.item.ItemAetherSword;
 import com.iconmaster.aec.common.item.ItemDummy;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.common.item.ItemInfused;
@@ -82,6 +85,9 @@ public class AetherCraft {
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
+	public static Item aetherAxe;
+	public static Item aetherShovel;
+	public static Item aetherSword;
 
 	static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -141,6 +147,9 @@ public class AetherCraft {
 		
 		//Tools
 		aetherPickaxe = new ItemAetherPickaxe(itemIds.get(4));
+		aetherAxe = new ItemAetherAxe(itemIds.get(5));
+		aetherShovel = new ItemAetherShovel(itemIds.get(6));
+		aetherSword = new ItemAetherSword(itemIds.get(7));
 
 		// Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -235,7 +244,7 @@ public class AetherCraft {
 				"How much AV a basic Conduit can transfer maximum.").getInt()));
 		
 		options.put("toolcost", Float.toString((float)forgeConfig.get("options",
-				"flowrate", 2F,
+				"toolcost", 2F,
 				"How much AV it costs for a basic Aether tool to break a block").getDouble(2)));
 
 		// BOOLEAN
@@ -278,6 +287,9 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());
 		itemIds.add(forgeConfig.getItem("dummy", 2703).getInt());
 		itemIds.add(forgeConfig.getItem("aetherPickaxe", 2704).getInt());
+		itemIds.add(forgeConfig.getItem("aetherAxe", 2705).getInt());
+		itemIds.add(forgeConfig.getItem("aetherShovel", 2706).getInt());
+		itemIds.add(forgeConfig.getItem("aetherSword", 2707).getInt());
 		forgeConfig.save();
 	}
 
