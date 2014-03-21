@@ -7,9 +7,11 @@ import java.util.HashMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.EnumHelper;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.client.ClientPacketHandler;
@@ -25,6 +27,7 @@ import com.iconmaster.aec.common.block.BlockAetherReconstructor;
 import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
+import com.iconmaster.aec.common.item.ItemAetherPickaxe;
 import com.iconmaster.aec.common.item.ItemDummy;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.common.item.ItemInfused;
@@ -78,6 +81,7 @@ public class AetherCraft {
 	public static Item itemFlyingRing;
 	public static Item itemInfused;
 	public static Item dummy;
+	public static Item aetherPickaxe;
 
 	static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -96,6 +100,8 @@ public class AetherCraft {
                  return new ItemStack(blockAetherManipulator, 1, 0);
          }
 	 };
+	 
+	 public static EnumToolMaterial aetherMaterial = EnumHelper.addToolMaterial("aether", 3, 1250, 6.0F, 2.0F, 18);
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -132,6 +138,9 @@ public class AetherCraft {
 		itemAetherBattery = new ItemAetherBattery(itemIds.get(0));
 		itemInfused = new ItemInfused(itemIds.get(2));
 		dummy = new ItemDummy(itemIds.get(3));
+		
+		//Tools
+		aetherPickaxe = new ItemAetherPickaxe(itemIds.get(4));
 
 		// Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -224,6 +233,10 @@ public class AetherCraft {
 		options.put("flowrate", Integer.toString(forgeConfig.get("options",
 				"flowrate", 8192,
 				"How much AV a basic Conduit can transfer maximum.").getInt()));
+		
+		options.put("toolcost", Float.toString((float)forgeConfig.get("options",
+				"flowrate", 2F,
+				"How much AV it costs for a basic Aether tool to break a block").getDouble(2)));
 
 		// BOOLEAN
 		options.put(
@@ -264,6 +277,7 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
 		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());
 		itemIds.add(forgeConfig.getItem("dummy", 2703).getInt());
+		itemIds.add(forgeConfig.getItem("aetherPickaxe", 2704).getInt());
 		forgeConfig.save();
 	}
 

@@ -66,6 +66,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
 		GameRegistry.registerItem(AetherCraft.dummy,"dummy");
+		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}
@@ -94,6 +95,9 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemAetherBattery,1,1),"Aether Cell");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,0),"Infused Ingot");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,1),"Aetheral Foci");
+		
+		LanguageRegistry.addName(AetherCraft.aetherPickaxe,"Aether Pickaxe");
+		
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			LanguageRegistry.addName(AetherCraft.itemFlyingRing,"Flying Ring");
 		}
@@ -126,6 +130,8 @@ public class CommonProxy implements IGuiHandler {
 		if(AetherCraft.itemFlyingRing != null)
 			GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing,1,0), "aba","c c","ada",'a',infusedIngot,'b',Item.netherStar,'c',Item.emerald,'d',Item.feather);
 
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherPickaxe), "aaa"," b "," b ",'a',infusedIngot,'b',Item.ingotGold);
+		
 		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), infusedIngot);
 		InfuserRegistry.addRecipe(new ItemStack(Item.diamond), aetheralFoci);
 	}
