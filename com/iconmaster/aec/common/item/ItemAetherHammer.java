@@ -124,63 +124,57 @@ public class ItemAetherHammer extends ItemPickaxe {
 		boolean active = tag.getBoolean("active");
 		
 		if (active) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-				InventoryUtils.drainAVFromInventory(player.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost")));
-			} else {
 				InventoryUtils.drainAVFromInventory(player.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost"))*9F);
-			}
 		}
 		
-		if (!Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-			//destroy surrounding blocks
-			
-			int side = SideUtils.getBlockHitSide(player.worldObj, player, 8D);
-			int axis1 = -1,axis2 = -1;
-			switch (side) {
-			case (0):
-			case (1):
-				axis1 = 4;
-				axis2 = 2;
-				break;
-			case (2):
-			case (3):
-				axis1 = 4;
-				axis2 = 0;
-				break;
-			case (4):
-			case (5):
-				axis1 = 2;
-				axis2 = 0;
-				break;
-			}
-			
-			SideUtils.Offset offset1 = new SideUtils.Offset(axis1);
-			SideUtils.Offset offset2 = new SideUtils.Offset(axis2);
-			
-			SideUtils.Offset endOffset1 = new SideUtils.Offset(SideUtils.getOppositeSide(axis1));
-			SideUtils.Offset endOffset2 = new SideUtils.Offset(SideUtils.getOppositeSide(axis2));
-			
-			int minx = Math.min(offset1.getOffsetX(xCoord),offset2.getOffsetX(xCoord));
-			int miny = Math.min(offset1.getOffsetY(yCoord),offset2.getOffsetY(yCoord));
-			int minz = Math.min(offset1.getOffsetZ(zCoord),offset2.getOffsetZ(zCoord));
-			
-			int maxx = Math.max(endOffset1.getOffsetX(xCoord),endOffset2.getOffsetX(xCoord));
-			int maxy = Math.max(endOffset1.getOffsetY(yCoord),endOffset2.getOffsetY(yCoord));
-			int maxz = Math.max(endOffset1.getOffsetZ(zCoord),endOffset2.getOffsetZ(zCoord));
-			
-			for (int x=minx;x<=maxx;x++) {
-				for (int y=miny;y<=maxy;y++) {
-					for (int z=minz;z<=maxz;z++) {
-						Block subject = Block.blocksList[player.worldObj.getBlockId(x, y, z)];
-						if (!(x==xCoord && y==yCoord && z==zCoord) && subject != null && ForgeHooks.isToolEffective(stack, subject, player.worldObj.getBlockMetadata(x, y, z))) {
-							//harvest the block
-							System.out.println("[AEC] Targeting a block at "+x+" "+y+" "+z);
-							
-                            //subject.harvestBlock(player.worldObj, player, x, y, z, player.worldObj.getBlockMetadata(x, y, z));
-                            //subject.onBlockHarvested(player.worldObj, x, y, z, player.worldObj.getBlockMetadata(x, y, z), player);
-                            
-                            player.worldObj.destroyBlock(x, y, z, true);
-						}
+		//destroy surrounding blocks
+		
+		int side = SideUtils.getBlockHitSide(player.worldObj, player, 8D);
+		int axis1 = -1,axis2 = -1;
+		switch (side) {
+		case (0):
+		case (1):
+			axis1 = 4;
+			axis2 = 2;
+			break;
+		case (2):
+		case (3):
+			axis1 = 4;
+			axis2 = 0;
+			break;
+		case (4):
+		case (5):
+			axis1 = 2;
+			axis2 = 0;
+			break;
+		}
+		
+		SideUtils.Offset offset1 = new SideUtils.Offset(axis1);
+		SideUtils.Offset offset2 = new SideUtils.Offset(axis2);
+		
+		SideUtils.Offset endOffset1 = new SideUtils.Offset(SideUtils.getOppositeSide(axis1));
+		SideUtils.Offset endOffset2 = new SideUtils.Offset(SideUtils.getOppositeSide(axis2));
+		
+		int minx = Math.min(offset1.getOffsetX(xCoord),offset2.getOffsetX(xCoord));
+		int miny = Math.min(offset1.getOffsetY(yCoord),offset2.getOffsetY(yCoord));
+		int minz = Math.min(offset1.getOffsetZ(zCoord),offset2.getOffsetZ(zCoord));
+		
+		int maxx = Math.max(endOffset1.getOffsetX(xCoord),endOffset2.getOffsetX(xCoord));
+		int maxy = Math.max(endOffset1.getOffsetY(yCoord),endOffset2.getOffsetY(yCoord));
+		int maxz = Math.max(endOffset1.getOffsetZ(zCoord),endOffset2.getOffsetZ(zCoord));
+		
+		for (int x=minx;x<=maxx;x++) {
+			for (int y=miny;y<=maxy;y++) {
+				for (int z=minz;z<=maxz;z++) {
+					Block subject = Block.blocksList[player.worldObj.getBlockId(x, y, z)];
+					if (!(x==xCoord && y==yCoord && z==zCoord) && subject != null && ForgeHooks.isToolEffective(stack, subject, player.worldObj.getBlockMetadata(x, y, z))) {
+						//harvest the block
+						System.out.println("[AEC] Targeting a block at "+x+" "+y+" "+z);
+						
+                        //subject.harvestBlock(player.worldObj, player, x, y, z, player.worldObj.getBlockMetadata(x, y, z));
+                        //subject.onBlockHarvested(player.worldObj, x, y, z, player.worldObj.getBlockMetadata(x, y, z), player);
+                        
+                        player.worldObj.destroyBlock(x, y, z, true);
 					}
 				}
 			}
