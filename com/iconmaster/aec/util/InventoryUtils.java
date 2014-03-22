@@ -1,14 +1,15 @@
 package com.iconmaster.aec.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 
 import com.iconmaster.aec.aether.IAetherStorageItem;
-import com.iconmaster.aec.common.AetherCraft;
 
 /**
  * A collection of utilities used in finding stored AV in inventories.

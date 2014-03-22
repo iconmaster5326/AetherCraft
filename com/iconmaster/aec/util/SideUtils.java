@@ -1,6 +1,11 @@
 package com.iconmaster.aec.util;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumMovingObjectType;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 /**
@@ -97,5 +102,43 @@ public class SideUtils {
 			return 4;
 		}
 		return -1;
+	}
+	
+	/**
+	 * If [4] is -1 , there was no block within reach.
+	 * @return the side hit
+	 */
+	public static int getBlockHitSide(World theWorld, EntityPlayer thePlayer, double reach)
+	{
+		int blockInfo = -1;
+
+		MovingObjectPosition movingobjectposition = getMovingObjectPositionFromPlayer(theWorld, thePlayer, true, reach);
+		if (movingobjectposition != null) {
+			if (movingobjectposition.typeOfHit == EnumMovingObjectType.TILE) {
+				blockInfo = movingobjectposition.sideHit;
+			}
+		}
+		return blockInfo;
+	}
+
+	private static MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer entityplayer, boolean flag, double reach)
+	{
+		float f = 1.0F;
+		float playerPitch = entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * f;
+		float playerYaw = entityplayer.prevRotationYaw + (entityplayer.rotationYaw - entityplayer.prevRotationYaw) * f;
+		double playerPosX = entityplayer.prevPosX + (entityplayer.posX - entityplayer.prevPosX) * f;
+		double playerPosY = (entityplayer.prevPosY + (entityplayer.posY - entityplayer.prevPosY) * f + 1.6200000000000001D) - entityplayer.yOffset;
+		double playerPosZ = entityplayer.prevPosZ + (entityplayer.posZ - entityplayer.prevPosZ) * f;
+		Vec3 vecPlayer = Vec3.createVectorHelper(playerPosX, playerPosY, playerPosZ);
+		float cosYaw = MathHelper.cos(-playerYaw * 0.01745329F - 3.141593F);
+		float sinYaw = MathHelper.sin(-playerYaw * 0.01745329F - 3.141593F);
+		float cosPitch = -MathHelper.cos(-playerPitch * 0.01745329F);
+		float sinPitch = MathHelper.sin(-playerPitch * 0.01745329F);
+		float pointX = sinYaw * cosPitch;
+		float pointY = sinPitch;
+		float pointZ = cosYaw * cosPitch;
+		Vec3 vecPoint = vecPlayer.addVector(pointX * reach, pointY * reach, pointZ * reach);
+		MovingObjectPosition movingobjectposition = world.rayTraceBlocks_do_do(vecPlayer, vecPoint, flag, !flag);
+		return movingobjectposition;
 	}
 }

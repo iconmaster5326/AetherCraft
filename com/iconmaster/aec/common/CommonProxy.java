@@ -66,10 +66,16 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
 		GameRegistry.registerItem(AetherCraft.dummy,"dummy");
-		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}
+		
+		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
+		GameRegistry.registerItem(AetherCraft.aetherAxe,"aetherAxe");
+		GameRegistry.registerItem(AetherCraft.aetherShovel,"aetherShovel");
+		GameRegistry.registerItem(AetherCraft.aetherSword,"aetherSword");
+		GameRegistry.registerItem(AetherCraft.aetherHammer,"aetherHammer");
+		GameRegistry.registerItem(AetherCraft.aetherShears,"aetherShears");
 	}
 
 	public void addNames() {
@@ -101,6 +107,8 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(AetherCraft.aetherAxe,"Aether Axe");
 		LanguageRegistry.addName(AetherCraft.aetherShovel,"Aether Shovel");
 		LanguageRegistry.addName(AetherCraft.aetherSword,"Aether Sword");
+		LanguageRegistry.addName(AetherCraft.aetherHammer,"Aether Hammer");
+		LanguageRegistry.addName(AetherCraft.aetherShears,"Aether Shears");
 		
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			LanguageRegistry.addName(AetherCraft.itemFlyingRing,"Flying Ring");
@@ -140,6 +148,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherAxe), "aa ","ab "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherShovel), " a "," b "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherSword), " a "," a "," b ",'a',infusedIngot,'b',infusedRod);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherHammer), "aaa","aba"," b ",'a',infusedIngot,'b',infusedRod);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherShears), "a "," a",'a',infusedIngot);
 		
 		InfuserRegistry.addRecipe(new ItemStack(Item.ingotGold), infusedIngot);
 		InfuserRegistry.addRecipe(new ItemStack(Item.diamond), aetheralFoci);

@@ -28,7 +28,9 @@ import com.iconmaster.aec.common.block.BlockInfused;
 import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.common.item.ItemAetherAxe;
 import com.iconmaster.aec.common.item.ItemAetherBattery;
+import com.iconmaster.aec.common.item.ItemAetherHammer;
 import com.iconmaster.aec.common.item.ItemAetherPickaxe;
+import com.iconmaster.aec.common.item.ItemAetherShears;
 import com.iconmaster.aec.common.item.ItemAetherShovel;
 import com.iconmaster.aec.common.item.ItemAetherSword;
 import com.iconmaster.aec.common.item.ItemDummy;
@@ -88,6 +90,8 @@ public class AetherCraft {
 	public static Item aetherAxe;
 	public static Item aetherShovel;
 	public static Item aetherSword;
+	public static Item aetherHammer;
+	public static Item aetherShears;
 
 	static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -150,6 +154,8 @@ public class AetherCraft {
 		aetherAxe = new ItemAetherAxe(itemIds.get(5));
 		aetherShovel = new ItemAetherShovel(itemIds.get(6));
 		aetherSword = new ItemAetherSword(itemIds.get(7));
+		aetherHammer = new ItemAetherHammer(itemIds.get(8));
+		aetherShears = new ItemAetherShears(itemIds.get(9));
 
 		// Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
@@ -290,6 +296,8 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("aetherAxe", 2705).getInt());
 		itemIds.add(forgeConfig.getItem("aetherShovel", 2706).getInt());
 		itemIds.add(forgeConfig.getItem("aetherSword", 2707).getInt());
+		itemIds.add(forgeConfig.getItem("aetherHammer", 2708).getInt());
+		itemIds.add(forgeConfig.getItem("aetherShears", 2709).getInt());
 		forgeConfig.save();
 	}
 
