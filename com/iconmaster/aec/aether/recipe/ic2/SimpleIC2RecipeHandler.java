@@ -41,23 +41,24 @@ public class SimpleIC2RecipeHandler implements IDynamicAVRecipeHandler {
 	}
 	
 	public void iterate(HashMap recipeList, IMachineRecipeManager manager) {
-		try {
+		
 		Iterator it = manager.getRecipes().entrySet().iterator();
         while (it.hasNext()) {
-        	Map.Entry pairs = (Map.Entry)it.next();
-        	List list = ((IRecipeInput)pairs.getKey()).getInputs();
-        	if (list.size()!=0) {
-	        	SimpleIC2Recipe recipe = new SimpleIC2Recipe(((IRecipeInput)pairs.getKey()),((RecipeOutput)pairs.getValue()));
-				ItemStack output = DynamicAVRegister.getOutput(recipe);
-				List uid = UidUtils.getUID(output);
-				if (recipeList.get(uid) == null) {
-					recipeList.put(uid, new ArrayList());
-				}
-				((ArrayList) recipeList.get(uid)).add(recipe);
+        	try {
+	        	Map.Entry pairs = (Map.Entry)it.next();
+	        	List list = ((IRecipeInput)pairs.getKey()).getInputs();
+	        	if (list.size()!=0) {
+		        	SimpleIC2Recipe recipe = new SimpleIC2Recipe(((IRecipeInput)pairs.getKey()),((RecipeOutput)pairs.getValue()));
+					ItemStack output = DynamicAVRegister.getOutput(recipe);
+					List uid = UidUtils.getUID(output);
+					if (recipeList.get(uid) == null) {
+						recipeList.put(uid, new ArrayList());
+					}
+					((ArrayList) recipeList.get(uid)).add(recipe);
+	        	}
+        	} catch (Exception e) {
+    			e.printStackTrace();
         	}
-        }
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 }
