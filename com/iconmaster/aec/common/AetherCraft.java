@@ -36,6 +36,7 @@ import com.iconmaster.aec.common.item.ItemAetherSword;
 import com.iconmaster.aec.common.item.ItemDummy;
 import com.iconmaster.aec.common.item.ItemFlyingRing;
 import com.iconmaster.aec.common.item.ItemInfused;
+import com.iconmaster.aec.common.item.ItemRepairRing;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -84,6 +85,7 @@ public class AetherCraft {
 	public static Block blockInfused;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
+	public static Item itemRepairRing;
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
@@ -161,6 +163,7 @@ public class AetherCraft {
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			itemFlyingRing = new ItemFlyingRing(itemIds.get(1));
 		}
+		itemRepairRing = new ItemRepairRing(itemIds.get(10));
 
 		NetworkRegistry.instance().registerGuiHandler(this, proxy);
 		NetworkRegistry.instance().registerConnectionHandler(
@@ -298,6 +301,7 @@ public class AetherCraft {
 		itemIds.add(forgeConfig.getItem("aetherSword", 2707).getInt());
 		itemIds.add(forgeConfig.getItem("aetherHammer", 2708).getInt());
 		itemIds.add(forgeConfig.getItem("aetherShears", 2709).getInt());
+		itemIds.add(forgeConfig.getItem("repairRing", 2710).getInt());
 		forgeConfig.save();
 	}
 

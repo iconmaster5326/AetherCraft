@@ -169,7 +169,7 @@ public class ItemAetherHammer extends ItemPickaxe {
 					Block subject = Block.blocksList[player.worldObj.getBlockId(x, y, z)];
 					if (!(x==xCoord && y==yCoord && z==zCoord) && subject != null && ForgeHooks.isToolEffective(stack, subject, player.worldObj.getBlockMetadata(x, y, z))) {
 						//harvest the block
-						System.out.println("[AEC] Targeting a block at "+x+" "+y+" "+z);
+						
 						
                         //subject.harvestBlock(player.worldObj, player, x, y, z, player.worldObj.getBlockMetadata(x, y, z));
                         //subject.onBlockHarvested(player.worldObj, x, y, z, player.worldObj.getBlockMetadata(x, y, z), player);
