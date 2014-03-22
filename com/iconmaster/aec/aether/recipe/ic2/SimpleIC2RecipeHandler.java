@@ -41,6 +41,7 @@ public class SimpleIC2RecipeHandler implements IDynamicAVRecipeHandler {
 	}
 	
 	public void iterate(HashMap recipeList, IMachineRecipeManager manager) {
+		try {
 		Iterator it = manager.getRecipes().entrySet().iterator();
         while (it.hasNext()) {
         	Map.Entry pairs = (Map.Entry)it.next();
@@ -55,5 +56,8 @@ public class SimpleIC2RecipeHandler implements IDynamicAVRecipeHandler {
 				((ArrayList) recipeList.get(uid)).add(recipe);
         	}
         }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
