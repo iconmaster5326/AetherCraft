@@ -9,6 +9,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 
 import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.util.InventoryUtils;
 
 public class AetherSwordEvent {
 	@ForgeSubscribe(priority = EventPriority.HIGHEST)
@@ -27,6 +28,8 @@ public class AetherSwordEvent {
 			entity.setHealth(entity.getHealth()-3F);
 			//entity.hurtResistantTime = 0;	//Hackish workaround due to attribute system
 			//entity.attackEntityFrom(DamageSource.causeMobDamage(event.entityPlayer), 3F);
+			
+			InventoryUtils.drainAVFromInventory(event.entityPlayer.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost")));
 		}
 	}
 }
