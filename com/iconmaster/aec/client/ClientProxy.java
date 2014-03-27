@@ -5,6 +5,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.iconmaster.aec.client.render.RenderAetherConduit;
 import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.common.CommonProxy;
+import com.iconmaster.aec.common.event.AetherSwordEvent;
 import com.iconmaster.aec.common.event.FallDamageEvent;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -33,5 +34,6 @@ public class ClientProxy extends CommonProxy {
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
+		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 	}
 }

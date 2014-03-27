@@ -118,31 +118,6 @@ public class ItemAetherSword extends ItemSword {
 	}
 	
 	@Override
-	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ) {
-			return false;
-		}
-		
-		NBTTagCompound tag;
-		if (!stack.hasTagCompound()) {
-			tag = new NBTTagCompound();
-			stack.setTagCompound(tag);
-		} else {
-			tag = stack.getTagCompound();
-		}
-		boolean active = tag.getBoolean("active");
-		
-		if (active) {
-			InventoryUtils.drainAVFromInventory(player.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost")));
-			
-			entity.hurtResistantTime = 0;	//Hackish workaround due to attribute system
-			entity.attackEntityFrom(DamageSource.causeMobDamage(player), 3F);
-		}
-		
-		return false;
-	}
-	
-	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held) {
 		if (!(entity  instanceof EntityPlayer)) {
 			return;

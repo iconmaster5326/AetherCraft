@@ -15,6 +15,7 @@ import com.iconmaster.aec.client.gui.GuiAetherExtractor;
 import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
+import com.iconmaster.aec.common.event.AetherSwordEvent;
 import com.iconmaster.aec.common.event.FallDamageEvent;
 import com.iconmaster.aec.common.gui.ContainerAetherCondenser;
 import com.iconmaster.aec.common.gui.ContainerAetherContainer;
@@ -216,5 +217,6 @@ public class CommonProxy implements IGuiHandler {
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
+		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 	}
 }
