@@ -48,7 +48,6 @@ public class ItemRepairRing extends Item {
 		if (update%16!=0) {
 			return;
 		} //Only proc occasionally
-		
 		if (!(entity instanceof EntityPlayer) || stack.getItemDamage()==0) {
 			return;
 		}
@@ -94,7 +93,7 @@ public class ItemRepairRing extends Item {
 	public boolean repairItem(ItemStack stack,Entity entity,InventoryPlayer inv,ItemStack tool) {
 		if (tool != null && tool.isItemDamaged()) {
 			float av = AVRegistry.getAbsoluteAV(tool)/tool.getMaxDamage();
-			if (av>0) {return true;}
+			if (av<=0) {return false;}
 			if (InventoryUtils.getAVInInventory(inv)>=av) {
 				float got = InventoryUtils.drainAVFromInventory(inv, av);
 				tool.setItemDamage(tool.getItemDamage()-1);
