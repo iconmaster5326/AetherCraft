@@ -17,14 +17,13 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.gui.ContainerAetherInfuser;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
+import com.iconmaster.aec.inventory.ContainerAetherInfuser;
+import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;

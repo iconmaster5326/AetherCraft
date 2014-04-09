@@ -10,14 +10,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.tileentity.AetherCraftTileEntity;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherCondenser;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherContainer;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherExtractor;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherInfuser;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherManipulator;
+import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
+import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
+import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
+import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
+import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
+import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
 
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;

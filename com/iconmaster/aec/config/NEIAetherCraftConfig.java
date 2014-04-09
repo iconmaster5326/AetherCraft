@@ -3,7 +3,7 @@ package com.iconmaster.aec.config;
 import codechicken.nei.api.IConfigureNEI;
 import codechicken.nei.forge.GuiContainerManager;
 
-import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.nei.TooltipHandler;
 
 public class NEIAetherCraftConfig implements IConfigureNEI {

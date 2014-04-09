@@ -2,11 +2,11 @@ package com.iconmaster.aec.client;
 
 import net.minecraftforge.common.MinecraftForge;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.client.render.RenderAetherConduit;
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.CommonProxy;
-import com.iconmaster.aec.common.event.AetherSwordEvent;
-import com.iconmaster.aec.common.event.FallDamageEvent;
+import com.iconmaster.aec.event.AetherSwordEvent;
+import com.iconmaster.aec.event.FallDamageEvent;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 

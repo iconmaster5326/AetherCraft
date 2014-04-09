@@ -5,8 +5,8 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.common.AetherCraft;
 
 public class AVConfigHandler {
 	private static DefaultAVConfig defs;

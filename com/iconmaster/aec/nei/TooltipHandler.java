@@ -9,11 +9,11 @@ import org.lwjgl.input.Keyboard;
 
 import codechicken.nei.forge.IContainerTooltipHandler;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.client.gui.AetherCraftGui;
-import com.iconmaster.aec.common.AetherCraft;
 import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.TooltipUtils;
 

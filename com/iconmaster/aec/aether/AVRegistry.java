@@ -8,7 +8,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 
-import com.iconmaster.aec.common.AetherCraft;
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.config.AVConfigHandler;
 import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.UidUtils;

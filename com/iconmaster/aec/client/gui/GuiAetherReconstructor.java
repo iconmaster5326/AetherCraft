@@ -10,8 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.common.gui.ContainerAetherReconstructor;
-import com.iconmaster.aec.common.tileentity.TileEntityAetherReconstructor;
+import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
+import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
 import com.iconmaster.aec.util.NumberUtils;
 
 import cpw.mods.fml.common.network.PacketDispatcher;

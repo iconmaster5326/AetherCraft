@@ -14,10 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraft.util.EnumChatFormatting;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.common.AetherCraft;
-import com.iconmaster.aec.common.handler.ConnectionHandler;
 import com.iconmaster.aec.config.AVConfig;
+import com.iconmaster.aec.handler.ConnectionHandler;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.PacketDispatcher;
