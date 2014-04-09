@@ -24,7 +24,7 @@ public class BlockInfused extends Block {
 	public BlockInfused(int id, Material material) {
 		super(id, material);
         this.setHardness(1.0f);
-        this.setUnlocalizedName("aec.aetherConduit");
+        this.setUnlocalizedName("aec.blockInfused");
         this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 	
@@ -33,7 +33,7 @@ public class BlockInfused extends Block {
     public void registerIcons(IconRegister iconRegister)
     {
         icons[0] = iconRegister.registerIcon("aec:infusedBlock");
-        icons[1] = iconRegister.registerIcon("aec:infusedBrick");
+        icons[1] = iconRegister.registerIcon("aec:InfusedBrick");
     }
     
     @Override
