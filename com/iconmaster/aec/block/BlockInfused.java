@@ -19,7 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockInfused extends Block {
 	
-	public Icon[] icons = new Icon[2];
+	public Icon[] icons = new Icon[4];
 
 	public BlockInfused(int id, Material material) {
 		super(id, material);
@@ -34,6 +34,8 @@ public class BlockInfused extends Block {
     {
         icons[0] = iconRegister.registerIcon("aec:infusedBlock");
         icons[1] = iconRegister.registerIcon("aec:InfusedBrick");
+        icons[2] = iconRegister.registerIcon("aec:gildedBlock");
+        icons[3] = iconRegister.registerIcon("aec:gildedBrick");
     }
     
     @Override

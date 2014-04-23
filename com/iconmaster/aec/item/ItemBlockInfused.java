@@ -32,6 +32,8 @@ public class ItemBlockInfused extends ItemBlock {
 	public void getSubItems(int par1,CreativeTabs tab,List list) {
 		list.add(new ItemStack(this,1,0));
 		list.add(new ItemStack(this,1,1));
+		list.add(new ItemStack(this,1,2));
+		list.add(new ItemStack(this,1,3));
 	}
 	
 	@Override

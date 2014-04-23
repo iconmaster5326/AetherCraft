@@ -87,17 +87,20 @@ public class BlockAetherConduit extends Block implements IAetherTransfer {
 	public void getSubBlocks(int par1, CreativeTabs tab, List list) {
 		list.add(new ItemStack(this,1,0));
 		list.add(new ItemStack(this,1,1));
+		list.add(new ItemStack(this,1,2));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		blockIcons = new Icon[2];
+		blockIcons = new Icon[3];
 		blockIcons[0] = iconRegister.registerIcon("aec:aetherConduitIcon");
 		blockIcons[1] = iconRegister.registerIcon("aec:aetherConduitInfusedIcon");
-		icon = new BlockTextureData[2];
+		blockIcons[2] = iconRegister.registerIcon("aec:aetherConduitGildedIcon");
+		icon = new BlockTextureData[3];
 		icon[0] = new BlockTextureData(iconRegister.registerIcon("aec:aetherConduitCenter"),iconRegister.registerIcon("aec:aetherConduitSide"),iconRegister.registerIcon("aec:aetherConduitCenter"));
 		icon[1] = new BlockTextureData(iconRegister.registerIcon("aec:aetherConduitInfusedCenter"),iconRegister.registerIcon("aec:aetherConduitInfusedSide"),iconRegister.registerIcon("aec:aetherConduitInfusedCenter"));
+		icon[2] = new BlockTextureData(iconRegister.registerIcon("aec:aetherConduitGildedCenter"),iconRegister.registerIcon("aec:aetherConduitGildedSide"),iconRegister.registerIcon("aec:aetherConduitGildedCenter"));
 	}
 	
 	@Override

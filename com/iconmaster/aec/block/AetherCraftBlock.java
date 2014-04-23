@@ -86,9 +86,10 @@ public class AetherCraftBlock extends BlockContainer implements IAetherTransfer 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IconRegister iconRegister) {
-		icon = new BlockTextureData[2];
+		icon = new BlockTextureData[3];
 		icon[0] = new BlockTextureData(iconRegister.registerIcon("aec:aether"+blockName+"Top"),iconRegister.registerIcon("aec:aether"+blockName+"Side"),iconRegister.registerIcon("aec:deviceBottom"));
 		icon[1] = new BlockTextureData(iconRegister.registerIcon("aec:aether"+blockName+"InfusedTop"),iconRegister.registerIcon("aec:aether"+blockName+"InfusedSide"),iconRegister.registerIcon("aec:deviceInfusedBottom"));
+		icon[2] = new BlockTextureData(iconRegister.registerIcon("aec:aether"+blockName+"GildedTop"),iconRegister.registerIcon("aec:aether"+blockName+"GildedSide"),iconRegister.registerIcon("aec:deviceGildedBottom"));
 	}
 
 	@Override
@@ -158,6 +159,7 @@ public class AetherCraftBlock extends BlockContainer implements IAetherTransfer 
     public void getSubBlocks(int par1, CreativeTabs tab, List list) {
     	list.add(new ItemStack(this,1,0));
     	list.add(new ItemStack(this,1,1));
+    	list.add(new ItemStack(this,1,2));
     }
     
 	@Override
