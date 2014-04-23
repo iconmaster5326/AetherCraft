@@ -6,6 +6,7 @@ import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.client.render.RenderAetherConduit;
 import com.iconmaster.aec.event.AetherSwordEvent;
+import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -35,5 +36,6 @@ public class ClientProxy extends CommonProxy {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
+		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
 	}
 }

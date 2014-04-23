@@ -20,9 +20,10 @@ import cpw.mods.fml.common.network.PacketDispatcher;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemFlyingRing extends Item {
+public class ItemFlyingRing extends Item implements IAetherRing {
 	
 	private Icon activeIcon;
+	private boolean suppressed = false;
 	
 	public ItemFlyingRing(int id) {
 		super(id);
@@ -68,32 +69,21 @@ public class ItemFlyingRing extends Item {
 		return meta==0 ? itemIcon : activeIcon;
 	}
 	
+	@Override
 	public void activateRing(ItemStack stack,EntityPlayer player) {
 		if (!canRingFunction(stack,player)) {return;}
 		stack.setItemDamage(1);
 		player.capabilities.allowFlying = true;
 		player.capabilities.isFlying = true;
+		
+		player.sendPlayerAbilities();
 	}
 	
+	@Override
 	public void deactivateRing(ItemStack stack,EntityPlayer player) {
 		stack.setItemDamage(0);
 		player.capabilities.allowFlying = false;
 		player.capabilities.isFlying = false;
-		
-//		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//		DataOutputStream outputStream = new DataOutputStream(bos);
-//
-//		try {
-//			outputStream.writeInt(0);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		
-//		Packet250CustomPayload packet = new Packet250CustomPayload();
-//		packet.channel = "AecFlyRing";
-//		packet.data = bos.toByteArray();
-//		packet.length = bos.size();
-//		PacketDispatcher.sendPacketToServer(packet);
 		
 		player.sendPlayerAbilities();
 	}
@@ -109,5 +99,10 @@ public class ItemFlyingRing extends Item {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public boolean isActive(ItemStack stack) {
+		return stack.getItemDamage()==1;
 	}
 }

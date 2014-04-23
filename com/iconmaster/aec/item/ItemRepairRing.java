@@ -16,10 +16,11 @@ import com.iconmaster.aec.util.InventoryUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemRepairRing extends Item {
+public class ItemRepairRing extends Item implements IAetherRing {
 	
 	private Icon activeIcon;
 	private int update = 0;
+	private boolean suppressed = false;
 	
 	public ItemRepairRing(int id) {
 		super(id);
@@ -79,11 +80,13 @@ public class ItemRepairRing extends Item {
 		return meta==0 ? itemIcon : activeIcon;
 	}
 	
+	@Override
 	public void activateRing(ItemStack stack,EntityPlayer player) {
 		stack.setItemDamage(1);
 
 	}
 	
+	@Override
 	public void deactivateRing(ItemStack stack,EntityPlayer player) {
 		stack.setItemDamage(0);
 
@@ -104,5 +107,10 @@ public class ItemRepairRing extends Item {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean isActive(ItemStack stack) {
+		return stack.getItemDamage()==1;
 	}
 }

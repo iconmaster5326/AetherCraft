@@ -16,6 +16,7 @@ import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
 import com.iconmaster.aec.event.AetherSwordEvent;
+import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.inventory.ContainerAetherCondenser;
 import com.iconmaster.aec.inventory.ContainerAetherContainer;

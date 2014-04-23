@@ -1,6 +1,7 @@
 package com.iconmaster.aec.util;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumMovingObjectType;
@@ -49,5 +50,15 @@ public class InventoryUtils {
 			}
 		}
 		return av-left;
+	}
+
+	public static ItemStack findItemStack(InventoryPlayer inventory, ItemStack item) {
+		for (int i=0;i<inventory.getSizeInventory();i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (ItemStack.areItemStacksEqual(item, stack)) {
+				return stack;
+			}
+		}
+		return null;
 	}
 }
