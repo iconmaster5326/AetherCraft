@@ -119,6 +119,7 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,2),"Infused Rod");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,3),"Wrought Band");
 		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,4),"Gilded Ingot");
+		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,5),"Golden Matter");
 		
 		LanguageRegistry.addName(AetherCraft.aetherPickaxe,"Aether Pickaxe");
 		LanguageRegistry.addName(AetherCraft.aetherAxe,"Aether Axe");
@@ -146,6 +147,7 @@ public class CommonProxy implements IGuiHandler {
 		ItemStack infusedRod = new ItemStack(AetherCraft.itemInfused,1,2);
 		ItemStack band = new ItemStack(AetherCraft.itemInfused,1,3);
 		ItemStack gildedIngot = new ItemStack(AetherCraft.itemInfused,1,4);
+		ItemStack goldMatter = new ItemStack(AetherCraft.itemInfused,1,5);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "aaa","bcd","aaa",'a',infusedIngot,'b',new ItemStack(AetherCraft.blockAetherExtractor,1,1),'c',new ItemStack(AetherCraft.blockAetherConduit,1,1),'d',new ItemStack(AetherCraft.blockAetherCondenser,1,1));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer,1,1), "aba","cdc","efe",'a',Item.emerald,'b',infusedIngot,'c',infusedIngot,'d',Block.glowStone,'e',Item.glowstone,'f',infusedIngot);
@@ -162,10 +164,10 @@ public class CommonProxy implements IGuiHandler {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,2), "aaa","bcd","aaa",'a',gildedIngot,'b',new ItemStack(AetherCraft.blockAetherExtractor,1,2),'c',new ItemStack(AetherCraft.blockAetherConduit,1,2),'d',new ItemStack(AetherCraft.blockAetherCondenser,1,2));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer,1,2), "aba","cdc","efe",'a',aetheralFoci,'b',infusedIngot,'c',gildedIngot,'d',Block.glowStone,'e',infusedIngot,'f',gildedIngot);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,8,2), "aaa","bbb","aaa",'a',gildedIngot,'b',Block.glowStone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,2), "aba","cdc","aaa",'a',gildedIngot,'c',aetheralFoci,'b',Item.emerald,'d',Block.glowStone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',aetheralFoci,'c',Item.emerald,'d',Block.glowStone);
-		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',aetheralFoci,'c',aetheralFoci,'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherConduit,16,2), "aaa","bbb","aaa",'a',gildedIngot,'b',infusedIngot);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',aetheralFoci,'c',goldMatter,'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',goldMatter,'c',aetheralFoci,'d',Block.glowStone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',goldMatter,'c',infusedIngot,'d',Block.glowStone);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,1,2), "aaa","aaa","aaa",'a',gildedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,4,3), "aa","aa",'a',new ItemStack(AetherCraft.blockInfused,1,2));
@@ -174,6 +176,7 @@ public class CommonProxy implements IGuiHandler {
 		
 		GameRegistry.addShapedRecipe(infusedRod, " a "," b "," a ",'a',Item.ingotGold,'b',infusedIngot);
 		GameRegistry.addShapedRecipe(band, "aaa","aba","aaa",'a',Item.ingotGold,'b',Item.bucketLava);
+		GameRegistry.addShapedRecipe(goldMatter, "cac","aba","cac",'a',Block.blockGold,'b',aetheralFoci,'c',Item.goldNugget);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,0), "aaa","bcb","aaa",'a',Item.ingotGold,'b',Block.glass,'c',Item.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemAetherBattery,1,1),"aba","bcb","aba",'a',Block.glass,'b',new ItemStack(AetherCraft.itemAetherBattery,1,0),'c',infusedIngot);
