@@ -398,11 +398,6 @@ public class AetherCraftTileEntity extends TileEntity implements
 	
 	public void calcLimit() {
 		if (limit!=0) {return;}
-		int id = worldObj.getBlockId(this.xCoord,this.yCoord,this.zCoord);
-		Block block = Block.blocksList[id];
-		if (block!=null && block instanceof IAetherTransfer) {
-			IAetherTransfer at = (IAetherTransfer)block;
-			limit = at.getMaxTransferAV(worldObj, xCoord, yCoord, zCoord, -1);
-		}
+		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
 	}
 }

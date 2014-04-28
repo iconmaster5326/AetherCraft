@@ -254,7 +254,11 @@ public class AetherCraft {
 		
 		options.put("toolcost", Float.toString((float)forgeConfig.get("options",
 				"toolcost", 2F,
-				"How much AV it costs for a basic Aether tool to break a block").getDouble(2)));
+				"How much AV it costs for a basic Aether tool to break a block.").getDouble(2)));
+		
+		options.put("avlimit", Float.toString((float)forgeConfig.get("options",
+				"avlimit", 8192F,
+				"The transmutation limit for Tier 1 machines. Multiplies by 4 for each tier.").getDouble(8192)));
 
 		// BOOLEAN
 		options.put(
@@ -263,23 +267,18 @@ public class AetherCraft {
 						.get("options",
 								"instantconsume",
 								false,
-								"Whether stacks will get get transmuted/consumed instantly or not")
+								"Whether stacks will get transmuted/consumed instantly or not.")
 						.getBoolean(false)));
-
-		options.put(
-				"debug",
-				Boolean.toString(forgeConfig.get("options", "debug", false,
-						"").getBoolean(false)));
 
 		options.put(
 				"enableflyring",
 				Boolean.toString(forgeConfig.get("options", "enableflyring",
-						true, "").getBoolean(true)));
+						true, "If false, there will be no Flying Ring.").getBoolean(true)));
 
 		options.put(
 				"showavalways",
 				Boolean.toString(forgeConfig.get("options", "showavalways",
-						false, "").getBoolean(false)));
+						false, "If true, the AV of objects will be shown even if the user is not holding shift.").getBoolean(false)));
 
 
 		// ------------------- REGISTER BLOCK/ITEM IDs -------------------
