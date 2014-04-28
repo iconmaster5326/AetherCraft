@@ -225,20 +225,20 @@ public class AetherCraft {
 						.get("options",
 								"avmultiplier",
 								1.0,
-								"Easily ramp up the AVs with this multiplier, added to comphensate for consumeprecision changing values for stone and such to 0 (decimal number)")
+								"Easily ramp up the AVs with this multiplier, added to compensate for consumeprecision changing values for stone and such to 0.")
 						.getDouble(1.0)));
 
 		options.put("ammaxstorage", Integer.toString(forgeConfig.get("options",
 				"ammaxstorage", 32768,
-				"How much aether an aether manipulator can store").getInt()));
+				"How much aether an Aether Manipulator (and other machines) can store.").getInt()));
 
 		options.put("acmaxstorage", Float.toString(forgeConfig.get("options",
 				"acmaxstorage", 65536,
-				"How much aether an aether container can store").getInt()));
+				"How much aether an Aether Container can store.").getInt()));
 
 		options.put("abatterymaxstorage", Float.toString(forgeConfig.get(
 				"options", "aabatterymaxstorage", 16384,
-				"How much aether an aether battery can store").getInt()));
+				"How much aether an Aether Cell can store.").getInt()));
 
 		options.put("flycostpersecond", Float.toString(forgeConfig.get(
 				"options", "flycostpersecond", 8,
@@ -246,7 +246,7 @@ public class AetherCraft {
 		
 		options.put("chargerate", Integer.toString(forgeConfig.get("options",
 				"chargerate", 128,
-				"How fast aether batteries placed in an aether container charge").getInt()));
+				"How fast Aether Cells placed in an Aether Container charge.").getInt()));
 		
 		options.put("flowrate", Integer.toString(forgeConfig.get("options",
 				"flowrate", 8192,

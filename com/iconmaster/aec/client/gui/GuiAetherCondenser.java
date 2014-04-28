@@ -59,8 +59,17 @@ public class GuiAetherCondenser extends AetherCraftGui {
 		te.calcLimit();
 		this.fontRenderer.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 30, 70,0x00FF00);
 		
+		float av = 0;
+		if (this.te.getStackInSlot(0)!=null) {
+			if (this.te.getStackInSlot(0).getItem() instanceof IProduceBehavior) {
+				av = ((IProduceBehavior)this.te.getStackInSlot(0).getItem()).getProduceAV(this.te.getStackInSlot(0));
+			} else {
+				av = AVRegistry.getAV(this.te.getStackInSlot(0));
+			}
+		}
+		
 		if (AVRegistry.getAV(this.te.getStackInSlot(0)) != 0) {
-			int percent = Math.min((int) ((te.getPossibleAether() / AVRegistry.getAV(this.te.getStackInSlot(0)))*100),100);
+			int percent = Math.min((int) ((te.getPossibleAether() / av)*100),100);
 			this.drawRect(30, 16, 30 + percent, 24,0xFF32FF00);
 		}
 		
@@ -68,7 +77,7 @@ public class GuiAetherCondenser extends AetherCraftGui {
 				this.fontRenderer,
 				NumberUtils.display(this.te.getPossibleAether())
 						+ " / "
-						+ NumberUtils.display(AVRegistry.getAV(this.te.getStackInSlot(0))), 30+50, 16, 0x55FF55);
+						+ NumberUtils.display(av), 30+50, 16, 0x55FF55);
 
 		
 		int barHeight = 68 - 16;

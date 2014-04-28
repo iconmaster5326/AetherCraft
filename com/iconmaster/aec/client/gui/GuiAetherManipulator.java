@@ -79,12 +79,21 @@ public class GuiAetherManipulator extends AetherCraftGui {
 				0x00404040, 0xFF2CCDB1);
 		this.drawGradientRect(68, 17, 68 + this.te.getProgress(), 22,
 				0xFF16FF00,0x990EA600);
+		
+		float av = 0;
+		if (this.te.getStackInSlot(0)!=null) {
+			if (this.te.getStackInSlot(0).getItem() instanceof IProduceBehavior) {
+				av = ((IProduceBehavior)this.te.getStackInSlot(0).getItem()).getProduceAV(this.te.getStackInSlot(0));
+			} else {
+				av = AVRegistry.getAV(this.te.getStackInSlot(0));
+			}
+		}
 
 		this.drawCenteredString(
 				this.fontRenderer,
 				NumberUtils.display(this.te.getPossibleAether())
 						+ " / "
-						+ NumberUtils.display(AVRegistry.getAV(this.te.getStackInSlot(0))), 118, 13, 0x55FF55);
+						+ NumberUtils.display(av), 118, 13, 0x55FF55);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
