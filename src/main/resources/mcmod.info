@@ -1,0 +1,27 @@
+[
+{
+  "modid": "AetherCraft",
+  "name": "AetherCraft",
+  "description": "A fork of Graknol's Aether Manipulator mod. Turn matter into other kinds of matter today!",
+  "version": "@VERSION@",
+  "url": "https://github.com/iconmaster5326/AetherCraft",
+  "updateUrl": "",
+  "authorList": [
+    "Graknol"
+    "dman10311"
+    "iconmaster"
+    "superckl"
+  ],
+  "credits": "Thanks to Graknol and dman10311 for the original mod (http://tinyurl.com/othpwju). Thanks to ChickenBones for the NEI integration.",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "requiredMods": [
+    "Forge"
+  ],
+  "dependencies": [
+    "Forge", "NotEnoughItems"
+  ]
+}
+]

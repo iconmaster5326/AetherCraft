@@ -3,3 +3,7 @@
 /build
 /bin
 /.gradle
+/.settings
+/eclipse
+/gradle
+/libs
