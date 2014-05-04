@@ -294,69 +294,60 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 	    boolean connectedPosX = block.canConnect(blockAccess.getBlock(x + 1, y, z));
 	
 	    if (connectedNegZ) {
-	    	//bottom
+            tessellator.addVertexWithUV(xLow, yLow, zLow, maxXSide, maxYSide);
+            tessellator.addVertexWithUV(xLow, yLow, zMin, maxXSide, minYSide);
+            tessellator.addVertexWithUV(xHigh, yLow, zMin, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xHigh, yLow, zMin, minXSide, minYSide);
-			tessellator.addVertexWithUV(xLow, yLow, zMin, maxXSide, minYSide);
-			tessellator.addVertexWithUV(xLow, yLow, zLow, maxXSide, maxYSide);
 	    	
-			//right
 			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xHigh, yLow, zMin, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zMin, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXSide, maxYSide);
 			
-			//left
-			tessellator.addVertexWithUV(xLow, yLow, zLow, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xLow, yLow, zMin, minXSide, minYSide);
-			tessellator.addVertexWithUV(xLow, yHigh, zMin, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xLow, yHigh, zMin, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xLow, yLow, zMin, minXSide, minYSide);
+			tessellator.addVertexWithUV(xLow, yLow, zLow, minXSide, maxYSide);
 			
-			//top
 			tessellator.addVertexWithUV(xHigh, yHigh, zLow, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zMin, minXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zMin, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXSide, maxYSide);
 			
-			//front
 			tessellator.addVertexWithUV(xHigh, yLow, zMin, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xHigh, yHigh, zMin, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xLow, yHigh, zMin, maxXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xLow, yLow, zMin, maxXCenter, minYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zMin, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zMin, minXCenter, maxYCenter);
+			
 	    } else {
 			//middle front
-			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xHigh, yHigh, zLow, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xLow, yLow, zLow, maxXCenter, minYCenter);
+			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh, yHigh, zLow, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXCenter, minYCenter);
 	    }
 	    
 	    if (connectedPosZ) {
-	    	//bottom
 			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xHigh, yLow, zMax, minXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yLow, zMax, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yLow, zHigh, maxXSide, maxYSide);
 	    	
-			//right
-			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xHigh, yLow, zMax, minXSide, minYSide);
-			tessellator.addVertexWithUV(xHigh, yHigh, zMax, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xHigh, yHigh, zMax, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh, yLow, zMax, minXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXSide, maxYSide);
 			
-			//left
 			tessellator.addVertexWithUV(xLow, yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xLow, yLow, zMax, minXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zMax, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zHigh, maxXSide, maxYSide);
 			
-			//top
-			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xHigh, yHigh, zMax, minXSide, minYSide);
-			tessellator.addVertexWithUV(xLow, yHigh, zMax, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zHigh, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xLow, yHigh, zMax, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh, yHigh, zMax, minXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXSide, maxYSide);
 			
-			//back
 			tessellator.addVertexWithUV(xHigh, yLow, zMax, minXCenter, minYCenter);
 			tessellator.addVertexWithUV(xHigh, yHigh, zMax, minXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xLow, yHigh, zMax, maxXCenter, maxYCenter);
@@ -370,31 +361,26 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 	    }
 	    
 	    if (connectedNegX) {
-	    	//bottom
 			tessellator.addVertexWithUV(xLow, yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xMin, yLow, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xMin, yLow, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yLow, zLow, maxXSide, maxYSide);
 	    	
-			//right
-			tessellator.addVertexWithUV(xLow, yLow, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xMin, yLow, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xMin, yHigh, zHigh, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zHigh, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xMin, yHigh, zHigh, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xMin, yLow, zHigh, minXSide, minYSide);
+			tessellator.addVertexWithUV(xLow, yLow, zHigh, minXSide, maxYSide);
 			
-			//left
 			tessellator.addVertexWithUV(xLow, yLow, zLow, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xMin, yLow, zLow, minXSide, minYSide);
 			tessellator.addVertexWithUV(xMin, yHigh, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXSide, maxYSide);
 			
-			//top
-			tessellator.addVertexWithUV(xLow, yHigh, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xMin, yHigh, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xMin, yHigh, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow, yHigh, zLow, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xMin, yHigh, zLow, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xMin, yHigh, zHigh, minXSide, minYSide);
+			tessellator.addVertexWithUV(xLow, yHigh, zHigh, minXSide, maxYSide);
 			
-			//front
 			tessellator.addVertexWithUV(xMin, yLow, zHigh, minXCenter, minYCenter);
 			tessellator.addVertexWithUV(xMin, yHigh, zHigh, minXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xMin, yHigh, zLow, maxXCenter, maxYCenter);
@@ -408,107 +394,92 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 	    }
 	    
 	    if (connectedPosX) {
-	    	//bottom
+            tessellator.addVertexWithUV(xHigh, yLow, zLow, maxXSide, maxYSide);
+            tessellator.addVertexWithUV(xMax, yLow, zLow, maxXSide, minYSide);
+            tessellator.addVertexWithUV(xMax, yLow, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xMax, yLow, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xMax, yLow, zLow, maxXSide, minYSide);
-			tessellator.addVertexWithUV(xHigh, yLow, zLow, maxXSide, maxYSide);
 	    	
-			//right
 			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xMax, yLow, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xMax, yHigh, zHigh, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, maxXSide, maxYSide);
 			
-			//left
-			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xMax, yLow, zLow, minXSide, minYSide);
-			tessellator.addVertexWithUV(xMax, yHigh, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xMax, yHigh, zLow, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xMax, yLow, zLow, minXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh, yLow, zLow, minXSide, maxYSide);
 			
-			//top
 			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xMax, yHigh, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xMax, yHigh, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXSide, maxYSide);
 			
-			//front
-			tessellator.addVertexWithUV(xMax, yLow, zHigh, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xMax, yHigh, zHigh, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xMax, yHigh, zLow, maxXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xMax, yLow, zLow, maxXCenter, minYCenter);
+			tessellator.addVertexWithUV(xMax, yHigh, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xMax, yHigh, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xMax, yLow, zHigh, minXCenter, minYCenter);
 	    } else {
 	    	//middle front
+	    	tessellator.addVertexWithUV(xHigh, yLow, zLow, maxXCenter, minYCenter);
+	    	tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXCenter, maxYCenter);
+	    	tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xHigh, yLow, zHigh, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xHigh, yHigh, zHigh, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xHigh, yHigh, zLow, maxXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xHigh, yLow, zLow, maxXCenter, minYCenter);
 	    }
 	    
 	    if (connectedNegY) {
-	    	//bottom
+            tessellator.addVertexWithUV(xLow,yLow, zLow, maxXSide, maxYSide);
+            tessellator.addVertexWithUV(xLow,yMin, zLow, maxXSide, minYSide);
+            tessellator.addVertexWithUV(xLow,yMin, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xLow,yLow, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xLow,yMin, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xLow,yMin, zLow, maxXSide, minYSide);
-			tessellator.addVertexWithUV(xLow,yLow, zLow, maxXSide, maxYSide);
 	    	
-			//right
 			tessellator.addVertexWithUV(xLow,yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xLow,yMin, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yMin, zHigh, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yLow, zHigh, maxXSide, maxYSide);
 			
-			//left
-			tessellator.addVertexWithUV(xLow,yLow, zLow, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xLow,yMin, zLow, minXSide, minYSide);
-			tessellator.addVertexWithUV(xHigh,yMin, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yLow, zLow, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xHigh,yMin, zLow, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xLow,yMin, zLow, minXSide, minYSide);
+			tessellator.addVertexWithUV(xLow,yLow, zLow, minXSide, maxYSide);
 			
-			//top
 			tessellator.addVertexWithUV(xHigh,yLow, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xHigh,yMin, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yMin, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yLow, zLow, maxXSide, maxYSide);
 			
-			//front
-			tessellator.addVertexWithUV(xLow,yMin, zHigh, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xHigh,yMin, zHigh, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xHigh,yMin, zLow, maxXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xLow,yMin, zLow, maxXCenter, minYCenter);
+			tessellator.addVertexWithUV(xHigh,yMin, zLow, maxXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xHigh,yMin, zHigh, minXCenter, maxYCenter);
+			tessellator.addVertexWithUV(xLow,yMin, zHigh, minXCenter, minYCenter);
 	    } else {
 	    	//middle front
+	    	tessellator.addVertexWithUV(xLow,yLow, zLow, maxXCenter, minYCenter);
+	    	tessellator.addVertexWithUV(xHigh,yLow, zLow, maxXCenter, maxYCenter);
+	    	tessellator.addVertexWithUV(xHigh,yLow, zHigh, minXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xLow,yLow, zHigh, minXCenter, minYCenter);
-			tessellator.addVertexWithUV(xHigh,yLow, zHigh, minXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xHigh,yLow, zLow, maxXCenter, maxYCenter);
-			tessellator.addVertexWithUV(xLow,yLow, zLow, maxXCenter, minYCenter);
 	    }
 	    
 	    if (connectedPosY) {
-	    	//bottom
 			tessellator.addVertexWithUV(xLow,yHigh, zHigh, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xLow,yMax, zHigh, minXSide, minYSide);
 			tessellator.addVertexWithUV(xLow,yMax, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xLow,yHigh, zLow, maxXSide, maxYSide);
 	    	
-			//right
-			tessellator.addVertexWithUV(xLow,yHigh, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xLow,yMax, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xHigh,yMax, zHigh, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yHigh, zHigh, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xHigh,yMax, zHigh, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xLow,yMax, zHigh, minXSide, minYSide);
+			tessellator.addVertexWithUV(xLow,yHigh, zHigh, minXSide, maxYSide);
 			
-			//left
 			tessellator.addVertexWithUV(xLow,yHigh, zLow, minXSide, maxYSide);
 			tessellator.addVertexWithUV(xLow,yMax, zLow, minXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yMax, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yHigh, zLow, maxXSide, maxYSide);
 			
-			//top
-			tessellator.addVertexWithUV(xHigh,yHigh, zHigh, minXSide, maxYSide);
-			tessellator.addVertexWithUV(xHigh,yMax, zHigh, minXSide, minYSide);
-			tessellator.addVertexWithUV(xHigh,yMax, zLow, maxXSide, minYSide);
 			tessellator.addVertexWithUV(xHigh,yHigh, zLow, maxXSide, maxYSide);
+			tessellator.addVertexWithUV(xHigh,yMax, zLow, maxXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh,yMax, zHigh, minXSide, minYSide);
+			tessellator.addVertexWithUV(xHigh,yHigh, zHigh, minXSide, maxYSide);
 			
-			//front
 			tessellator.addVertexWithUV(xLow,yMax, zHigh, minXCenter, minYCenter);
 			tessellator.addVertexWithUV(xHigh,yMax, zHigh, minXCenter, maxYCenter);
 			tessellator.addVertexWithUV(xHigh,yMax, zLow, maxXCenter, maxYCenter);
