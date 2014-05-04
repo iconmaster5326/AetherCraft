@@ -9,7 +9,7 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
-    }
+	}
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
@@ -21,6 +21,15 @@ if (System.getenv().BUILD_NUMBER != null)
 	ext.BUILD = System.getenv().BUILD_NUMBER?.toInteger()
 else
 	ext.BUILD = 0
+
+def libs = new File('./libs')
+if (!libs.exists()) {
+	libs.mkdirs()
+}
+def f = new File('./libs/industrialcraft-2-2.1.476-experimental-api.jar')
+if (!f.exists()) {
+    new URL('http://ic2api.player.to:8080/job/IC2_experimental/476/artifact/build/libs/industrialcraft-2-2.1.476-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
+}
 
 version = "1.7.2-1.4.0.${BUILD}"
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -52,4 +61,21 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+repositories {
+	mavenCentral()
+	maven {
+        name "Mobius Repo"
+        url "http://mobiusstrip.eu/maven"
+    }
+	maven {
+		name = "chickenbones"
+		url = "http://chickenbones.net/maven/"
+	}
+}
+dependencies {
+	compile "mcp.mobius.waila:Waila:1.5.2a"
+	//compile "codechicken.core:CodeChickenCore:1.7.2-1.0.0-dev"
+	//compile "codechicken.nei:NotEnoughItems:1.7.2-1.0.1-dev"
 }
