@@ -33,6 +33,7 @@ import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -249,6 +250,6 @@ public class CommonProxy implements IGuiHandler {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
-		MinecraftForge.EVENT_BUS.register(new PlayerLogInEvent());
+		FMLCommonHandler.instance().bus().register(new PlayerLogInEvent());
 	}
 }

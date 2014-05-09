@@ -15,6 +15,7 @@ public class PlayerLogInEvent {
 	public void eventHandler(PlayerEvent.PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
 		
-		AetherCraft.packetHandler.sendTo(new TransferConfigsPacket(), (EntityPlayerMP) player);
+		System.out.println("[AEC TRANS] Sending packet!!");
+		AetherCraft.packetHandler.sendTo(new TransferConfigsPacket(),(EntityPlayerMP)event.player);
 	}
 }

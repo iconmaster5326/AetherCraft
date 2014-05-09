@@ -198,6 +198,10 @@ public class AVRegistry {
 //			}
 //		}
 		
+		if (unlocalizedNames==null) {
+			unlocalizedNames=getAllNames();
+		}
+		
 		if (unlocalizedNames.get(s)!=null) {
 			//System.out.println("[AEC] Found name: "+s);
 			ItemStack result = (ItemStack)unlocalizedNames.get(s);

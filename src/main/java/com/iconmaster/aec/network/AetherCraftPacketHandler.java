@@ -125,6 +125,8 @@ public class AetherCraftPacketHandler extends MessageToMessageCodec<FMLProxyPack
         }
         
         this.registerPacket(DeviceSyncPacket.class);
+        this.registerPacket(RequestSyncPacket.class);
+        this.registerPacket(TransferConfigsPacket.class);
 
         this.isPostInitialised = true;
         Collections.sort(this.packets, new Comparator<Class<? extends AetherCraftPacket>>() {
