@@ -134,7 +134,6 @@ public class AVRegistry {
 		if (av == null) {
 			return 0;
 		} else {
-			av*=Float.parseFloat(AetherCraft.getOptions("avmultiplier"));
 			return av;
 		}
 	}

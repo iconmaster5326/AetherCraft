@@ -44,7 +44,7 @@ public class AVConfigHandler {
 	public static void loadNetworkConfigFile(HashMap stringValues) {
 		for (Object entry : stringValues.entrySet().toArray()) {
 			String item = (String) ((Entry)entry).getKey();
-			float av = (Float) ((Entry)entry).getValue()*Float.parseFloat(AetherCraft.getOptions("avmultiplier"));
+			float av = (Float) ((Entry)entry).getValue();
 			
 			AVRegistry.setConfigAV(item,av);
 		}
