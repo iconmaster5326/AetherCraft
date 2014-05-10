@@ -111,7 +111,7 @@ public class AVRegistry {
 	public static float getAV(ItemStack item) {
 		if (item==null) {return 0;}
 		if (Item.getIdFromItem(item.getItem())==Item.getIdFromItem(Items.book)) {
-			return ((Float)values.get(Arrays.asList(Item.getIdFromItem(Items.book),0)))*Float.parseFloat(AetherCraft.getOptions("avmultiplier")); //really hackish fix for books, which continue to act in a silly manner
+			return ((Float)values.get(Arrays.asList(Item.getIdFromItem(Items.book),0))); //really hackish fix for books, which continue to act in a silly manner
 		}
 		Float av = (Float)values.get(UidUtils.getUID(item));
 		if (av == null) {
@@ -120,7 +120,6 @@ public class AVRegistry {
 			if (item.getItem().isItemTool(item)) {
 				av*=1-((float)item.getItemDamage()/item.getMaxDamage());
 			}
-			av*=Float.parseFloat(AetherCraft.getOptions("avmultiplier"));
 			return av;
 		}
 	}

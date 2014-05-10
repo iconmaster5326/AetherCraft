@@ -5,9 +5,12 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,22 +22,25 @@ import com.iconmaster.aec.config.AVConfigHandler;
 public class TransferConfigsPacket extends AetherCraftPacket {
 
 	private HashMap values;
-	private HashMap<String, String> options;
+	private HashMap options;
 
 	public TransferConfigsPacket() {
-		//System.out.println("TRANS Saving values!");
+		
+	}
+	
+	public TransferConfigsPacket setState() {
 		this.values = AVConfigHandler.getNetworkConfigMap();
 		this.options = AetherCraft.getOptionsMap();
+		
+		return this;
 	}
 
 	@Override
 	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		//System.out.println("TRANS Encoding maps!");
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			oos.writeObject(values);
-			oos.writeObject(options);
+			oos.writeObject(new HashMap[] {values,options});
 			oos.flush();
 			oos.close();
 		} catch (Exception ex) {
@@ -45,30 +51,27 @@ public class TransferConfigsPacket extends AetherCraftPacket {
 
 	@Override
 	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		//System.out.println("TRANS Decoding maps!");
 		try {
-			ObjectInputStream dis = new ObjectInputStream(new ByteArrayInputStream(buffer.array()));
+			ObjectInputStream dis = new ObjectInputStream(new ByteArrayInputStream(buffer.array(),buffer.arrayOffset(),buffer.capacity()));
+			
+			HashMap[] array = (HashMap[]) dis.readObject();
 
-			values = (HashMap) dis.readObject();
-			options = (HashMap<String, String>) dis.readObject();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+			values = array[0];
+			options = array[1];
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		//System.out.println("TRANS CLIENT!");
-		
+	public void handleClientSide(EntityPlayer player) {	
 		AetherCraft.setOptionsMap(options);
 		AVRegistry.reloadClientValues(values);
 	}
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
-		//System.out.println("TRANS SERVER!");
+
 	}
 
 }

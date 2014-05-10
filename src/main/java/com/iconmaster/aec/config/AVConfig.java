@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.util.UidUtils;
 
@@ -128,7 +129,7 @@ public class AVConfig {
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry entry = (Map.Entry) it.next();
-			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue());
+			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue()*Float.parseFloat(AetherCraft.getOptions("avmultiplier")));
 		}
 	}
 	
