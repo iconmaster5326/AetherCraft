@@ -35,7 +35,7 @@ public class DisableRingInContainerEvent {
 					System.out.println("Sending to server");
 					AetherCraft.packetHandler.sendToServer(new ActivateRingsPacket());
 				}
-				System.out.println("[AEC PACKET] ACTIVATE EVENT SIDE");
+				//System.out.println("[AEC PACKET] ACTIVATE EVENT SIDE");
 				InventoryUtils.activateRings(player);
 				inContainer = false;
 			} else {
@@ -53,7 +53,7 @@ public class DisableRingInContainerEvent {
 					System.out.println("Sending to server");
 					AetherCraft.packetHandler.sendToServer(new DeactivateRingsPacket());
 				}
-				System.out.println("[AEC PACKET] DEACTIVATE EVENT SIDE");
+				//System.out.println("[AEC PACKET] DEACTIVATE EVENT SIDE");
 				InventoryUtils.deactivateRings(player);
 				inContainer = true;
 			}

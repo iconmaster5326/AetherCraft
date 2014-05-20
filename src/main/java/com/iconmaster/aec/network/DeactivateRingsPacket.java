@@ -29,14 +29,14 @@ public class DeactivateRingsPacket extends AetherCraftPacket {
 
 	@Override
 	public void handleClientSide(EntityPlayer player) {
-		System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
+		//System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
 		
 		InventoryUtils.deactivateRings(player);
 	}
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
-		System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
+		//System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
 		
 		InventoryUtils.deactivateRings(player);
 	}
