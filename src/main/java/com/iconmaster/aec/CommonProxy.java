@@ -16,6 +16,7 @@ import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
 import com.iconmaster.aec.event.AetherSwordEvent;
+import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.event.PlayerLogInEvent;
 import com.iconmaster.aec.inventory.ContainerAetherCondenser;
@@ -251,5 +252,6 @@ public class CommonProxy implements IGuiHandler {
 		}
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 		FMLCommonHandler.instance().bus().register(new PlayerLogInEvent());
+		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
 	}
 }
