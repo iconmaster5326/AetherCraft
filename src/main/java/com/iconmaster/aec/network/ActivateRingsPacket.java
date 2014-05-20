@@ -24,14 +24,14 @@ public class ActivateRingsPacket extends AetherCraftPacket {
 
 	@Override
 	public void handleClientSide(EntityPlayer player) {
-		System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
+		//System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
 		
 		InventoryUtils.activateRings(player);
 	}
 
 	@Override
 	public void handleServerSide(EntityPlayer player) {
-		System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
+		//System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
 		
 		InventoryUtils.activateRings(player);
 	}

@@ -70,9 +70,9 @@ public class InventoryUtils {
 		for (int i=0;i<player.inventory.getSizeInventory();i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null && stack.getItem() instanceof IAetherRing) {
-				System.out.println("found ring "+InventoryUtils.ringsSupressed);
+				//System.out.println("found ring "+InventoryUtils.ringsSupressed);
 					if (InventoryUtils.ringsSupressed.get(stack.getItem())!=null) {
-						System.out.println("activating ring");
+						//System.out.println("activating ring");
 						//InventoryUtils.ringsSupressed.remove(stack.getItem());
 						((IAetherRing)stack.getItem()).activateRing(stack, player);
 					}
@@ -85,12 +85,12 @@ public class InventoryUtils {
 		for (int i=0;i<player.inventory.getSizeInventory();i++) {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null && stack.getItem() instanceof IAetherRing) {
-				System.out.println("found ring");
+				//System.out.println("found ring");
 					if (((IAetherRing)stack.getItem()).isActive(stack)) {
-						System.out.println("deactivating ring");
+						//System.out.println("deactivating ring");
 						((IAetherRing)stack.getItem()).deactivateRing(stack, player);
 						InventoryUtils.ringsSupressed.put(stack.getItem(), new Object());
-						System.out.println(InventoryUtils.ringsSupressed);
+						//System.out.println(InventoryUtils.ringsSupressed);
 					}
 			}
 		}
