@@ -332,6 +332,8 @@ public class DynamicAVRegister {
 		}
 		if (Loader.isModLoaded("TConstruct")) {
 			try {
+				ModHelpers.setupTConMap();
+				
 				registerHandler(map,new TConSmeltingHandler(),TConSmeltingHandler.TConSmeltingEntry.class);
 				registerHandler(map,new AlloyHandler(),Class.forName("tconstruct.library.crafting.AlloyMix"));
 				registerHandler(map,new CastingHandler(),Class.forName("tconstruct.library.crafting.CastingRecipe"));

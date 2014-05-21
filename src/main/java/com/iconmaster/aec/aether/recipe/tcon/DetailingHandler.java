@@ -21,7 +21,7 @@ public class DetailingHandler implements IDynamicAVRecipeHandler {
 			Class recipeClass = Class.forName("tconstruct.library.crafting.Detailing$DetailInput");
 			Object inputObj = recipeClass.cast(recipe);
 			
-			a.add(new ItemStack((Item) recipe.getClass().getField("inputID").get(recipe),1,recipe.getClass().getField("inputMeta").getInt(recipe)));
+			a.add(new ItemStack(((ItemStack) recipe.getClass().getField("input").get(recipe)).getItem(),1,recipe.getClass().getField("inputMeta").getInt(recipe)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,7 +35,7 @@ public class DetailingHandler implements IDynamicAVRecipeHandler {
 			Class recipeClass = Class.forName("tconstruct.library.crafting.Detailing$DetailInput");
 			Object inputObj = recipeClass.cast(recipe);
 
-			return new ItemStack((Item) recipe.getClass().getField("outputID").get(recipe),1,recipe.getClass().getField("outputMeta").getInt(recipe));
+			return new ItemStack(((ItemStack) recipe.getClass().getField("output").get(recipe)).getItem(),1,recipe.getClass().getField("outputMeta").getInt(recipe));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

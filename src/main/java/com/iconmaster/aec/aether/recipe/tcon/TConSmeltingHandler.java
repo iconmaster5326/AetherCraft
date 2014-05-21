@@ -7,15 +7,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
 public class TConSmeltingHandler implements IDynamicAVRecipeHandler {
+	
 	public class TConSmeltingEntry {
 		private ItemStack input;
 		private FluidStack output;
@@ -72,7 +75,7 @@ public class TConSmeltingHandler implements IDynamicAVRecipeHandler {
 		    for (Object recipe : list.entrySet()) {
 		    	List<Integer> ilist = (List<Integer>) ((Entry)recipe).getKey();
 				FluidStack fstack = (FluidStack) ((Entry)recipe).getValue();
-				TConSmeltingEntry entry = new TConSmeltingEntry(UidUtils.getStackFromUid(ilist),fstack);
+				TConSmeltingEntry entry = new TConSmeltingEntry(ModHelpers.decodeTConList(ilist),fstack);
 				ItemStack output;
 				
 				Block bid = fstack.getFluid().getBlock();
@@ -91,5 +94,9 @@ public class TConSmeltingHandler implements IDynamicAVRecipeHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public ItemStack decodeTConList(List<Integer> list) {
+		return null;
 	}
 }
