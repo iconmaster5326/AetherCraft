@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.bc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
 public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
@@ -15,8 +16,7 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		try {
-			Class recipeClass = Class.forName("buildcraft.api.recipes.AssemblyRecipe");
-			for (Object input : (Object[])recipeClass.cast(recipe).getClass().getField("input").get(recipe)) {
+			for (Object input : (Object[])recipe.getClass().getMethod("getInputs").invoke(recipe)) {
 				a.add(input);
 			}
 		} catch (Exception e) {
@@ -28,8 +28,7 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public ItemStack getOutput(Object recipe) {
 		try {
-			Class recipeClass = Class.forName("buildcraft.api.recipes.AssemblyRecipe");
-			return (ItemStack) recipeClass.cast(recipe).getClass().getField("output").get(recipe);
+			return (ItemStack) recipe.getClass().getMethod("getOutput").invoke(recipe);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -39,9 +38,10 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 		try {
-			Class recipeClass = Class.forName("buildcraft.api.recipes.AssemblyRecipe");
-			for (Object recipe : (Iterable)recipeClass.getField("assemblyRecipes").get(null)) {
+			Object obj = Class.forName("buildcraft.api.recipes.BuildcraftRecipes").getField("assemblyTable").get(null);
+			for (Object recipe : (Iterable)obj.getClass().getMethod("getRecipes").invoke(obj)) {
 				ItemStack output = DynamicAVRegister.getOutput(recipe);
+				
 				List uid = UidUtils.getUID(output);
 				if (recipeList.get(uid) == null) {
 					recipeList.put(uid, new ArrayList());

@@ -15,7 +15,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
-import com.iconmaster.aec.aether.recipe.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
@@ -23,13 +22,14 @@ import com.iconmaster.aec.aether.recipe.InfuserHandler;
 import com.iconmaster.aec.aether.recipe.InfuserRecipe;
 import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
 import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
-import com.iconmaster.aec.aether.recipe.RefineryHandler;
 import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.bc.AssemblyRecipeHandler;
+import com.iconmaster.aec.aether.recipe.bc.RefineryHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartCraftingHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartGrindingHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartShapelessCraftingHandler;
@@ -284,8 +284,8 @@ public class DynamicAVRegister {
 		}
 		if (Loader.isModLoaded("BuildCraft|Core")) {
 			try {
-				registerHandler(map,new AssemblyRecipeHandler(),Class.forName("buildcraft.api.recipes.AssemblyRecipe"));
-				registerHandler(map,new RefineryHandler(),Class.forName("buildcraft.api.recipes.RefineryRecipes$Recipe"));
+				registerHandler(map,new AssemblyRecipeHandler(),Class.forName("buildcraft.api.recipes.IAssemblyRecipeManager$IAssemblyRecipe"));
+				registerHandler(map,new RefineryHandler(),Class.forName("buildcraft.api.recipes.IRefineryRecipeManager$IRefineryRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

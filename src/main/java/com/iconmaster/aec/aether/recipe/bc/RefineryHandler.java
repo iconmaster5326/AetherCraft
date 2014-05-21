@@ -1,4 +1,4 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.bc;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +11,7 @@ import net.minecraftforge.fluids.FluidStack;
 
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import com.iconmaster.aec.util.UidUtils;
 
 public class RefineryHandler implements IDynamicAVRecipeHandler {
@@ -19,11 +20,8 @@ public class RefineryHandler implements IDynamicAVRecipeHandler {
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		try {
-			Class recipeClass = Class.forName("buildcraft.api.recipes.RefineryRecipes$Recipe");
-			Object inputObj = recipeClass.cast(recipe);
-			
 			ItemStack fluid;
-			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("ingredient1").get(inputObj));
+			FluidStack fstack = ((FluidStack) recipe.getClass().getMethod("getIngredient1").invoke(recipe));
 			Block bid = fstack.getFluid().getBlock();
 			if (bid == null) {
 				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
@@ -33,7 +31,7 @@ public class RefineryHandler implements IDynamicAVRecipeHandler {
 			a.add(fluid);
 			
 			fstack = null;
-			fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("ingredient2").get(inputObj));
+			fstack = ((FluidStack) recipe.getClass().getMethod("getIngredient2").invoke(recipe));
 			if (fstack != null) {
 				bid = fstack.getFluid().getBlock();
 				if (bid == null) {
@@ -53,11 +51,8 @@ public class RefineryHandler implements IDynamicAVRecipeHandler {
 	public ItemStack getOutput(Object recipe) {
 		ItemStack output = null;
 		try {
-			Class recipeClass = Class.forName("buildcraft.api.recipes.RefineryRecipes$Recipe");
-			Object inputObj = recipeClass.cast(recipe);
-
 			ItemStack fluid;
-			FluidStack fstack = ((FluidStack) recipeClass.cast(recipe).getClass().getField("result").get(inputObj));
+			FluidStack fstack = ((FluidStack) recipe.getClass().getMethod("getResult").invoke(recipe));
 			Block bid = fstack.getFluid().getBlock();
 			if (bid == null) {
 				fluid = AVRegistry.createFluidStack(fstack.getFluid(), fstack.amount);
@@ -74,10 +69,9 @@ public class RefineryHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public void populateRecipeList(HashMap recipeList) {
 	 try {
-		 Class recipeClass = Class.forName("buildcraft.api.recipes.RefineryRecipes$Recipe");
-		Collection list = (Collection) Class.forName("buildcraft.api.recipes.RefineryRecipes").getMethod("getRecipes").invoke(null);
+		Object obj = Class.forName("buildcraft.api.recipes.BuildcraftRecipes").getField("refinery").get(null);
+		Collection list = (Collection) obj.getClass().getMethod("getRecipes").invoke(obj);
 	    for (Object recipe : list) {
-			Object inputObj2 = recipeClass.cast(recipe);
 			ItemStack output = DynamicAVRegister.getOutput(recipe);
 			List uid = UidUtils.getUID(output);
 			if (recipeList.get(uid) == null) {
