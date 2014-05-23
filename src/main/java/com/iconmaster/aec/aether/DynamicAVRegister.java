@@ -360,7 +360,10 @@ public class DynamicAVRegister {
 				float lav = Float.MAX_VALUE;
 				Object lentry = s.get(0);
 				for (Object entry : s) {
-					float av = AVRegistry.getAV((ItemStack)entry);
+					float av = 0;
+					if (entry instanceof ItemStack) {
+						av = AVRegistry.getAV((ItemStack)entry);
+					}
 					if (av != 0 && av < lav) {
 						lav = av;
 						lentry = entry;
@@ -373,7 +376,10 @@ public class DynamicAVRegister {
 				float lav = Float.MAX_VALUE;
 				Object lentry = s.get(0);
 				for (Object entry : s) {
-					float av = AVRegistry.getAV((ItemStack)entry);
+					float av = 0;
+					if (entry instanceof ItemStack) {
+						av = AVRegistry.getAV((ItemStack)entry);
+					}
 					if (av != 0 && av < lav) {
 						lav = av;
 						lentry = entry;
