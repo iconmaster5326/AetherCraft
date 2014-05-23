@@ -31,7 +31,7 @@ if (!f.exists()) {
     new URL('http://ic2api.player.to:8080/job/IC2_experimental/476/artifact/build/libs/industrialcraft-2-2.1.476-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
 }
 
-version = "1.7.2-1.4.0.${BUILD}"
+version = "1.7.2-1.4.1.${BUILD}"
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AetherCraft"
 
