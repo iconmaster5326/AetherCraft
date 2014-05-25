@@ -126,8 +126,9 @@ public class DynamicAVRegister {
 		
 		float sum = 0;
 		for (Object input : inputs) {
-			ItemStack item = (ItemStack) input;
-			if (item != null) {
+			
+			if (input != null && input instanceof ItemStack) {
+				ItemStack item = (ItemStack) input;
 //				System.out.println("	Found component "+getDebugName(item));
 				
 				float av = 0;
