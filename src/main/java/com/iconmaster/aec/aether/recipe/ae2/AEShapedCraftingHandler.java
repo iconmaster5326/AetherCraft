@@ -1,5 +1,6 @@
-package com.iconmaster.aec.aether.recipe;
+package com.iconmaster.aec.aether.recipe.ae2;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -7,16 +8,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 
-public class AECraftingHandler implements IDynamicAVRecipeHandler {
+public class AEShapedCraftingHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
 		ArrayList a = new ArrayList();
 		try {
-			Class recipeClass = Class.forName("appeng.recipes.AEShapedQuartzRecipe");
-			Object inputObj = recipeClass.cast(recipe);
-			Object[] items = (Object[]) recipeClass.cast(recipe).getClass().getMethod("getInput").invoke(inputObj);
+			Object[] items = (Object[]) recipe.getClass().getMethod("getInput").invoke(recipe);
 			for (Object item : items) {
 				a.add(item);
 			}
@@ -29,8 +29,6 @@ public class AECraftingHandler implements IDynamicAVRecipeHandler {
 	@Override
 	public ItemStack getOutput(Object recipe) {
 		try {
-			Class recipeClass = Class.forName("appeng.recipes.AEShapedQuartzRecipe");
-			Object inputObj = recipeClass.cast(recipe);
 			ItemStack item = ((IRecipe)recipe).getRecipeOutput();
 			return item;
 		} catch (Exception e) {

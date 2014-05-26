@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.flattener.ArrayFlattener;
 import com.iconmaster.aec.aether.flattener.BlockFlattener;
 import com.iconmaster.aec.aether.flattener.IC2InputFlattener;
 import com.iconmaster.aec.aether.flattener.IFlattenerHandler;
@@ -24,7 +25,6 @@ import com.iconmaster.aec.aether.flattener.ItemFlattener;
 import com.iconmaster.aec.aether.flattener.ItemStackFlattener;
 import com.iconmaster.aec.aether.flattener.ListFlattener;
 import com.iconmaster.aec.aether.flattener.StringFlattener;
-import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
@@ -38,6 +38,10 @@ import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
 import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
 import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.recipe.ae2.AEGrindingHandler;
+import com.iconmaster.aec.aether.recipe.ae2.AEInscribingHandler;
+import com.iconmaster.aec.aether.recipe.ae2.AEShapedCraftingHandler;
+import com.iconmaster.aec.aether.recipe.ae2.AEShapelessCraftingHandler;
 import com.iconmaster.aec.aether.recipe.bc.AssemblyRecipeHandler;
 import com.iconmaster.aec.aether.recipe.bc.RefineryHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartCraftingHandler;
@@ -265,9 +269,13 @@ public class DynamicAVRegister {
 				e.printStackTrace();
 			}
 		}
-		if (Loader.isModLoaded("AppliedEnergistics")) {
+		if (Loader.isModLoaded("appliedenergistics2")) {
 			try {
-				registerHandler(map,new AECraftingHandler(),Class.forName("appeng.recipes.AEShapedQuartzRecipe"));
+				registerHandler(map,new AEShapedCraftingHandler(),Class.forName("appeng.recipes.game.ShapedRecipe"));
+				registerHandler(map,new AEShapelessCraftingHandler(),Class.forName("appeng.recipes.game.ShapelessRecipe"));
+				registerHandler(map,new AEGrindingHandler(),Class.forName("appeng.api.features.IGrinderEntry"));
+				registerHandler(map,new AEInscribingHandler(),Class.forName("appeng.recipes.handlers.Inscribe$InscriberRecipe"));
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -358,6 +366,7 @@ public class DynamicAVRegister {
 		registerFlattener(map,new ItemFlattener(),Item.class);
 		registerFlattener(map,new BlockFlattener(),Block.class);
 		registerFlattener(map,new IntegerFlattener(),Integer.class);
+		registerFlattener(map,new ArrayFlattener(),Object[].class);
 		
 		if (Loader.isModLoaded("IC2")) {
 			try {
