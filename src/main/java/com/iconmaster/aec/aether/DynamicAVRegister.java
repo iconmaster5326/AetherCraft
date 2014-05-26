@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -18,6 +17,7 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.iconmaster.aec.aether.flattener.BlockFlattener;
+import com.iconmaster.aec.aether.flattener.IC2InputFlattener;
 import com.iconmaster.aec.aether.flattener.IFlattenerHandler;
 import com.iconmaster.aec.aether.flattener.IntegerFlattener;
 import com.iconmaster.aec.aether.flattener.ItemFlattener;
@@ -358,6 +358,14 @@ public class DynamicAVRegister {
 		registerFlattener(map,new ItemFlattener(),Item.class);
 		registerFlattener(map,new BlockFlattener(),Block.class);
 		registerFlattener(map,new IntegerFlattener(),Integer.class);
+		
+		if (Loader.isModLoaded("IC2")) {
+			try {
+				registerFlattener(map,new IC2InputFlattener(),Class.forName("ic2.api.recipe.IRecipeInput"));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		return map;
 	}
