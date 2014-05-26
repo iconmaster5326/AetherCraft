@@ -1,17 +1,13 @@
 package com.iconmaster.aec.aether.recipe.ae2;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
-import appeng.api.AEApi;
-import appeng.recipes.handlers.Inscribe;
 
 import com.iconmaster.aec.aether.DynamicAVRegister;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
-import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
 
 public class AEInscribingHandler implements IDynamicAVRecipeHandler {
