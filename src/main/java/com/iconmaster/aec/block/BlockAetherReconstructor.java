@@ -16,7 +16,6 @@ import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
 
 public class BlockAetherReconstructor extends AetherCraftBlock implements IAetherTransfer {
-	private IIcon blockIconTop, blockIconBottom;
 
 	public BlockAetherReconstructor(Material material,String name) {
 		super(material,name);

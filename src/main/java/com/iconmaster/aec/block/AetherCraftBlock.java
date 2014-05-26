@@ -133,6 +133,7 @@ public class AetherCraftBlock extends BlockContainer implements IAetherTransfer 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int metadata) {
+		if (metadata >= icon.length || icon[metadata]==null) {return null;}
 		return side == 0 ? icon[metadata].getBottom() : side == 1 ? icon[metadata].getTop() : icon[metadata].getSide();
 	}
 
