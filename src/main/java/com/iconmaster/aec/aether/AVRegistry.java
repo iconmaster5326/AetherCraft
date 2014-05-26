@@ -56,7 +56,7 @@ public class AVRegistry {
 					}
 				} 
 			}catch (Exception e) {
-				System.out.println("[AEC] cauugh unandled exception: "+e);	
+				e.printStackTrace();
 			}
 		}
 	return map;

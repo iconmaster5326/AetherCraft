@@ -29,10 +29,10 @@ public class DisableRingInContainerEvent {
 			if (inContainer) {
 				//activate rings
 				if (player instanceof EntityPlayerMP) {
-					System.out.println("Sending to player");
+					//System.out.println("Sending to player");
 					AetherCraft.packetHandler.sendTo(new ActivateRingsPacket(),(EntityPlayerMP) player);
 				} else {
-					System.out.println("Sending to server");
+					//System.out.println("Sending to server");
 					AetherCraft.packetHandler.sendToServer(new ActivateRingsPacket());
 				}
 				//System.out.println("[AEC PACKET] ACTIVATE EVENT SIDE");
@@ -47,10 +47,10 @@ public class DisableRingInContainerEvent {
 			} else {
 				//deactivate rings
 				if (player instanceof EntityPlayerMP) {
-					System.out.println("Sending to player");
+					//System.out.println("Sending to player");
 					AetherCraft.packetHandler.sendTo(new DeactivateRingsPacket(),(EntityPlayerMP) player);
 				} else {
-					System.out.println("Sending to server");
+					//System.out.println("Sending to server");
 					AetherCraft.packetHandler.sendToServer(new DeactivateRingsPacket());
 				}
 				//System.out.println("[AEC PACKET] DEACTIVATE EVENT SIDE");

@@ -10,24 +10,26 @@ import net.minecraft.item.ItemStack;
  * @author iconmaster
  *
  */
-public interface IDynamicAVRecipeHandler {
+public interface IDynamicAVRecipeHandler<T> {
 	
 	/**
 	 * Given a recipe, returns an ArrayList of inputs used to make it.
 	 * @param recipe
 	 * @return
 	 */
-	public ArrayList getInputs(Object recipe);
+	public ArrayList getInputs(T recipe);
 	
 	/**
 	 * Given a recipe, returns an ItemStack that is the recipe's output.
 	 * @param recipe
 	 * @return
 	 */
-	public ItemStack getOutput(Object recipe);
+	public ItemStack getOutput(T recipe);
 	
 	/**
-	 * Called when the reipe list is populated. Add your recipes to the ArrayLists in recipeList keyed by item UID.
+	 * Called when the recipe list is populated. Add your recipes to the ArrayLists in recipeList keyed by item UID. 
+	 * Note that there needs to be an ArrayList of possible inputs at the value; you'll need to create a new list
+	 * if it's null and THEN add your recipe to that list.
 	 * @param recipeList
 	 */
 	public void populateRecipeList(HashMap recipeList);

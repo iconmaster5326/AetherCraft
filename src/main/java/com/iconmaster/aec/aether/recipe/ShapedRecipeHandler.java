@@ -20,7 +20,7 @@ public class ShapedRecipeHandler implements IDynamicAVRecipeHandler {
 			if (item!=null)
 				item.stackSize = 1;
 		}
-		return DynamicAVRegister.flattenInputs(new ArrayList(Arrays.asList(((ShapedRecipes)recipe).recipeItems)));
+		return new ArrayList(Arrays.asList(((ShapedRecipes)recipe).recipeItems));
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ShapedRecipeHandler implements IDynamicAVRecipeHandler {
 					}
 					((ArrayList) recipeList.get(uid)).add(recipe);
 				} else {
-					System.out.println("Found new recipe class: "+recipe.getClass());
+					System.out.println("[AEC] Found new recipe class: "+recipe.getClass());
 				}
 			} catch (NullPointerException e) {
 				//System.out.println("Invalid recipe state!");

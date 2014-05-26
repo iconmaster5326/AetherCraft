@@ -1,19 +1,29 @@
 package com.iconmaster.aec.aether;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
-import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+import com.iconmaster.aec.aether.flattener.BlockFlattener;
+import com.iconmaster.aec.aether.flattener.IFlattenerHandler;
+import com.iconmaster.aec.aether.flattener.IntegerFlattener;
+import com.iconmaster.aec.aether.flattener.ItemFlattener;
+import com.iconmaster.aec.aether.flattener.ItemStackFlattener;
+import com.iconmaster.aec.aether.flattener.ListFlattener;
+import com.iconmaster.aec.aether.flattener.StringFlattener;
 import com.iconmaster.aec.aether.recipe.AECraftingHandler;
 import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
@@ -50,7 +60,6 @@ import com.iconmaster.aec.aether.recipe.railcraft.RollingMachineHandler;
 import com.iconmaster.aec.aether.recipe.tcon.AlloyHandler;
 import com.iconmaster.aec.aether.recipe.tcon.CastingHandler;
 import com.iconmaster.aec.aether.recipe.tcon.DetailingHandler;
-import com.iconmaster.aec.aether.recipe.tcon.DryingHandler;
 import com.iconmaster.aec.aether.recipe.tcon.TConSmeltingHandler;
 import com.iconmaster.aec.aether.recipe.te3.CrucibleHandler;
 import com.iconmaster.aec.aether.recipe.te3.InductionSmelterHandler;
@@ -67,8 +76,9 @@ import cpw.mods.fml.common.Loader;
  *
  */
 public class DynamicAVRegister {
-	private static HashMap recipeList  = new HashMap();
-	private static HashMap handlers = getDefaultHandlers();
+	private static HashMap<List,ArrayList> recipeList  = new HashMap<List, ArrayList>();
+	private static HashMap<Class,IDynamicAVRecipeHandler> handlers = getDefaultHandlers();
+	private static HashMap<Class,IFlattenerHandler> flatteners = getDefaultFlatteners();
 
 	/**
 	 * Assigns all items with recipes dynamic AVs.
@@ -187,21 +197,16 @@ public class DynamicAVRegister {
 	 * @param recipe
 	 * @return
 	 */
-	public static ArrayList getInputs(Object recipe) {
-		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
-		if (handler != null) {
-			//System.out.println("[AEC] inputs from "+recipe.getClass());
-			return handler.getInputs(recipe);
+	public static ArrayList<ItemStack> getInputs(Object recipe) {
+		//System.out.println("recipe: "+recipe+" for "+String.valueOf(getOutput(recipe)));
+		IDynamicAVRecipeHandler handler = getHandler(recipe);
+		if (handler==null) {
+			//System.out.println("	was null!");
+			return null;
 		} else {
-			Iterator it = handlers.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pairs = (Map.Entry) it.next();
-				if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
-					return ((IDynamicAVRecipeHandler)pairs.getValue()).getInputs(recipe);
-				}
-			}
+			//System.out.println("	was "+handler.getClass());
+			return flattenInputs(handler.getInputs(recipe));
 		}
-		return null;
 	}
 	
 	/**
@@ -210,29 +215,13 @@ public class DynamicAVRegister {
 	 * @return
 	 */
 	public static ItemStack getOutput(Object recipe) {
-		IDynamicAVRecipeHandler handler = (IDynamicAVRecipeHandler) handlers.get(recipe.getClass());
-		if (handler != null) {
+		IDynamicAVRecipeHandler handler = getHandler(recipe);
+		if (handler==null) {
+			return null;
+		} else {
 			return handler.getOutput(recipe);
-		} else {
-			Iterator it = handlers.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pairs = (Map.Entry) it.next();
-				if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
-					return ((IDynamicAVRecipeHandler)pairs.getValue()).getOutput(recipe);
-				}
-			}
 		}
-		return null;
 	}
-	
-	//TODO: restore this
-	/*private static String getDebugName(ItemStack item) {
-		if (item.getUnlocalizedName() == null) {
-			return "ID "+((Integer)item.itemID).toString();
-		} else {
-			return item.getUnlocalizedName();
-		}
-	}*/
 	
 	/**
 	 *  Registers a new dynamic recipe handler, given a handler object and the class that the handler should be called on when the register encounters a recipe of given class.
@@ -247,8 +236,8 @@ public class DynamicAVRegister {
 		map.put(recipeType,handler);
 	}
 	
-	public static HashMap getDefaultHandlers() {
-		HashMap map = new HashMap();
+	public static HashMap<Class,IDynamicAVRecipeHandler> getDefaultHandlers() {
+		HashMap<Class,IDynamicAVRecipeHandler> map = new HashMap<Class,IDynamicAVRecipeHandler>();
 		registerHandler(map,new ShapedRecipeHandler(),ShapedRecipes.class);
 		registerHandler(map,new ShapelessRecipeHandler(),ShapelessRecipes.class);
 		registerHandler(map,new ShapedOreRecipeHandler(),ShapedOreRecipe.class);
@@ -348,56 +337,118 @@ public class DynamicAVRegister {
 	}
 	
 	/**
+	 *  Registers a new object-to-ItemStack converter, given a handler object and the class that the handler should be called on when a certain non-ItemStack is found in an input list.
+	 * @param handler
+	 * @param inputType
+	 */
+	public static void registerFlattener(IFlattenerHandler handler,Class inputType) {
+		registerFlattener(flatteners,handler,inputType);
+	}
+	
+	public static void registerFlattener(HashMap<Class,IFlattenerHandler> map,IFlattenerHandler handler,Class inputType) {
+		map.put(inputType,handler);
+	}
+	
+	public static HashMap<Class,IFlattenerHandler> getDefaultFlatteners() {
+		HashMap<Class,IFlattenerHandler> map = new HashMap<Class,IFlattenerHandler>();
+		
+		registerFlattener(map,new ItemStackFlattener(),ItemStack.class);
+		registerFlattener(map,new ListFlattener(),List.class);
+		registerFlattener(map,new StringFlattener(),String.class);
+		registerFlattener(map,new ItemFlattener(),Item.class);
+		registerFlattener(map,new BlockFlattener(),Block.class);
+		registerFlattener(map,new IntegerFlattener(),Integer.class);
+		
+		return map;
+	}
+	
+	/**
 	 * Takes an input ArrayList and replaces the OreDict references with something more manageable.
 	 * @param inputs
 	 * @return
 	 */
-	public static ArrayList flattenInputs(ArrayList inputs) {
-		ArrayList ret = new ArrayList();
+	public static ArrayList<ItemStack> flattenInputs(Collection inputs) {
+		if (inputs==null) {return null;}
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 		for (Object input : inputs) {
-			if (input instanceof List) {
-				List s = (List)input;
-				if (s.size() == 0) {return null;}
-				float lav = Float.MAX_VALUE;
-				Object lentry = s.get(0);
-				for (Object entry : s) {
-					float av = 0;
-					if (entry instanceof ItemStack) {
-						av = AVRegistry.getAV((ItemStack)entry);
+			if (input != null) {
+				IFlattenerHandler handler = getFlattener(input);
+				if (handler != null) {
+					ItemStack stack = handler.flatten(input);
+					if (stack!=null) {
+						ret.add(stack);
+					} else {
+						//Can't finish recipe, handler failed
+						//System.out.println("	Handler "+handler.getClass()+" failed!");
+						return null;
 					}
-					if (av != 0 && av < lav) {
-						lav = av;
-						lentry = entry;
-					}
+				} else {
+					//Can't finish recipe, has unhandled item
+					System.out.println("[AEC] Input type "+input.getClass()+" not recognised!");
+					return null;
 				}
-				ret.add(lentry);
-			} else if (input instanceof String) {
-				ArrayList s = OreDictionary.getOres((String)input);
-				if (s.size() == 0) {return null;}
-				float lav = Float.MAX_VALUE;
-				Object lentry = s.get(0);
-				for (Object entry : s) {
-					float av = 0;
-					if (entry instanceof ItemStack) {
-						av = AVRegistry.getAV((ItemStack)entry);
-					}
-					if (av != 0 && av < lav) {
-						lav = av;
-						lentry = entry;
-					}
-				}
-				ret.add(lentry);
-			} else if (input instanceof ItemStack) {
-				ret.add(input);
-			} else {
-//				if (input == null) {
-//					System.out.println("[AEC] Object in list is null!");
-//				} else {
-//					System.out.println("[AEC] Object in list is a "+input.getClass());
-//				}
-//				return null;
 			}
 		}
 		return ret;
+	}
+	
+	/**
+	 * Like flattenInputs, but won't return null if an item isn't flattenable.
+	 * @param input
+	 * @return
+	 */
+	public static ArrayList<ItemStack> flattenInputsPassively(Collection inputs) {
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		if (inputs==null) {return ret;}
+		for (Object input : inputs) {
+			if (input != null) {
+				IFlattenerHandler handler = getFlattener(input);
+				if (handler != null) {
+					ItemStack stack = handler.flatten(input);
+					if (stack!=null) {
+						ret.add(stack);
+					} else {
+						//handler failed
+						//System.out.println("	Passive: Handler "+handler.getClass()+" failed!");
+					}
+				} else {
+					//has unhandled item
+					System.out.println("[AEC] Input type "+input.getClass()+" not recognised!");
+				}
+			}
+		}
+		return ret;
+	}
+	
+	public static IDynamicAVRecipeHandler getHandler(Object recipe) {
+		IDynamicAVRecipeHandler handler = handlers.get(recipe.getClass());
+		if (handler != null) {
+			return handler;
+		} else {
+			Iterator it = handlers.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry) it.next();
+				if (((Class) pairs.getKey()).isAssignableFrom(recipe.getClass())) {
+					return ((IDynamicAVRecipeHandler)pairs.getValue());
+				}
+			}
+		}
+		return null;
+	}
+	
+	public static IFlattenerHandler getFlattener(Object input) {
+		IFlattenerHandler handler = flatteners.get(input.getClass());
+		if (handler != null) {
+			return handler;
+		} else {
+			Iterator it = flatteners.entrySet().iterator();
+			while (it.hasNext()) {
+				Map.Entry pairs = (Map.Entry) it.next();
+				if (((Class) pairs.getKey()).isAssignableFrom(input.getClass())) {
+					return ((IFlattenerHandler)pairs.getValue());
+				}
+			}
+		}
+		return null;
 	}
 }

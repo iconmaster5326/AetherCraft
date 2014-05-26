@@ -38,7 +38,7 @@ public class ItemRepairRing extends Item implements IAetherRing {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack stack, EntityPlayer player) {
-		System.out.println("RING WAS DROPPED LOCALLY");
+		//System.out.println("RING WAS DROPPED LOCALLY");
 		deactivateRing(stack,player);
 		return super.onDroppedByPlayer(stack, player);
 	}

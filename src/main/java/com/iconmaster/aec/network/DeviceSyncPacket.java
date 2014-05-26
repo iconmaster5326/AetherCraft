@@ -50,7 +50,7 @@ public class DeviceSyncPacket extends AetherCraftPacket {
 		//System.out.println("[AEC PACKET] SYNC CLIENT "+x+" "+y+" "+z+" "+av1+" "+av2);
 		AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getTileEntity(x, y, z);
 		if (te == null) {
-			System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
+			//System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
 			return;
 		}
 		if (te instanceof TileEntityAetherInfuser) {

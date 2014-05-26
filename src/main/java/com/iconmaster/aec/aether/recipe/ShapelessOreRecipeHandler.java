@@ -12,7 +12,7 @@ public class ShapelessOreRecipeHandler implements IDynamicAVRecipeHandler {
 
 	@Override
 	public ArrayList getInputs(Object recipe) {
-		return DynamicAVRegister.flattenInputs(((ShapelessOreRecipe)recipe).getInput());
+		return ((ShapelessOreRecipe)recipe).getInput();
 	}
 
 	@Override

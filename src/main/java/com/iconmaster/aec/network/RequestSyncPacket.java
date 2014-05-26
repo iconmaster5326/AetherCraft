@@ -45,7 +45,7 @@ public class RequestSyncPacket extends AetherCraftPacket {
 		//System.out.println("[AEC PACKET] REQ SERVER "+x+" "+y+" "+z);
 		AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getTileEntity(x, y, z);
 		if (te == null) {
-			System.out.println("[AEC PACKET]SERVER ERROR: TE was null!");
+			//System.out.println("[AEC PACKET]SERVER ERROR: TE was null!");
 			return;
 		}
 		AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(x,y,z,te.getAether()));

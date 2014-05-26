@@ -34,7 +34,7 @@ public class AVConfigHandler {
 			}
 		});
 		for (File file : configFiles) {
-			System.out.println("Found a config file: "+file);
+			System.out.println("[AEC] Found a config file: "+file);
 			AVConfig config = new AVConfig(file);
 			config.loadValues();
 			config.addValuesToTable();

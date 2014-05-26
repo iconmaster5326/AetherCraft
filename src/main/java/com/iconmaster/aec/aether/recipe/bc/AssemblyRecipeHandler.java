@@ -22,7 +22,7 @@ public class AssemblyRecipeHandler implements IDynamicAVRecipeHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return DynamicAVRegister.flattenInputs(a);
+		return a;
 	}
 
 	@Override
