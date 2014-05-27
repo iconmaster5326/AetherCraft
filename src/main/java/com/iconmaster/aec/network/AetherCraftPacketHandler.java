@@ -114,7 +114,7 @@ public class AetherCraftPacketHandler extends MessageToMessageCodec<FMLProxyPack
 
     // Method to call from FMLInitializationEvent
     public void initialise() {
-        this.channels = NetworkRegistry.INSTANCE.newChannel("TUT", this);
+        this.channels = NetworkRegistry.INSTANCE.newChannel("AetherCraft", this);
     }
 
     // Method to call from FMLPostInitializationEvent
