@@ -54,7 +54,7 @@ public class TooltipUtils {
 		}
 		ev1 *= ((float) Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0f;
 
-		tip.add("\u00a79" + "CONSUME AV: " + NumberUtils.display(ev1));
+		tip.add("\u00a72" + "CONSUME AV: " + NumberUtils.display(ev1));
 	}
 	
 	public static void displayProduceTooltip(ItemStack stack, List tip) {
