@@ -25,6 +25,7 @@ import com.iconmaster.aec.aether.flattener.ItemFlattener;
 import com.iconmaster.aec.aether.flattener.ItemStackFlattener;
 import com.iconmaster.aec.aether.flattener.ListFlattener;
 import com.iconmaster.aec.aether.flattener.StringFlattener;
+import com.iconmaster.aec.aether.recipe.EIOAlloySmelterHandler;
 import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
 import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
 import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
@@ -337,6 +338,13 @@ public class DynamicAVRegister {
 				registerHandler(map,new CastingHandler(),Class.forName("tconstruct.library.crafting.CastingRecipe"));
 				registerHandler(map,new DetailingHandler(),Class.forName("tconstruct.library.crafting.Detailing$DetailInput"));
 				//registerHandler(map,new DryingHandler(),Class.forName("tconstruct.library.crafting.DryingRackRecipes$DryingRecipe"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (Loader.isModLoaded("EnderIO")) {
+			try {
+				registerHandler(map,new EIOAlloySmelterHandler(),Class.forName("crazypants.enderio.machine.alloy.IAlloyRecipe"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
