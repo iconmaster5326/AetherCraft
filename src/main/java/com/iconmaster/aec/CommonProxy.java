@@ -8,7 +8,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
-import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.client.gui.GuiAetherCondenser;
 import com.iconmaster.aec.client.gui.GuiAetherContainer;
 import com.iconmaster.aec.client.gui.GuiAetherExtractor;
@@ -19,6 +18,7 @@ import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.event.PlayerLogInEvent;
+import com.iconmaster.aec.event.TooltipEvent;
 import com.iconmaster.aec.inventory.ContainerAetherCondenser;
 import com.iconmaster.aec.inventory.ContainerAetherContainer;
 import com.iconmaster.aec.inventory.ContainerAetherExtractor;
