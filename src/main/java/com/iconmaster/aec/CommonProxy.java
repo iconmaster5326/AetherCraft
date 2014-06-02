@@ -194,10 +194,6 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherSword), " a "," a "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherHammer), "aaa","aba"," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherShears), "a "," a",'a',infusedIngot);
-		
-		InfuserRegistry.addRecipe(new ItemStack(Items.gold_ingot), infusedIngot);
-		InfuserRegistry.addRecipe(new ItemStack(Items.diamond), aetheralFoci);
-		InfuserRegistry.addRecipe(infusedIngot, gildedIngot);
 	}
 
 	@Override

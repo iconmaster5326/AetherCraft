@@ -13,6 +13,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.block.BlockAetherCondenser;
 import com.iconmaster.aec.block.BlockAetherConduit;
 import com.iconmaster.aec.block.BlockAetherContainer;
@@ -190,11 +191,11 @@ public class AetherCraft {
 		packetHandler.postInitialise();
 		
 		//AVRegistry.reloadAllValues();
-		
 	}
 
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event) {
+		InfuserRegistry.addDefaultRecipes();
 		AVRegistry.reloadAllValues(); //Just to make sure some mods last-minute registered stuff gets added
 		event.registerServerCommand(new ConfigCommand());
 	}

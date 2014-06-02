@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.config.AVConfigHandler;
 
 public class TransferConfigsPacket extends AetherCraftPacket {
@@ -66,6 +67,7 @@ public class TransferConfigsPacket extends AetherCraftPacket {
 	@Override
 	public void handleClientSide(EntityPlayer player) {	
 		AetherCraft.setOptionsMap(options);
+		InfuserRegistry.addDefaultRecipes();
 		AVRegistry.reloadClientValues(values);
 	}
 

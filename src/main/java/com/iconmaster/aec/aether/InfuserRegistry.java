@@ -2,9 +2,11 @@ package com.iconmaster.aec.aether;
 
 import java.util.HashMap;
 
-import com.iconmaster.aec.util.UidUtils;
-
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.util.UidUtils;
 
 /**
  * This class stores the reipes for the Aether Infuser. Use addRecipe to add your own Infuser recipes.
@@ -50,5 +52,11 @@ public class InfuserRegistry {
 			return 0;
 		}
 		return AVRegistry.getAV(input)*3;
+	}
+	
+	public static void addDefaultRecipes() {
+		InfuserRegistry.addRecipe(new ItemStack(Items.gold_ingot), new ItemStack(AetherCraft.itemInfused,1,0));
+		InfuserRegistry.addRecipe(new ItemStack(Items.diamond), new ItemStack(AetherCraft.itemInfused,1,1));
+		InfuserRegistry.addRecipe(new ItemStack(AetherCraft.itemInfused,1,0), new ItemStack(AetherCraft.itemInfused,1,4));
 	}
 }

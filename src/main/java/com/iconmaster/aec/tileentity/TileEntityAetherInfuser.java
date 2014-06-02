@@ -8,6 +8,10 @@ import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.InfuserRegistry;
+import com.iconmaster.aec.network.DeviceSyncPacket;
+
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherInfuser extends AetherCraftTileEntity implements ISidedInventory, IAetherStorage {
 	
@@ -93,32 +97,8 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	
 	@Override
 	public void sync() {
-		//TODO: hanle sync
-		/*
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			DataOutputStream outputStream = new DataOutputStream(bos);
-
-			try {
-				outputStream.writeByte(this.energyBlockType);
-				outputStream.writeInt(this.xCoord);
-				outputStream.writeInt(this.yCoord);
-				outputStream.writeInt(this.zCoord);
-				outputStream.writeFloat(this.energy);
-				outputStream.writeFloat(this.infused);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-			Packet250CustomPayload packet = new Packet250CustomPayload();
-			packet.channel = "Aec";
-			packet.data = bos.toByteArray();
-			packet.length = bos.size();
-			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllPlayers(packet);
-			}
-		}
-		*/
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
+			AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.infused));
 	}
 	
 	public void recieveSync(float par1energy,float infused) {

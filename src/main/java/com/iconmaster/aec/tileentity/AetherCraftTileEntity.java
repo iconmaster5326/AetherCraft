@@ -186,33 +186,8 @@ public class AetherCraftTileEntity extends TileEntity implements
 	}
 
 	public void sync() {
-		//TODO: handle sych packet
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
 			AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy));
-		/*
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			DataOutputStream outputStream = new DataOutputStream(bos);
-
-			try {
-				outputStream.writeByte(this.energyBlockType);
-				outputStream.writeInt(this.xCoord);
-				outputStream.writeInt(this.yCoord);
-				outputStream.writeInt(this.zCoord);
-				outputStream.writeFloat(this.energy);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-			Packet250CustomPayload packet = new Packet250CustomPayload();
-			packet.channel = "Aec";
-			packet.data = bos.toByteArray();
-			packet.length = bos.size();
-			if (this.worldObj != null && this.worldObj.provider != null) {
-				PacketDispatcher.sendPacketToAllPlayers(packet);
-			}
-		}
-		*/
 	}
 
 	public void recieveSync(float par1energy) {
