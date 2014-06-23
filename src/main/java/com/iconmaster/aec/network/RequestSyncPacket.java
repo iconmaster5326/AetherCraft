@@ -1,14 +1,16 @@
 package com.iconmaster.aec.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
-import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 
-public class RequestSyncPacket extends AetherCraftPacket {
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+
+public class RequestSyncPacket implements IMessage, IMessageHandler<RequestSyncPacket, IMessage> {
 	private int x,y,z = 0;
 	
 	public RequestSyncPacket() {
@@ -22,33 +24,28 @@ public class RequestSyncPacket extends AetherCraftPacket {
 	}
 
 	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		buffer.writeInt(x);
-		buffer.writeInt(y);
-		buffer.writeInt(z);
-	}
-
-	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void fromBytes(ByteBuf buffer) {
 		x = buffer.readInt();
 		y = buffer.readInt();
 		z = buffer.readInt();
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		
+	public void toBytes(ByteBuf buffer) {
+		buffer.writeInt(x);
+		buffer.writeInt(y);
+		buffer.writeInt(z);
 	}
 
 	@Override
-	public void handleServerSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] REQ SERVER "+x+" "+y+" "+z);
-		AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getTileEntity(x, y, z);
+	public IMessage onMessage(RequestSyncPacket message, MessageContext ctx) {
+		AetherCraftTileEntity te = (AetherCraftTileEntity) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(x, y, z);
 		if (te == null) {
 			//System.out.println("[AEC PACKET]SERVER ERROR: TE was null!");
-			return;
+			return null;
 		}
-		AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(x,y,z,te.getAether()));
+		AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(x,y,z,te.getAether()));
+		return null;
 	}
-
+	
 }

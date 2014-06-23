@@ -36,7 +36,7 @@ group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming
 archivesBaseName = "AetherCraft"
 
 minecraft {
-    version = "1.7.2-10.12.1.1063"
+    version = "1.7.2-10.12.1.1121"
     assetDir = "eclipse/assets"
 
 	replaceIn "com/iconmaster/aec/AetherCraft.java"

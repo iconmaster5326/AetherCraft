@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.TransferConfigsPacket;
 
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -16,6 +17,6 @@ public class PlayerLogInEvent {
 		EntityPlayer player = event.player;
 		
 		//System.out.println("[AEC TRANS] Sending packet!!");
-		AetherCraft.packetHandler.sendTo(new TransferConfigsPacket().setState(),(EntityPlayerMP)event.player);
+		AetherCraftPacketHandler.HANDLER.sendTo(new TransferConfigsPacket().setState(),(EntityPlayerMP)event.player);
 	}
 }

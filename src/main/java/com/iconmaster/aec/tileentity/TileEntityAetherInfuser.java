@@ -8,6 +8,7 @@ import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.InfuserRegistry;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -98,7 +99,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	@Override
 	public void sync() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-			AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.infused));
+			AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.infused));
 	}
 	
 	public void recieveSync(float par1energy,float infused) {

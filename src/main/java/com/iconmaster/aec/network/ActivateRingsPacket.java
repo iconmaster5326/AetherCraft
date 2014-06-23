@@ -1,38 +1,38 @@
 package com.iconmaster.aec.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.Minecraft;
 
 import com.iconmaster.aec.util.InventoryUtils;
 
-public class ActivateRingsPacket extends AetherCraftPacket {
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+
+public class ActivateRingsPacket implements IMessage, IMessageHandler<ActivateRingsPacket, IMessage> {
 	public ActivateRingsPacket() {
 		
 	}
 
 	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void fromBytes(ByteBuf buffer) {
 
 	}
 
 	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void toBytes(ByteBuf buffer) {
 
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
-		
-		InventoryUtils.activateRings(player);
+	public IMessage onMessage(ActivateRingsPacket message, MessageContext ctx) {
+		if (ctx.side==Side.CLIENT) {
+			InventoryUtils.activateRings(Minecraft.getMinecraft().thePlayer);
+		} else {
+			InventoryUtils.activateRings(ctx.getServerHandler().playerEntity);
+		}
+		return null;
 	}
-
-	@Override
-	public void handleServerSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] ACTIVATE PACKET SIDE");
-		
-		InventoryUtils.activateRings(player);
-	}
+	
 }

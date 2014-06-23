@@ -1,13 +1,16 @@
 package com.iconmaster.aec.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.Minecraft;
 
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
 import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 
-public class DeviceSyncPacket extends AetherCraftPacket {
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+
+public class DeviceSyncPacket implements IMessage, IMessageHandler<DeviceSyncPacket, IMessage> {
 	private int x,y,z = 0;
 	private float av1,av2 = 0;
 	
@@ -26,18 +29,9 @@ public class DeviceSyncPacket extends AetherCraftPacket {
 		this(x,y,z,av1);
 		this.av2 = av2;
 	}
-	
-	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		buffer.writeInt(x);
-		buffer.writeInt(y);
-		buffer.writeInt(z);
-		buffer.writeFloat(av1);
-		buffer.writeFloat(av2);
-	}
 
 	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void fromBytes(ByteBuf buffer) {
 		x = buffer.readInt();
 		y = buffer.readInt();
 		z = buffer.readInt();
@@ -46,23 +40,28 @@ public class DeviceSyncPacket extends AetherCraftPacket {
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] SYNC CLIENT "+x+" "+y+" "+z+" "+av1+" "+av2);
-		AetherCraftTileEntity te = (AetherCraftTileEntity) player.worldObj.getTileEntity(x, y, z);
+	public void toBytes(ByteBuf buffer) {
+		buffer.writeInt(x);
+		buffer.writeInt(y);
+		buffer.writeInt(z);
+		buffer.writeFloat(av1);
+		buffer.writeFloat(av2);
+	}
+
+	@Override
+	public IMessage onMessage(DeviceSyncPacket message, MessageContext ctx) {
+		System.out.println("[AEC PACKET] SYNC CLIENT "+x+" "+y+" "+z+" "+av1+" "+av2);
+		AetherCraftTileEntity te = (AetherCraftTileEntity) Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
 		if (te == null) {
-			//System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
-			return;
+			System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
+			return null;
 		}
 		if (te instanceof TileEntityAetherInfuser) {
 			((TileEntityAetherInfuser)te).recieveSync(av1,av2);
 		} else {
 			te.recieveSync(av1);
 		}
+		return null;
 	}
-
-	@Override
-	public void handleServerSide(EntityPlayer player) {
-
-	}
-
+	
 }

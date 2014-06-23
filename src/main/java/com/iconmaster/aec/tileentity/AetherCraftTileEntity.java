@@ -11,6 +11,7 @@ import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
 import com.iconmaster.aec.network.RequestSyncPacket;
 
@@ -187,7 +188,7 @@ public class AetherCraftTileEntity extends TileEntity implements
 
 	public void sync() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-			AetherCraft.packetHandler.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy));
+			AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy));
 	}
 
 	public void recieveSync(float par1energy) {
@@ -340,28 +341,8 @@ public class AetherCraftTileEntity extends TileEntity implements
 	}
 
 	public void requestSync() {
-		//TODO: handle sync here
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
-			AetherCraft.packetHandler.sendToServer(new RequestSyncPacket(this.xCoord,this.yCoord,this.zCoord));
-		/*
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bos);
-	
-		try {
-			outputStream.writeByte(this.energyBlockType);
-			outputStream.writeInt(this.xCoord);
-			outputStream.writeInt(this.yCoord);
-			outputStream.writeInt(this.zCoord);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	
-		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "AecReq";
-		packet.data = bos.toByteArray();
-		packet.length = bos.size();
-		PacketDispatcher.sendPacketToServer(packet);
-		*/
+			AetherCraftPacketHandler.HANDLER.sendToServer(new RequestSyncPacket(this.xCoord,this.yCoord,this.zCoord));
 	}
 	
 	public int getMetadata() {

@@ -1,43 +1,38 @@
 package com.iconmaster.aec.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.client.Minecraft;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.event.DisableRingInContainerEvent;
-import com.iconmaster.aec.item.IAetherRing;
-import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
-import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.util.InventoryUtils;
 
-public class DeactivateRingsPacket extends AetherCraftPacket {
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+
+public class DeactivateRingsPacket implements IMessage, IMessageHandler<DeactivateRingsPacket, IMessage> {
 	public DeactivateRingsPacket() {
 		
 	}
 
 	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void fromBytes(ByteBuf buffer) {
 
 	}
 
 	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
+	public void toBytes(ByteBuf buffer) {
 
 	}
 
 	@Override
-	public void handleClientSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
-		
-		InventoryUtils.deactivateRings(player);
+	public IMessage onMessage(DeactivateRingsPacket message, MessageContext ctx) {
+		if (ctx.side==Side.CLIENT) {
+			InventoryUtils.deactivateRings(Minecraft.getMinecraft().thePlayer);
+		} else {
+			InventoryUtils.deactivateRings(ctx.getServerHandler().playerEntity);
+		}
+		return null;
 	}
-
-	@Override
-	public void handleServerSide(EntityPlayer player) {
-		//System.out.println("[AEC PACKET] DEACTIVATE PACKET SIDE");
-		
-		InventoryUtils.deactivateRings(player);
-	}
+	
 }

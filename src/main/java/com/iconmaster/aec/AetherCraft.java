@@ -106,8 +106,6 @@ public class AetherCraft {
 
 	private static File currentAVConfig;
 	
-	public static final AetherCraftPacketHandler packetHandler = new AetherCraftPacketHandler();
-	
 	 public static CreativeTabs tabAetherCraft  = new CreativeTabs("aetherCraft") {
          public ItemStack getIconItemStack() {
                  return new ItemStack(blockAetherManipulator, 1, 0);
@@ -173,8 +171,7 @@ public class AetherCraft {
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		
-		//TODO: net handler here
-		packetHandler.initialise();
+		AetherCraftPacketHandler.init();
 		
 		proxy.registerTiles();
 		proxy.registerBlocks();
@@ -188,8 +185,6 @@ public class AetherCraft {
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
-		packetHandler.postInitialise();
-		
 		//AVRegistry.reloadAllValues();
 	}
 
