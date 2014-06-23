@@ -23,7 +23,7 @@ public class TooltipEvent {
 		List currenttip = event.toolTip;
 		GuiScreen gui = Minecraft.getMinecraft().currentScreen;
 		
-		System.out.println(gui);
+		//System.out.println(gui);
 		
 		if (gui instanceof AetherCraftGui) {
 			AetherCraftGui agui = (AetherCraftGui)gui;
