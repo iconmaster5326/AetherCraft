@@ -17,8 +17,8 @@ buildscript {
 
 apply plugin: 'forge'
 
-if (System.getenv().BUILD_NUMBER != null)
-	ext.BUILD = System.getenv().BUILD_NUMBER?.toInteger()
+if (System.getenv().BUILD_ID != null)
+	ext.BUILD = System.getenv().BUILD_ID?.toInteger()
 else
 	ext.BUILD = 0
 
