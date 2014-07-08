@@ -96,5 +96,5 @@ public class InventoryUtils {
 		}
 	}
 
-	private static HashMap<Item,Object> ringsSupressed = new HashMap<Item, Object>();
+	public static HashMap<Item,Object> ringsSupressed = new HashMap<Item, Object>();
 }

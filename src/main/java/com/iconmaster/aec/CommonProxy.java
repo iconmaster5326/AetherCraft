@@ -18,7 +18,6 @@ import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.event.PlayerLogInEvent;
-import com.iconmaster.aec.event.TooltipEvent;
 import com.iconmaster.aec.inventory.ContainerAetherCondenser;
 import com.iconmaster.aec.inventory.ContainerAetherContainer;
 import com.iconmaster.aec.inventory.ContainerAetherExtractor;
@@ -27,6 +26,10 @@ import com.iconmaster.aec.inventory.ContainerAetherManipulator;
 import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
 import com.iconmaster.aec.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.item.ItemBlockInfused;
+import com.iconmaster.aec.network.ActivateRingsPacket;
+import com.iconmaster.aec.network.ActivateRingsServerPacket;
+import com.iconmaster.aec.network.DeactivateRingsPacket;
+import com.iconmaster.aec.network.DeactivateRingsServerPacket;
 import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
@@ -249,5 +252,13 @@ public class CommonProxy implements IGuiHandler {
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 		FMLCommonHandler.instance().bus().register(new PlayerLogInEvent());
 		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
+	}
+	
+	public ActivateRingsPacket getActivatePacket() {
+		return new ActivateRingsServerPacket();
+	}
+	
+	public DeactivateRingsPacket getDeactivatePacket() {
+		return new DeactivateRingsServerPacket();
 	}
 }

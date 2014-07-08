@@ -9,6 +9,10 @@ import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.event.TooltipEvent;
+import com.iconmaster.aec.network.ActivateRingsClientPacket;
+import com.iconmaster.aec.network.ActivateRingsPacket;
+import com.iconmaster.aec.network.DeactivateRingsClientPacket;
+import com.iconmaster.aec.network.DeactivateRingsPacket;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
@@ -39,5 +43,15 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
 		MinecraftForge.EVENT_BUS.register(new TooltipEvent());
+	}
+	
+	@Override
+	public ActivateRingsPacket getActivatePacket() {
+		return new ActivateRingsClientPacket();
+	}
+	
+	@Override
+	public DeactivateRingsPacket getDeactivatePacket() {
+		return new DeactivateRingsClientPacket();
 	}
 }

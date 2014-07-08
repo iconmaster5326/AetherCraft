@@ -59,7 +59,7 @@ public class DeviceSyncPacket implements IMessage, IMessageHandler<DeviceSyncPac
 		if (te instanceof TileEntityAetherInfuser) {
 			((TileEntityAetherInfuser)te).recieveSync(message.av1,message.av2);
 		} else {
-			te.recieveSync(av1);
+			te.recieveSync(message.av1);
 		}
 		return null;
 	}
