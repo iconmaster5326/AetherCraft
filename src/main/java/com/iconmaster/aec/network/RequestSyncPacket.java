@@ -39,12 +39,12 @@ public class RequestSyncPacket implements IMessage, IMessageHandler<RequestSyncP
 
 	@Override
 	public IMessage onMessage(RequestSyncPacket message, MessageContext ctx) {
-		AetherCraftTileEntity te = (AetherCraftTileEntity) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(x, y, z);
+		AetherCraftTileEntity te = (AetherCraftTileEntity) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 		if (te == null) {
 			//System.out.println("[AEC PACKET]SERVER ERROR: TE was null!");
 			return null;
 		}
-		AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(x,y,z,te.getAether()));
+		AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(message.x,message.y,message.z,te.getAether()));
 		return null;
 	}
 	

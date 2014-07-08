@@ -111,9 +111,9 @@ public class TransferConfigsPacket implements IMessage, IMessageHandler<Transfer
 
 	@Override
 	public IMessage onMessage(TransferConfigsPacket message, MessageContext ctx) {
-		AetherCraft.setOptionsMap(options);
+		AetherCraft.setOptionsMap(message.options);
 		InfuserRegistry.addDefaultRecipes();
-		AVRegistry.reloadClientValues(values);
+		AVRegistry.reloadClientValues(message.values);
 		return null;
 	}
 	

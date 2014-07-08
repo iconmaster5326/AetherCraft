@@ -50,14 +50,14 @@ public class DeviceSyncPacket implements IMessage, IMessageHandler<DeviceSyncPac
 
 	@Override
 	public IMessage onMessage(DeviceSyncPacket message, MessageContext ctx) {
-		System.out.println("[AEC PACKET] SYNC CLIENT "+x+" "+y+" "+z+" "+av1+" "+av2);
-		AetherCraftTileEntity te = (AetherCraftTileEntity) Minecraft.getMinecraft().theWorld.getTileEntity(x, y, z);
+		//System.out.println("[AEC PACKET] SYNC CLIENT "+message.x+" "+message.y+" "+message.z+" "+message.av1+" "+message.av2);
+		AetherCraftTileEntity te = (AetherCraftTileEntity) Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (te == null) {
-			System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
+			//System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");
 			return null;
 		}
 		if (te instanceof TileEntityAetherInfuser) {
-			((TileEntityAetherInfuser)te).recieveSync(av1,av2);
+			((TileEntityAetherInfuser)te).recieveSync(message.av1,message.av2);
 		} else {
 			te.recieveSync(av1);
 		}
