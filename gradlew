@@ -156,7 +156,7 @@ fi
 
 # Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
 splitJvmOpts() {
-    JVM_OPTS=("$@")
+    JVM_OPTS="$@"
 }
 eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $GRADLE_OPTS
 JVM_OPTS[${#JVM_OPTS[*]}]="-Dorg.gradle.appname=$APP_BASE_NAME"
