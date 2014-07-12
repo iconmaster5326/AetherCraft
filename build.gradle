@@ -44,7 +44,7 @@ minecraft {
     replace "@MC_VERSION@", project.minecraft.version
     replace "@VERSION@", project.version
     replaceIn "AetherCraft.java"
-    //replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
+    replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
 }
 
 processResources
