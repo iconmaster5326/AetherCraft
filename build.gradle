@@ -51,7 +51,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.config.minecraft_version
+        expand 'mod_version':project.version, 'minecraft_version':project.config.minecraft_version
     }
 
     // copy everything else, thats not the mcmod.info
