@@ -28,9 +28,9 @@ def libs = new File('./libs')
 if (!libs.exists()) {
 	libs.mkdirs()
 }
-def f = new File('./libs/industrialcraft-2-2.2.508-experimental-api.jar')
+def f = new File('./libs/industrialcraft-2-2.2.509-experimental-api.jar')
 if (!f.exists()) {
-    new URL('http://ic2api.player.to:8080/job/IC2_experimental/lastSuccessfulBuild/artifact/build/libs/industrialcraft-2-2.2.508-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
+    new URL('http://ic2api.player.to:8080/job/IC2_experimental/lastSuccessfulBuild/artifact/build/libs/industrialcraft-2-2.2.509-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
 }
 
 version = "1.7.10-1.4.2.${BUILD}"
