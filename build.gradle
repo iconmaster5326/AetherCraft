@@ -24,14 +24,14 @@ if (System.getenv().BUILD_NUMBER != null)
 else
 	ext.BUILD = 0
 
-def libs = new File('./libs')
-if (!libs.exists()) {
-	libs.mkdirs()
-}
-def f = new File('./libs/industrialcraft-2-2.2.509-experimental-api.jar')
-if (!f.exists()) {
-    new URL('http://ic2api.player.to:8080/job/IC2_experimental/lastSuccessfulBuild/artifact/build/libs/industrialcraft-2-2.2.509-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
-}
+//def libs = new File('./libs')
+//if (!libs.exists()) {
+//	libs.mkdirs()
+//}
+//def f = new File('./libs/industrialcraft-2-2.2.509-experimental-api.jar')
+//if (!f.exists()) {
+//    new URL('http://ic2api.player.to:8080/job/IC2_experimental/509/artifact/build/libs/industrialcraft-2-2.2.509-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
+//}
 
 version = "1.7.10-1.4.2.${BUILD}"
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -41,10 +41,11 @@ minecraft {
     version = "1.7.10-10.13.0.1180"
     //assetDir = "eclipse/assets"
 
+    replaceIn "AetherCraft.java"
+    replaceIn "com/iconmaster/aec/AetherCraft.java"
+    replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
     replace "@MC_VERSION@", project.minecraft.version
     replace "@VERSION@", project.version
-    replaceIn "AetherCraft.java"
-    replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
 }
 
 processResources
@@ -77,10 +78,15 @@ repositories {
 		name = "chickenbones"
 		url = "http://chickenbones.net/maven/"
 	}
+	maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to"
+    }
 }
 
 dependencies {
 	compile "mcp.mobius.waila:Waila:1.5.2a"
     //compile "codechicken:CodeChickenLib:1.7.10-1.1.1.93:dev"
     //compile "codechicken:CodeChickenCore:1.7.10-1.0.2.11:dev"
+    compile "net.industrial-craft:industrialcraft-2:2.2.509-experimental:api"
 }
