@@ -19,34 +19,26 @@ buildscript {
 
 apply plugin: 'forge'
 
-if (System.getenv().BUILD_NUMBER != null)
-	ext.BUILD = System.getenv().BUILD_NUMBER?.toInteger()
-else
-	ext.BUILD = 0
+ext.configFile = file "build.properties"
 
-//def libs = new File('./libs')
-//if (!libs.exists()) {
-//	libs.mkdirs()
-//}
-//def f = new File('./libs/industrialcraft-2-2.2.509-experimental-api.jar')
-//if (!f.exists()) {
-//    new URL('http://ic2api.player.to:8080/job/IC2_experimental/509/artifact/build/libs/industrialcraft-2-2.2.509-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
-//}
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
 
-version = "1.7.10-1.4.2.${BUILD}"
+version = config.mod_version
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AetherCraft"
 
 minecraft {
-    version = "1.7.10-10.13.0.1180"
-    //assetDir = "eclipse/assets"
+    version = config.minecraft_version + "-" + config.forge_version
 
     replaceIn "AetherCraft.java"
-    replaceIn "com/iconmaster/aec/AetherCraft.java"
-    replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
-    replace "@MC_VERSION@", project.minecraft.version
-    replace "@VERSION@", project.version
+    replace "@VERSION@", "${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
 }
+
+version = "${config.minecraft_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
 
 processResources
 {
@@ -59,7 +51,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version':project.version, 'mcversion':project.config.minecraft_version
     }
 
     // copy everything else, thats not the mcmod.info
