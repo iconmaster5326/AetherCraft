@@ -39,6 +39,7 @@ minecraft {
     version = "1.7.10-10.13.0.1180"
     //assetDir = "eclipse/assets"
 
+	replaceIn "com/iconmaster/aec/AetherCraft.java"
     replace "@MC_VERSION@", project.minecraft.version
     replace "@VERSION@", project.version
 	replaceIn "AetherCraft.java"
