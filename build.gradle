@@ -41,10 +41,10 @@ minecraft {
     version = "1.7.10-10.13.0.1180"
     //assetDir = "eclipse/assets"
 
-	replaceIn "src/main/java/com/iconmaster/aec/AetherCraft.java"
+    replaceIn "AetherCraft.java"
+    replaceIn "build/sources/java/com/iconmaster/aec/AetherCraft.java"
     replace "@MC_VERSION@", project.minecraft.version
     replace "@VERSION@", project.version
-	replaceIn "AetherCraft.java"
 }
 
 processResources
