@@ -27,7 +27,20 @@ configFile.withReader {
     project.ext.config = new ConfigSlurper().parse prop
 }
 
-version = config.mod_version
+ext.env = System.getenv()
+
+// Drone.io Support
+if(env.DRONE_BUILD_NUMBER)
+ext.buildNumber = env.DRONE_BUILD_NUMBER
+
+// Jenkins Support
+else if (env.BUILD_NUMBER)
+ext.buildNumber = env.BUILD_NUMBER
+
+else
+ext.buildNumber = config.build_number
+
+version = "${config.minecraft_version}-${config.mod_version}.${buildNumber ?: 0}"
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AetherCraft"
 
@@ -35,10 +48,8 @@ minecraft {
     version = config.minecraft_version + "-" + config.forge_version
 
     replaceIn "AetherCraft.java"
-    replace "@VERSION@", "${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
+    replace "@VERSION@", "${config.mod_version}.${buildNumber ?: 0}"
 }
-
-version = "${config.minecraft_version}-${config.mod_version}.${System.getenv("BUILD_NUMBER") ?: 0}"
 
 processResources
 {
