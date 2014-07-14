@@ -25,7 +25,7 @@ public class DeactivateRingsPacket implements IMessage, IMessageHandler<Deactiva
 
 	@Override
 	public IMessage onMessage(DeactivateRingsPacket message, MessageContext ctx) {
-		AetherCraft.proxy.getDeactivatePacket().onMessage(message, ctx);
+		AetherCraft.proxy.deactivateRings(ctx);
 		return null;
 	}
 	

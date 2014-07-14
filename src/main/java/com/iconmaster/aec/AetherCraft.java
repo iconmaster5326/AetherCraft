@@ -49,10 +49,6 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION)
-//TODO: add packet handler init here
-//@NetworkMod(clientSideRequired = true, serverSideRequired = false, clientPacketHandlerSpec = @SidedPacketHandler(channels = {
-//		"Aec", "AecReq", "AecTrans" }, packetHandler = ClientPacketHandler.class), serverPacketHandlerSpec = @SidedPacketHandler(channels = {
-//		"Aec", "AecReq", "AecTrans" }, packetHandler = ServerPacketHandler.class))
 public class AetherCraft {
 	
     public static final String MODID = "AetherCraft";

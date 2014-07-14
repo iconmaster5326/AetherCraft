@@ -1,5 +1,6 @@
 package com.iconmaster.aec.client;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.iconmaster.aec.AetherCraft;
@@ -9,12 +10,12 @@ import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
 import com.iconmaster.aec.event.TooltipEvent;
-import com.iconmaster.aec.network.ActivateRingsClientPacket;
-import com.iconmaster.aec.network.ActivateRingsPacket;
-import com.iconmaster.aec.network.DeactivateRingsClientPacket;
-import com.iconmaster.aec.network.DeactivateRingsPacket;
+import com.iconmaster.aec.util.InventoryUtils;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	public static int renderPass;
@@ -45,13 +46,15 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new TooltipEvent());
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
-	public ActivateRingsPacket getActivatePacket() {
-		return new ActivateRingsClientPacket();
+	public void activateRings(Object ctx) {
+		InventoryUtils.activateRings(Minecraft.getMinecraft().thePlayer);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@Override
-	public DeactivateRingsPacket getDeactivatePacket() {
-		return new DeactivateRingsClientPacket();
+	public void deactivateRings(Object ctx) {
+		InventoryUtils.deactivateRings(Minecraft.getMinecraft().thePlayer);
 	}
 }

@@ -1,5 +1,6 @@
 package com.iconmaster.aec;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,21 +27,21 @@ import com.iconmaster.aec.inventory.ContainerAetherManipulator;
 import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
 import com.iconmaster.aec.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.item.ItemBlockInfused;
-import com.iconmaster.aec.network.ActivateRingsPacket;
-import com.iconmaster.aec.network.ActivateRingsServerPacket;
-import com.iconmaster.aec.network.DeactivateRingsPacket;
-import com.iconmaster.aec.network.DeactivateRingsServerPacket;
 import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
+import com.iconmaster.aec.util.InventoryUtils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class CommonProxy implements IGuiHandler {
 	public void registerRenderInformation() {
@@ -254,11 +255,13 @@ public class CommonProxy implements IGuiHandler {
 		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
 	}
 	
-	public ActivateRingsPacket getActivatePacket() {
-		return new ActivateRingsServerPacket();
+	//@SideOnly(Side.SERVER)
+	public void activateRings(Object ctx) {
+		InventoryUtils.activateRings(((MessageContext)ctx).getServerHandler().playerEntity);
 	}
 	
-	public DeactivateRingsPacket getDeactivatePacket() {
-		return new DeactivateRingsServerPacket();
+	//@SideOnly(Side.SERVER)
+	public void deactivateRings(Object ctx) {
+		InventoryUtils.deactivateRings(((MessageContext)ctx).getServerHandler().playerEntity);
 	}
 }

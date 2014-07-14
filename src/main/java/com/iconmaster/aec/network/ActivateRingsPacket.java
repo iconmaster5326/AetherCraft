@@ -28,7 +28,7 @@ public class ActivateRingsPacket implements IMessage, IMessageHandler<ActivateRi
 
 	@Override
 	public IMessage onMessage(ActivateRingsPacket message, MessageContext ctx) {
-		AetherCraft.proxy.getActivatePacket().onMessage(message, ctx);
+		AetherCraft.proxy.activateRings(ctx);
 		return null;
 	}
 	
