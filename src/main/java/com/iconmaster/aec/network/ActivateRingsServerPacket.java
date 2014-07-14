@@ -19,7 +19,7 @@ public class ActivateRingsServerPacket extends ActivateRingsPacket {
 			ItemStack stack = player.inventory.getStackInSlot(i);
 			if (stack != null && stack.getItem() instanceof IAetherRing) {
 				if (InventoryUtils.ringsSupressed.get(stack.getItem())!=null) {
-					System.out.println("Sending packet for slot "+i);
+					//System.out.println("Sending packet for slot "+i);
 					AetherCraftPacketHandler.HANDLER.sendTo(new ActivateSpecificRingPacket(i), player);
 				}
 			}

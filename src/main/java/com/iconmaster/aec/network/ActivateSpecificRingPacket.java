@@ -37,12 +37,12 @@ public class ActivateSpecificRingPacket implements IMessage, IMessageHandler<Act
 	@Override
 	@SideOnly(Side.CLIENT)
 	public IMessage onMessage(ActivateSpecificRingPacket message, MessageContext ctx) {
-		System.out.println("Activating ring in slot "+message.slot);
+		//System.out.println("Activating ring in slot "+message.slot);
 		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
 
 		ItemStack stack = player.inventory.getStackInSlot(message.slot);
 		if (stack != null && stack.getItem() instanceof IAetherRing) {
-			System.out.println("Found it");
+			//System.out.println("Found it");
 			((IAetherRing)stack.getItem()).activateRing(stack, player);
 		}
 		
