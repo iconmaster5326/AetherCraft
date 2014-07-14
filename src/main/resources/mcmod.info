@@ -3,7 +3,8 @@
   "modid": "AetherCraft",
   "name": "AetherCraft",
   "description": "A fork of Graknol's Aether Manipulator mod. Turn matter into other kinds of matter today!",
-  "version": "@VERSION@",
+  "version": "${mod_version}",
+  "mcversion": "${minecraft_version}",
   "url": "https://github.com/iconmaster5326/AetherCraft",
   "updateUrl": "",
   "authorList": [

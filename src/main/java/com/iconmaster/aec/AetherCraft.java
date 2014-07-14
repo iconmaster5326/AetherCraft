@@ -56,6 +56,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 public class AetherCraft {
 	
     public static final String MODID = "AetherCraft";
+
     //public static final String VERSION = "test"; //for testing server/client connections
     public static final String VERSION = "@VERSION@";
 
