@@ -1,3 +1,5 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
     repositories {
         mavenCentral()
@@ -17,30 +19,36 @@ buildscript {
 
 apply plugin: 'forge'
 
-if (System.getenv().BUILD_ID != null)
-	ext.BUILD = System.getenv().BUILD_ID?.toInteger()
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+ext.env = System.getenv()
+
+// Drone.io Support
+if(env.DRONE_BUILD_NUMBER)
+ext.buildNumber = env.DRONE_BUILD_NUMBER
+
+// Jenkins Support
+else if (env.BUILD_NUMBER)
+ext.buildNumber = env.BUILD_NUMBER
+
 else
-	ext.BUILD = 0
+ext.buildNumber = config.build_number
 
-def libs = new File('./libs')
-if (!libs.exists()) {
-	libs.mkdirs()
-}
-def f = new File('./libs/industrialcraft-2-2.1.476-experimental-api.jar')
-if (!f.exists()) {
-    new URL('http://ic2api.player.to:8080/job/IC2_experimental/476/artifact/build/libs/industrialcraft-2-2.1.476-experimental-api.jar').withInputStream{ i -> f.withOutputStream{ it << i }}
-}
-
-version = "1.7.2-1.4.2.${BUILD}"
+version = "${config.minecraft_version}-${config.mod_version}.${buildNumber ?: 0}"
 group = "com.iconmaster.aec" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "AetherCraft"
 
 minecraft {
-    version = "1.7.2-10.12.2.1147"
-    assetDir = "eclipse/assets"
+    version = config.minecraft_version + "-" + config.forge_version
 
-	replaceIn "com/iconmaster/aec/AetherCraft.java"
-    replace "@VERSION@", project.version
+    replaceIn "AetherCraft.java"
+    replace "@VERSION@", "${config.mod_version}.${buildNumber ?: 0}"
 }
 
 processResources
@@ -54,7 +62,7 @@ processResources
         include 'mcmod.info'
 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'mod_version':project.version, 'minecraft_version':project.config.minecraft_version
     }
 
     // copy everything else, thats not the mcmod.info
@@ -73,9 +81,15 @@ repositories {
 		name = "chickenbones"
 		url = "http://chickenbones.net/maven/"
 	}
+	maven {
+        name = "ic2"
+        url = "http://maven.ic2.player.to"
+    }
 }
+
 dependencies {
 	compile "mcp.mobius.waila:Waila:1.5.2a"
-	//compile "codechicken.core:CodeChickenCore:1.7.2-1.0.0-dev"
-	//compile "codechicken.nei:NotEnoughItems:1.7.2-1.0.1-dev"
+    //compile "codechicken:CodeChickenLib:1.7.10-1.1.1.93:dev"
+    //compile "codechicken:CodeChickenCore:1.7.10-1.0.2.11:dev"
+    compile "net.industrial-craft:industrialcraft-2:2.2.509-experimental:api"
 }
