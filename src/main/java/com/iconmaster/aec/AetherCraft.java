@@ -24,6 +24,7 @@ import com.iconmaster.aec.block.BlockAetherReconstructor;
 import com.iconmaster.aec.block.BlockInfused;
 import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.command.ConfigCommand;
+import com.iconmaster.aec.item.ItemAetherArmor;
 import com.iconmaster.aec.item.ItemAetherAxe;
 import com.iconmaster.aec.item.ItemAetherBattery;
 import com.iconmaster.aec.item.ItemAetherHammer;
@@ -91,6 +92,10 @@ public class AetherCraft {
 	public static Item aetherSword;
 	public static Item aetherHammer;
 	public static Item aetherShears;
+	public static Item aetherHelmet;
+	public static Item aetherChestplate;
+	public static Item aetherLeggings;
+	public static Item aetherBoots;
 
 	//static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	//private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -160,8 +165,14 @@ public class AetherCraft {
 		aetherSword = new ItemAetherSword();
 		aetherHammer = new ItemAetherHammer();
 		aetherShears = new ItemAetherShears();
-
-		// Rings
+		
+		//Armor
+		aetherHelmet = new ItemAetherArmor(0);
+		aetherChestplate = new ItemAetherArmor(1);
+		aetherLeggings= new ItemAetherArmor(2);
+		aetherBoots = new ItemAetherArmor(3);
+		
+		//Rings
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			itemFlyingRing = new ItemFlyingRing();
 		}
@@ -265,6 +276,10 @@ public class AetherCraft {
 		options.put("excesspull", Float.toString((float)forgeConfig.get("options",
 				"excesspull", 16F,
 				"The multiple of which machines try to pull AV from. EX: A value of 16 means machines pull in 16x the needed AV when they need to.").getDouble(16)));
+
+		options.put("armorcost", Float.toString((float)forgeConfig.get("options",
+				"armorcost", 128F,
+				"The amount of AV Aether Armor draws to prevent 1/2 heart of damage.").getDouble(128)));
 
 		// BOOLEAN
 		options.put(

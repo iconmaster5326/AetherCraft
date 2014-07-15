@@ -1,6 +1,5 @@
 package com.iconmaster.aec;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -15,6 +14,7 @@ import com.iconmaster.aec.client.gui.GuiAetherExtractor;
 import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
+import com.iconmaster.aec.event.AetherArmorDamageEvent;
 import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
 import com.iconmaster.aec.event.FallDamageEvent;
@@ -40,8 +40,6 @@ import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class CommonProxy implements IGuiHandler {
 	public void registerRenderInformation() {
@@ -87,6 +85,11 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.aetherSword,"aetherSword");
 		GameRegistry.registerItem(AetherCraft.aetherHammer,"aetherHammer");
 		GameRegistry.registerItem(AetherCraft.aetherShears,"aetherShears");
+		
+		GameRegistry.registerItem(AetherCraft.aetherHelmet,"aetherHelmet");
+		GameRegistry.registerItem(AetherCraft.aetherChestplate,"aetherChestplate");
+		GameRegistry.registerItem(AetherCraft.aetherLeggings,"aetherLeggings");
+		GameRegistry.registerItem(AetherCraft.aetherBoots,"aetherBoots");
 	}
 
 	public void addNames() {
@@ -133,6 +136,11 @@ public class CommonProxy implements IGuiHandler {
 		LanguageRegistry.addName(AetherCraft.aetherSword,"Aether Sword");
 		LanguageRegistry.addName(AetherCraft.aetherHammer,"Aether Hammer");
 		LanguageRegistry.addName(AetherCraft.aetherShears,"Aether Shears");
+		
+		LanguageRegistry.addName(AetherCraft.aetherHelmet,"Aether Helmet");
+		LanguageRegistry.addName(AetherCraft.aetherChestplate,"Aether Chestplate");
+		LanguageRegistry.addName(AetherCraft.aetherLeggings,"Aether Leggings");
+		LanguageRegistry.addName(AetherCraft.aetherBoots,"Aether Boots");
 		
 		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
 			LanguageRegistry.addName(AetherCraft.itemFlyingRing,"Ring of Flight");
@@ -253,6 +261,7 @@ public class CommonProxy implements IGuiHandler {
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());
 		FMLCommonHandler.instance().bus().register(new PlayerLogInEvent());
 		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
+		MinecraftForge.EVENT_BUS.register(new AetherArmorDamageEvent());
 	}
 	
 	//@SideOnly(Side.SERVER)
