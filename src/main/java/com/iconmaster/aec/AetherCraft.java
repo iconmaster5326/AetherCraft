@@ -261,6 +261,10 @@ public class AetherCraft {
 		options.put("avlimit", Float.toString((float)forgeConfig.get("options",
 				"avlimit", 8192F,
 				"The transmutation limit for Tier 1 machines. Multiplies by 4 for each tier.").getDouble(8192)));
+		
+		options.put("excesspull", Float.toString((float)forgeConfig.get("options",
+				"excesspull", 16F,
+				"The multiple of which machines try to pull AV from. EX: A value of 16 means machines pull in 16x the needed AV when they need to.").getDouble(16)));
 
 		// BOOLEAN
 		options.put(

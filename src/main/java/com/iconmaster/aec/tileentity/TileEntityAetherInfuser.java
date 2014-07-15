@@ -52,11 +52,24 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 			} else {
 				//drain some AV
 				float rate = (float) (8*Math.pow(2,getMetadata()*2));
-				float  got = Math.min(this.energy,rate);
-				energy -= got;
-				got += AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, rate-got);
-				infused += got;
-				if (got > 0) {
+				
+				boolean failure = false;
+				if (energy<rate) {
+					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(this.max,rate*Float.parseFloat(AetherCraft.getOptions("excesspull"))));
+					energy+=got;
+					float amt = Math.min(energy,rate);
+					if (amt==0) {
+						failure = true;
+					} else {
+						energy-=amt;
+						infused+=amt;
+					}
+				} else {
+					energy-=rate;
+					infused+=rate;
+				}
+				
+				if (!failure) {
 					sync();
 				}
 			}

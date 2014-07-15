@@ -26,8 +26,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 	@Override
 	public void handleAether() {
 		calcMax();
-		float chargeRate = (float) (Float.parseFloat(AetherCraft
-				.getOptions("chargerate"))*Math.pow(2,getMetadata()*2));
+		float chargeRate = (float) (Float.parseFloat(AetherCraft.getOptions("chargerate"))*Math.pow(2,getMetadata()*2));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack bottomStack = this.getStackInSlot(1);
@@ -51,12 +50,14 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, Math.min(this.energy,chargeRate));
 			float drawn = Math.min(this.energy,chargeRate);
 			if (chargeRate > this.energy ) {
-				float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, chargeRate-energy);
+				float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(chargeRate*Float.parseFloat(AetherCraft.getOptions("excesspull"))-this.energy,this.max-chargeRate));
 				this.energy = got;
 			} else {
 				this.energy -= drawn-rest;
 			}
-			this.sync();
+			if (drawn-rest>0) {
+				this.sync();
+			}
 		}
 	}
 
