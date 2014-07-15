@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -36,15 +37,15 @@ public class ItemAetherHammer extends ItemPickaxe {
         this.setUnlocalizedName("aec.aetherHammer");
         this.setCreativeTab(AetherCraft.tabAetherCraft);
         
-        // Add additional effectiveness ratings
-        for (Block block : pickGoodOn) {
-        	block.setHarvestLevel("aecHammer", 0);
-        }
-        for (Block block : shovelGoodOn) {
-        	block.setHarvestLevel("aecHammer", 0);
-        }
-        
-        this.setHarvestLevel("aecHammer", 3);
+//        // Add additional effectiveness ratings
+//        for (Block block : pickGoodOn) {
+//        	block.setHarvestLevel("aecHammer", 0);
+//        }
+//        for (Block block : shovelGoodOn) {
+//        	block.setHarvestLevel("aecHammer", 0);
+//        }
+//        
+//        this.setHarvestLevel("aecHammer", 3);
 	}
 	
 	@Override
@@ -171,15 +172,13 @@ public class ItemAetherHammer extends ItemPickaxe {
 			for (int y=miny;y<=maxy;y++) {
 				for (int z=minz;z<=maxz;z++) {
 					Block subject = player.worldObj.getBlock(x, y, z);
-					if (!(x==xCoord && y==yCoord && z==zCoord) && subject != null && ForgeHooks.isToolEffective(stack, subject, player.worldObj.getBlockMetadata(x, y, z))) {
+					int meta =  player.worldObj.getBlockMetadata(x, y, z);
+					if (!(x==xCoord && y==yCoord && z==zCoord) && subject != null && canHammerBreak(subject,meta)) {
 						//harvest the block
 						
-						
-                        //subject.harvestBlock(player.worldObj, player, x, y, z, player.worldObj.getBlockMetadata(x, y, z));
-                        //subject.onBlockHarvested(player.worldObj, x, y, z, player.worldObj.getBlockMetadata(x, y, z), player);
-                        
-						//TODO: This probs does not work at all
-                        player.worldObj.destroyBlockInWorldPartially(x, y, z, 1 , 1);
+						subject.harvestBlock(player.worldObj, player, x, y, z, meta);
+						subject.onBlockHarvested(player.worldObj, x, y, z, meta, player);
+						subject.removedByPlayer(player.worldObj, player, x, y, z, true);
 					}
 				}
 			}
@@ -213,4 +212,8 @@ public class ItemAetherHammer extends ItemPickaxe {
 		if (par3 == null) {return true;}
 		return super.onBlockDestroyed(par1ItemStack, par2World, par3, par4, par5, par6, par7EntityLivingBase);
 	 }
+	
+	public boolean canHammerBreak(Block block, int meta) {
+		return ForgeHooks.canToolHarvestBlock(block, meta, new ItemStack(Items.diamond_pickaxe)) || ForgeHooks.canToolHarvestBlock(block, meta, new ItemStack(Items.diamond_shovel));
+	}
 }
