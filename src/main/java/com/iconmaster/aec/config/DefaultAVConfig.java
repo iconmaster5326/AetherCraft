@@ -17,7 +17,7 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("minecraft:gravel",8.0F);
 		addValue("minecraft:beef",64.0F);
 		addValue("minecraft:hopper_minecart",2592.0F);
-		addValue("minecraft:blaze_rod",320.0F);
+		addValue("minecraft:blaze_rod",420.0F);
 		addValue("minecraft:stone_axe",7.0F);
 		addValue("minecraft:melon_block",576.0F);
 		addValue("minecraft:mossy_cobblestone",16.0F);
