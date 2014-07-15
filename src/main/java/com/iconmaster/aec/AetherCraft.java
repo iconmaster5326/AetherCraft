@@ -48,7 +48,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
-@Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION)
+@Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.client.gui.ConfigGui")
 public class AetherCraft {
 	
     public static final String MODID = "AetherCraft";
@@ -286,26 +286,6 @@ public class AetherCraft {
 				Boolean.toString(forgeConfig.get("options", "showavalways",
 						false, "If true, the AV of objects will be shown even if the user is not holding shift.").getBoolean(false)));
 
-//		// ------------------- REGISTER BLOCK/ITEM IDs -------------------
-//		blockIds.add(forgeConfig.getBlock("aethermanipulator", 2690).getInt());
-//		blockIds.add(forgeConfig.getBlock("aethercontainer", 2691).getInt());
-//		blockIds.add(forgeConfig.getBlock("aetherconduit", 2692).getInt());
-//		blockIds.add(forgeConfig.getBlock("aetherextractor", 2693).getInt());
-//		blockIds.add(forgeConfig.getBlock("aethercondenser", 2694).getInt());
-//		blockIds.add(forgeConfig.getBlock("aetherinfuser", 2695).getInt());
-//		blockIds.add(forgeConfig.getBlock("infusedblock", 2696).getInt());
-//		blockIds.add(forgeConfig.getBlock("aetherreconstructor", 2697).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherbattery", 2700).getInt());
-//		itemIds.add(forgeConfig.getItem("flyingring", 2701).getInt());
-//		itemIds.add(forgeConfig.getItem("infuseditem", 2702).getInt());
-//		itemIds.add(forgeConfig.getItem("dummy", 2703).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherPickaxe", 2704).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherAxe", 2705).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherShovel", 2706).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherSword", 2707).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherHammer", 2708).getInt());
-//		itemIds.add(forgeConfig.getItem("aetherShears", 2709).getInt());
-//		itemIds.add(forgeConfig.getItem("repairRing", 2710).getInt());
 		forgeConfig.save();
 	}
 
