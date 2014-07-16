@@ -20,7 +20,7 @@ public class AetherArmorDamageEvent {
 			
 			for (int i=1;i<=4;i++) {
 				if (player.getEquipmentInSlot(i)!= null && player.getEquipmentInSlot(i).getItem() instanceof ItemAetherArmor) {
-					reduced += Math.min(event.ammount-reduced, .5F);
+					reduced += Math.min(event.ammount-reduced, .25F);
 				}
 			}
 			
