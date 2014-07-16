@@ -2,6 +2,8 @@ package com.iconmaster.aec.event;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
@@ -18,5 +20,6 @@ public class PlayerLogInEvent {
 		
 		//System.out.println("[AEC TRANS] Sending packet!!");
 		AetherCraftPacketHandler.HANDLER.sendTo(new TransferConfigsPacket().setState(),(EntityPlayerMP)event.player);
+		
 	}
 }

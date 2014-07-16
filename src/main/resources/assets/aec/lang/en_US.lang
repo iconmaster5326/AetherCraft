@@ -2,3 +2,7 @@ item.aec.aetherArmor.0.name=Aether Helmet
 item.aec.aetherArmor.1.name=Aether Chestplate
 item.aec.aetherArmor.2.name=Aether Leggings
 item.aec.aetherArmor.3.name=Aether Boots
+
+item.aec.regnerationRing.name=Ring of Regneration
+
+aec.potion.regneration=Regneration

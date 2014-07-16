@@ -17,15 +17,15 @@ import com.iconmaster.aec.util.InventoryUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemRepairRing extends Item implements IAetherRing {
+public class ItemRegnerationRing extends Item implements IAetherRing {
 	
 	private IIcon activeIcon;
 	private int update = 0;
 	private boolean suppressed = false;
 	
-	public ItemRepairRing() {
+	public ItemRegnerationRing() {
 		super();
-		this.setUnlocalizedName("aec.repairRing");
+		this.setUnlocalizedName("aec.regnerationRing");
 		this.setMaxStackSize(1);
 		 this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
@@ -33,35 +33,27 @@ public class ItemRepairRing extends Item implements IAetherRing {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister) {
-		this.itemIcon = iconRegister.registerIcon("aec:itemRepairRing");
-		this.activeIcon = iconRegister.registerIcon("aec:itemRepairRingActive");
+		this.itemIcon = iconRegister.registerIcon("aec:itemRegnerationRing");
+		this.activeIcon = iconRegister.registerIcon("aec:itemRegnerationRingActive");
 	}
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack stack, EntityPlayer player) {
-		//System.out.println("RING WAS DROPPED LOCALLY");
 		deactivateRing(stack,player);
 		return super.onDroppedByPlayer(stack, player);
 	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot,boolean held) {
-		update++;
-		if (update%16!=0) {
-			return;
-		} //Only proc occasionally
-		if (!(entity instanceof EntityPlayer) || stack.getItemDamage()==0) {
-			return;
-		}
-		if (entity instanceof EntityPlayer && (!((EntityPlayer)entity).inventory.hasItem(this))) {
-			deactivateRing(stack,(EntityPlayer)entity);
-			return;
-		}
-		InventoryPlayer inv = ((EntityPlayer)entity).inventory;
-		for (int i=0;i<inv.getSizeInventory();i++) {
-			ItemStack tool = inv.getStackInSlot(i);
-			if (repairItem(stack,entity,inv,tool)) {
-				return;
+		if (!(entity instanceof EntityPlayer)) {return;}
+		EntityPlayer player = (EntityPlayer) entity;
+		if (stack.getItemDamage()==1) {
+			float av = Float.parseFloat(AetherCraft.getOptions("flycostpersecond"))/20;
+			float got = InventoryUtils.drainAVFromInventory(player.inventory, av);
+			if (got<av) {
+				this.deactivateRing(stack, player);
+			} else if (player.getActivePotionEffect(AetherCraft.regnerationPotion) == null) {
+				player.addPotionEffect(new PotionEffect(AetherCraft.regnerationPotionId, 50, 1));
 			}
 		}
 	}
@@ -85,30 +77,11 @@ public class ItemRepairRing extends Item implements IAetherRing {
 	@Override
 	public void activateRing(ItemStack stack,EntityPlayer player) {
 		stack.setItemDamage(1);
-
 	}
 	
 	@Override
 	public void deactivateRing(ItemStack stack,EntityPlayer player) {
 		stack.setItemDamage(0);
-
-		
-	}
-	
-	public boolean repairItem(ItemStack stack,Entity entity,InventoryPlayer inv,ItemStack tool) {
-		if (tool != null && tool.isItemDamaged()) {
-			float av = AVRegistry.getAbsoluteAV(tool)/tool.getMaxDamage();
-			if (av<=0) {return false;}
-			if (InventoryUtils.getAVInInventory(inv)>=av) {
-				float got = InventoryUtils.drainAVFromInventory(inv, av);
-				tool.setItemDamage(tool.getItemDamage()-1);
-				return true;
-			} else {
-				deactivateRing(stack,(EntityPlayer)entity);
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	@Override

@@ -78,6 +78,7 @@ public class CommonProxy implements IGuiHandler {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}
 		GameRegistry.registerItem(AetherCraft.itemRepairRing,"repairRing");
+		GameRegistry.registerItem(AetherCraft.itemRegnerationRing,"regnerationRing");
 		
 		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		GameRegistry.registerItem(AetherCraft.aetherAxe,"aetherAxe");
@@ -199,6 +200,7 @@ public class CommonProxy implements IGuiHandler {
 			GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemFlyingRing,1,0), "eae","bcb","ede",'a',aetheralFoci,'b',Items.feather,'c',band,'d',Items.emerald,'e',gildedIngot);
 		}
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemRepairRing,1,0), " a ","bcb"," d ",'a',AetherCraft.blockAetherReconstructor,'b',Items.iron_ingot,'c',band,'d',Items.diamond);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemRegnerationRing,1,0), "aba","dcf","aea",'a',infusedIngot,'b',goldMatter,'c',band,'d',Items.nether_wart,'e',Items.potionitem,'f',Items.ghast_tear);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherPickaxe), "aaa"," b "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherAxe), "aa ","ab "," b ",'a',infusedIngot,'b',infusedRod);

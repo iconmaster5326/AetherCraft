@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -35,7 +36,9 @@ import com.iconmaster.aec.item.ItemAetherSword;
 import com.iconmaster.aec.item.ItemDummy;
 import com.iconmaster.aec.item.ItemFlyingRing;
 import com.iconmaster.aec.item.ItemInfused;
+import com.iconmaster.aec.item.ItemRegnerationRing;
 import com.iconmaster.aec.item.ItemRepairRing;
+import com.iconmaster.aec.item.PotionRegneration;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 
 import cpw.mods.fml.common.Mod;
@@ -84,6 +87,9 @@ public class AetherCraft {
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 	public static Item itemRepairRing;
+	public static Item itemRegnerationRing;
+	public static int regnerationPotionId;
+	public static Potion regnerationPotion;
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
@@ -177,6 +183,10 @@ public class AetherCraft {
 			itemFlyingRing = new ItemFlyingRing();
 		}
 		itemRepairRing = new ItemRepairRing();
+		this.regnerationPotionId = Integer.parseInt(AetherCraft.getOptions("regnerationid"));
+		itemRegnerationRing = new ItemRegnerationRing();
+		this.regnerationPotion = new PotionRegneration(this.regnerationPotionId);
+		Potion.potionTypes[this.regnerationPotionId] = this.regnerationPotion;
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		
@@ -280,6 +290,10 @@ public class AetherCraft {
 		options.put("armorcost", Float.toString((float)forgeConfig.get("options",
 				"armorcost", 128F,
 				"The amount of AV Aether Armor draws to prevent 1/2 heart of damage.").getDouble(128)));
+				
+		options.put("regnerationid", Integer.toString(forgeConfig.get("options",
+				"regnerationid", 25,
+				"A potion ID. Don't think about it too much.").getInt()));
 
 		// BOOLEAN
 		options.put(
