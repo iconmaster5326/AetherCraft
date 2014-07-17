@@ -14,9 +14,10 @@ public class AetherCraftPacketHandler {
 		HANDLER.registerMessage(TransferConfigsPacket.class, TransferConfigsPacket.class, 1, Side.CLIENT);
 		HANDLER.registerMessage(ActivateRingsPacket.class, ActivateRingsPacket.class, 2, Side.CLIENT);
 		HANDLER.registerMessage(DeactivateRingsPacket.class, DeactivateRingsPacket.class, 3, Side.CLIENT);
+		HANDLER.registerMessage(PumpFacePacket.class, PumpFacePacket.class, 4, Side.CLIENT);
 		
-		HANDLER.registerMessage(RequestSyncPacket.class, RequestSyncPacket.class, 4, Side.SERVER);
-		HANDLER.registerMessage(ActivateRingsPacket.class, ActivateRingsPacket.class, 5, Side.SERVER);
-		HANDLER.registerMessage(DeactivateRingsPacket.class, DeactivateRingsPacket.class, 6, Side.SERVER);
+		HANDLER.registerMessage(RequestSyncPacket.class, RequestSyncPacket.class, 5, Side.SERVER);
+		HANDLER.registerMessage(ActivateRingsPacket.class, ActivateRingsPacket.class, 6, Side.SERVER);
+		HANDLER.registerMessage(DeactivateRingsPacket.class, DeactivateRingsPacket.class, 7, Side.SERVER);
 	}
 }

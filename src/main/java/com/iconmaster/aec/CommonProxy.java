@@ -32,6 +32,7 @@ import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
 import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
+import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
 import com.iconmaster.aec.util.InventoryUtils;
 
@@ -39,7 +40,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class CommonProxy implements IGuiHandler {
 	public void registerRenderInformation() {
@@ -58,6 +58,8 @@ public class CommonProxy implements IGuiHandler {
 				"aec.infuser");
 		GameRegistry.registerTileEntity(TileEntityAetherReconstructor.class,
 				"aec.reconstructor");
+		GameRegistry.registerTileEntity(TileEntityAetherPump.class,
+				"aec.pump");
 	}
 
 	public void registerBlocks() {
@@ -68,6 +70,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerBlock(AetherCraft.blockAetherCondenser,ItemAetherCraftBlock.class,"aetherCondenser");
 		GameRegistry.registerBlock(AetherCraft.blockAetherInfuser,ItemAetherCraftBlock.class,"aetherInfuser");
 		GameRegistry.registerBlock(AetherCraft.blockAetherReconstructor,ItemAetherCraftBlock.class,"aetherReconstructor");
+		GameRegistry.registerBlock(AetherCraft.blockAetherPump,ItemAetherCraftBlock.class,"aetherPump");
 		GameRegistry.registerBlock(AetherCraft.blockInfused,ItemBlockInfused.class,"blockInfused");
 		
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");

@@ -21,6 +21,7 @@ import com.iconmaster.aec.block.BlockAetherContainer;
 import com.iconmaster.aec.block.BlockAetherExtractor;
 import com.iconmaster.aec.block.BlockAetherInfuser;
 import com.iconmaster.aec.block.BlockAetherManipulator;
+import com.iconmaster.aec.block.BlockAetherPump;
 import com.iconmaster.aec.block.BlockAetherReconstructor;
 import com.iconmaster.aec.block.BlockInfused;
 import com.iconmaster.aec.client.ClientProxy;
@@ -50,7 +51,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 @Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.client.gui.ConfigGui")
 public class AetherCraft {
@@ -75,6 +75,7 @@ public class AetherCraft {
 	public static Block blockAetherCondenser;
 	public static Block blockAetherInfuser;
 	public static Block blockAetherReconstructor;
+	public static Block blockAetherPump;
 	public static Block blockInfused;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
@@ -149,6 +150,8 @@ public class AetherCraft {
 				Material.rock,"Infuser").setLightLevel(0.3f);
 		blockAetherReconstructor = new BlockAetherReconstructor(
 				Material.rock,"Reconstructor").setLightLevel(0.3f);
+		blockAetherPump= new BlockAetherPump(
+				Material.rock,"Pump").setLightLevel(0.3f);
 		blockInfused = new BlockInfused(
 				Material.rock).setLightLevel(0.7f);
 		// Items
