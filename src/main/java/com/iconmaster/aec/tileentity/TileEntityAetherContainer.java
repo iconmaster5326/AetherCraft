@@ -19,7 +19,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 	@Override
 	public String getInventoryName() {
-		return "gra.tileentityec";
+		return "aec.container";
 	}
 
 	@Override

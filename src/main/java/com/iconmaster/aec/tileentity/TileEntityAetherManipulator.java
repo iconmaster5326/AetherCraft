@@ -21,7 +21,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 
 	@Override
 	public String getInventoryName() {
-		return "gra.tileentityem";
+		return "aec.manipulaator";
 	}
 
 	public void handleAether() {
