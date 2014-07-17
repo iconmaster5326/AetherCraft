@@ -1,8 +1,53 @@
+aec.aetherManipulator.0.name=Aether Manipulator
+aec.aetherManipulator.1.name=Infused Manipulator
+aec.aetherManipulator.2.name=Gilded Manipulator
+aec.aetherExtractor.0.name=Aether Extractor
+aec.aetherExtractor.1.name=Infused Extractor
+aec.aetherExtractor.2.name=Gilded Extractor
+aec.aetherCondenser.0.name=Aether Condenser
+aec.aetherCondenser.1.name=Infused Condenser
+aec.aetherCondenser.2.name=Gilded Condenser
+aec.aetherContainer.0.name=Aether Container
+aec.aetherContainer.1.name=Infused Container
+aec.aetherContainer.2.name=Gilded Container
+aec.aetherInfuser.0.name=Aether Infuser
+aec.aetherInfuser.1.name=Infused Catalyzer
+aec.aetherInfuser.2.name=Gilded Infuser
+aec.aetherReconstructor.0.name=Aether Reconstructor
+tile.aec.aetherConduit.0.name=Aether Conduit
+tile.aec.aetherConduit.1.name=Infused Conduit
+tile.aec.aetherConduit.2.name=Gilded Conduit
+
+aec.infused.block.0.name=Infused Block
+aec.infused.block.1.name=Infused Brick
+aec.infused.block.2.name=Gilded Block
+aec.infused.block.3.name=Gilded Brick
+
+aec.aetherBattery.0.name=Aether Cell
+aec.aetherBattery.1.name=Aether Battery
+
+aec.infused.0.name=Infused Ingot
+aec.infused.1.name=Aetheral Foci
+aec.infused.2.name=Infused Rod
+aec.infused.3.name=Wrought Band
+aec.infused.4.name=Gilded Ingot
+aec.infused.5.name=Golden Matter
+
 item.aec.aetherArmor.0.name=Aether Helmet
 item.aec.aetherArmor.1.name=Aether Chestplate
 item.aec.aetherArmor.2.name=Aether Leggings
 item.aec.aetherArmor.3.name=Aether Boots
 
+item.aec.flyingRing.name=Ring of Flight
+item.aec.repairRing.name=Ring of Repair
 item.aec.regnerationRing.name=Ring of Regneration
-
 aec.potion.regneration=Regneration
+
+item.aec.aetherPickaxe.name=Aether Pickaxe
+item.aec.aetherAxe.name=Aether Axe
+item.aec.aetherSword.name=Aether Sword
+item.aec.aetherShovel.name=Aether Shovel
+item.aec.aetherHammer.name=Aether Hammer
+item.aec.aetherShears.name=Aether Shears
+
+itemGroup.aetherCraft=AetherCraft

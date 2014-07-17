@@ -93,62 +93,6 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.aetherBoots,"aetherBoots");
 	}
 
-	public void addNames() {
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "Aether Manipulator");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,0), "Aether Container");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherConduit,1,0), "Aether Conduit");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,0),"Aether Extractor");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,0),"Aether Condenser");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,0),"Aether Infuser");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherReconstructor,1,0),"Aether Reconstructor");
-		
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,0),"Infused Blocks");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,1),"Infused Brick");
-		
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,1), "Infused Manipulator");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,1), "Infused Container");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherConduit,1,1), "Infused Conduit");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,1),"Infused Extractor");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,1),"Infused Condenser");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,1),"Aether Catalyzer");
-		
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,2),"Gilded Blocks");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockInfused,1,3),"Gilded Brick");
-		
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherManipulator,1,2), "Gilded Manipulator");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherContainer,1,2), "Gilded Container");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherConduit,1,2), "Gilded Conduit");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherExtractor,1,2),"Gilded Extractor");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherCondenser,1,2),"Gilded Condenser");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.blockAetherInfuser,1,2),"Gilded Infuser");
-		
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemAetherBattery,1,0),"Aether Cell");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemAetherBattery,1,1),"Aether Battery");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,0),"Infused Ingot");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,1),"Aetheral Foci");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,2),"Infused Rod");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,3),"Wrought Band");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,4),"Gilded Ingot");
-		LanguageRegistry.addName(new ItemStack(AetherCraft.itemInfused,1,5),"Golden Matter");
-		
-		LanguageRegistry.addName(AetherCraft.aetherPickaxe,"Aether Pickaxe");
-		LanguageRegistry.addName(AetherCraft.aetherAxe,"Aether Axe");
-		LanguageRegistry.addName(AetherCraft.aetherShovel,"Aether Shovel");
-		LanguageRegistry.addName(AetherCraft.aetherSword,"Aether Sword");
-		LanguageRegistry.addName(AetherCraft.aetherHammer,"Aether Hammer");
-		LanguageRegistry.addName(AetherCraft.aetherShears,"Aether Shears");
-		
-		LanguageRegistry.addName(AetherCraft.aetherHelmet,"Aether Helmet");
-		LanguageRegistry.addName(AetherCraft.aetherChestplate,"Aether Chestplate");
-		LanguageRegistry.addName(AetherCraft.aetherLeggings,"Aether Leggings");
-		LanguageRegistry.addName(AetherCraft.aetherBoots,"Aether Boots");
-		
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
-			LanguageRegistry.addName(AetherCraft.itemFlyingRing,"Ring of Flight");
-		}
-		LanguageRegistry.addName(AetherCraft.itemRepairRing,"Ring of Repair");
-	}
-
 	public void addRecipes() {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherManipulator,1,0), "aaa","bcd","aaa",'a',Blocks.obsidian,'b',new ItemStack(AetherCraft.blockAetherExtractor,1,0),'c',new ItemStack(AetherCraft.blockAetherConduit,1,0),'d',new ItemStack(AetherCraft.blockAetherCondenser,1,0));
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherContainer,1,0), "aba","cdc","efe",'a',Items.diamond,'b',Blocks.obsidian,'c',Blocks.obsidian,'d',Blocks.glowstone,'e',Items.redstone,'f',Blocks.obsidian);

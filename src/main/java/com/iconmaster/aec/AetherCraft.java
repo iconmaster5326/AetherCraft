@@ -194,12 +194,10 @@ public class AetherCraft {
 		
 		proxy.registerTiles();
 		proxy.registerBlocks();
-		proxy.addNames();
 		proxy.addRecipes();
 		proxy.registerHandlers();
 		proxy.registerEventHandlers();
 		ClientProxy.setCustomRenderers();
-		LanguageRegistry.instance().addStringLocalization("itemGroup.aetherCraft", "en_US", "AetherCraft");
 	}
 	
 	@EventHandler
