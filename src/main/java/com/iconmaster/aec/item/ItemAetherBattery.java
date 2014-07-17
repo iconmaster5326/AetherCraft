@@ -41,14 +41,16 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem, IProd
 	public void getSubItems(Item par1,CreativeTabs tab,List list) {
 		list.add(new ItemStack(this,1,0));
 		list.add(new ItemStack(this,1,1));
+		list.add(new ItemStack(this,1,2));
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerIcons(IIconRegister iconRegister) {
-		icons = new IIcon[2];
+		icons = new IIcon[3];
 		icons[0] = iconRegister.registerIcon("aec:itemAetherBattery");
 		icons[1] = iconRegister.registerIcon("aec:itemAetherCell");
+		icons[2] = iconRegister.registerIcon("aec:itemLesserStorageCrystal");
 	}
 	
 	@Override
