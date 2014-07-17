@@ -35,12 +35,9 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 	public void handleAether() {
 		calcLimit();
 		AetherNetwork.setCheckSelfMode(true);
-		
-//				System.out.println(side+": "+AetherNetwork.getStoredAV(worldObj, off.getOffsetX(xCoord), off.getOffsetY(yCoord), off.getOffsetZ(zCoord)));
-		
 		Offset out = new Offset(face);
 		float need = limit-AetherNetwork.canSendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), limit);
-		System.out.println(need);
+
 		if (need>0) {
 			float got = 0;
 			for (int side : SideUtils.allSides) {
