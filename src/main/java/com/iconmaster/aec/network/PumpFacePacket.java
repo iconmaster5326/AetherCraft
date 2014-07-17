@@ -43,7 +43,6 @@ public class PumpFacePacket implements IMessage, IMessageHandler<PumpFacePacket,
 
 	@Override
 	public IMessage onMessage(PumpFacePacket message, MessageContext ctx) {
-		System.out.println("PUMP PACKET "+message.face);
 		AetherCraftTileEntity te = (AetherCraftTileEntity) Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (te == null) {
 			System.out.println("[AEC PACKET]CLIENT ERROR: TE was null!");

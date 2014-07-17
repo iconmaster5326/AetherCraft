@@ -11,6 +11,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
+import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
@@ -35,7 +36,7 @@ public class BlockAetherPump extends AetherCraftBlock implements IAetherTransfer
 		TileEntityAetherPump te = (TileEntityAetherPump) world.getTileEntity(x, y, z);
 		te.face+=1;
 		if (te.face==6) {te.face=0;}
-		te.sync();
+		te.syncFace();
         return true;
     }
 
@@ -78,7 +79,7 @@ public class BlockAetherPump extends AetherCraftBlock implements IAetherTransfer
 		
 		te.face = i;
 		System.out.println(FMLCommonHandler.instance().getEffectiveSide()+": "+te.face);
-		te.sync();
+		te.syncFace();
 	}
 	
 	@Override
@@ -93,4 +94,16 @@ public class BlockAetherPump extends AetherCraftBlock implements IAetherTransfer
 		return ClientProxy.pumpRenderType;
 	}
 
+	@Override
+	public boolean canTransferAV(World world, int x, int y, int z, int sideFrom) {
+//		TileEntityAetherPump te = (TileEntityAetherPump) world.getTileEntity(x, y, z);
+//		return te.face==SideUtils.getOppositeSide(sideFrom);
+		return false;
+	}
+	
+	@Override
+	public float getMaxTransferAV(World world, int x,int y,int z,int side) {
+//		return super.getMaxTransferAV(world, x, y, z, side)/4;
+		return 0;
+	}
 }

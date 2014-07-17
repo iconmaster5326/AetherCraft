@@ -31,6 +31,8 @@ public class AetherNetwork {
 			this.maxAV = av;
 		}
 	}
+
+	private static boolean checkSelf = false;
 	
 	/**
 	 * Given the coordinates of a network start, returns the amount of AV stored in the network that can be retrieved.
@@ -150,7 +152,7 @@ public class AetherNetwork {
 	public static ArrayList<DeviceData> getAllConnectedDevices(World world, int x, int y, int z,float maxAV,ArrayList a,HashMap been) {
 		been.put(encodeCoords(x,y,z),true);
 		////System.out.println("Visiting "+x+" "+y+" "+z);
-		for (int side : SideUtils.allSides) {
+		for (int side : checkSelf? new int[] {-1,0,1,2,3,4,5} : SideUtils.allSides) {
 			//System.out.println("SIDE "+side);
 			SideUtils.Offset off = new SideUtils.Offset(side);
 			int ofx = off.getOffsetX(x);
@@ -175,6 +177,10 @@ public class AetherNetwork {
 	
 	private static List encodeCoords(int x,int y, int z) {
 		return Arrays.asList(x,y,z);
+	}
+	
+	public static void setCheckSelfMode(boolean mode) {
+		checkSelf  = mode;
 	}
 	
 }
