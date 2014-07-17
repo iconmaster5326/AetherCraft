@@ -24,7 +24,7 @@ public class BlockAetherManipulator extends AetherCraftBlock implements IAetherT
 			return false;
 		}
 
-		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_MANIPULATOR, world, x, y, z);
+		player.openGui(AetherCraft.instance, 0, world, x, y, z);
 		return true;
 	}
 

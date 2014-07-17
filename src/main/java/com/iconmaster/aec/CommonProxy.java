@@ -164,17 +164,17 @@ public class CommonProxy implements IGuiHandler {
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-		if (tileEntity instanceof TileEntityAetherManipulator && ID == AetherCraft.GUI_ID_MANIPULATOR) {
+		if (tileEntity instanceof TileEntityAetherManipulator) {
 			return new ContainerAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer && ID == AetherCraft.GUI_ID_CONTAINER) {
+		} else if (tileEntity instanceof TileEntityAetherContainer) {
 			return new ContainerAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherExtractor && ID == AetherCraft.GUI_ID_EXTRACTOR) {
+		} else if (tileEntity instanceof TileEntityAetherExtractor) {
 			return new ContainerAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
+		} else if (tileEntity instanceof TileEntityAetherCondenser) {
 			return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
+		} else if (tileEntity instanceof TileEntityAetherInfuser) {
 			return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherReconstructor && ID == AetherCraft.GUI_ID_RECONSTRUCTOR) {
+		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
 			return new ContainerAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
 		}
 		return null;
@@ -185,17 +185,17 @@ public class CommonProxy implements IGuiHandler {
 			int x, int y, int z) {
 		TileEntity tileEntity = world.getTileEntity(x, y, z);
 
-		if (tileEntity instanceof TileEntityAetherManipulator && ID == AetherCraft.GUI_ID_MANIPULATOR) {
+		if (tileEntity instanceof TileEntityAetherManipulator) {
 			return new GuiAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer && ID == AetherCraft.GUI_ID_CONTAINER) {
+		} else if (tileEntity instanceof TileEntityAetherContainer) {
 			return new GuiAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherExtractor && ID == AetherCraft.GUI_ID_EXTRACTOR) {
+		} else if (tileEntity instanceof TileEntityAetherExtractor) {
 			return new GuiAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherCondenser && ID == AetherCraft.GUI_ID_CONDENSER) {
+		} else if (tileEntity instanceof TileEntityAetherCondenser) {
 			return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherInfuser && ID == AetherCraft.GUI_ID_INFUSER) {
+		} else if (tileEntity instanceof TileEntityAetherInfuser) {
 			return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherReconstructor && ID == AetherCraft.GUI_ID_RECONSTRUCTOR) {
+		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
 			return new GuiAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
 		}
 		return null;

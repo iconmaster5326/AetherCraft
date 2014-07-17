@@ -23,7 +23,7 @@ public class BlockAetherCondenser extends AetherCraftBlock {
 			return false;
 		}
 
-		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_CONDENSER, world, x, y, z);
+		player.openGui(AetherCraft.instance, 0, world, x, y, z);
 		return true;
 	}
 

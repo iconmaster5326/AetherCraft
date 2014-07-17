@@ -23,7 +23,7 @@ public class BlockAetherInfuser extends AetherCraftBlock implements IAetherTrans
 			return false;
 		}
 
-		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_INFUSER, world, x, y, z);
+		player.openGui(AetherCraft.instance, 0, world, x, y, z);
 		return true;
 	}
 

@@ -20,7 +20,6 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 
 	public TileEntityAetherInfuser() {
 		super();
-		energyBlockType = AetherCraft.GUI_ID_INFUSER;
 		inventory = new ItemStack[2];
 	}
 

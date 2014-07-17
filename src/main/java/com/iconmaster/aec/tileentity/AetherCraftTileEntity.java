@@ -23,9 +23,7 @@ import cpw.mods.fml.relauncher.Side;
  * @author iconmaster
  *
  */
-public class AetherCraftTileEntity extends TileEntity implements
-		ISidedInventory, IAetherStorage {
-	public byte energyBlockType;
+public class AetherCraftTileEntity extends TileEntity implements ISidedInventory, IAetherStorage {
 
 	protected ItemStack[] inventory;
 	protected float energy;

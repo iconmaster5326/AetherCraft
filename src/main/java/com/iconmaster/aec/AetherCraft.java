@@ -61,15 +61,7 @@ public class AetherCraft {
     public static final String VERSION = "@VERSION@";
 
 	public static final String DEFAULT_CONFIG_FILE = "default.cfg";
-	public static final int GUI_ID_MANIPULATOR = 0;
-	public static final int GUI_ID_CONTAINER = 1;
-	public static final int GUI_ID_EXTRACTOR = 2;
-	public static final int GUI_ID_CONDENSER = 3;
-	public static final int GUI_ID_INFUSER = 4;
-	public static final int GUI_ID_RECONSTRUCTOR = 5;
 	
-	public static final byte PACKET_TTID_CONFIG = 0;
-
 	@Instance("AetherCraft")
 	public static AetherCraft instance = new AetherCraft();
 

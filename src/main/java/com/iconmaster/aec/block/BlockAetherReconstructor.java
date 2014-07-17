@@ -33,7 +33,7 @@ public class BlockAetherReconstructor extends AetherCraftBlock implements IAethe
             return false;
         }
 
-        player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_RECONSTRUCTOR, world, x, y, z);
+        player.openGui(AetherCraft.instance, 0, world, x, y, z);
         return true;
     }
 

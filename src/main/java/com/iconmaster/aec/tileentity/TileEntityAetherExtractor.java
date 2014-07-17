@@ -14,7 +14,6 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 		ISidedInventory, IAetherStorage {
 	public TileEntityAetherExtractor() {
 		super();
-		energyBlockType = AetherCraft.GUI_ID_EXTRACTOR;
 		inventory = new ItemStack[8];
 	}
 

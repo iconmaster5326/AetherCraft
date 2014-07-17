@@ -29,7 +29,7 @@ public class BlockAetherContainer extends AetherCraftBlock implements IAetherTra
             return false;
         }
 
-        player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_CONTAINER, world, x, y, z);
+        player.openGui(AetherCraft.instance, 0, world, x, y, z);
         return true;
     }
 

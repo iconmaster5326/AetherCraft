@@ -23,7 +23,7 @@ public class BlockAetherExtractor extends AetherCraftBlock implements IAetherTra
 			return false;
 		}
 
-		player.openGui(AetherCraft.instance, AetherCraft.GUI_ID_EXTRACTOR, world, x, y, z);
+		player.openGui(AetherCraft.instance, 0, world, x, y, z);
 		return true;
 	}
 

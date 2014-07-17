@@ -16,7 +16,6 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 	public TileEntityAetherCondenser() {
 		super();
 		this.use0 = false;
-		energyBlockType = AetherCraft.GUI_ID_CONDENSER;
 		inventory = new ItemStack[9];
 	}
 

@@ -16,7 +16,6 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 
 	public TileEntityAetherReconstructor() {
 		super();
-		energyBlockType = AetherCraft.GUI_ID_RECONSTRUCTOR;
 		inventory = new ItemStack[2];
 	}
 

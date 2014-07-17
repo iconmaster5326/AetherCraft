@@ -14,7 +14,6 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 	public TileEntityAetherContainer() {
 		super();
-		energyBlockType = AetherCraft.GUI_ID_CONTAINER;
 		inventory = new ItemStack[2];
 	}
 

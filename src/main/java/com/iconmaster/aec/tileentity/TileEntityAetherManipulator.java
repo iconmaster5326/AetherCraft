@@ -16,7 +16,6 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 	public TileEntityAetherManipulator() {
 		super();
 		use0 = false;
-		energyBlockType = AetherCraft.GUI_ID_MANIPULATOR;
 		inventory = new ItemStack[55];
 	}
 
