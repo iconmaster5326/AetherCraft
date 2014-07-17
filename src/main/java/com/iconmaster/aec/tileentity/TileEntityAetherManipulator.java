@@ -45,7 +45,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 				//System.out.println("Consuming... ");
 				if (stackEv+getAether()>max) {
 					//System.out.println("Has more aether than we can hold!");
-					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-max);
+					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+getAether()-max)==0;
 					if (!canSend) {
 						//System.out.println("Could not transfer!");
 						//AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, stackEv-getAether()-left);
@@ -94,7 +94,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 
 				if (getAether() - av < 0) {
 					calcMax();
-					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
+					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy)==av-energy;
 					if (willGet) {
 						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
 						energy = 0;

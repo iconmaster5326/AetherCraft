@@ -35,25 +35,25 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 	public void handleAether() {
 		calcLimit();
 		AetherNetwork.setCheckSelfMode(true);
-		float got = 0;
-		for (int side : SideUtils.allSides) {
-			if (side!=face) {
-				Offset off = new Offset(side);
-				got += AetherNetwork.requestAV(worldObj, off.getOffsetX(xCoord), off.getOffsetY(yCoord), off.getOffsetZ(zCoord), limit-got);
-			}
-		}
-		if (got>0) {
-			Offset out = new Offset(face);
-			float left = AetherNetwork.sendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), got);
-			if (left>0) {
-				for (int side : SideUtils.allSides) {
-					if (side!=face) {
-						Offset off = new Offset(side);
-						left -= AetherNetwork.requestAV(worldObj, off.getOffsetX(xCoord), off.getOffsetY(yCoord), off.getOffsetZ(zCoord), left);
-					}
+		
+//				System.out.println(side+": "+AetherNetwork.getStoredAV(worldObj, off.getOffsetX(xCoord), off.getOffsetY(yCoord), off.getOffsetZ(zCoord)));
+		
+		Offset out = new Offset(face);
+		float need = limit-AetherNetwork.canSendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), limit);
+		System.out.println(need);
+		if (need>0) {
+			float got = 0;
+			for (int side : SideUtils.allSides) {
+				if (side!=face) {
+					Offset off = new Offset(side);
+					got += AetherNetwork.requestAV(worldObj, off.getOffsetX(xCoord), off.getOffsetY(yCoord), off.getOffsetZ(zCoord), need-got);
 				}
 			}
+			if (got>0) {
+				AetherNetwork.sendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), got);
+			}
 		}
+		
 		AetherNetwork.setCheckSelfMode(false);
 	}
 	
@@ -89,8 +89,10 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 	
 	@Override
 	public void calcLimit() {
-		super.calcLimit();
-		limit /= 4;
+		if (limit==0) {
+			super.calcLimit();
+			limit /= 8;
+		}
 	}
 	
     @Override

@@ -102,7 +102,7 @@ public class AetherNetwork {
 	 * @param av
 	 * @return
 	 */
-	public static boolean canSendAV(World world, int x,int y,int z,float av) {
+	public static float canSendAV(World world, int x,int y,int z,float av) {
 		float left = av;
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		for (DeviceData device : devices) {
@@ -111,7 +111,7 @@ public class AetherNetwork {
 			//System.out.println("[c] Left is "+left);
 		}
 		//System.out.println("[c] Requested "+av+". Left is "+left+". Returning "+(left==0));
-		return left==0;
+		return left;
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class AetherNetwork {
 	 * @param av
 	 * @return
 	 */
-	public static boolean canRequestAV(World world,int x,int y,int z,float av) {
+	public static float canRequestAV(World world,int x,int y,int z,float av) {
 		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
 		float got = 0;
 		for (DeviceData device : devices) {
@@ -132,7 +132,7 @@ public class AetherNetwork {
 			//System.out.println("[c] Got is now "+(got));
 		}
 		//System.out.println("[c] Requested "+av+". Got "+got+". Returning "+(got==av));
-		return got==av;
+		return got;
 	}
 	
 	/**
@@ -150,8 +150,8 @@ public class AetherNetwork {
 	}
 	
 	public static ArrayList<DeviceData> getAllConnectedDevices(World world, int x, int y, int z,float maxAV,ArrayList a,HashMap been) {
-		been.put(encodeCoords(x,y,z),true);
-		////System.out.println("Visiting "+x+" "+y+" "+z);
+		if (!checkSelf) {been.put(encodeCoords(x,y,z),true);}
+		//System.out.println("Visiting "+x+" "+y+" "+z);
 		for (int side : checkSelf? new int[] {-1,0,1,2,3,4,5} : SideUtils.allSides) {
 			//System.out.println("SIDE "+side);
 			SideUtils.Offset off = new SideUtils.Offset(side);
@@ -162,6 +162,7 @@ public class AetherNetwork {
 			if (been.get(encodeCoords(ofx,ofy,ofz))==null && block instanceof IAetherTransfer) {
 				float nav = Math.min(maxAV,((IAetherTransfer)block).getMaxTransferAV(world, ofx, ofy, ofz, side));
 				if (((IAetherTransfer)block).canTransferAV(world, ofx, ofy, ofz, side)) {
+					if (checkSelf) {been.put(encodeCoords(x,y,z),true);}
 					getAllConnectedDevices(world,ofx,ofy,ofz,nav,a,been);
 				}
 				if (world.getTileEntity(ofx, ofy, ofz)!= null && world.getTileEntity(ofx, ofy, ofz) instanceof IAetherStorage) {

@@ -47,7 +47,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 				
 				if (getAether() - av < 0) {
 					calcMax();
-					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
+					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy)==av-energy;
 					if (willGet) {
 						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
 						energy = 0;

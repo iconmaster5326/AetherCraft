@@ -103,6 +103,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,0), "aba","cdc","aaa",'a',Blocks.obsidian,'c',Items.diamond,'b',new ItemStack(Items.dye,1,4),'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,0), "aba","cdc","aaa",'a',Blocks.obsidian,'b',Items.emerald,'c',new ItemStack(Items.dye,1,4),'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,0), "aba","cdc","aaa",'a',Blocks.obsidian,'b',Items.diamond,'c',Items.emerald,'d',Blocks.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherPump,1,0), "aaa","bcd","aaa",'a',Blocks.obsidian,'b',Items.diamond,'c',Blocks.glowstone,'d',Blocks.redstone_block);
 		
 		ItemStack infusedIngot = new ItemStack(AetherCraft.itemInfused,1,0);
 		ItemStack aetheralFoci = new ItemStack(AetherCraft.itemInfused,1,1);
@@ -118,6 +119,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',aetheralFoci,'c',Blocks.lapis_block,'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,1), "aba","cdc","aaa",'a',infusedIngot,'b',Items.emerald,'c',aetheralFoci,'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherReconstructor,1,0), "aba","cdc","aaa",'a',Blocks.obsidian,'b',aetheralFoci,'c',infusedIngot,'d',Blocks.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherPump,1,1), "aaa","bcd","aaa",'a',infusedIngot,'b',Items.emerald,'c',Blocks.glowstone,'d',Blocks.redstone_block);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,1,0), "aaa","aaa","aaa",'a',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,4,1), "aa","aa",'a',new ItemStack(AetherCraft.blockInfused,1,0));
@@ -130,6 +132,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherExtractor,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',aetheralFoci,'c',goldMatter,'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherCondenser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',goldMatter,'c',aetheralFoci,'d',Blocks.glowstone);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherInfuser,1,2), "aba","cdc","aaa",'a',gildedIngot,'b',goldMatter,'c',infusedIngot,'d',Blocks.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockAetherPump,1,2), "aaa","bcd","aaa",'a',gildedIngot,'b',aetheralFoci,'c',Blocks.glowstone,'d',Blocks.redstone_block);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,1,2), "aaa","aaa","aaa",'a',gildedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.blockInfused,4,3), "aa","aa",'a',new ItemStack(AetherCraft.blockInfused,1,2));

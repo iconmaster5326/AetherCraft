@@ -44,7 +44,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 				//System.out.println("Consuming... ");
 				if (stackEv+energy>max) {
 					//System.out.println("Has more aether than we can hold!");
-					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max);
+					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max)==0;
 					if (!canSend) {
 						//System.out.println("Could not transfer!");
 						failed = true;
