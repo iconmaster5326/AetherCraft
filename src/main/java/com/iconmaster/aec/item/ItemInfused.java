@@ -14,7 +14,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemInfused extends Item {
-	public IIcon[] icons = new IIcon[6];
+	public IIcon[] icons = new IIcon[7];
 	public ItemInfused() {
 		super();
         this.setUnlocalizedName("aec.infused");
@@ -32,6 +32,7 @@ public class ItemInfused extends Item {
 		this.icons[3] = iconRegister.registerIcon("aec:itemWroughtBand");
 		this.icons[4] = iconRegister.registerIcon("aec:itemGildedIngot");
 		this.icons[5] = iconRegister.registerIcon("aec:itemGoldMatter");
+		this.icons[6] = iconRegister.registerIcon("aec:itemSingularity");
 	}
 	
 	@Override
@@ -48,6 +49,7 @@ public class ItemInfused extends Item {
 		list.add(new ItemStack(this,1,3));
 		list.add(new ItemStack(this,1,4));
 		list.add(new ItemStack(this,1,5));
+		list.add(new ItemStack(this,1,6));
 	}
 	
 	@Override

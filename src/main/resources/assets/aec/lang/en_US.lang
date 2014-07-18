@@ -36,6 +36,7 @@ aec.infused.2.name=Infused Rod
 aec.infused.3.name=Wrought Band
 aec.infused.4.name=Gilded Ingot
 aec.infused.5.name=Golden Matter
+aec.infused.6.name=A-Space Singularity
 
 item.aec.aetherArmor.0.name=Aether Helmet
 item.aec.aetherArmor.1.name=Aether Chestplate
@@ -46,6 +47,7 @@ item.aec.flyingRing.name=Ring of Flight
 item.aec.repairRing.name=Ring of Repair
 item.aec.regnerationRing.name=Ring of Regneration
 aec.potion.regneration=Regneration
+item.aec.phasingRing.name=Ring of Phasing
 
 item.aec.aetherPickaxe.name=Aether Pickaxe
 item.aec.aetherAxe.name=Aether Axe
