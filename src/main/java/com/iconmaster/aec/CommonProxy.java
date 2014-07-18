@@ -94,6 +94,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.aetherChestplate,"aetherChestplate");
 		GameRegistry.registerItem(AetherCraft.aetherLeggings,"aetherLeggings");
 		GameRegistry.registerItem(AetherCraft.aetherBoots,"aetherBoots");
+		
+		GameRegistry.registerItem(AetherCraft.aetometer,"aetometer");
 	}
 
 	public void addRecipes() {
@@ -164,6 +166,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherChestplate), "a a","aaa","aaa",'a',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherLeggings), "aaa","a a","a a",'a',infusedIngot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherBoots), "   ","a a","a a",'a',infusedIngot);
+		
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetometer), "b b","bab"," b ",'a',infusedIngot,'b',Blocks.obsidian);
 	}
 
 	@Override

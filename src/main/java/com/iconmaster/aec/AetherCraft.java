@@ -34,6 +34,7 @@ import com.iconmaster.aec.item.ItemAetherPickaxe;
 import com.iconmaster.aec.item.ItemAetherShears;
 import com.iconmaster.aec.item.ItemAetherShovel;
 import com.iconmaster.aec.item.ItemAetherSword;
+import com.iconmaster.aec.item.ItemAetometer;
 import com.iconmaster.aec.item.ItemDummy;
 import com.iconmaster.aec.item.ItemFlyingRing;
 import com.iconmaster.aec.item.ItemInfused;
@@ -95,6 +96,7 @@ public class AetherCraft {
 	public static Item aetherChestplate;
 	public static Item aetherLeggings;
 	public static Item aetherBoots;
+	public static Item aetometer;
 
 	//static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	//private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -158,6 +160,7 @@ public class AetherCraft {
 		itemAetherBattery = new ItemAetherBattery();
 		itemInfused = new ItemInfused();
 		dummy = new ItemDummy();
+		aetometer = new ItemAetometer();
 		
 		//Tools
 		aetherPickaxe = new ItemAetherPickaxe();

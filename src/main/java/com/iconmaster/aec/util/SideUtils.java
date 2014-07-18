@@ -121,7 +121,7 @@ public class SideUtils {
 		return blockInfo;
 	}
 
-	private static MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer entityplayer, boolean flag, double reach)
+	public static MovingObjectPosition getMovingObjectPositionFromPlayer(World world, EntityPlayer entityplayer, boolean flag, double reach)
 	{
 		float f = 1.0F;
 		float playerPitch = entityplayer.prevRotationPitch + (entityplayer.rotationPitch - entityplayer.prevRotationPitch) * f;

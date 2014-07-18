@@ -54,4 +54,6 @@ item.aec.aetherShovel.name=Aether Shovel
 item.aec.aetherHammer.name=Aether Hammer
 item.aec.aetherShears.name=Aether Shears
 
+item.aec.aetometer.name=Aetometer
+
 itemGroup.aetherCraft=AetherCraft
