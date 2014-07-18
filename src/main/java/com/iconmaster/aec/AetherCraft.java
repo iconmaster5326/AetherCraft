@@ -38,6 +38,7 @@ import com.iconmaster.aec.item.ItemAetometer;
 import com.iconmaster.aec.item.ItemDummy;
 import com.iconmaster.aec.item.ItemFlyingRing;
 import com.iconmaster.aec.item.ItemInfused;
+import com.iconmaster.aec.item.ItemPhasingRing;
 import com.iconmaster.aec.item.ItemRegnerationRing;
 import com.iconmaster.aec.item.ItemRepairRing;
 import com.iconmaster.aec.item.PotionRegneration;
@@ -84,6 +85,7 @@ public class AetherCraft {
 	public static Item itemRegnerationRing;
 	public static int regnerationPotionId;
 	public static Potion regnerationPotion;
+	public static Item itemPhasingRing;
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
@@ -185,6 +187,7 @@ public class AetherCraft {
 		itemRegnerationRing = new ItemRegnerationRing();
 		this.regnerationPotion = new PotionRegneration(this.regnerationPotionId);
 		Potion.potionTypes[this.regnerationPotionId] = this.regnerationPotion;
+		itemPhasingRing = new ItemPhasingRing();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		
@@ -195,7 +198,7 @@ public class AetherCraft {
 		proxy.addRecipes();
 		proxy.registerHandlers();
 		proxy.registerEventHandlers();
-		ClientProxy.setCustomRenderers();
+		proxy.setCustomRenderers();
 	}
 	
 	@EventHandler

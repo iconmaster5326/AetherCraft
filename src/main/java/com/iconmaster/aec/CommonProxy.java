@@ -238,4 +238,8 @@ public class CommonProxy implements IGuiHandler {
 	public void deactivateRings(Object ctx) {
 		InventoryUtils.deactivateRings(((MessageContext)ctx).getServerHandler().playerEntity);
 	}
+
+	public void setCustomRenderers() {
+		
+	}
 }

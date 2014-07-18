@@ -25,7 +25,8 @@ public class ClientProxy extends CommonProxy {
     public static int conduitRenderType;
     public static int pumpRenderType;
     
-    public static void setCustomRenderers()
+    @Override
+    public void setCustomRenderers()
     {
             conduitRenderType = RenderingRegistry.getNextAvailableRenderId();
             RenderingRegistry.registerBlockHandler(new RenderAetherConduit());
