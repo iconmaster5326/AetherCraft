@@ -22,8 +22,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	public static int renderPass;
-    public static int conduitRenderType;
-    public static int pumpRenderType;
+    public static int conduitRenderType = -1;
+    public static int pumpRenderType = -1;
     
     @Override
     public void setCustomRenderers()
