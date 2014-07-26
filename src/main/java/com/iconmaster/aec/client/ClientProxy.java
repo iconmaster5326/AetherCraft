@@ -22,16 +22,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 	public static int renderPass;
-    public static int conduitRenderType = -1;
-    public static int pumpRenderType = -1;
-    
+	
     @Override
     public void setCustomRenderers()
     {
-            conduitRenderType = RenderingRegistry.getNextAvailableRenderId();
+    		AetherCraft.proxy.conduitRenderType = RenderingRegistry.getNextAvailableRenderId();
             RenderingRegistry.registerBlockHandler(new RenderAetherConduit());
             
-            pumpRenderType = RenderingRegistry.getNextAvailableRenderId();
+            AetherCraft.proxy.pumpRenderType = RenderingRegistry.getNextAvailableRenderId();
             RenderingRegistry.registerBlockHandler(new RenderAetherPump());
             ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAetherPump.class, new RenderAetherPump());
     }

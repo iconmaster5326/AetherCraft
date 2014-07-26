@@ -12,8 +12,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 
 import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.block.BlockAetherPump;
-import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
@@ -125,7 +125,7 @@ public class RenderAetherPump extends TileEntitySpecialRenderer implements ISimp
 
 	@Override
 	public int getRenderId() {
-		return ClientProxy.pumpRenderType;
+		return CommonProxy.pumpRenderType;
 	}
 	
 	public void renderItem(RenderBlocks renderer, Block block, int meta, int pass) {

@@ -8,8 +8,8 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
+import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.block.BlockAetherConduit;
-import com.iconmaster.aec.client.ClientProxy;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
@@ -502,6 +502,6 @@ public class RenderAetherConduit implements ISimpleBlockRenderingHandler
 
 	@Override
 	public int getRenderId() {
-		return ClientProxy.conduitRenderType;
+		return CommonProxy.conduitRenderType;
 	}
 }

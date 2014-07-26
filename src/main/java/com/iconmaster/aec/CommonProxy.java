@@ -42,6 +42,9 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
+	public static int pumpRenderType = -1;
+	public static int conduitRenderType = -1;
+
 	public void registerRenderInformation() {
 	}
 

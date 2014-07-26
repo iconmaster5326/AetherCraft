@@ -12,8 +12,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.util.SideUtils;
 
@@ -91,7 +91,7 @@ public class BlockAetherPump extends AetherCraftBlock implements IAetherTransfer
 	@Override
 	public int getRenderType()
 	{
-		return ClientProxy.pumpRenderType;
+		return AetherCraft.proxy.pumpRenderType;
 	}
 
 	@Override
