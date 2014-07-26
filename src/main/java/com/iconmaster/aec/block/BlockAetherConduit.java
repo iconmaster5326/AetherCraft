@@ -13,7 +13,6 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.util.BlockTextureData;

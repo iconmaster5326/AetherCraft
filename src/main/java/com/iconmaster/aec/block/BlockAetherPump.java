@@ -7,12 +7,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.util.SideUtils;

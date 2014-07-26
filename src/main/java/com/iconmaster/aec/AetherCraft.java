@@ -24,7 +24,6 @@ import com.iconmaster.aec.block.BlockAetherManipulator;
 import com.iconmaster.aec.block.BlockAetherPump;
 import com.iconmaster.aec.block.BlockAetherReconstructor;
 import com.iconmaster.aec.block.BlockInfused;
-import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.command.ConfigCommand;
 import com.iconmaster.aec.item.ItemAetherArmor;
 import com.iconmaster.aec.item.ItemAetherAxe;
