@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -85,8 +87,17 @@ public class NEIInfuserHandler extends TemplateRecipeHandler {
 	public void loadUsageRecipes(String inputId, Object... ingredients)
 	{
 		if (ingredients.length == 0) {return;}
+		ItemStack finalInput = null;
 		
-		ItemStack finalInput = (ItemStack) ingredients[0];
+		if (ingredients[0] instanceof ItemStack) {
+			finalInput = (ItemStack) ingredients[0];
+		} else if (ingredients[0] instanceof FluidStack) {
+			Block block = ((FluidStack) ingredients[0]).getFluid().getBlock();
+			if (block!=null) {
+				finalInput = new ItemStack(block,((FluidStack) ingredients[0]).amount);
+			}
+		}
+		if (finalInput==null) {return;}
 		
 		for (Object entry : InfuserRegistry.getRecipes().entrySet()) {
 			Entry recipe = (Entry)entry;
