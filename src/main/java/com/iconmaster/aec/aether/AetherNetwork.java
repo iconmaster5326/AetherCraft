@@ -51,6 +51,15 @@ public class AetherNetwork {
 		return av;
 	}
 	
+	public static float getAbsoluteStoredAV(World world,int x,int y,int z) {
+		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
+		float av = 0;
+		for (DeviceData device : devices) {
+			av += device.device.getAether();
+		}
+		return av;
+	}
+	
 	/**
 	 * Attempts to send AV into the network at the given coords. Returns the amount of AV that was not sent successfully; this will be greater than 0 if the network could not hold all the Aether put into it.
 	 * @param world

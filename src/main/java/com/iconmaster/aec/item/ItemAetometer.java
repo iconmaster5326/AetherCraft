@@ -63,7 +63,7 @@ public class ItemAetometer extends Item {
 		}
 		
 		if (block!=null && block instanceof IAetherTransfer && showNetwork) {
-			float av = AetherNetwork.getStoredAV(world, x, y, z);
+			float av = AetherNetwork.getAbsoluteStoredAV(world, x, y, z);
 			
 			ChatComponentText cmc = new ChatComponentText("Aether in network: "+NumberUtils.display(deviceAV+av));
 			player.addChatMessage(cmc);

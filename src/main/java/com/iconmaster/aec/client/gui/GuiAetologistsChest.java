@@ -37,7 +37,7 @@ public class GuiAetologistsChest extends AetherCraftGui<TileEntityAetologistsChe
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		GL11.glDisable(GL11.GL_LIGHTING);
 
-		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(AetherNetwork.getStoredAV(te.getWorldObj(), te.xCoord,  te.yCoord,  te.zCoord)), 6, 6,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(AetherNetwork.getAbsoluteStoredAV(te.getWorldObj(), te.xCoord,  te.yCoord,  te.zCoord)), 6, 6,0x00FF00);
 
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
