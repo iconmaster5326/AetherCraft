@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
@@ -16,6 +17,7 @@ import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.IAetherTransfer;
 import com.iconmaster.aec.client.ClientProxy;
 import com.iconmaster.aec.util.BlockTextureData;
+import com.iconmaster.aec.util.SideUtils;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -24,6 +26,8 @@ public class BlockAetherConduit extends Block implements IAetherTransfer {
 
 	public BlockTextureData[] icon;
 	public IIcon[] blockIcons;
+	
+	float pixel = 1F / 16F;
 
 	public BlockAetherConduit(Material material) {
 		super(material);
@@ -113,4 +117,47 @@ public class BlockAetherConduit extends Block implements IAetherTransfer {
 	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
 		return new ItemStack(this,1,world.getBlockMetadata(x, y, z));
 	}
+	
+	public static final int pOffset = 7;
+	
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {  
+    	boolean[] conns = getConnections(world,x,y,z);
+    	
+        float minX = pOffset * pixel / 2 - (conns[4] ? (pOffset * pixel / 2) : 0);
+        float minZ = pOffset * pixel / 2 - (conns[2] ? (pOffset * pixel / 2) : 0);
+        float minY = pOffset * pixel / 2 - (conns[0] ? (pOffset * pixel / 2) : 0);
+        float maxZ = 1 - pOffset * pixel / 2 + (conns[3] ? (pOffset * pixel / 2) : 0);
+        float maxY = 1 - pOffset * pixel / 2 + (conns[1] ? (pOffset * pixel / 2) : 0);
+        float maxX = 1 - pOffset * pixel / 2 + (conns[5] ? (pOffset * pixel / 2) : 0);
+
+        setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+
+        return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ);
+    }
+
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z) {
+    	boolean[] conns = getConnections(world,x,y,z);
+    	
+        float minX = pOffset * pixel / 2 - (conns[4] ? (pOffset * pixel / 2) : 0);
+        float minZ = pOffset * pixel / 2 - (conns[2] ? (pOffset * pixel / 2) : 0);
+        float minY = pOffset * pixel / 2 - (conns[0] ? (pOffset * pixel / 2) : 0);
+        float maxZ = 1 - pOffset * pixel / 2 + (conns[3] ? (pOffset * pixel / 2) : 0);
+        float maxY = 1 - pOffset * pixel / 2 + (conns[1] ? (pOffset * pixel / 2) : 0);
+        float maxX = 1 - pOffset * pixel / 2 + (conns[5] ? (pOffset * pixel / 2) : 0);
+
+        setBlockBounds(minX, minY, minZ, maxX, maxY, maxZ);
+
+        return AxisAlignedBB.getBoundingBox(x + minX, y + minY, z + minZ, x + maxX, y + maxY, z + maxZ);
+    }
+    
+    public boolean[] getConnections(World world,int x,int y,int z) {
+    	boolean[] ret = new boolean[SideUtils.allSides.length];
+    	for (int side : SideUtils.allSides) {
+    		Block block = SideUtils.getBlockFromSide(x, y, z, world, side);
+    		if (block!=null && block instanceof IAetherTransfer) {
+    			ret[side] = true;
+    		}
+    	}
+    	return ret;
+    }
 }
