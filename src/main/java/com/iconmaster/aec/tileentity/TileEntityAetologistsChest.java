@@ -47,12 +47,12 @@ public class TileEntityAetologistsChest extends AetherCraftTileEntity implements
 
 	@Override
 	public boolean canInsertItem(int slot, ItemStack stack, int side) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean canExtractItem(int slot, ItemStack stack, int side) {
-		return true;
+		return false;
 	}
 	
 	@Override
