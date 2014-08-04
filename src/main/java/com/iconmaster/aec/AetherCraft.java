@@ -23,6 +23,7 @@ import com.iconmaster.aec.block.BlockAetherInfuser;
 import com.iconmaster.aec.block.BlockAetherManipulator;
 import com.iconmaster.aec.block.BlockAetherPump;
 import com.iconmaster.aec.block.BlockAetherReconstructor;
+import com.iconmaster.aec.block.BlockAetologistsChest;
 import com.iconmaster.aec.block.BlockInfused;
 import com.iconmaster.aec.command.ConfigCommand;
 import com.iconmaster.aec.item.ItemAetherArmor;
@@ -78,6 +79,7 @@ public class AetherCraft {
 	public static Block blockAetherReconstructor;
 	public static Block blockAetherPump;
 	public static Block blockInfused;
+	public static Block blockAetoChest;
 	public static Item itemAetherBattery;
 	public static Item itemFlyingRing;
 	public static Item itemRepairRing;
@@ -139,24 +141,16 @@ public class AetherCraft {
 	public void init(FMLInitializationEvent event) {
 		proxy.registerRenderInformation();
 		// Blocks
-		blockAetherManipulator  = new BlockAetherManipulator(
-				Material.rock,"Manipulator").setLightLevel(0.3f);
-		blockAetherContainer  = new BlockAetherContainer(
-				Material.rock,"Container").setLightLevel(0.3f);
-		blockAetherConduit  = new BlockAetherConduit(
-				Material.rock).setLightLevel(0.2f);
-		blockAetherExtractor = new BlockAetherExtractor(
-				Material.rock,"Extractor").setLightLevel(0.3f);
-		blockAetherCondenser = new BlockAetherCondenser(
-				Material.rock,"Condenser").setLightLevel(0.3f);
-		blockAetherInfuser = new BlockAetherInfuser(
-				Material.rock,"Infuser").setLightLevel(0.3f);
-		blockAetherReconstructor = new BlockAetherReconstructor(
-				Material.rock,"Reconstructor").setLightLevel(0.3f);
-		blockAetherPump= new BlockAetherPump(
-				Material.rock,"Pump").setLightLevel(0.3f);
-		blockInfused = new BlockInfused(
-				Material.rock).setLightLevel(0.7f);
+		blockAetherManipulator  = new BlockAetherManipulator(Material.rock,"Manipulator").setLightLevel(0.3f);
+		blockAetherContainer  = new BlockAetherContainer(Material.rock,"Container").setLightLevel(0.3f);
+		blockAetherConduit  = new BlockAetherConduit(Material.rock).setLightLevel(0.2f);
+		blockAetherExtractor = new BlockAetherExtractor(Material.rock,"Extractor").setLightLevel(0.3f);
+		blockAetherCondenser = new BlockAetherCondenser(Material.rock,"Condenser").setLightLevel(0.3f);
+		blockAetherInfuser = new BlockAetherInfuser(Material.rock,"Infuser").setLightLevel(0.3f);
+		blockAetherReconstructor = new BlockAetherReconstructor(Material.rock,"Reconstructor").setLightLevel(0.3f);
+		blockAetherPump= new BlockAetherPump(Material.rock,"Pump").setLightLevel(0.3f);
+		blockInfused = new BlockInfused(Material.rock).setLightLevel(0.7f);
+		blockAetoChest = new BlockAetologistsChest(Material.rock).setLightLevel(0.3f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery();
 		itemInfused = new ItemInfused();

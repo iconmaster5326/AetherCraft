@@ -20,6 +20,7 @@ tile.aec.aetherConduit.2.name=Gilded Conduit
 aec.aetherPump.0.name=Aether Pump
 aec.aetherPump.1.name=Infused Pump
 aec.aetherPump.2.name=Gilded Pump
+tile.aec.aetoChest.name=Aetologist's Chest
 
 aec.infused.block.0.name=Infused Block
 aec.infused.block.1.name=Infused Brick

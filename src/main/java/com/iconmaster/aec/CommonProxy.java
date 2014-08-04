@@ -14,6 +14,7 @@ import com.iconmaster.aec.client.gui.GuiAetherExtractor;
 import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
+import com.iconmaster.aec.client.gui.GuiAetologistsChest;
 import com.iconmaster.aec.event.AetherArmorDamageEvent;
 import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
@@ -25,6 +26,7 @@ import com.iconmaster.aec.inventory.ContainerAetherExtractor;
 import com.iconmaster.aec.inventory.ContainerAetherInfuser;
 import com.iconmaster.aec.inventory.ContainerAetherManipulator;
 import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
+import com.iconmaster.aec.inventory.ContainerAetologistsChest;
 import com.iconmaster.aec.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.item.ItemBlockInfused;
 import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
@@ -34,6 +36,7 @@ import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
 import com.iconmaster.aec.util.InventoryUtils;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -63,6 +66,8 @@ public class CommonProxy implements IGuiHandler {
 				"aec.reconstructor");
 		GameRegistry.registerTileEntity(TileEntityAetherPump.class,
 				"aec.pump");
+		GameRegistry.registerTileEntity(TileEntityAetologistsChest.class,
+				"aec.chest");
 	}
 
 	public void registerBlocks() {
@@ -75,6 +80,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerBlock(AetherCraft.blockAetherReconstructor,ItemAetherCraftBlock.class,"aetherReconstructor");
 		GameRegistry.registerBlock(AetherCraft.blockAetherPump,ItemAetherCraftBlock.class,"aetherPump");
 		GameRegistry.registerBlock(AetherCraft.blockInfused,ItemBlockInfused.class,"blockInfused");
+		GameRegistry.registerBlock(AetherCraft.blockAetoChest,"aetoChest");
 		
 		GameRegistry.registerItem(AetherCraft.itemAetherBattery,"aetherBattery");
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
@@ -193,6 +199,8 @@ public class CommonProxy implements IGuiHandler {
 			return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
 			return new ContainerAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetologistsChest) {
+			return new ContainerAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
 		}
 		return null;
 	}
@@ -214,6 +222,8 @@ public class CommonProxy implements IGuiHandler {
 			return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
 		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
 			return new GuiAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
+		} else if (tileEntity instanceof TileEntityAetologistsChest) {
+			return new GuiAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
 		}
 		return null;
 	}

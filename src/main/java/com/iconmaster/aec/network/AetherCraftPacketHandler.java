@@ -19,5 +19,6 @@ public class AetherCraftPacketHandler {
 		HANDLER.registerMessage(RequestSyncPacket.class, RequestSyncPacket.class, 5, Side.SERVER);
 		HANDLER.registerMessage(ActivateRingsPacket.class, ActivateRingsPacket.class, 6, Side.SERVER);
 		HANDLER.registerMessage(DeactivateRingsPacket.class, DeactivateRingsPacket.class, 7, Side.SERVER);
+		HANDLER.registerMessage(ChangeEditModePacket.class, ChangeEditModePacket.class, 8, Side.SERVER);
 	}
 }

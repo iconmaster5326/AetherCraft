@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
 import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -28,6 +29,12 @@ public class DeviceSyncPacket implements IMessage, IMessageHandler<DeviceSyncPac
 	public DeviceSyncPacket(int x,int y,int z,float av1,float av2) {
 		this(x,y,z,av1);
 		this.av2 = av2;
+	}
+	
+	//more hackish use of syncpacket! yay!
+	public DeviceSyncPacket(int x,int y,int z,float av1,boolean opt) {
+		this(x,y,z,av1);
+		this.av2 = opt ? 1 : 0;
 	}
 
 	@Override
@@ -58,6 +65,8 @@ public class DeviceSyncPacket implements IMessage, IMessageHandler<DeviceSyncPac
 		}
 		if (te instanceof TileEntityAetherInfuser) {
 			((TileEntityAetherInfuser)te).recieveSync(message.av1,message.av2);
+		} else if (te instanceof TileEntityAetologistsChest) {
+			((TileEntityAetologistsChest)te).recieveSync(message.av1,message.av2==1);
 		} else {
 			te.recieveSync(message.av1);
 		}

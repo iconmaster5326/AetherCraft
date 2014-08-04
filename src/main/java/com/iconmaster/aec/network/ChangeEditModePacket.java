@@ -3,22 +3,25 @@ package com.iconmaster.aec.network;
 import io.netty.buffer.ByteBuf;
 
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
 
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 
-public class RequestSyncPacket implements IMessage, IMessageHandler<RequestSyncPacket, IMessage> {
+public class ChangeEditModePacket implements IMessage, IMessageHandler<ChangeEditModePacket, IMessage> {
 	private int x,y,z = 0;
+	private boolean mode = false;
 	
-	public RequestSyncPacket() {
+	public ChangeEditModePacket() {
 		
 	}
 	
-	public RequestSyncPacket(int x,int y,int z) {
+	public ChangeEditModePacket(int x,int y,int z,boolean mode) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.mode  = mode;
 	}
 
 	@Override
@@ -26,6 +29,7 @@ public class RequestSyncPacket implements IMessage, IMessageHandler<RequestSyncP
 		x = buffer.readInt();
 		y = buffer.readInt();
 		z = buffer.readInt();
+		mode = buffer.readBoolean();
 	}
 
 	@Override
@@ -33,16 +37,20 @@ public class RequestSyncPacket implements IMessage, IMessageHandler<RequestSyncP
 		buffer.writeInt(x);
 		buffer.writeInt(y);
 		buffer.writeInt(z);
+		buffer.writeBoolean(mode);
 	}
 
 	@Override
-	public IMessage onMessage(RequestSyncPacket message, MessageContext ctx) {
+	public IMessage onMessage(ChangeEditModePacket message, MessageContext ctx) {
 		AetherCraftTileEntity te = (AetherCraftTileEntity) ctx.getServerHandler().playerEntity.worldObj.getTileEntity(message.x, message.y, message.z);
 		if (te == null) {
 			//System.out.println("[AEC PACKET]SERVER ERROR: TE was null!");
 			return null;
 		}
-		AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(message.x,message.y,message.z,te.getAether()));
+		if (te instanceof TileEntityAetologistsChest) {
+			((TileEntityAetologistsChest)te).editMode = message.mode;
+			te.sync();
+		}
 		return null;
 	}
 	
