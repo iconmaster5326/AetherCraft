@@ -22,45 +22,8 @@ import com.iconmaster.aec.util.UidUtils;
 public class AVRegistry {
 	private static HashMap values ;
 	private static HashMap hardcoded = new HashMap();
-	private static HashMap unlocalizedNames ;
 	private static int usedMetas = 0;
 	private static HashMap fluids = new HashMap();
-	
-	/**
-	 * Returns a hash with keys of unlocalized names and values of <code>Item</code>s. Used in looking up items by config name.
-	 * @return
-	 */
-	private static HashMap getAllNames() {
-		HashMap map = new HashMap();
-		//TODO: remove name table; uneeded
-		for (int i=0;i<32000;i++) {
-			try {
-				Item item = (Item) Item.itemRegistry.getObjectById(i);
-				if (item!=null) {
-					if (item.getHasSubtypes() &&!item.isItemTool(new ItemStack(item))) {
-						//ArrayList li = new ArrayList();
-						//item.getSubItems(item.itemID, null, li);
-						for (int j=0;j<=2048/*li.size()-1*/;j++) {
-							//System.out.println("WRITING "+item.getUnlocalizedName(new ItemStack(item,1,j)));
-							try {
-								if (map.get(item.getUnlocalizedName(new ItemStack(item,1,j)))==null) {
-									map.put(item.getUnlocalizedName(new ItemStack(item,1,j)),new ItemStack(item,1,j));
-								}
-							} catch (Exception e) {
-								
-							}
-						}
-					} else if (item.getUnlocalizedName()!=null) {
-						//System.out.println("WRITING "+item.getUnlocalizedName());
-						map.put(item.getUnlocalizedName(),new ItemStack(item));
-					}
-				} 
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	return map;
-	}
 	
 	/**
 	 * Sets the AV of a given ItemStack.
@@ -187,30 +150,6 @@ public class AVRegistry {
 			//System.out.println("[AEC] :: case detected. String is"+s+". Meta is "+meta);
 		}
 		
-		//TODO: remove this. No longer able to do this
-//		if (NumberUtils.isInteger(s)) {
-//			if (meta != null) {
-//				return new ItemStack(Integer.parseInt(s),1,meta);
-//			}	else {
-//				return new ItemStack(Integer.parseInt(s),1,0);
-//			}
-//		}
-		
-		if (unlocalizedNames==null) {
-			unlocalizedNames=getAllNames();
-		}
-		
-		if (unlocalizedNames.get(s)!=null) {
-			//System.out.println("[AEC] Found name: "+s);
-			ItemStack result = (ItemStack)unlocalizedNames.get(s);
-			if (meta != null) {
-				return new ItemStack(result.getItem(),result.stackSize,meta);
-			} else {
-				return result;
-			}
-		}
-		
-		//TODO: remove code above
 		if (Item.itemRegistry.getObject(s)!=null) {
 			Item result = (Item) Item.itemRegistry.getObject(s);
 			if (meta != null) {
@@ -235,7 +174,6 @@ public class AVRegistry {
 	public static void reloadAllValues() {
 		values = new HashMap();
 		
-		unlocalizedNames = getAllNames();
 		AVConfigHandler.loadAllConfigFiles();
 		DynamicAVRegister.addDynamicValues();
 		
@@ -244,7 +182,6 @@ public class AVRegistry {
 	public static void reloadClientValues(HashMap stringValues) {
 		values = new HashMap();
 		
-		unlocalizedNames = getAllNames();
 		AVConfigHandler.loadNetworkConfigFile(stringValues);
 		DynamicAVRegister.addDynamicValues();
 		
