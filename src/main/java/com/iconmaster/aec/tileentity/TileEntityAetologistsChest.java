@@ -13,6 +13,7 @@ import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetologistsChest extends AetherCraftTileEntity implements ISidedInventory, IAetherStorage {
@@ -71,7 +72,7 @@ public class TileEntityAetologistsChest extends AetherCraftTileEntity implements
 	@Override
 	public void sync() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-			AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.editMode));
+			AetherCraftPacketHandler.HANDLER.sendToAllAround(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.editMode), new TargetPoint(worldObj.provider.dimensionId,xCoord,yCoord,zCoord,8));
 	}
 
 	public void recieveSync(float av1, boolean b) {

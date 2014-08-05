@@ -5,6 +5,9 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
 import com.iconmaster.aec.AetherCraft;
@@ -16,6 +19,7 @@ import com.iconmaster.aec.network.DeviceSyncPacket;
 import com.iconmaster.aec.network.RequestSyncPacket;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 
 /**
@@ -186,7 +190,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 
 	public void sync() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-			AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy));
+			AetherCraftPacketHandler.HANDLER.sendToAllAround(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy), new TargetPoint(worldObj.provider.dimensionId,xCoord,yCoord,zCoord,8));
 	}
 
 	public void recieveSync(float par1energy) {
@@ -355,4 +359,18 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		if (limit!=0) {return;}
 		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
 	}
+	
+   @Override
+    public Packet getDescriptionPacket() 
+    {
+    	NBTTagCompound tagCompound = new NBTTagCompound();
+    	this.writeToNBT(tagCompound);
+    	return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, tagCompound);
+    }
+    
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
+    {
+    	this.readFromNBT(pkt.func_148857_g());
+    }
 }

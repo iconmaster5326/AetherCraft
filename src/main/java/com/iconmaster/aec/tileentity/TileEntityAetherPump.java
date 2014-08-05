@@ -91,18 +91,4 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 			limit /= 8;
 		}
 	}
-	
-    @Override
-    public Packet getDescriptionPacket() 
-    {
-    	NBTTagCompound tagCompound = new NBTTagCompound();
-    	this.writeToNBT(tagCompound);
-    	return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, tagCompound);
-    }
-    
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
-    {
-    	this.readFromNBT(pkt.func_148857_g());
-    }
 }

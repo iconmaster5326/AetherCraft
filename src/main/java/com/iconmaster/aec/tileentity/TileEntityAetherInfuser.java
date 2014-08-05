@@ -12,6 +12,7 @@ import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
 
 public class TileEntityAetherInfuser extends AetherCraftTileEntity implements ISidedInventory, IAetherStorage {
@@ -111,7 +112,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	@Override
 	public void sync() {
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER)
-			AetherCraftPacketHandler.HANDLER.sendToAll(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.infused));
+			AetherCraftPacketHandler.HANDLER.sendToAllAround(new DeviceSyncPacket(this.xCoord,this.yCoord,this.zCoord,this.energy,this.infused), new TargetPoint(worldObj.provider.dimensionId,xCoord,yCoord,zCoord,8));
 	}
 	
 	public void recieveSync(float par1energy,float infused) {
