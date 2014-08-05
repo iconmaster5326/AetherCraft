@@ -42,6 +42,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	 */
 	protected boolean use0 = true;
 	private int tickCount = 0;
+	private boolean dirty = false;
 
 	public AetherCraftTileEntity() {
 		
@@ -187,8 +188,9 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 				boolean result = handleAether();
 				doSync = doSync || result;
 			}
-			if (doSync) {
+			if (doSync || dirty) {
 				sync();
+				dirty = false;
 			}
 		}
 	}
@@ -242,12 +244,12 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		calcMax();
 		if (this.energy + ev <= max) {
 			this.energy += ev;
-			this.sync();
+			this.markDirty();
 			return 0;
 		} else {
 			float rest = (this.energy + ev) - max;
 			this.energy = max;
-			this.sync();
+			this.markDirty();
 			return rest;
 		}
 	}
@@ -259,13 +261,13 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		if (this.energy - av >= 0) {
 			//System.out.println("Had enough AV. Returning "+av+" AV.");
 			this.energy -= av;
-			this.sync();
+			this.markDirty();
 			return av;
 		}
 		float rest = this.energy;
 		//System.out.println("Did not have enough AV. Returning "+rest+" AV.");
 		this.energy = 0;
-		this.sync();
+		this.markDirty();
 		return rest;
 	}
 	
@@ -363,5 +365,9 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	public void calcLimit() {
 		if (limit!=0) {return;}
 		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
+	}
+	
+	public void markDirty() {
+		dirty = true;
 	}
 }
