@@ -24,7 +24,7 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 		return "aec.manipulaator";
 	}
 
-	public void handleAether() {
+	public boolean handleAether() {
 		calcMax();
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
@@ -133,16 +133,14 @@ public class TileEntityAetherManipulator extends AetherCraftTileEntity implement
 				
 			}
 			
-			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
-				this.sync();
-				return;
+			if (!Boolean.parseBoolean(AetherCraft.getOptions("instantconsume")) && i >= 9 && doneSomething) {
+				return true;
 			}
 		}
 		if (doneSomething) {
-			this.sync();
-			return;
+			return true;
 		}
+		return false;
 	}
 
 	public void calculateProgress() {

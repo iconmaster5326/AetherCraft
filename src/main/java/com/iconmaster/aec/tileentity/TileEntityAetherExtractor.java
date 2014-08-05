@@ -23,7 +23,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 	}
 
 	@Override
-	public void handleAether() {
+	public boolean handleAether() {
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
 		boolean doneSomething = false;
@@ -83,14 +83,13 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 			
 			if (!Boolean.parseBoolean(AetherCraft
 					.getOptions("instantconsume")) && doneSomething) {
-				this.sync();
-				return;
+				return true;
 			}
 		}
 		if (doneSomething) {
-			this.sync();
-			return;
+			return true;
 		}
+		return false;
 	}
 
 	@Override

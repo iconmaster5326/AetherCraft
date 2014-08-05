@@ -25,7 +25,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 	}
 
 	@Override
-	public void handleAether() {
+	public boolean handleAether() {
 		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
@@ -88,14 +88,13 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 			
 			if (!Boolean.parseBoolean(AetherCraft
 					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
-				this.sync();
-				return;
+				return true;
 			}
 		}
 		if (doneSomething) {
-			this.sync();
-			return;
+			return true;
 		}
+		return false;
 	}
 
 	@Override

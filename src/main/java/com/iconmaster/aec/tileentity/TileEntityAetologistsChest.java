@@ -30,8 +30,8 @@ public class TileEntityAetologistsChest extends AetherCraftTileEntity implements
 	}
 
 	@Override
-	public void handleAether() {
-
+	public boolean handleAether() {
+		return false;
 	}
 
 	@Override

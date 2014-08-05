@@ -25,7 +25,7 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 	}
 
 	@Override
-	public void handleAether() {
+	public boolean handleAether() {
 		float rate = 8;
 		ItemStack tool = getStackInSlot(0);
 		if (tool != null) {
@@ -44,14 +44,15 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 				}
 				if (!failed && av != 0) {
 					tool.setItemDamage(tool.getItemDamage()-1);
-					sync();
+					return true;
 				}
 			} else if (getStackInSlot(1)==null) {
 				setInventorySlotContents(1, tool);
 				inventory[0] = null;
-				sync();
+				return true;
 			}
 		}
+		return false;
 	}
 
 	@Override

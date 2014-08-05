@@ -23,8 +23,9 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 	}
 
 	@Override
-	public void handleAether() {
+	public boolean handleAether() {
 		calcMax();
+		boolean doneSomething = false;
 		float chargeRate = (float) (Float.parseFloat(AetherCraft.getOptions("chargerate"))*Math.pow(2,getMetadata()*2));
 
 		ItemStack topStack = this.getStackInSlot(0);
@@ -40,8 +41,9 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 			} else {
 				energy += got;
 			}
-			this.sync();
-
+			if(got>0) {
+				doneSomething = true;
+			}
 		}
 
 		// ------------------- Charging - BOTTOM SLOT -------------------
@@ -55,9 +57,10 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 				this.energy -= drawn-rest;
 			}
 			if (drawn-rest>0) {
-				this.sync();
+				doneSomething = true;
 			}
 		}
+		return doneSomething;
 	}
 
 	@Override

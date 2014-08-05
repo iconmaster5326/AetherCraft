@@ -95,42 +95,6 @@ public class AetherCraftBlock extends BlockContainer implements IAetherTransfer 
 	}
 
 	@Override
-	public void onBlockAdded(World world, int x, int y, int z) {
-		if (!world.isRemote) {
-			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-			AetherCraftTileEntity tileEntity = (AetherCraftTileEntity) world
-					.getTileEntity(x, y, z);
-			if (tileEntity != null) {
-				tileEntity.setPoweredState(state);
-			}
-		}
-	}
-
-	@Override
-    public void updateTick(World world, int x, int y, int z, Random random)
-    {
-		boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-		AetherCraftTileEntity tileEntity = (AetherCraftTileEntity) world
-				.getTileEntity(x, y, z);
-		if (tileEntity != null) {
-			tileEntity.setPoweredState(state);
-		}
-    }
-
-	//TODO: I never realized that these things were RS powered
-//	@Override
-//	public void onNeighborBlockChange(World world, int x, int y, int z, int par5) {
-//		if (!world.isRemote) {
-//			boolean state = world.isBlockIndirectlyGettingPowered(x, y, z);
-//			AetherCraftTileEntity tileEntity = (AetherCraftTileEntity) world
-//					.getTileEntity(x, y, z);
-//			if (tileEntity != null) {
-//				tileEntity.setPoweredState(state);
-//			}
-//		}
-//	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public IIcon getIcon(int side, int metadata) {
 		if (metadata >= icon.length || icon[metadata]==null) {return null;}

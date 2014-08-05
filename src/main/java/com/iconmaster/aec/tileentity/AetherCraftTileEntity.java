@@ -41,6 +41,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	 * Set this to false is you don't want the 0th slot to be considered as valid in getStackableSlot and getEmptySlot.
 	 */
 	protected boolean use0 = true;
+	private int tickCount = 0;
 
 	public AetherCraftTileEntity() {
 		
@@ -171,20 +172,24 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		tagCompound.setFloat("AV", this.energy);
 	}
 
-	public void handleAether() {
-	}
-
-	public void setPoweredState(boolean state) {
-		this.powered = state;
+	public boolean handleAether() {
+		return false;
 	}
 
 	@Override
 	public void updateEntity() {
 		this.calculateProgress();
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER
-				&& !this.powered) {
-//			this.updateConnectedSides();
-			handleAether();
+		tickCount ++;
+		int ticks = Integer.parseInt(AetherCraft.getOptions("ticksperop"));
+		if (tickCount%ticks==0 && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
+			boolean doSync = false;
+			for (int i=0;i<ticks;i++) {
+				boolean result = handleAether();
+				doSync = doSync || result;
+			}
+			if (doSync) {
+				sync();
+			}
 		}
 	}
 
@@ -359,18 +364,4 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		if (limit!=0) {return;}
 		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
 	}
-	
-   @Override
-    public Packet getDescriptionPacket() 
-    {
-    	NBTTagCompound tagCompound = new NBTTagCompound();
-    	this.writeToNBT(tagCompound);
-    	return new S35PacketUpdateTileEntity(this.xCoord, this.yCoord, this.zCoord, 2, tagCompound);
-    }
-    
-    @Override
-    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) 
-    {
-    	this.readFromNBT(pkt.func_148857_g());
-    }
 }

@@ -30,7 +30,8 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	}
 
 	@Override
-	public void handleAether() {
+	public boolean handleAether() {
+		boolean doneSomething = false;
 		ItemStack item = getStackInSlot(0);
 		if (InfuserRegistry.getOutputAV(item)!=0) {
 			if (infused >= InfuserRegistry.getOutputAV(item)) {
@@ -42,12 +43,12 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 					ItemStack stack = output.copy();
 					this.setInventorySlotContents(1, stack);
 					this.decrStackSize(0, 1);
-					sync();
+					doneSomething = true;
 				} else if (outputSlot.isItemEqual(output) && outputSlot.stackSize + output.stackSize <= output.getMaxStackSize()) {
 					infused -= InfuserRegistry.getOutputAV(item);
 					this.decrStackSize(1, -output.stackSize);
 					this.decrStackSize(0, 1);
-					sync();
+					doneSomething = true;
 				}
 			} else {
 				//drain some AV
@@ -69,11 +70,10 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 					infused+=rate;
 				}
 				
-				if (!failure) {
-					sync();
-				}
+				doneSomething = !failure;
 			}
 		}
+		return doneSomething;
 	}
 
 	@Override

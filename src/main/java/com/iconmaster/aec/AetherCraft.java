@@ -286,6 +286,10 @@ public class AetherCraft {
 		options.put("regnerationid", Integer.toString(forgeConfig.get("options",
 				"regnerationid", 25,
 				"A potion ID. Don't think about it too much.").getInt()));
+		
+		options.put("ticksperop", Integer.toString(forgeConfig.get("options",
+				"ticksperop", 1,
+				"Machines will take X ticks to process X items. X is this value.").getInt()));
 
 		// BOOLEAN
 		options.put(
