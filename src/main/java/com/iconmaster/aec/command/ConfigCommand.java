@@ -18,6 +18,8 @@ import net.minecraft.util.EnumChatFormatting;
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.config.AVConfig;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import com.iconmaster.aec.network.TransferConfigsPacket;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
@@ -76,13 +78,9 @@ public class ConfigCommand implements ICommand {
 				item = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
 			}
 			if (astring[0].equalsIgnoreCase("name") && item != null) {
-				String name = item.getUnlocalizedName();
+				String name = Item.itemRegistry.getNameForObject(item);
 				cmc = new ChatComponentText("");
-				if (name==null) {
-					cmc.appendText(EnumChatFormatting.RED  + "Item has no unlocalized name!");
-				} else {
-					cmc.appendText(EnumChatFormatting.GREEN  + "The item's name is " + name);
-				}
+				cmc.appendText(EnumChatFormatting.GREEN  + "The item's name is " + name);
 				icommandsender.addChatMessage(cmc);
 				return;
 			} else if (astring[0].equalsIgnoreCase("edit")) {
@@ -147,8 +145,7 @@ public class ConfigCommand implements ICommand {
 				cmc.appendText(EnumChatFormatting.GREEN +" All AV values have been updated.");
 				icommandsender.addChatMessage(cmc);
 				
-				//TODO: sync tables here
-				//PacketDispatcher.sendPacketToAllPlayers(ConnectionHandler.getTransferPacket());
+				AetherCraftPacketHandler.HANDLER.sendToAll(new TransferConfigsPacket().setState());
 			} else if (astring[0].equalsIgnoreCase("discard")) {
 				if (config == null) {
 					cmc.appendText(EnumChatFormatting.RED  + "There is no open config file. Use /aec edit first.");
