@@ -78,7 +78,7 @@ public class ConfigCommand implements ICommand {
 				item = ((EntityPlayerMP) icommandsender).inventory.getCurrentItem();
 			}
 			if (astring[0].equalsIgnoreCase("name") && item != null) {
-				String name = Item.itemRegistry.getNameForObject(item);
+				String name = Item.itemRegistry.getNameForObject(item.getItem());
 				cmc = new ChatComponentText("");
 				cmc.appendText(EnumChatFormatting.GREEN  + "The item's name is " + name);
 				icommandsender.addChatMessage(cmc);

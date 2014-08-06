@@ -19,6 +19,7 @@ import com.iconmaster.aec.block.BlockAetherCondenser;
 import com.iconmaster.aec.block.BlockAetherConduit;
 import com.iconmaster.aec.block.BlockAetherContainer;
 import com.iconmaster.aec.block.BlockAetherExtractor;
+import com.iconmaster.aec.block.BlockAetherFlame;
 import com.iconmaster.aec.block.BlockAetherInfuser;
 import com.iconmaster.aec.block.BlockAetherManipulator;
 import com.iconmaster.aec.block.BlockAetherPump;
@@ -38,6 +39,7 @@ import com.iconmaster.aec.item.ItemAetometer;
 import com.iconmaster.aec.item.ItemDummy;
 import com.iconmaster.aec.item.ItemFlyingRing;
 import com.iconmaster.aec.item.ItemInfused;
+import com.iconmaster.aec.item.ItemLightRing;
 import com.iconmaster.aec.item.ItemPhasingRing;
 import com.iconmaster.aec.item.ItemRegnerationRing;
 import com.iconmaster.aec.item.ItemRepairRing;
@@ -100,6 +102,8 @@ public class AetherCraft {
 	public static Item aetherLeggings;
 	public static Item aetherBoots;
 	public static Item aetometer;
+	public static Item itemLightRing;
+	public static Block blockAetherFlame;
 
 	//static ArrayList<Integer> blockIds = new ArrayList<Integer>();
 	//private static ArrayList<Integer> itemIds = new ArrayList<Integer>();
@@ -150,13 +154,12 @@ public class AetherCraft {
 		blockAetherReconstructor = new BlockAetherReconstructor(Material.rock,"Reconstructor").setLightLevel(0.3f);
 		blockAetherPump= new BlockAetherPump(Material.rock,"Pump").setLightLevel(0.3f);
 		blockInfused = new BlockInfused(Material.rock).setLightLevel(0.7f);
-		blockAetoChest = new BlockAetologistsChest(Material.rock).setLightLevel(0.3f);
+		blockAetoChest  = new BlockAetologistsChest(Material.rock).setLightLevel(0.3f);
 		// Items
 		itemAetherBattery = new ItemAetherBattery();
 		itemInfused = new ItemInfused();
 		dummy = new ItemDummy();
 		aetometer = new ItemAetometer();
-		
 		//Tools
 		aetherPickaxe = new ItemAetherPickaxe();
 		aetherAxe = new ItemAetherAxe();
@@ -181,6 +184,8 @@ public class AetherCraft {
 		this.regnerationPotion = new PotionRegneration(this.regnerationPotionId);
 		Potion.potionTypes[this.regnerationPotionId] = this.regnerationPotion;
 		itemPhasingRing = new ItemPhasingRing();
+		itemLightRing = new ItemLightRing();
+		blockAetherFlame = new BlockAetherFlame(Material.rock);
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		

@@ -6,6 +6,7 @@ import net.minecraftforge.common.MinecraftForge;
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.client.render.RenderAetherConduit;
+import com.iconmaster.aec.client.render.RenderAetherFlame;
 import com.iconmaster.aec.client.render.RenderAetherPump;
 import com.iconmaster.aec.event.AetherArmorDamageEvent;
 import com.iconmaster.aec.event.AetherSwordEvent;
@@ -32,6 +33,9 @@ public class ClientProxy extends CommonProxy {
             AetherCraft.proxy.pumpRenderType = RenderingRegistry.getNextAvailableRenderId();
             RenderingRegistry.registerBlockHandler(new RenderAetherPump());
             ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAetherPump.class, new RenderAetherPump());
+            
+            AetherCraft.proxy.flameRenderType = RenderingRegistry.getNextAvailableRenderId();
+            RenderingRegistry.registerBlockHandler(new RenderAetherFlame());
     }
 	
 	@Override

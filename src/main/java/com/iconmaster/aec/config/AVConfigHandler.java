@@ -10,7 +10,9 @@ import com.iconmaster.aec.aether.AVRegistry;
 
 public class AVConfigHandler {
 	private static DefaultAVConfig defs;
+	private static AetherCraftAVConfig aecdefs;
 	public final static String DEFAULT_DIR = "default.cfg";
+	public final static String AEC_DEFAULT_DIR = "AetherCraft.cfg";
 	
 	public static void loadAllConfigFiles() {
 		File dir = AetherCraft.getConfigDir();
@@ -26,11 +28,22 @@ public class AVConfigHandler {
 		}
 		defs.addValuesToTable();
 		
+		//AND the AeC config file
+		didExist = doesFileExist(dir,AEC_DEFAULT_DIR);
+		aecdefs  = new AetherCraftAVConfig(new File(dir,AEC_DEFAULT_DIR));
+		if (!didExist) {
+			aecdefs.setupDefault();
+			aecdefs.saveValues();
+		} else {
+			aecdefs.loadValues();
+		}
+		aecdefs.addValuesToTable();
+		
 		//next get any plugin config files
 		File[] configFiles = dir.listFiles(new FilenameFilter() {
 			@Override
 			public boolean accept(File dir, String name) {
-				return !name.equals(DEFAULT_DIR) && name.endsWith(".cfg");
+				return !name.equals(DEFAULT_DIR) &&  !name.equals(AEC_DEFAULT_DIR) && name.endsWith(".cfg");
 			}
 		});
 		for (File file : configFiles) {

@@ -47,6 +47,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 public class CommonProxy implements IGuiHandler {
 	public static int pumpRenderType = -1;
 	public static int conduitRenderType = -1;
+	public static int flameRenderType = -1;
 
 	public void registerRenderInformation() {
 	}
@@ -92,6 +93,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemRepairRing,"repairRing");
 		GameRegistry.registerItem(AetherCraft.itemRegnerationRing,"regnerationRing");
 		GameRegistry.registerItem(AetherCraft.itemPhasingRing,"phasingRing");
+		GameRegistry.registerItem(AetherCraft.itemLightRing,"lightRing");
+		GameRegistry.registerBlock(AetherCraft.blockAetherFlame,"aetherFlame");
 		
 		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		GameRegistry.registerItem(AetherCraft.aetherAxe,"aetherAxe");
@@ -168,6 +171,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemRepairRing,1,0), " a ","bcb"," d ",'a',AetherCraft.blockAetherReconstructor,'b',Items.iron_ingot,'c',band,'d',Items.diamond);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemRegnerationRing,1,0), "aba","dcf","aea",'a',infusedIngot,'b',goldMatter,'c',band,'d',Items.nether_wart,'e',Items.potionitem,'f',Items.ghast_tear);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemPhasingRing,1,0), " a ","dbd"," c ",'a',singularity,'b',band,'c',Blocks.glass,'d',Items.iron_ingot);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemLightRing,1,0), " a ","cbc"," c ",'a',infusedIngot,'b',band,'c',Blocks.glowstone);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherPickaxe), "aaa"," b "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherAxe), "aa ","ab "," b ",'a',infusedIngot,'b',infusedRod);

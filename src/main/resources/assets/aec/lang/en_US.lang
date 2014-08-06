@@ -49,6 +49,7 @@ item.aec.repairRing.name=Ring of Repair
 item.aec.regnerationRing.name=Ring of Regneration
 aec.potion.regneration=Regneration
 item.aec.phasingRing.name=Ring of Phasing
+item.aec.lightRing.name=Ring of Illumination
 
 item.aec.aetherPickaxe.name=Aether Pickaxe
 item.aec.aetherAxe.name=Aether Axe
@@ -58,5 +59,6 @@ item.aec.aetherHammer.name=Aether Hammer
 item.aec.aetherShears.name=Aether Shears
 
 item.aec.aetometer.name=Aetometer
+tile.aec.flame.name=Aetheral Flame
 
 itemGroup.aetherCraft=AetherCraft
