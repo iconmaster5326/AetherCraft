@@ -105,7 +105,7 @@ public class ItemTeleportRing extends Item {
 			if (cost <= av) {
 				InventoryUtils.drainAVFromInventory(player.inventory, cost);
 				player.setPositionAndUpdate(pos.x, pos.y, pos.z);
-				sendMessage(player,"Teleported across "+Math.floor(dis)+" blocks.");
+				sendMessage(player,"Teleported across "+(int)dis+" blocks.");
 			} else {
 				sendMessage(player,"Not enough AV!");
 			}
