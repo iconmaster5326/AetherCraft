@@ -1,7 +1,8 @@
 package com.iconmaster.aec.client.render;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
@@ -11,11 +12,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.CommonProxy;
-import com.iconmaster.aec.client.particle.AetherFlameFX;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class RenderAetherFlame implements ISimpleBlockRenderingHandler {
+	private static Random random = new Random();
 
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId,

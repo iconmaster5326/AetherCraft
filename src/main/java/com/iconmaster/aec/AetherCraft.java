@@ -43,6 +43,7 @@ import com.iconmaster.aec.item.ItemLightRing;
 import com.iconmaster.aec.item.ItemPhasingRing;
 import com.iconmaster.aec.item.ItemRegnerationRing;
 import com.iconmaster.aec.item.ItemRepairRing;
+import com.iconmaster.aec.item.ItemTeleportRing;
 import com.iconmaster.aec.item.PotionRegneration;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 
@@ -89,6 +90,8 @@ public class AetherCraft {
 	public static int regnerationPotionId;
 	public static Potion regnerationPotion;
 	public static Item itemPhasingRing;
+	public static Item itemLightRing;
+	public static Item itemTeleportRing;
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
@@ -102,7 +105,6 @@ public class AetherCraft {
 	public static Item aetherLeggings;
 	public static Item aetherBoots;
 	public static Item aetometer;
-	public static Item itemLightRing;
 	public static Block blockAetherFlame;
 
 	//static ArrayList<Integer> blockIds = new ArrayList<Integer>();
@@ -186,6 +188,7 @@ public class AetherCraft {
 		itemPhasingRing = new ItemPhasingRing();
 		itemLightRing = new ItemLightRing();
 		blockAetherFlame = new BlockAetherFlame(Material.rock);
+		itemTeleportRing = new ItemTeleportRing();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		
@@ -295,6 +298,10 @@ public class AetherCraft {
 		options.put("ticksperop", Integer.toString(forgeConfig.get("options",
 				"ticksperop", 1,
 				"Machines will take X ticks to process X items. X is this value.").getInt()));
+		
+		options.put("telecost", Float.toString((float)forgeConfig.get("options",
+				"telecost", 4F,
+				"The amount of AV the Ring of Teleportation uses to move you 1 block.").getDouble(4)));
 
 		// BOOLEAN
 		options.put(

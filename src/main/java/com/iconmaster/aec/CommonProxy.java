@@ -95,6 +95,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemPhasingRing,"phasingRing");
 		GameRegistry.registerItem(AetherCraft.itemLightRing,"lightRing");
 		GameRegistry.registerBlock(AetherCraft.blockAetherFlame,"aetherFlame");
+		GameRegistry.registerItem(AetherCraft.itemTeleportRing,"teleRing");
 		
 		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		GameRegistry.registerItem(AetherCraft.aetherAxe,"aetherAxe");
@@ -172,6 +173,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemRegnerationRing,1,0), "aba","dcf","aea",'a',infusedIngot,'b',goldMatter,'c',band,'d',Items.nether_wart,'e',Items.potionitem,'f',Items.ghast_tear);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemPhasingRing,1,0), " a ","dbd"," c ",'a',singularity,'b',band,'c',Blocks.glass,'d',Items.iron_ingot);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemLightRing,1,0), " a ","cbc"," c ",'a',infusedIngot,'b',band,'c',Blocks.glowstone);
+		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.itemTeleportRing,1,0), " a ","cbc"," d ",'a',singularity,'b',band,'c',Items.ender_pearl,'d',Items.ender_eye);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherPickaxe), "aaa"," b "," b ",'a',infusedIngot,'b',infusedRod);
 		GameRegistry.addShapedRecipe(new ItemStack(AetherCraft.aetherAxe), "aa ","ab "," b ",'a',infusedIngot,'b',infusedRod);

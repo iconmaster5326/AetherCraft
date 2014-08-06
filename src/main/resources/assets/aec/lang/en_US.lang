@@ -50,6 +50,7 @@ item.aec.regnerationRing.name=Ring of Regneration
 aec.potion.regneration=Regneration
 item.aec.phasingRing.name=Ring of Phasing
 item.aec.lightRing.name=Ring of Illumination
+item.aec.teleRing.name=Ring of Teleportation
 
 item.aec.aetherPickaxe.name=Aether Pickaxe
 item.aec.aetherAxe.name=Aether Axe
