@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockInfused extends Block {
 	
-	public IIcon[] icons = new IIcon[4];
+	public IIcon[] icons = new IIcon[6];
 
 	public BlockInfused(Material material) {
 		super(material);
@@ -34,6 +34,8 @@ public class BlockInfused extends Block {
         icons[1] = iconRegister.registerIcon("aec:InfusedBrick");
         icons[2] = iconRegister.registerIcon("aec:gildedBlock");
         icons[3] = iconRegister.registerIcon("aec:gildedBrick");
+        icons[4] = iconRegister.registerIcon("aec:eternalBlock");
+        icons[5] = iconRegister.registerIcon("aec:eternalBrick");
     }
     
     @Override

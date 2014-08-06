@@ -26,6 +26,8 @@ aec.infused.block.0.name=Infused Block
 aec.infused.block.1.name=Infused Brick
 aec.infused.block.2.name=Gilded Block
 aec.infused.block.3.name=Gilded Brick
+aec.infused.block.4.name=Eternal Block
+aec.infused.block.5.name=Eternal Brick
 
 aec.aetherBattery.0.name=Aether Cell
 aec.aetherBattery.1.name=Aether Battery
@@ -38,6 +40,10 @@ aec.infused.3.name=Wrought Band
 aec.infused.4.name=Gilded Ingot
 aec.infused.5.name=Golden Matter
 aec.infused.6.name=A-Space Singularity
+aec.infused.7.name=Pure Power
+aec.infused.8.name=Eternal Ingot
+aec.infused.9.name=Pure Crystal
+aec.infused.10.name=Compressed Singularity
 
 item.aec.aetherArmor.0.name=Aether Helmet
 item.aec.aetherArmor.1.name=Aether Chestplate

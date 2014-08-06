@@ -59,5 +59,6 @@ public class InfuserRegistry {
 		InfuserRegistry.addRecipe(new ItemStack(Items.diamond), new ItemStack(AetherCraft.itemInfused,1,1));
 		InfuserRegistry.addRecipe(new ItemStack(AetherCraft.itemInfused,1,0), new ItemStack(AetherCraft.itemInfused,1,4));
 		InfuserRegistry.addRecipe(new ItemStack(Items.nether_star), new ItemStack(AetherCraft.itemInfused,1,6));
+		InfuserRegistry.addRecipe(new ItemStack(AetherCraft.itemInfused,1,7), new ItemStack(AetherCraft.itemInfused,1,8));
 	}
 }
