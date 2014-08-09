@@ -244,12 +244,12 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		calcMax();
 		if (this.energy + ev <= max) {
 			this.energy += ev;
-			this.markDirty();
+			this.markDeviceDirty();
 			return 0;
 		} else {
 			float rest = (this.energy + ev) - max;
 			this.energy = max;
-			this.markDirty();
+			this.markDeviceDirty();
 			return rest;
 		}
 	}
@@ -261,13 +261,13 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		if (this.energy - av >= 0) {
 			//System.out.println("Had enough AV. Returning "+av+" AV.");
 			this.energy -= av;
-			this.markDirty();
+			this.markDeviceDirty();
 			return av;
 		}
 		float rest = this.energy;
 		//System.out.println("Did not have enough AV. Returning "+rest+" AV.");
 		this.energy = 0;
-		this.markDirty();
+		this.markDeviceDirty();
 		return rest;
 	}
 	
@@ -367,7 +367,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
 	}
 	
-	public void markDirty() {
+	public void markDeviceDirty() {
 		dirty = true;
 	}
 }

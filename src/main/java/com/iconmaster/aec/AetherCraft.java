@@ -44,6 +44,7 @@ import com.iconmaster.aec.item.ItemPhasingRing;
 import com.iconmaster.aec.item.ItemRegnerationRing;
 import com.iconmaster.aec.item.ItemRepairRing;
 import com.iconmaster.aec.item.ItemTeleportRing;
+import com.iconmaster.aec.item.ItemTransmuteRing;
 import com.iconmaster.aec.item.PotionRegneration;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 
@@ -92,6 +93,7 @@ public class AetherCraft {
 	public static Item itemPhasingRing;
 	public static Item itemLightRing;
 	public static Item itemTeleportRing;
+	public static Item itemTransmuteRing;
 	public static Item itemInfused;
 	public static Item dummy;
 	public static Item aetherPickaxe;
@@ -189,6 +191,7 @@ public class AetherCraft {
 		itemLightRing = new ItemLightRing();
 		blockAetherFlame = new BlockAetherFlame(Material.rock);
 		itemTeleportRing = new ItemTeleportRing();
+		itemTransmuteRing = new ItemTransmuteRing();
 
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 		

@@ -39,7 +39,7 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 					if (got < av) {
 						energy += got;
 						failed = true;
-						if (got != 0) {markDirty();}
+						if (got != 0) {markDeviceDirty();}
 					}
 				}
 				if (!failed && av != 0) {

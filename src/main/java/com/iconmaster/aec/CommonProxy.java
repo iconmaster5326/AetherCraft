@@ -15,6 +15,7 @@ import com.iconmaster.aec.client.gui.GuiAetherInfuser;
 import com.iconmaster.aec.client.gui.GuiAetherManipulator;
 import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
 import com.iconmaster.aec.client.gui.GuiAetologistsChest;
+import com.iconmaster.aec.client.gui.GuiTransmuteRing;
 import com.iconmaster.aec.event.AetherArmorDamageEvent;
 import com.iconmaster.aec.event.AetherSwordEvent;
 import com.iconmaster.aec.event.DisableRingInContainerEvent;
@@ -27,6 +28,7 @@ import com.iconmaster.aec.inventory.ContainerAetherInfuser;
 import com.iconmaster.aec.inventory.ContainerAetherManipulator;
 import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
 import com.iconmaster.aec.inventory.ContainerAetologistsChest;
+import com.iconmaster.aec.inventory.ContainerTransmuteRing;
 import com.iconmaster.aec.item.ItemAetherCraftBlock;
 import com.iconmaster.aec.item.ItemBlockInfused;
 import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
@@ -96,6 +98,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemLightRing,"lightRing");
 		GameRegistry.registerBlock(AetherCraft.blockAetherFlame,"aetherFlame");
 		GameRegistry.registerItem(AetherCraft.itemTeleportRing,"teleRing");
+		GameRegistry.registerItem(AetherCraft.itemTransmuteRing,"transmuteRing");
 		
 		GameRegistry.registerItem(AetherCraft.aetherPickaxe,"aetherPickaxe");
 		GameRegistry.registerItem(AetherCraft.aetherAxe,"aetherAxe");
@@ -205,50 +208,61 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,8), new ItemStack(AetherCraft.blockInfused,1,4));
 		GameRegistry.addShapelessRecipe(new ItemStack(AetherCraft.itemInfused,9,8), new ItemStack(AetherCraft.blockInfused,1,5));
 	}
+	
+	public static final int BLOCK_GUI_ID  = 0;
+	public static final int RING_TRANSMUTE_GUI_ID  = 1;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-
-		if (tileEntity instanceof TileEntityAetherManipulator) {
-			return new ContainerAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer) {
-			return new ContainerAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherExtractor) {
-			return new ContainerAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherCondenser) {
-			return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherInfuser) {
-			return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
-			return new ContainerAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetologistsChest) {
-			return new ContainerAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
+		if (ID==BLOCK_GUI_ID) {
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			if (tileEntity instanceof TileEntityAetherManipulator) {
+				return new ContainerAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherContainer) {
+				return new ContainerAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherExtractor) {
+				return new ContainerAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherCondenser) {
+				return new ContainerAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherInfuser) {
+				return new ContainerAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherReconstructor) {
+				return new ContainerAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetologistsChest) {
+				return new ContainerAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
+			}
+		} else if (ID == RING_TRANSMUTE_GUI_ID) {
+			return new ContainerTransmuteRing(player.inventory,player.getHeldItem());
 		}
+		
 		return null;
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world,
 			int x, int y, int z) {
-		TileEntity tileEntity = world.getTileEntity(x, y, z);
-
-		if (tileEntity instanceof TileEntityAetherManipulator) {
-			return new GuiAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherContainer) {
-			return new GuiAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherExtractor) {
-			return new GuiAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherCondenser) {
-			return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherInfuser) {
-			return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetherReconstructor) {
-			return new GuiAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
-		} else if (tileEntity instanceof TileEntityAetologistsChest) {
-			return new GuiAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
+		if (ID==BLOCK_GUI_ID) {
+			TileEntity tileEntity = world.getTileEntity(x, y, z);
+			if (tileEntity instanceof TileEntityAetherManipulator) {
+				return new GuiAetherManipulator(player.inventory,(TileEntityAetherManipulator) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherContainer) {
+				return new GuiAetherContainer(player.inventory,(TileEntityAetherContainer) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherExtractor) {
+				return new GuiAetherExtractor(player.inventory,(TileEntityAetherExtractor) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherCondenser) {
+				return new GuiAetherCondenser(player.inventory,(TileEntityAetherCondenser) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherInfuser) {
+				return new GuiAetherInfuser(player.inventory,(TileEntityAetherInfuser) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetherReconstructor) {
+				return new GuiAetherReconstructor(player.inventory,(TileEntityAetherReconstructor) tileEntity);
+			} else if (tileEntity instanceof TileEntityAetologistsChest) {
+				return new GuiAetologistsChest(player.inventory,(TileEntityAetologistsChest) tileEntity);
+			}
+		} else if (ID == RING_TRANSMUTE_GUI_ID) {
+			return new GuiTransmuteRing(player.inventory,player.getHeldItem());
 		}
+		
 		return null;
 	}
 
