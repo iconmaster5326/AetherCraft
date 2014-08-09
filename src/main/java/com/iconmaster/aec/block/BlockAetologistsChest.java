@@ -29,6 +29,7 @@ public class BlockAetologistsChest extends BlockContainer implements IAetherTran
 		super(material);
 		this.setCreativeTab(AetherCraft.tabAetherCraft);
 		this.setBlockName("aec.aetoChest");
+		this.setHardness(1.5f);
 	}
 
 	@Override
