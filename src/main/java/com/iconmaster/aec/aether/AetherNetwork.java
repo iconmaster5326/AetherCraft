@@ -193,4 +193,13 @@ public class AetherNetwork {
 		checkSelf  = mode;
 	}
 	
+	public static float getAVTransferLimit(World world,int x,int y,int z) {
+		ArrayList<DeviceData> devices = getAllConnectedDevices(world,x,y,z);
+		float av = Float.MAX_VALUE;
+		for (DeviceData device : devices) {
+			av = Math.min(device.maxAV, av);
+		}
+		return av;
+	}
+	
 }

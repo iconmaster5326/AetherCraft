@@ -16,6 +16,7 @@ import org.lwjgl.opengl.GL12;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.inventory.ContainerAetologistsChest;
+import com.iconmaster.aec.inventory.SlotAetoChest;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.ChangeEditModePacket;
 import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
@@ -59,6 +60,21 @@ public class GuiAetologistsChest extends AetherCraftGui<TileEntityAetologistsChe
 		int x = (this.width - this.xSize) / 2;
 		int y = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
+		
+		for (int yy = 0; yy < 3; yy++) {
+			for (int xx = 0; xx < 9; xx++) {
+				int slot = xx + (yy * 9);
+				int rx = x + 8 + xx * 18;
+				int ry = y + 18 + yy * 18;
+				
+				ItemStack stack = te.getStackInSlot(slot);
+				float av = AVRegistry.getAV(stack);
+				float limit = AetherNetwork.getAVTransferLimit(te.getWorldObj(),te.xCoord,te.yCoord,te.zCoord);
+				if (limit<av) {
+					this.drawGradientRect(rx, ry, rx+16, ry+16, 0x88FF0000,0x88FF0000);
+				}
+			}
+		}
 	}
 	
 	@Override
