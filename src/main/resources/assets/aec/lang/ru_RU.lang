@@ -1,0 +1,71 @@
+aec.aetherManipulator.0.name=Эфирный манипулятор
+aec.aetherManipulator.1.name=Наполненный манипулятор
+aec.aetherManipulator.2.name=Позолоченный манипулятор
+aec.aetherExtractor.0.name=Эфирный экстрактор
+aec.aetherExtractor.1.name=Наполненный экстрактор
+aec.aetherExtractor.2.name=Позолоченный экстрактор
+aec.aetherCondenser.0.name=Эфирный конденсатор
+aec.aetherCondenser.1.name=Наполненный конденсатор
+aec.aetherCondenser.2.name=Позолоченный конденсатор
+aec.aetherContainer.0.name=Эфирный контейнер
+aec.aetherContainer.1.name=Наполненный контейнер
+aec.aetherContainer.2.name=Позолоченный контейнер
+aec.aetherInfuser.0.name=Эфирный наполнитель
+aec.aetherInfuser.1.name=Наполненный катализатор
+aec.aetherInfuser.2.name=Позолоченный наполнитель
+aec.aetherReconstructor.0.name=Эфирный реконструктор
+tile.aec.aetherConduit.0.name=Эфирная труба
+tile.aec.aetherConduit.1.name=Наполненная труба
+tile.aec.aetherConduit.2.name=Позолоченная труба
+aec.aetherPump.0.name=Эфирная помпа
+aec.aetherPump.1.name=Наполненная помпа
+aec.aetherPump.2.name=Позолоченная помпа
+tile.aec.aetoChest.name=Эфирный сундук
+
+aec.infused.block.0.name=Наполненный блок
+aec.infused.block.1.name=Наполненный кирпич
+aec.infused.block.2.name=Позолоченный блок
+aec.infused.block.3.name=Позолоченный кирпич
+aec.infused.block.4.name=Эфирный блок
+aec.infused.block.5.name=Эфирный кирпич
+
+aec.aetherBattery.0.name=Эфирная капсула
+aec.aetherBattery.1.name=Эфирный аккумулятор
+aec.aetherBattery.2.name=Кристалл малого хранения
+
+aec.infused.0.name=Наполненный слиток
+aec.infused.1.name=Эфирное сосредоточение
+aec.infused.2.name=Наполненный стержень
+aec.infused.3.name=Кованый браслет
+aec.infused.4.name=Позолоченный слиток
+aec.infused.5.name=Золотая материя
+aec.infused.6.name=A-Space Singularity
+aec.infused.7.name=Чистая энергия
+aec.infused.8.name=Эфирный слиток
+aec.infused.9.name=Чистый кристалл
+aec.infused.10.name=Сжатая сингулярность
+
+item.aec.aetherArmor.0.name=Эфирный шлем
+item.aec.aetherArmor.1.name=Эфирная кираса
+item.aec.aetherArmor.2.name=Эфирные поножи
+item.aec.aetherArmor.3.name=Эфирные ботинки
+
+item.aec.flyingRing.name=Кольцо полёта
+item.aec.repairRing.name=Кольцо починки
+item.aec.regnerationRing.name=Кольцо регенерации
+aec.potion.regneration=Регенерация
+item.aec.phasingRing.name=Кольцо фазирования
+item.aec.lightRing.name=Кольцо освещения
+item.aec.teleRing.name=Кольцо телепортации
+
+item.aec.aetherPickaxe.name=Эфирная кирка
+item.aec.aetherAxe.name=Эфирный топор
+item.aec.aetherSword.name=Эфирный меч
+item.aec.aetherShovel.name=Эфирная лопата
+item.aec.aetherHammer.name=Эфирный молот
+item.aec.aetherShears.name=Эфирные ножницы
+
+item.aec.aetometer.name=Измеритель эфира
+tile.aec.flame.name=Эфирное пламя
+
+itemGroup.aetherCraft=AetherCraft
