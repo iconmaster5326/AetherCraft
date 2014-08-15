@@ -1,6 +1,8 @@
 package com.iconmaster.aec.config;
 
 import java.io.File;
+
+import net.minecraft.item.Item;
 /*
  * \t\t//[^\n]+\n
  */
@@ -22,7 +24,6 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("minecraft:melon_block",576.0F);
 		addValue("minecraft:mossy_cobblestone",16.0F);
 		addValue("minecraft:web",64.0F);
-		addValue("minecraft:record_wait",8192.0F);
 		addValue("minecraft:snowball",1.0F);
 		addValue("minecraft:mycelium",1.0F);
 		addValue("minecraft:poisonous_potato",32.0F);
@@ -36,7 +37,7 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("minecraft:nether_star",32768.0F);
 		addValue("minecraft:reeds",16.0F);
 		addValue("minecraft:redstone",16.0F);
-		addValue("minecraft:red_mushroom_block",32.0F);
+		addValue("minecraft:red_mushroom",32.0F);
 		addValue("minecraft:wheat_seeds",8.0F);
 		addValue("minecraft:glass",1.0F);
 		addValue("minecraft:speckled_melon",471.0F);
@@ -150,7 +151,19 @@ public class DefaultAVConfig extends AVConfig {
 		addValue("minecraft:dirt::0",1.0F);
 		addValue("minecraft:red_flower::6",16.0F);
 		addValue("minecraft:log2::1",16.0F);
-		addValue("minecraft:leaves2::1",1.0F);
+		addValue("minecraft:leaves2::1",8192.0F);
+		addValue("minecraft:record_13",8192.0F);
+		addValue("minecraft:record_cat",8192.0F);
+		addValue("minecraft:record_blocks",8192.0F);
+		addValue("minecraft:record_chirp",8192.0F);
+		addValue("minecraft:record_far",8192.0F);
+		addValue("minecraft:record_mall",8192.0F);
+		addValue("minecraft:record_mellohi",8192.0F);
+		addValue("minecraft:record_stal",8192.0F);
+		addValue("minecraft:record_strad",8192.0F);
+		addValue("minecraft:record_ward",8192.0F);
+		addValue("minecraft:record_11",8192.0F);
+		addValue("minecraft:record_wait",8192.0F);
 
 	}
 }
