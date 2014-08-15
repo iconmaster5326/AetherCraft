@@ -26,7 +26,7 @@ public class ItemTransmuteRing extends Item {
 		super();
 		this.setUnlocalizedName("aec.transmuteRing");
 		this.setMaxStackSize(1);
-		 this.setCreativeTab(AetherCraft.tabAetherCraft);
+		 //this.setCreativeTab(AetherCraft.tabAetherCraft);
 	}
 
 	@Override
