@@ -1,6 +1,8 @@
 package com.iconmaster.aec.tileentity;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -319,6 +321,9 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	}
 	
 	public boolean canConsume(ItemStack topStack, ItemStack currentStack) {
+		if (Boolean.parseBoolean(AetherCraft.getOptions("cobblehack")) && currentStack!=null && Block.getBlockFromItem(currentStack.getItem())==Blocks.cobblestone) {
+			return false;
+		}
 		calcLimit();
 		if (currentStack == null) {
 			return false;

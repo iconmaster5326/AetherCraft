@@ -325,6 +325,11 @@ public class AetherCraft {
 				"showavalways",
 				Boolean.toString(forgeConfig.get("options", "showavalways",
 						false, "If true, the AV of objects will be shown even if the user is not holding shift.").getBoolean(false)));
+		
+		options.put(
+				"cobblehack",
+				Boolean.toString(forgeConfig.get("options", "cobblehack",
+						false, "If true, you can't consume cobble for AV. A hackish fix!").getBoolean(false)));
 
 		forgeConfig.save();
 	}
