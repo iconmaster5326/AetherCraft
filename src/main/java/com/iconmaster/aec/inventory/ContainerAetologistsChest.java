@@ -70,7 +70,7 @@ public class ContainerAetologistsChest extends Container {
 					float av = AVRegistry.getAV(stackHeld);
 					if (av>0) {
 						ItemStack clone = stackHeld.copy();
-						clone.stackSize = 1;
+						clone.stackSize = 0;
 						pslot.putStack(clone);
 						
 						return clone;

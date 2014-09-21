@@ -14,12 +14,4 @@ public class SlotAetoChest extends Slot {
 		super(te, id, x, y);
 		this.te = te;
 	}
-	
-//	@Override
-//	public boolean canTakeStack(EntityPlayer par1EntityPlayer) {
-//        return te.editMode;
-//    }
-	
-	
-
 }
