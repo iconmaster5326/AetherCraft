@@ -1,12 +1,11 @@
 package com.iconmaster.aec.aether.flattener;
 
-import java.util.ArrayList;
-
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.DynamicAVRegister;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.DynamicAVRegister;
+import java.util.ArrayList;
 
 //We're assuming here that a string means an OreDict entry
 public class StringFlattener implements IFlattenerHandler<String> {

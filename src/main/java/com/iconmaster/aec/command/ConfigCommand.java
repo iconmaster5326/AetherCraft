@@ -1,12 +1,11 @@
 package com.iconmaster.aec.command;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.config.AVConfig;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import com.iconmaster.aec.network.TransferConfigsPacket;
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -15,13 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.config.AVConfig;
-import com.iconmaster.aec.network.AetherCraftPacketHandler;
-import com.iconmaster.aec.network.TransferConfigsPacket;
-
-import cpw.mods.fml.common.FMLCommonHandler;
+import java.io.File;
+import java.util.*;
 
 public class ConfigCommand implements ICommand {
 	private List aliases, tabCompletionOptions;

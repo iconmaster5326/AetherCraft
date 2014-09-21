@@ -1,15 +1,14 @@
 package com.iconmaster.aec.aether.recipe.te3;
 
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.util.ModHelpers;
+import com.iconmaster.aec.util.UidUtils;
+import net.minecraft.item.ItemStack;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
-
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
-import com.iconmaster.aec.util.ModHelpers;
-import com.iconmaster.aec.util.UidUtils;
 
 public class PulverizerHandler implements IDynamicAVRecipeHandler {
 	

@@ -1,22 +1,17 @@
 package com.iconmaster.aec.client.gui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
 import cpw.mods.fml.client.IModGuiFactory;
-import cpw.mods.fml.client.IModGuiFactory.RuntimeOptionCategoryElement;
-import cpw.mods.fml.client.IModGuiFactory.RuntimeOptionGuiHandler;
 import cpw.mods.fml.client.config.ConfigGuiType;
 import cpw.mods.fml.client.config.DummyConfigElement;
 import cpw.mods.fml.client.config.GuiConfig;
 import cpw.mods.fml.client.config.IConfigElement;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class ConfigGui implements IModGuiFactory {
 

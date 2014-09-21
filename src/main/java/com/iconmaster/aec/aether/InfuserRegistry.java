@@ -1,12 +1,11 @@
 package com.iconmaster.aec.aether;
 
-import java.util.HashMap;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.util.UidUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.util.UidUtils;
+import java.util.HashMap;
 
 /**
  * This class stores the reipes for the Aether Infuser. Use addRecipe to add your own Infuser recipes.

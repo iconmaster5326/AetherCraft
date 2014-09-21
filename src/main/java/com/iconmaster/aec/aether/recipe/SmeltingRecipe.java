@@ -1,9 +1,9 @@
 package com.iconmaster.aec.aether.recipe;
 
-import java.util.ArrayList;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 	public class SmeltingRecipe {
 		private ItemStack input;

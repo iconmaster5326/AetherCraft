@@ -1,14 +1,13 @@
 package com.iconmaster.aec.block;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.IAetherTransfer;
+import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 
 public class BlockAetherContainer extends AetherCraftBlock implements IAetherTransfer {
 	private IIcon blockIconTop, blockIconBottom;

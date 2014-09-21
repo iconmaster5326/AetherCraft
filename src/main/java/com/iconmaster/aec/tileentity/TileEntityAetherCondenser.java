@@ -1,14 +1,12 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.IProduceBehavior;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 		ISidedInventory, IAetherStorage {
@@ -26,7 +24,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 
 	@Override
 	public boolean handleAether() {
-		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("ammaxstorage"));
+		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("amgetMax()storage"));
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
@@ -46,13 +44,13 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 				}
 				
 				if (getAether() - av < 0) {
-					calcMax();
+					getMax();
 					boolean willGet = AetherNetwork.canRequestAV(worldObj, xCoord, yCoord, zCoord, av-energy)==av-energy;
 					if (willGet) {
 						AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, av-energy);
 						energy = 0;
 					} else {
-						float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(av-energy,max-energy));
+						float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(av-energy,getMax()-energy));
 						energy += got;
 						failed = true;
 					}
@@ -95,15 +93,6 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public void calculateProgress() {
-		calcMax();
-		this.progress = (int) ((this.getAether()/max)*100);
-		if (this.progress > 100) {
-			this.progress = 100;
-		}
 	}
 
 	@Override
@@ -159,9 +148,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 	}
 	
 	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
-		}
+	public float getMax() {
+			return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

@@ -1,9 +1,9 @@
 package com.iconmaster.aec.aether.recipe;
 
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import net.minecraft.item.ItemStack;
 
 /**
  * Make your dynamic recipe handlers implement this.

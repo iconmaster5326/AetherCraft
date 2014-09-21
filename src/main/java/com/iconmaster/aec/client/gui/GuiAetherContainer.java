@@ -1,19 +1,13 @@
 package com.iconmaster.aec.client.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import com.iconmaster.aec.inventory.ContainerAetherContainer;
 import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
 import com.iconmaster.aec.util.NumberUtils;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherContainer extends AetherCraftGui<TileEntityAetherContainer> {
@@ -36,11 +30,12 @@ public class GuiAetherContainer extends AetherCraftGui<TileEntityAetherContainer
 		this.fontRendererObj.drawString("Inventory", 7, 72, 0x404040);
 
 		this.fontRendererObj.drawStringWithShadow(
-				"AV: " + NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 34, 38,
+				"AV: " + NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.getMax()), 34, 38,
 				0x55FF55);
 
 		int a = 68 - 16;
-		float b = (100 - this.te.getProgress()) / 100.0f;
+		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
+		float b = (100 - progress) / 100.0f;
 		this.drawGradientRect(148, (int) (16.0f + (a * b)), 164, 68,
 				0xFF16FF00,0x990EA600);
 

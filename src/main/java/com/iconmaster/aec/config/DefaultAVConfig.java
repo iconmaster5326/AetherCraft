@@ -1,8 +1,6 @@
 package com.iconmaster.aec.config;
 
 import java.io.File;
-
-import net.minecraft.item.Item;
 /*
  * \t\t//[^\n]+\n
  */

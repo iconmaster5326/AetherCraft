@@ -1,44 +1,7 @@
 package com.iconmaster.aec.aether;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
-import net.minecraftforge.oredict.ShapedOreRecipe;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import com.iconmaster.aec.aether.flattener.ArrayFlattener;
-import com.iconmaster.aec.aether.flattener.BlockFlattener;
-import com.iconmaster.aec.aether.flattener.IC2InputFlattener;
-import com.iconmaster.aec.aether.flattener.IFlattenerHandler;
-import com.iconmaster.aec.aether.flattener.IntegerFlattener;
-import com.iconmaster.aec.aether.flattener.ItemFlattener;
-import com.iconmaster.aec.aether.flattener.ItemStackFlattener;
-import com.iconmaster.aec.aether.flattener.ListFlattener;
-import com.iconmaster.aec.aether.flattener.StringFlattener;
-import com.iconmaster.aec.aether.recipe.EIOAlloySmelterHandler;
-import com.iconmaster.aec.aether.recipe.EssenseRefinerHandler;
-import com.iconmaster.aec.aether.recipe.FluidContainerHandler;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
-import com.iconmaster.aec.aether.recipe.InfuserHandler;
-import com.iconmaster.aec.aether.recipe.InfuserRecipe;
-import com.iconmaster.aec.aether.recipe.OreDictionaryEntry;
-import com.iconmaster.aec.aether.recipe.OreDictionaryHandler;
-import com.iconmaster.aec.aether.recipe.ShapedOreRecipeHandler;
-import com.iconmaster.aec.aether.recipe.ShapedRecipeHandler;
-import com.iconmaster.aec.aether.recipe.ShapelessOreRecipeHandler;
-import com.iconmaster.aec.aether.recipe.ShapelessRecipeHandler;
-import com.iconmaster.aec.aether.recipe.SmeltingRecipe;
-import com.iconmaster.aec.aether.recipe.SmeltingRecipeHandler;
+import com.iconmaster.aec.aether.flattener.*;
+import com.iconmaster.aec.aether.recipe.*;
 import com.iconmaster.aec.aether.recipe.ae2.AEGrindingHandler;
 import com.iconmaster.aec.aether.recipe.ae2.AEInscribingHandler;
 import com.iconmaster.aec.aether.recipe.ae2.AEShapedCraftingHandler;
@@ -48,14 +11,7 @@ import com.iconmaster.aec.aether.recipe.bc.RefineryHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartCraftingHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartGrindingHandler;
 import com.iconmaster.aec.aether.recipe.dartcraft.DartShapelessCraftingHandler;
-import com.iconmaster.aec.aether.recipe.forestry.BottlerHandler;
-import com.iconmaster.aec.aether.recipe.forestry.CarpenterHandler;
-import com.iconmaster.aec.aether.recipe.forestry.FabricatorHandler;
-import com.iconmaster.aec.aether.recipe.forestry.FabricatorSmeltingHandler;
-import com.iconmaster.aec.aether.recipe.forestry.FermenterHandler;
-import com.iconmaster.aec.aether.recipe.forestry.ForestryCraftingRecipeHandler;
-import com.iconmaster.aec.aether.recipe.forestry.MoistenerHandler;
-import com.iconmaster.aec.aether.recipe.forestry.StillHandler;
+import com.iconmaster.aec.aether.recipe.forestry.*;
 import com.iconmaster.aec.aether.recipe.ic2.IC2CraftingHandler;
 import com.iconmaster.aec.aether.recipe.ic2.SimpleIC2Recipe;
 import com.iconmaster.aec.aether.recipe.ic2.SimpleIC2RecipeHandler;
@@ -72,8 +28,17 @@ import com.iconmaster.aec.aether.recipe.te3.PulverizerHandler;
 import com.iconmaster.aec.aether.recipe.te3.TransposerHandler;
 import com.iconmaster.aec.util.ModHelpers;
 import com.iconmaster.aec.util.UidUtils;
-
 import cpw.mods.fml.common.Loader;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import java.util.*;
 
 /**
  * This class is called when dynamic AV values are assigned.

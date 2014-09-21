@@ -1,15 +1,11 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IAetherStorageItem;
-import com.iconmaster.aec.util.SideUtils;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAetherReconstructor extends AetherCraftTileEntity implements
 		IInventory, IAetherStorage {
@@ -54,21 +50,10 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 		}
 		return false;
 	}
-
-	@Override
-	public void calculateProgress() {
-		calcMax();
-		this.progress = (int) ((this.energy / max) * 100.0f);
-		if (this.progress > 100) {
-			this.progress = 100;
-		}
-	}
 	
 	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/4)*(Math.pow(2,getMetadata()*2)));
-		}
+	public float getMax() {
+			return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/4)*(Math.pow(2,getMetadata()*2)));
 	}
 
 	@Override

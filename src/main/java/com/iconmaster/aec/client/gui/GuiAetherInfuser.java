@@ -1,20 +1,14 @@
 package com.iconmaster.aec.client.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.inventory.ContainerAetherInfuser;
 import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
 import com.iconmaster.aec.util.NumberUtils;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherInfuser extends AetherCraftGui<TileEntityAetherInfuser> {
@@ -36,7 +30,7 @@ public class GuiAetherInfuser extends AetherCraftGui<TileEntityAetherInfuser> {
 		GL11.glDisable(GL11.GL_LIGHTING);
 		this.fontRendererObj.drawString("Aether Infuser", 9, 4, 0x404040);
 
-		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.getMax()), 30, 58,0x00FF00);
 		
 		//te.calcLimit();
 		//this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 30, 70,0x00FF00);
@@ -54,7 +48,8 @@ public class GuiAetherInfuser extends AetherCraftGui<TileEntityAetherInfuser> {
 
 		
 		int barHeight = 68 - 16;
-		float barPercent = (100 - this.te.getProgress()) / 100.0f;
+		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
+		float barPercent = (100 - progress) / 100.0f;
 		//this.drawGradientRect(10, (int) (16+barHeight*barPercent), 26, 68,
 		//		0xFF16FF00,0x990EA600);
 		this.drawGradientRect(10, (int) (16.0f + (barHeight * barPercent)), 26, 68,

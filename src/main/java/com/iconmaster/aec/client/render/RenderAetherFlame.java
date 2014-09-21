@@ -1,19 +1,16 @@
 package com.iconmaster.aec.client.render;
 
-import java.util.Random;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.CommonProxy;
+import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
-
 import org.lwjgl.opengl.GL11;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.CommonProxy;
-
-import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import java.util.Random;
 
 public class RenderAetherFlame implements ISimpleBlockRenderingHandler {
 	private static Random random = new Random();

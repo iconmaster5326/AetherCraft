@@ -1,16 +1,13 @@
 package com.iconmaster.aec.util;
 
-import java.util.List;
-
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.input.Keyboard;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.aether.IProduceBehavior;
+import net.minecraft.item.ItemStack;
+import org.lwjgl.input.Keyboard;
+
+import java.util.List;
 
 /**
  * This class is a set of utilities having to do with tooltips. Call from GUIs to get AV tooltips.

@@ -1,25 +1,19 @@
 package com.iconmaster.aec.client;
 
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.common.MinecraftForge;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.CommonProxy;
 import com.iconmaster.aec.client.render.RenderAetherConduit;
 import com.iconmaster.aec.client.render.RenderAetherFlame;
 import com.iconmaster.aec.client.render.RenderAetherPump;
-import com.iconmaster.aec.event.AetherArmorDamageEvent;
-import com.iconmaster.aec.event.AetherSwordEvent;
-import com.iconmaster.aec.event.DisableRingInContainerEvent;
-import com.iconmaster.aec.event.FallDamageEvent;
-import com.iconmaster.aec.event.TooltipEvent;
+import com.iconmaster.aec.event.*;
 import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.util.InventoryUtils;
-
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ClientProxy extends CommonProxy {
 	public static int renderPass;

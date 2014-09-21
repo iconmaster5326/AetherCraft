@@ -1,20 +1,14 @@
 package com.iconmaster.aec.util;
 
-import java.util.HashMap;
-
+import com.iconmaster.aec.aether.IAetherStorageItem;
+import com.iconmaster.aec.item.IAetherRing;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.server.S09PacketHeldItemChange;
 
-import com.iconmaster.aec.aether.IAetherStorageItem;
-import com.iconmaster.aec.item.IAetherRing;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
+import java.util.HashMap;
 
 /**
  * A collection of utilities used in finding stored AV in inventories.

@@ -1,24 +1,17 @@
 package com.iconmaster.aec.block;
 
-import java.util.Random;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.client.particle.AetherFlameFX;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.client.particle.AetherFlameFX;
-import com.iconmaster.aec.tileentity.TileEntityAetherPump;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Random;
 
 public class BlockAetherFlame extends Block {
 	

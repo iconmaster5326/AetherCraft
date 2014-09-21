@@ -1,5 +1,10 @@
 package com.iconmaster.aec.item;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.util.InventoryUtils;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -9,13 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.util.InventoryUtils;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemAetherShears extends ItemShears {
 	public static IIcon activeIcon;

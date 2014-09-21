@@ -1,20 +1,19 @@
 package com.iconmaster.aec.nei;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map.Entry;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-
 import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.util.NumberUtils;
 import com.iconmaster.aec.util.UidUtils;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 public class NEIInfuserHandler extends TemplateRecipeHandler {
 	public static final int XOFFSET = 5;

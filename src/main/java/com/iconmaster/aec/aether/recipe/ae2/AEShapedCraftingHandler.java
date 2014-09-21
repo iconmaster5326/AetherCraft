@@ -1,14 +1,11 @@
 package com.iconmaster.aec.aether.recipe.ae2;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AEShapedCraftingHandler implements IDynamicAVRecipeHandler {
 

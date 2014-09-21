@@ -1,21 +1,19 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.PumpFacePacket;
 import com.iconmaster.aec.util.SideUtils;
 import com.iconmaster.aec.util.SideUtils.Offset;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 
 public class TileEntityAetherPump extends AetherCraftTileEntity implements
 		IInventory, IAetherStorage {
@@ -33,10 +31,10 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 
 	@Override
 	public boolean handleAether() {
-		calcLimit();
+		getLimit();
 		AetherNetwork.setCheckSelfMode(true);
 		Offset out = new Offset(face);
-		float need = limit-AetherNetwork.canSendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), limit);
+		float need = getLimit()-AetherNetwork.canSendAV(worldObj, out.getOffsetX(xCoord), out.getOffsetY(yCoord), out.getOffsetZ(zCoord), getLimit());
 
 		if (need>0) {
 			float got = 0;
@@ -53,11 +51,6 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 		
 		AetherNetwork.setCheckSelfMode(false);
 		return false;
-	}
-	
-	@Override
-	public void calcMax() {
-
 	}
 	
 	@Override
@@ -86,11 +79,8 @@ public class TileEntityAetherPump extends AetherCraftTileEntity implements
 	}
 	
 	@Override
-	public void calcLimit() {
-		if (limit==0) {
-			super.calcLimit();
-			limit /= 8;
-		}
+	public float getLimit() {
+		return super.getLimit()/8;
 	}
 	
 	   @Override

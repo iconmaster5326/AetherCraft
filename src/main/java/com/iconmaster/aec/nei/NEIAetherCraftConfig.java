@@ -2,7 +2,6 @@ package com.iconmaster.aec.nei;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
-
 import com.iconmaster.aec.AetherCraft;
 
 public class NEIAetherCraftConfig implements IConfigureNEI {

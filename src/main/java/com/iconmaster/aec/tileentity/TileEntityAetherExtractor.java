@@ -1,14 +1,12 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.IConsumeBehavior;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 		ISidedInventory, IAetherStorage {
@@ -27,7 +25,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
 		boolean doneSomething = false;
-		calcMax();
+		getMax();
 		for (int i = 0; i < this.getSizeInventory(); i++) {
 			boolean failed = false;
 			currentStack = this.getStackInSlot(i);
@@ -42,15 +40,15 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 				}
 				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
 				//System.out.println("Consuming... ");
-				if (stackEv+energy>max) {
+				if (stackEv+energy>getMax()) {
 					//System.out.println("Has more aether than we can hold!");
-					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max)==0;
+					boolean canSend = AetherNetwork.canSendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-getMax())==0;
 					if (!canSend) {
 						//System.out.println("Could not transfer!");
 						failed = true;
 					} else {
-						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-max);
-						energy = max;
+						AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, stackEv+energy-getMax());
+						energy = getMax();
 					}
 				} else {
 					//System.out.println("Has "+energy+". Adding "+stackEv);
@@ -115,18 +113,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 	}
 	
 	@Override
-	public void calculateProgress() {
-		calcMax();
-		this.progress = (int) ((this.energy/max)*100);
-		if (this.progress > 100) {
-			this.progress = 100;
-		}
-	}
-	
-	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
-		}
+	public float getMax() {
+        return  (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

@@ -1,6 +1,5 @@
 package com.iconmaster.aec.aether;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 /**

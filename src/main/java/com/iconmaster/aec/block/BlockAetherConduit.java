@@ -1,7 +1,12 @@
 package com.iconmaster.aec.block;
 
-import java.util.List;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.IAetherTransfer;
+import com.iconmaster.aec.client.ClientProxy;
+import com.iconmaster.aec.util.BlockTextureData;
+import com.iconmaster.aec.util.SideUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -13,14 +18,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.client.ClientProxy;
-import com.iconmaster.aec.util.BlockTextureData;
-import com.iconmaster.aec.util.SideUtils;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class BlockAetherConduit extends Block implements IAetherTransfer {
 

@@ -1,17 +1,12 @@
 package com.iconmaster.aec.event;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
-
-import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.TransferConfigsPacket;
-
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public class PlayerLogInEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)

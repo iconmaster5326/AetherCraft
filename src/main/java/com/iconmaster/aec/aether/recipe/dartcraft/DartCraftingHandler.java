@@ -1,13 +1,11 @@
 package com.iconmaster.aec.aether.recipe.dartcraft;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DartCraftingHandler implements IDynamicAVRecipeHandler {
 

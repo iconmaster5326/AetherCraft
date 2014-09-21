@@ -1,6 +1,10 @@
 package com.iconmaster.aec.block;
 
-import net.minecraft.block.Block;
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.IAetherTransfer;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,13 +15,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockAetologistsChest extends BlockContainer implements IAetherTransfer {
 	public IIcon topIcon;

@@ -1,20 +1,14 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IConsumeBehavior;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAetologistsChest extends AetherCraftTileEntity implements ISidedInventory, IAetherStorage {
 	public boolean editMode = false;
@@ -57,16 +51,13 @@ public class TileEntityAetologistsChest extends AetherCraftTileEntity implements
 	}
 	
 	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,2*2)));
-		}
+	public float getMax() {
+		return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,2*2)));
 	}
 	
 	@Override
-	public void calcLimit() {
-		if (limit!=0) {return;}
-		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,2*2)));
+	public float getLimit() {
+		return (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,2*2)));
 	}
 	
 	@Override

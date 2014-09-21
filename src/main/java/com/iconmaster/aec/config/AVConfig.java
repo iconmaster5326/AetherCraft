@@ -1,24 +1,13 @@
 package com.iconmaster.aec.config;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.util.UidUtils;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.io.*;
+import java.util.*;
 
 public class AVConfig {
 	private File file;

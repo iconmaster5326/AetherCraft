@@ -1,8 +1,20 @@
 package com.iconmaster.aec;
 
-import java.io.File;
-import java.util.HashMap;
-
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.InfuserRegistry;
+import com.iconmaster.aec.block.*;
+import com.iconmaster.aec.command.ConfigCommand;
+import com.iconmaster.aec.item.*;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
@@ -13,50 +25,8 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.InfuserRegistry;
-import com.iconmaster.aec.block.BlockAetherCondenser;
-import com.iconmaster.aec.block.BlockAetherConduit;
-import com.iconmaster.aec.block.BlockAetherContainer;
-import com.iconmaster.aec.block.BlockAetherExtractor;
-import com.iconmaster.aec.block.BlockAetherFlame;
-import com.iconmaster.aec.block.BlockAetherInfuser;
-import com.iconmaster.aec.block.BlockAetherManipulator;
-import com.iconmaster.aec.block.BlockAetherPump;
-import com.iconmaster.aec.block.BlockAetherReconstructor;
-import com.iconmaster.aec.block.BlockAetologistsChest;
-import com.iconmaster.aec.block.BlockInfused;
-import com.iconmaster.aec.command.ConfigCommand;
-import com.iconmaster.aec.item.ItemAetherArmor;
-import com.iconmaster.aec.item.ItemAetherAxe;
-import com.iconmaster.aec.item.ItemAetherBattery;
-import com.iconmaster.aec.item.ItemAetherHammer;
-import com.iconmaster.aec.item.ItemAetherPickaxe;
-import com.iconmaster.aec.item.ItemAetherShears;
-import com.iconmaster.aec.item.ItemAetherShovel;
-import com.iconmaster.aec.item.ItemAetherSword;
-import com.iconmaster.aec.item.ItemAetometer;
-import com.iconmaster.aec.item.ItemDummy;
-import com.iconmaster.aec.item.ItemFlyingRing;
-import com.iconmaster.aec.item.ItemInfused;
-import com.iconmaster.aec.item.ItemLightRing;
-import com.iconmaster.aec.item.ItemPhasingRing;
-import com.iconmaster.aec.item.ItemRegnerationRing;
-import com.iconmaster.aec.item.ItemRepairRing;
-import com.iconmaster.aec.item.ItemTeleportRing;
-import com.iconmaster.aec.item.ItemTransmuteRing;
-import com.iconmaster.aec.item.PotionRegneration;
-import com.iconmaster.aec.network.AetherCraftPacketHandler;
-
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
+import java.io.File;
+import java.util.HashMap;
 
 @Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.client.gui.ConfigGui")
 public class AetherCraft {

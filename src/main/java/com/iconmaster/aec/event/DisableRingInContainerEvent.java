@@ -1,18 +1,15 @@
 package com.iconmaster.aec.event;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.ContainerPlayer;
-import net.minecraftforge.event.entity.player.PlayerOpenContainerEvent;
-
-import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.network.ActivateRingsPacket;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeactivateRingsPacket;
 import com.iconmaster.aec.util.InventoryUtils;
-
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.ContainerPlayer;
+import net.minecraftforge.event.entity.player.PlayerOpenContainerEvent;
 
 public class DisableRingInContainerEvent {
 	public static boolean inContainer = false;

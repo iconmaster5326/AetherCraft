@@ -1,8 +1,8 @@
 package com.iconmaster.aec.aether.flattener;
 
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
+
+import java.util.List;
 
 //IC2:itemDust::0=127.75
 public class IC2InputFlattener implements IFlattenerHandler {

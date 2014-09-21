@@ -1,15 +1,13 @@
 package com.iconmaster.aec.aether.recipe;
 
+import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.util.UidUtils;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.util.UidUtils;
 
 public class EssenseRefinerHandler implements IDynamicAVRecipeHandler {
 

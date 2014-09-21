@@ -1,12 +1,12 @@
 package com.iconmaster.aec.config;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.AVRegistry;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.AVRegistry;
 
 public class AVConfigHandler {
 	private static DefaultAVConfig defs;

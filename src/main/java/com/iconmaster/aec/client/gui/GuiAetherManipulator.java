@@ -1,20 +1,17 @@
 package com.iconmaster.aec.client.gui;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.inventory.ContainerAetherManipulator;
 import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
 import com.iconmaster.aec.util.NumberUtils;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherManipulator extends AetherCraftGui<TileEntityAetherManipulator> {
@@ -46,7 +43,7 @@ public class GuiAetherManipulator extends AetherCraftGui<TileEntityAetherManipul
 //		this.fontRendererObj.drawStringWithShadow(
 //				NumberUtils.display(this.te.getAether()), 95, 26, 0x00FF00);
 		
-		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 9, 26,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.getMax()), 9, 26,0x00FF00);
 
 //		this.fontRendererObj.drawStringWithShadow("Consume Precision:", 9, 38,
 //				0xFF0000);
@@ -55,15 +52,15 @@ public class GuiAetherManipulator extends AetherCraftGui<TileEntityAetherManipul
 //						.getOptions("consumeprecision"))) + "%", 112, 38,
 //				0x00FF00);
 		
-		te.calcLimit();
-		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 100, 38,0x00FF00);
+		te.getLimit();
+		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.getLimit()), 100, 38,0x00FF00);
 		
-		te.calcMax();
+		te.getMax();
 		this.fontRendererObj.drawStringWithShadow("Precision: "+((int)(Double.parseDouble(AetherCraft.getOptions("consumeprecision"))))+"%", 9, 38,0x00FF00);
-
-		this.drawGradientRect(68, 11, 68 + this.te.getProgress(), 17,
+		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
+		this.drawGradientRect(68, 11, 68 + progress, 17,
 				0x00404040, 0xFF2CCDB1);
-		this.drawGradientRect(68, 17, 68 + this.te.getProgress(), 22,
+		this.drawGradientRect(68, 17, 68 + progress, 22,
 				0xFF16FF00,0x990EA600);
 		
 		float av = 0;
@@ -95,8 +92,8 @@ public class GuiAetherManipulator extends AetherCraftGui<TileEntityAetherManipul
 		
 		ItemStack topStack = te.getStackInSlot(0);
 		float av = AVRegistry.getAV(topStack);
-		te.calcLimit();
-		if (topStack != null && (av<=0 || av>te.limit)) {
+		te.getLimit();
+		if (topStack != null && (av<=0 || av>te.getLimit())) {
 			this.drawGradientRect(x+8, y+6, x+8+16, y+6+16,0x88FF0000,0x88FF0000);
 		}
 	}

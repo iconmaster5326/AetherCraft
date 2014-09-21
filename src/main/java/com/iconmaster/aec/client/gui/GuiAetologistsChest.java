@@ -1,30 +1,26 @@
 package com.iconmaster.aec.client.gui;
 
-import java.util.Iterator;
-import java.util.List;
-
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.AetherNetwork;
+import com.iconmaster.aec.inventory.ContainerAetologistsChest;
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import com.iconmaster.aec.network.ChangeEditModePacket;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
+import com.iconmaster.aec.util.NumberUtils;
+import com.iconmaster.aec.util.TooltipUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.AetherNetwork;
-import com.iconmaster.aec.inventory.ContainerAetologistsChest;
-import com.iconmaster.aec.inventory.SlotAetoChest;
-import com.iconmaster.aec.network.AetherCraftPacketHandler;
-import com.iconmaster.aec.network.ChangeEditModePacket;
-import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
-import com.iconmaster.aec.util.NumberUtils;
-import com.iconmaster.aec.util.TooltipUtils;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Iterator;
+import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetologistsChest extends AetherCraftGui<TileEntityAetologistsChest> {

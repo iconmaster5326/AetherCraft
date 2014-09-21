@@ -1,14 +1,13 @@
 package com.iconmaster.aec.aether;
 
+import com.iconmaster.aec.util.SideUtils;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
-import com.iconmaster.aec.util.SideUtils;
-
-import net.minecraft.block.Block;
-import net.minecraft.world.World;
 
 /**
  * A set of classes that deal with transferring Aether across devices.

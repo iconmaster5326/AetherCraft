@@ -1,7 +1,13 @@
 package com.iconmaster.aec.item;
 
-import java.util.List;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.IAetherStorageItem;
+import com.iconmaster.aec.aether.IConsumeBehavior;
+import com.iconmaster.aec.aether.IProduceBehavior;
+import com.iconmaster.aec.util.NumberUtils;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,15 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.IAetherStorageItem;
-import com.iconmaster.aec.aether.IConsumeBehavior;
-import com.iconmaster.aec.aether.IProduceBehavior;
-import com.iconmaster.aec.util.NumberUtils;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class ItemAetherBattery extends Item implements IAetherStorageItem, IProduceBehavior, IConsumeBehavior {
 	

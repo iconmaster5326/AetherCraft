@@ -1,13 +1,12 @@
 package com.iconmaster.aec.block;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.IAetherTransfer;
+import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
 
 public class BlockAetherExtractor extends AetherCraftBlock implements IAetherTransfer {
 	public BlockAetherExtractor(Material material,String name) {

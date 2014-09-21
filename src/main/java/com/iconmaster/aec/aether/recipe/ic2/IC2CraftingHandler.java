@@ -1,12 +1,10 @@
 package com.iconmaster.aec.aether.recipe.ic2;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
 import net.minecraft.item.ItemStack;
 
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 //TODO: Downlad IC2 API and REFLECT AROUND IT!!!
 public class IC2CraftingHandler implements IDynamicAVRecipeHandler {

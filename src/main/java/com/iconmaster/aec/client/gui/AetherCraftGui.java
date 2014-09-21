@@ -1,19 +1,8 @@
 package com.iconmaster.aec.client.gui;
 
-import java.util.Iterator;
-import java.util.List;
-
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
-
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL12;
-
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
-import com.iconmaster.aec.util.TooltipUtils;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
 
 /**
  * This is the base class for AetherCraft GUIs. Extend this class to get AV tooltip functionality in your GUI.

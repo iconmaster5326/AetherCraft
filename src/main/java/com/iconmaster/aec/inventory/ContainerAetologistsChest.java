@@ -1,18 +1,13 @@
 package com.iconmaster.aec.inventory;
 
+import com.iconmaster.aec.aether.AVRegistry;
+import com.iconmaster.aec.aether.AetherNetwork;
+import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.AetherNetwork;
-import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
-import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 
 public class ContainerAetologistsChest extends Container {
 	private TileEntityAetologistsChest tileEntity;

@@ -1,22 +1,16 @@
 package com.iconmaster.aec.client.gui;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.IProduceBehavior;
 import com.iconmaster.aec.inventory.ContainerAetherCondenser;
 import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
 import com.iconmaster.aec.util.NumberUtils;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherCondenser extends AetherCraftGui<TileEntityAetherCondenser> {
@@ -42,10 +36,10 @@ public class GuiAetherCondenser extends AetherCraftGui<TileEntityAetherCondenser
 		GL11.glDisable(GL11.GL_LIGHTING);
 		this.fontRendererObj.drawString("Aether Condenser", 9, 4, 0x404040);
 
-		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(te.getAether())+"/"+NumberUtils.display(te.getMax()), 30, 58,0x00FF00);
 		
-		te.calcLimit();
-		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 30, 70,0x00FF00);
+		te.getLimit();
+		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.getLimit()), 30, 70,0x00FF00);
 		
 		float av = 0;
 		if (this.te.getStackInSlot(0)!=null) {
@@ -69,7 +63,8 @@ public class GuiAetherCondenser extends AetherCraftGui<TileEntityAetherCondenser
 
 		
 		int barHeight = 68 - 16;
-		float barPercent = (100 - this.te.getProgress()) / 100.0f;
+		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
+		float barPercent = (100 - progress) / 100.0f;
 		//this.drawGradientRect(10, (int) (16+barHeight*barPercent), 26, 68,
 		//		0xFF16FF00,0x990EA600);
 		this.drawGradientRect(10, (int) (16.0f + (barHeight * barPercent)), 26, 68,
@@ -89,8 +84,8 @@ public class GuiAetherCondenser extends AetherCraftGui<TileEntityAetherCondenser
 		
 		ItemStack topStack = te.getStackInSlot(0);
 		float av = AVRegistry.getAV(topStack);
-		te.calcLimit();
-		if (topStack != null && (av<=0 || av>te.limit)) {
+		te.getLimit();
+		if (topStack != null && (av<=0 || av>te.getLimit())) {
 			this.drawGradientRect(x+38, y+33, x+38+16, y+33+16,0x88FF0000,0x88FF0000);
 		}
 	}

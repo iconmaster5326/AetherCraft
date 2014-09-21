@@ -1,16 +1,13 @@
 package com.iconmaster.aec.aether.recipe.dartcraft;
 
-import java.lang.reflect.Array;
+import com.iconmaster.aec.aether.DynamicAVRegister;
+import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
+import com.iconmaster.aec.util.UidUtils;
+import net.minecraft.item.ItemStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
-
-import com.iconmaster.aec.aether.DynamicAVRegister;
-import com.iconmaster.aec.aether.recipe.IDynamicAVRecipeHandler;
-import com.iconmaster.aec.util.ModHelpers;
-import com.iconmaster.aec.util.UidUtils;
 
 public class DartGrindingHandler implements IDynamicAVRecipeHandler {
 

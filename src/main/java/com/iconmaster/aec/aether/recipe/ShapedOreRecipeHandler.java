@@ -1,13 +1,11 @@
 package com.iconmaster.aec.aether.recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-import com.iconmaster.aec.aether.DynamicAVRegister;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class ShapedOreRecipeHandler implements IDynamicAVRecipeHandler {
 

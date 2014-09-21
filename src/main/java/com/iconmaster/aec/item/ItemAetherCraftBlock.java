@@ -1,12 +1,11 @@
 package com.iconmaster.aec.item;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.block.BlockAetherConduit;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.block.BlockAetherConduit;
 
 public class ItemAetherCraftBlock extends ItemBlock {
 	public ItemAetherCraftBlock(Block block) {

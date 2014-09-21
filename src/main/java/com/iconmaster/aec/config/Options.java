@@ -1,12 +1,10 @@
 package com.iconmaster.aec.config;
 
+import net.minecraftforge.common.config.Configuration;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import net.minecraftforge.common.config.Configuration;
-
-import com.iconmaster.aec.AetherCraft;
 
 public class Options {
 	private HashMap<String,Object> options = new HashMap<String, Object>();

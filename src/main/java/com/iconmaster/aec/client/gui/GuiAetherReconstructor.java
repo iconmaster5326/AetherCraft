@@ -1,17 +1,14 @@
 package com.iconmaster.aec.client.gui;
 
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-
-import org.lwjgl.opengl.GL11;
-
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
 import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
 import com.iconmaster.aec.util.NumberUtils;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import org.lwjgl.opengl.GL11;
 
 @SideOnly(Side.CLIENT)
 public class GuiAetherReconstructor extends AetherCraftGui<TileEntityAetherReconstructor> {
@@ -34,10 +31,10 @@ public class GuiAetherReconstructor extends AetherCraftGui<TileEntityAetherRecon
 		this.fontRendererObj.drawString("Aether Reconstructor", 44, 5, 0x404040);
 		this.fontRendererObj.drawString("Inventory", 7, 72, 0x404040);
 
-		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.max), 30, 58,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.getMax()), 30, 58,0x00FF00);
 		
-		te.calcLimit();
-		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.limit), 110, 58,0x00FF00);
+		te.getLimit();
+		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.getLimit()), 110, 58,0x00FF00);
 		
 		float cost = 0;
 		if (te.getStackInSlot(0) != null && te.getStackInSlot(0).isItemDamaged()) {
@@ -47,7 +44,8 @@ public class GuiAetherReconstructor extends AetherCraftGui<TileEntityAetherRecon
 		this.fontRendererObj.drawStringWithShadow("Cost Per Point: "+NumberUtils.display(cost), 30, 16,0x00FF00);
 
 		int barHeight = 68 - 16;
-		float barPercent = (100 - this.te.getProgress()) / 100.0f;
+		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
+		float barPercent = (100 - progress) / 100.0f;
 		this.drawGradientRect(10, (int) (16.0f + (barHeight * barPercent)), 26, 68,
 				0xFF16FF00,0x990EA600);
 

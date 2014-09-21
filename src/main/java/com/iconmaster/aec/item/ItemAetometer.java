@@ -1,7 +1,11 @@
 package com.iconmaster.aec.item;
 
-import java.util.ArrayList;
-
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.aether.*;
+import com.iconmaster.aec.util.NumberUtils;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,18 +16,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.AetherNetwork;
-import com.iconmaster.aec.aether.IAetherStorage;
-import com.iconmaster.aec.aether.IAetherTransfer;
-import com.iconmaster.aec.aether.IProduceBehavior;
-import com.iconmaster.aec.util.NumberUtils;
-import com.iconmaster.aec.util.RenderUtils;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.ArrayList;
 
 public class ItemAetometer extends Item {
 	

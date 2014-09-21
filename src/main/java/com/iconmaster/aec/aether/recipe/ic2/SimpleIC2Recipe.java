@@ -2,11 +2,10 @@ package com.iconmaster.aec.aether.recipe.ic2;
 
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeOutput;
+import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import net.minecraft.item.ItemStack;
 
 	public class SimpleIC2Recipe {
 		private IRecipeInput input;

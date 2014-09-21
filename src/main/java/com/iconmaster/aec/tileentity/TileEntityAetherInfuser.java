@@ -1,19 +1,17 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.InfuserRegistry;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityAetherInfuser extends AetherCraftTileEntity implements ISidedInventory, IAetherStorage {
 	
@@ -56,7 +54,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 				
 				boolean failure = false;
 				if (energy<rate) {
-					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(this.max,rate*Float.parseFloat(AetherCraft.getOptions("excesspull"))));
+					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(this.getMax(),rate*Float.parseFloat(AetherCraft.getOptions("excesspull"))));
 					energy+=got;
 					float amt = Math.min(energy,rate);
 					if (amt==0) {
@@ -74,15 +72,6 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 			}
 		}
 		return doneSomething;
-	}
-
-	@Override
-	public void calculateProgress() {
-		calcMax();
-		progress = (int) ((energy / max)*100);
-		if (progress > 100) {
-			progress = 100;
-		}
 	}
 
 	@Override
@@ -133,9 +122,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	}
 	
 	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
-		}
+	public float getMax() {
+		return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

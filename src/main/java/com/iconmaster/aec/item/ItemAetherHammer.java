@@ -1,7 +1,12 @@
 package com.iconmaster.aec.item;
 
-import java.util.Set;
-
+import com.google.common.collect.Sets;
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.util.InventoryUtils;
+import com.iconmaster.aec.util.SideUtils;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
@@ -16,14 +21,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 
-import com.google.common.collect.Sets;
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.util.InventoryUtils;
-import com.iconmaster.aec.util.SideUtils;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.Set;
 
 public class ItemAetherHammer extends ItemPickaxe {
 	//really bad hack for getting into a private field: Copy it!

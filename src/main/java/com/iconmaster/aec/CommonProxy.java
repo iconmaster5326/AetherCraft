@@ -1,5 +1,16 @@
 package com.iconmaster.aec;
 
+import com.iconmaster.aec.client.gui.*;
+import com.iconmaster.aec.event.*;
+import com.iconmaster.aec.inventory.*;
+import com.iconmaster.aec.item.ItemAetherCraftBlock;
+import com.iconmaster.aec.item.ItemBlockInfused;
+import com.iconmaster.aec.tileentity.*;
+import com.iconmaster.aec.util.InventoryUtils;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.IGuiHandler;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -7,44 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import com.iconmaster.aec.client.gui.GuiAetherCondenser;
-import com.iconmaster.aec.client.gui.GuiAetherContainer;
-import com.iconmaster.aec.client.gui.GuiAetherExtractor;
-import com.iconmaster.aec.client.gui.GuiAetherInfuser;
-import com.iconmaster.aec.client.gui.GuiAetherManipulator;
-import com.iconmaster.aec.client.gui.GuiAetherReconstructor;
-import com.iconmaster.aec.client.gui.GuiAetologistsChest;
-import com.iconmaster.aec.client.gui.GuiTransmuteRing;
-import com.iconmaster.aec.event.AetherArmorDamageEvent;
-import com.iconmaster.aec.event.AetherSwordEvent;
-import com.iconmaster.aec.event.DisableRingInContainerEvent;
-import com.iconmaster.aec.event.FallDamageEvent;
-import com.iconmaster.aec.event.PlayerLogInEvent;
-import com.iconmaster.aec.inventory.ContainerAetherCondenser;
-import com.iconmaster.aec.inventory.ContainerAetherContainer;
-import com.iconmaster.aec.inventory.ContainerAetherExtractor;
-import com.iconmaster.aec.inventory.ContainerAetherInfuser;
-import com.iconmaster.aec.inventory.ContainerAetherManipulator;
-import com.iconmaster.aec.inventory.ContainerAetherReconstructor;
-import com.iconmaster.aec.inventory.ContainerAetologistsChest;
-import com.iconmaster.aec.inventory.ContainerTransmuteRing;
-import com.iconmaster.aec.item.ItemAetherCraftBlock;
-import com.iconmaster.aec.item.ItemBlockInfused;
-import com.iconmaster.aec.tileentity.TileEntityAetherCondenser;
-import com.iconmaster.aec.tileentity.TileEntityAetherContainer;
-import com.iconmaster.aec.tileentity.TileEntityAetherExtractor;
-import com.iconmaster.aec.tileentity.TileEntityAetherInfuser;
-import com.iconmaster.aec.tileentity.TileEntityAetherManipulator;
-import com.iconmaster.aec.tileentity.TileEntityAetherPump;
-import com.iconmaster.aec.tileentity.TileEntityAetherReconstructor;
-import com.iconmaster.aec.tileentity.TileEntityAetologistsChest;
-import com.iconmaster.aec.util.InventoryUtils;
-
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
 	public static int pumpRenderType = -1;

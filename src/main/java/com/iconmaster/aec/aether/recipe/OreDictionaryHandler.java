@@ -1,13 +1,12 @@
 package com.iconmaster.aec.aether.recipe;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
+import com.iconmaster.aec.util.UidUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-import com.iconmaster.aec.util.UidUtils;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class OreDictionaryHandler implements IDynamicAVRecipeHandler {
 

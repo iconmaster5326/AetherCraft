@@ -1,13 +1,11 @@
 package com.iconmaster.aec.event;
 
+import com.iconmaster.aec.AetherCraft;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-
-import com.iconmaster.aec.AetherCraft;
-
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class FallDamageEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)

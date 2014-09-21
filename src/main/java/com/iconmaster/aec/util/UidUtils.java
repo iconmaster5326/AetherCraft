@@ -1,10 +1,10 @@
 package com.iconmaster.aec.util;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import java.util.Arrays;
+import java.util.List;
 /**
  * Use this class to encode/decode ItemStacks for HashMap use.
  * @author iconmaster

@@ -1,16 +1,14 @@
 package com.iconmaster.aec.event;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.item.ItemAetherArmor;
 import com.iconmaster.aec.item.ItemPhasingRing;
 import com.iconmaster.aec.util.InventoryUtils;
-
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class AetherArmorDamageEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)

@@ -1,17 +1,5 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AVRegistry;
 import com.iconmaster.aec.aether.AetherNetwork;
@@ -19,10 +7,17 @@ import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
 import com.iconmaster.aec.network.DeviceSyncPacket;
 import com.iconmaster.aec.network.RequestSyncPacket;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.relauncher.Side;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 
 /**
  * Extend this to get a bunch of default AetherCraft TE functions.
@@ -33,11 +28,6 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 
 	protected ItemStack[] inventory;
 	protected float energy;
-	protected int progress;
-	protected boolean powered;
-	public float max;
-	public float limit;
-	
 	protected boolean polled = false;
 	/**
 	 * Set this to false is you don't want the 0th slot to be considered as valid in getStackableSlot and getEmptySlot.
@@ -181,7 +171,6 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 
 	@Override
 	public void updateEntity() {
-		this.calculateProgress();
 		tickCount ++;
 		int ticks = Integer.parseInt(AetherCraft.getOptions("ticksperop"));
 		if (tickCount%ticks==0 && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
@@ -204,14 +193,6 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 
 	public void recieveSync(float par1energy) {
 		this.energy = par1energy;
-	}
-
-	public void calculateProgress() {
-
-	}
-
-	public int getProgress() {
-		return this.progress;
 	}
 
 	public int getStackableSlot(ItemStack cStack) {
@@ -243,14 +224,14 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	@Override
 	public float addAether(float ev) {
 		if (ev==0) {return 0;}
-		calcMax();
-		if (this.energy + ev <= max) {
+		getMax();
+		if (this.energy + ev <= getMax()) {
 			this.energy += ev;
 			this.markDeviceDirty();
 			return 0;
 		} else {
-			float rest = (this.energy + ev) - max;
-			this.energy = max;
+			float rest = (this.energy + ev) - getMax();
+			this.energy = getMax();
 			this.markDeviceDirty();
 			return rest;
 		}
@@ -276,11 +257,11 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	@Override
 	public float tryAddAether(float ev) {
 		if (ev==0) {return 0;}
-		calcMax();
-		if (this.energy + ev <= max) {
+		getMax();
+		if (this.energy + ev <= getMax()) {
 			return 0;
 		} else {
-			float rest = (this.energy + ev) - max;
+			float rest = (this.energy + ev) - getMax();
 			return rest;
 		}
 	}
@@ -324,7 +305,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		if (Boolean.parseBoolean(AetherCraft.getOptions("cobblehack")) && currentStack!=null && Block.getBlockFromItem(currentStack.getItem())==Blocks.cobblestone) {
 			return false;
 		}
-		calcLimit();
+		getLimit();
 		if (currentStack == null) {
 			return false;
 		}
@@ -332,16 +313,16 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 			return false;
 		}
 		float av = AVRegistry.getAV(currentStack);
-		if (av<=0 || av>limit) {
+		if (av<=0 || av>getLimit()) {
 			return false;
 		}
 		return true;
 	}
 	public boolean canProduce(ItemStack currentItem) {
-		calcLimit();
+		getLimit();
 		float av = AVRegistry.getAV(currentItem);
 		if (this.getStackableSlot(currentItem)<=0 && this.getEmptySlot() <=0) {return false;}
-		return av>0 && av<=getPossibleAether() && av<=limit;
+		return av>0 && av<=getPossibleAether() && av<=getLimit();
 	}
 
 	@Override
@@ -363,13 +344,12 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 		return this.worldObj.getBlockMetadata(this.xCoord,this.yCoord,this.zCoord);
 	}
 
-	public void calcMax() {
-		
+	public float getMax() {
+		return 0;
 	}
 	
-	public void calcLimit() {
-		if (limit!=0) {return;}
-		limit = (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
+	public float getLimit() {
+		return (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
 	}
 	
 	public void markDeviceDirty() {

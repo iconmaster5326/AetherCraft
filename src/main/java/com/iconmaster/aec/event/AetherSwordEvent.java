@@ -1,15 +1,13 @@
 package com.iconmaster.aec.event;
 
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.util.InventoryUtils;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
-
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.util.InventoryUtils;
-
-import cpw.mods.fml.common.eventhandler.EventPriority;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class AetherSwordEvent {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

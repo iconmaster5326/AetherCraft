@@ -1,17 +1,15 @@
 package com.iconmaster.aec.item;
 
-import java.util.List;
-
+import com.iconmaster.aec.AetherCraft;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 
-import com.iconmaster.aec.AetherCraft;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.util.List;
 
 public class ItemInfused extends Item {
 	public IIcon[] icons = new IIcon[11];

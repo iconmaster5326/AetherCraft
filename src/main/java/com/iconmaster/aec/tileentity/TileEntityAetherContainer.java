@@ -1,13 +1,11 @@
 package com.iconmaster.aec.tileentity;
 
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
-
 import com.iconmaster.aec.AetherCraft;
 import com.iconmaster.aec.aether.AetherNetwork;
 import com.iconmaster.aec.aether.IAetherStorage;
 import com.iconmaster.aec.aether.IAetherStorageItem;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 
 public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 		IInventory, IAetherStorage {
@@ -24,7 +22,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 
 	@Override
 	public boolean handleAether() {
-		calcMax();
+		getMax();
 		boolean doneSomething = false;
 		float chargeRate = (float) (Float.parseFloat(AetherCraft.getOptions("chargerate"))*Math.pow(2,getMetadata()*2));
 
@@ -34,9 +32,9 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 		// ------------------- Discharging - TOP SLOT -------------------
 		if (topStack != null && topStack.getItem() instanceof IAetherStorageItem) {
 			float got =  ((IAetherStorageItem)topStack.getItem()).extractAether(topStack, chargeRate);
-			if (energy+got > max) {
-				energy = max;
-				float rest = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, energy+got-max);
+			if (energy+got > getMax()) {
+				energy = getMax();
+				float rest = AetherNetwork.sendAV(worldObj, xCoord, yCoord, zCoord, energy+got-getMax());
 				((IAetherStorageItem)topStack.getItem()).addAether(topStack, rest);
 			} else {
 				energy += got;
@@ -51,7 +49,7 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 			float rest = ((IAetherStorageItem)bottomStack.getItem()).addAether(bottomStack, Math.min(this.energy,chargeRate));
 			float drawn = Math.min(this.energy,chargeRate);
 			if (chargeRate > this.energy ) {
-				float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(chargeRate*Float.parseFloat(AetherCraft.getOptions("excesspull"))-this.energy,this.max-chargeRate));
+				float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(chargeRate*Float.parseFloat(AetherCraft.getOptions("excesspull"))-this.energy,this.getMax()-chargeRate));
 				this.energy = got;
 			} else {
 				this.energy -= drawn-rest;
@@ -62,21 +60,10 @@ public class TileEntityAetherContainer extends AetherCraftTileEntity implements
 		}
 		return doneSomething;
 	}
-
-	@Override
-	public void calculateProgress() {
-		calcMax();
-		this.progress = (int) ((this.energy / max) * 100.0f);
-		if (this.progress > 100) {
-			this.progress = 100;
-		}
-	}
 	
 	@Override
-	public void calcMax() {
-		if (max == 0) {
-			max = (float) ((Float.parseFloat(AetherCraft.getOptions("acmaxstorage")))*(Math.pow(2,getMetadata()*2)));
-		}
+	public float getMax() {
+        return (float) ((Float.parseFloat(AetherCraft.getOptions("acmaxstorage")))*(Math.pow(2,getMetadata()*2)));
 	}
 	
 	@Override

@@ -1,19 +1,16 @@
 package com.iconmaster.aec.aether;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.regex.Pattern;
-
-import net.minecraft.init.Blocks;
+import com.iconmaster.aec.AetherCraft;
+import com.iconmaster.aec.config.AVConfigHandler;
+import com.iconmaster.aec.util.UidUtils;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 
-import com.iconmaster.aec.AetherCraft;
-import com.iconmaster.aec.config.AVConfigHandler;
-import com.iconmaster.aec.util.NumberUtils;
-import com.iconmaster.aec.util.UidUtils;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * A class that holds item-AV pairings for all items.

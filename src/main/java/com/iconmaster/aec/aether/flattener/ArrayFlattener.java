@@ -1,13 +1,8 @@
 package com.iconmaster.aec.aether.flattener;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.minecraft.item.ItemStack;
 
-import com.iconmaster.aec.aether.AVRegistry;
-import com.iconmaster.aec.aether.DynamicAVRegister;
+import java.util.Arrays;
 
 public class ArrayFlattener implements IFlattenerHandler<Object[]> {
 

@@ -1,14 +1,13 @@
 package com.iconmaster.aec.item;
 
-import java.util.List;
-
+import com.iconmaster.aec.AetherCraft;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-import com.iconmaster.aec.AetherCraft;
+import java.util.List;
 
 public class ItemBlockInfused extends ItemBlock {
 	public ItemBlockInfused(Block block) {
