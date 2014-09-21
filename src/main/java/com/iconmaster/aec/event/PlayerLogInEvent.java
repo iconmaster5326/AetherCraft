@@ -12,9 +12,7 @@ public class PlayerLogInEvent {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void eventHandler(PlayerEvent.PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
-		
-		//System.out.println("[AEC TRANS] Sending packet!!");
+
 		AetherCraftPacketHandler.HANDLER.sendTo(new TransferConfigsPacket().setState(),(EntityPlayerMP)event.player);
-		
 	}
 }

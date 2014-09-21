@@ -10,6 +10,7 @@ import com.iconmaster.aec.tileentity.TileEntityAetherPump;
 import com.iconmaster.aec.util.InventoryUtils;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
@@ -50,6 +51,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new DisableRingInContainerEvent());
 		MinecraftForge.EVENT_BUS.register(new TooltipEvent());
 		MinecraftForge.EVENT_BUS.register(new AetherArmorDamageEvent());
+		FMLCommonHandler.instance().bus().register(new SSPLogInEvent());
 	}
 	
 	@SideOnly(Side.CLIENT)
