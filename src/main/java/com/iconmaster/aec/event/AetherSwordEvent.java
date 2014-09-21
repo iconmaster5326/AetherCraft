@@ -27,7 +27,7 @@ public class AetherSwordEvent {
 			//entity.hurtResistantTime = 0;	//Hackish workaround due to attribute system
 			//entity.attackEntityFrom(DamageSource.causeMobDamage(event.entityPlayer), 3F);
 			
-			InventoryUtils.drainAVFromInventory(event.entityPlayer.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost")));
+			InventoryUtils.drainAVFromInventory(event.entityPlayer.inventory, AetherCraft.options.getFloat("toolcost"));
 		}
 	}
 }

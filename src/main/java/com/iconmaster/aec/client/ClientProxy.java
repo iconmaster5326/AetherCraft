@@ -43,7 +43,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerEventHandlers() {
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
+		if (AetherCraft.options.getBoolean("enableflyring")) {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());

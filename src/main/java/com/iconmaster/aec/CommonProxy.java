@@ -62,7 +62,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerItem(AetherCraft.itemInfused,"infusedItem");
 		GameRegistry.registerItem(AetherCraft.dummy,"dummy");
 		
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
+		if (AetherCraft.options.getBoolean("enableflyring")) {
 			GameRegistry.registerItem(AetherCraft.itemFlyingRing,"flyingRing");
 		}
 		GameRegistry.registerItem(AetherCraft.itemRepairRing,"repairRing");
@@ -244,7 +244,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 	public void registerEventHandlers() {
-		if (Boolean.parseBoolean(AetherCraft.getOptions("enableflyring"))) {
+		if (AetherCraft.options.getBoolean("enableflyring")) {
 			MinecraftForge.EVENT_BUS.register(new FallDamageEvent());
 		}
 		MinecraftForge.EVENT_BUS.register(new AetherSwordEvent());

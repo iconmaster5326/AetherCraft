@@ -94,7 +94,7 @@ public class ItemTeleportRing extends Item {
 	public static void teleportToWaypoint(ItemStack stack,EntityPlayer player) {
 		TeleportWaypoint pos = getWaypoint(stack);
 		if (player.worldObj.provider.dimensionId == pos.dim) {
-			float cost = Float.parseFloat(AetherCraft.getOptions("telecost"));
+			float cost = AetherCraft.options.getFloat("telecost");
 			double dis = distance((int)player.posX,(int)player.posY,(int)player.posZ,pos.x,pos.y,pos.z);
 			cost *= dis;
 			

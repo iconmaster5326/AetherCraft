@@ -54,7 +54,7 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 				
 				boolean failure = false;
 				if (energy<rate) {
-					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(this.getMax(),rate*Float.parseFloat(AetherCraft.getOptions("excesspull"))));
+					float got = AetherNetwork.requestAV(worldObj, xCoord, yCoord, zCoord, Math.min(this.getMax(),rate*AetherCraft.options.getFloat("excesspull")));
 					energy+=got;
 					float amt = Math.min(energy,rate);
 					if (amt==0) {
@@ -123,6 +123,6 @@ public class TileEntityAetherInfuser extends AetherCraftTileEntity implements IS
 	
 	@Override
 	public float getMax() {
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
+		return (float) ((AetherCraft.options.getFloat("ammaxstorage")/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

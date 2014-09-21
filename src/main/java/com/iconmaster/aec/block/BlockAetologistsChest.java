@@ -54,7 +54,7 @@ public class BlockAetologistsChest extends BlockContainer implements IAetherTran
 
 	@Override
 	public float getMaxTransferAV(World world, int x, int y, int z, int sideFrom) {
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("flowrate")))*(Math.pow(2,2*2)));
+		return (float) ((AetherCraft.options.getFloat("flowrate"))*(Math.pow(2,2*2)));
 	}
 	
     @Override

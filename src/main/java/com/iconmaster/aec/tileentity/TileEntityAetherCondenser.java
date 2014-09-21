@@ -24,7 +24,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 
 	@Override
 	public boolean handleAether() {
-		float emMaxStorage = Float.parseFloat(AetherCraft.getOptions("amgetMax()storage"));
+		float emMaxStorage = AetherCraft.options.getFloat("ammaxstorage");
 
 		ItemStack topStack = this.getStackInSlot(0);
 		ItemStack currentStack;
@@ -84,8 +84,7 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 				
 			}
 			
-			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("instantconsume")) && i >= 9 && doneSomething) {
+			if (!AetherCraft.options.getBoolean("instantconsume") && i >= 9 && doneSomething) {
 				return true;
 			}
 		}
@@ -149,6 +148,6 @@ public class TileEntityAetherCondenser extends AetherCraftTileEntity implements
 	
 	@Override
 	public float getMax() {
-			return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
+			return (float) ((AetherCraft.options.getFloat("ammaxstorage")/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

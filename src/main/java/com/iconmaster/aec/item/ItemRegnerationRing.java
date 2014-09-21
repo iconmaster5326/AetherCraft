@@ -44,7 +44,7 @@ public class ItemRegnerationRing extends Item implements IAetherRing {
 		if (!(entity instanceof EntityPlayer)) {return;}
 		EntityPlayer player = (EntityPlayer) entity;
 		if (stack.getItemDamage()==1) {
-			float av = Float.parseFloat(AetherCraft.getOptions("flycostpersecond"))/20;
+			float av = AetherCraft.options.getFloat("flycostpersecond")/20;
 			float got = InventoryUtils.drainAVFromInventory(player.inventory, av);
 			if (got<av) {
 				this.deactivateRing(stack, player);

@@ -52,12 +52,12 @@ public class TileEntityAetologistsChest extends AetherCraftTileEntity implements
 	
 	@Override
 	public float getMax() {
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,2*2)));
+		return (float) ((AetherCraft.options.getFloat("ammaxstorage")/2)*(Math.pow(2,2*2)));
 	}
 	
 	@Override
 	public float getLimit() {
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,2*2)));
+		return (float) ((AetherCraft.options.getFloat("avlimit"))*(Math.pow(2,2*2)));
 	}
 	
 	@Override

@@ -83,7 +83,7 @@ public class ItemFlyingRing extends Item implements IAetherRing {
 	
 	public boolean canRingFunction(ItemStack stack,EntityPlayer player) {
 		if (stack.getItemDamage()==1) {
-			float flyCost = Float.parseFloat(AetherCraft.getOptions("flycostpersecond"))/20;
+			float flyCost = AetherCraft.options.getFloat("flycostpersecond")/20;
 			if (!player.capabilities.isFlying) { flyCost /= 4;}
 			float rest = InventoryUtils.drainAVFromInventory(player.inventory, flyCost);
 			

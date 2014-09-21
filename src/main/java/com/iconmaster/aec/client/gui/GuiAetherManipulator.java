@@ -56,7 +56,7 @@ public class GuiAetherManipulator extends AetherCraftGui<TileEntityAetherManipul
 		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.getLimit()), 100, 38,0x00FF00);
 		
 		te.getMax();
-		this.fontRendererObj.drawStringWithShadow("Precision: "+((int)(Double.parseDouble(AetherCraft.getOptions("consumeprecision"))))+"%", 9, 38,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("Precision: "+((int)(AetherCraft.options.getFloat("consumeprecision")))+"%", 9, 38,0x00FF00);
 		int progress = (int) Math.min(100,(te.getAether()/te.getMax())*100);
 		this.drawGradientRect(68, 11, 68 + progress, 17,
 				0x00404040, 0xFF2CCDB1);

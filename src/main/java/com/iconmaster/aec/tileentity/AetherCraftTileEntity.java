@@ -172,7 +172,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	@Override
 	public void updateEntity() {
 		tickCount ++;
-		int ticks = Integer.parseInt(AetherCraft.getOptions("ticksperop"));
+		int ticks = AetherCraft.options.getInt("ticksperop");
 		if (tickCount%ticks==0 && FMLCommonHandler.instance().getEffectiveSide() == Side.SERVER) {
 			boolean doSync = false;
 			for (int i=0;i<ticks;i++) {
@@ -302,7 +302,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	}
 	
 	public boolean canConsume(ItemStack topStack, ItemStack currentStack) {
-		if (Boolean.parseBoolean(AetherCraft.getOptions("cobblehack")) && currentStack!=null && Block.getBlockFromItem(currentStack.getItem())==Blocks.cobblestone) {
+		if (AetherCraft.options.getBoolean("cobblehack") && currentStack!=null && Block.getBlockFromItem(currentStack.getItem())==Blocks.cobblestone) {
 			return false;
 		}
 		getLimit();
@@ -349,7 +349,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	}
 	
 	public float getLimit() {
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("avlimit")))*(Math.pow(2,getMetadata()*2)));
+		return (float) ((AetherCraft.options.getFloat("avlimit"))*(Math.pow(2,getMetadata()*2)));
 	}
 	
 	public void markDeviceDirty() {

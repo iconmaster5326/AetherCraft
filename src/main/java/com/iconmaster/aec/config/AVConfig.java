@@ -118,7 +118,7 @@ public class AVConfig {
 		Iterator it = values.entrySet().iterator();
 		while (it.hasNext()) {
 			Map.Entry entry = (Map.Entry) it.next();
-			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue()*Float.parseFloat(AetherCraft.getOptions("avmultiplier")));
+			AVRegistry.setConfigAV(UidUtils.getStackFromUid((List)entry.getKey()), (Float)entry.getValue()*AetherCraft.options.getFloat("avmultiplier"));
 		}
 	}
 	

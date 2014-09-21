@@ -77,7 +77,7 @@ public class BlockAetherConduit extends Block implements IAetherTransfer {
 	@Override
 	public float getMaxTransferAV(World world, int x,int y,int z,int side) {
 		int meta = world.getBlockMetadata(x, y, z);
-		return (float) ((Float.parseFloat(AetherCraft.getOptions("flowrate")))*(Math.pow(2,meta*2)));
+		return (float) ((AetherCraft.options.getFloat("flowrate"))*(Math.pow(2,meta*2)));
 	}
 
 	@Override

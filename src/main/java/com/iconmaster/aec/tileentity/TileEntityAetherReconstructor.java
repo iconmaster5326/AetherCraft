@@ -53,7 +53,7 @@ public class TileEntityAetherReconstructor extends AetherCraftTileEntity impleme
 	
 	@Override
 	public float getMax() {
-			return (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/4)*(Math.pow(2,getMetadata()*2)));
+			return (float) ((AetherCraft.options.getFloat("ammaxstorage")/4)*(Math.pow(2,getMetadata()*2)));
 	}
 
 	@Override

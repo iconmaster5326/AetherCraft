@@ -103,7 +103,7 @@ public class ItemAetherSword extends ItemSword {
 		boolean active = tag.getBoolean("active");
 		
 		if (active) {
-			InventoryUtils.drainAVFromInventory(player.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost")));
+			InventoryUtils.drainAVFromInventory(player.inventory, AetherCraft.options.getFloat("toolcost"));
 		}
 		
 		return false;
@@ -115,7 +115,7 @@ public class ItemAetherSword extends ItemSword {
 			return;
 		}
 		float av = InventoryUtils.getAVInInventory(((EntityPlayer)entity).inventory);
-		if (av < Float.parseFloat(AetherCraft.getOptions("toolcost"))) {
+		if (av < AetherCraft.options.getFloat("toolcost")) {
 			NBTTagCompound tag;
 			if (!stack.hasTagCompound()) {
 				tag = new NBTTagCompound();

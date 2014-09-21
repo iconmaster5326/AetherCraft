@@ -75,7 +75,7 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem, IProd
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		float max = (float) (Float.parseFloat(AetherCraft.getOptions("abatterymaxstorage"))*Math.pow(2,stack.getItemDamage()*2));
+		float max = (float) (AetherCraft.options.getFloat("abatterymaxstorage")*Math.pow(2,stack.getItemDamage()*2));
 		float has = stack.getTagCompound().getFloat("AV");
 		if (has + av > max) {
 			this.setAether(stack,max);
@@ -141,7 +141,7 @@ public class ItemAetherBattery extends Item implements IAetherStorageItem, IProd
 		if (!stack.hasTagCompound()) {
 			stack.setTagCompound(new NBTTagCompound());
 		}
-		float max = (float) (Float.parseFloat(AetherCraft.getOptions("abatterymaxstorage"))*Math.pow(2,stack.getItemDamage()*2));
+		float max = (float) (AetherCraft.options.getFloat("abatterymaxstorage")*Math.pow(2,stack.getItemDamage()*2));
 		float has = stack.getTagCompound().getFloat("AV");
 		if (has + av > max) {
 			//this.setAether(stack,max);

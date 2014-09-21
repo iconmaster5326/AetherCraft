@@ -37,7 +37,7 @@ public class GuiAetherExtractor extends AetherCraftGui<TileEntityAetherExtractor
 
 		this.fontRendererObj.drawStringWithShadow("AV: "+NumberUtils.display(this.te.getAether())+"/"+NumberUtils.display(te.getMax()), 54, 58,0x00FF00);
 
-		this.fontRendererObj.drawStringWithShadow("Precision: "+(int) (Double.parseDouble(AetherCraft.getOptions("consumeprecision"))) + "%", 54,68,0x00FF00);
+		this.fontRendererObj.drawStringWithShadow("Precision: "+(int) (AetherCraft.options.getFloat("consumeprecision")) + "%", 54,68,0x00FF00);
 		
 		te.getLimit();
 		this.fontRendererObj.drawStringWithShadow("Limit: "+NumberUtils.display(te.getLimit()), 54, 20,0x00FF00);

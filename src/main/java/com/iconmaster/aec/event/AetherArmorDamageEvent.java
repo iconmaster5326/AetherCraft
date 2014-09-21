@@ -40,7 +40,7 @@ public class AetherArmorDamageEvent {
 			
 			if (reduced > 0F) {
 				float have = InventoryUtils.getAVInInventory(player.inventory);
-				float av = reduced*(Float.parseFloat(AetherCraft.getOptions("armorcost")));
+				float av = reduced*(AetherCraft.options.getFloat("armorcost"));
 				//System.out.println(reduced+" damage costs "+av+" av");
 				if (have >= av) {
 					player.setHealth(player.getHealth()+reduced);

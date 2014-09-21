@@ -38,7 +38,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 				} else {
 					stackEv = AVRegistry.getAV(currentStack);
 				}
-				stackEv *= Float.parseFloat(AetherCraft.getOptions("consumeprecision")) / 100.0f;
+				stackEv *= AetherCraft.options.getFloat("consumeprecision") / 100.0f;
 				//System.out.println("Consuming... ");
 				if (stackEv+energy>getMax()) {
 					//System.out.println("Has more aether than we can hold!");
@@ -79,8 +79,7 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 				}
 			}
 			
-			if (!Boolean.parseBoolean(AetherCraft
-					.getOptions("instantconsume")) && doneSomething) {
+			if (!AetherCraft.options.getBoolean("instantconsume") && doneSomething) {
 				return true;
 			}
 		}
@@ -114,6 +113,6 @@ public class TileEntityAetherExtractor extends AetherCraftTileEntity implements
 	
 	@Override
 	public float getMax() {
-        return  (float) ((Float.parseFloat(AetherCraft.getOptions("ammaxstorage"))/2)*(Math.pow(2,getMetadata()*2)));
+        return  (float) ((AetherCraft.options.getFloat("ammaxstorage")/2)*(Math.pow(2,getMetadata()*2)));
 	}
 }

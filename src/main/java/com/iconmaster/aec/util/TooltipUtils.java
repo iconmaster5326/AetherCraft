@@ -22,7 +22,7 @@ public class TooltipUtils {
 	 */
 	public static boolean showTip() {
 		boolean showAV = true;
-		if (!Boolean.parseBoolean(AetherCraft.getOptions("showavalways"))) {
+		if (!AetherCraft.options.getBoolean("showavalways")) {
 			if (!Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && !Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
 				showAV = false;
 			}
@@ -49,7 +49,7 @@ public class TooltipUtils {
 		} else {
 			ev1 = AVRegistry.getAV(stack);
 		}
-		ev1 *= ((float) Float.parseFloat(AetherCraft.getOptions("consumeprecision"))) / 100.0f;
+		ev1 *= ((float) AetherCraft.options.getFloat("consumeprecision")) / 100.0f;
 
 		tip.add("\u00a72" + "CONSUME AV: " + NumberUtils.display(ev1));
 	}

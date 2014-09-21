@@ -74,7 +74,7 @@ public class TransferConfigsPacket implements IMessage, IMessageHandler<Transfer
 	
 	public TransferConfigsPacket setState() {
 		this.values = AVConfigHandler.getNetworkConfigMap();
-		this.options = AetherCraft.getOptionsMap();
+		this.options = AetherCraft.options.getOptionsMap();
 		
 		return this;
 	}
@@ -109,7 +109,7 @@ public class TransferConfigsPacket implements IMessage, IMessageHandler<Transfer
 
 	@Override
 	public IMessage onMessage(TransferConfigsPacket message, MessageContext ctx) {
-		AetherCraft.setOptionsMap(message.options);
+		AetherCraft.options.setOptionsMap(message.options);
 		InfuserRegistry.addDefaultRecipes();
 		AVRegistry.reloadClientValues(message.values);
 		return null;

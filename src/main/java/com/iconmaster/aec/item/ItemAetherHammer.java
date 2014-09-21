@@ -127,7 +127,7 @@ public class ItemAetherHammer extends ItemPickaxe {
 		boolean active = tag.getBoolean("active");
 		
 		if (active) {
-				InventoryUtils.drainAVFromInventory(player.inventory, Float.parseFloat(AetherCraft.getOptions("toolcost"))*9F);
+				InventoryUtils.drainAVFromInventory(player.inventory, AetherCraft.options.getFloat("toolcost")*9F);
 		}
 		
 		//destroy surrounding blocks
@@ -191,7 +191,7 @@ public class ItemAetherHammer extends ItemPickaxe {
 			return;
 		}
 		float av = InventoryUtils.getAVInInventory(((EntityPlayer)entity).inventory);
-		if (av < Float.parseFloat(AetherCraft.getOptions("toolcost"))) {
+		if (av < AetherCraft.options.getFloat("toolcost")) {
 			NBTTagCompound tag;
 			if (!stack.hasTagCompound()) {
 				tag = new NBTTagCompound();
