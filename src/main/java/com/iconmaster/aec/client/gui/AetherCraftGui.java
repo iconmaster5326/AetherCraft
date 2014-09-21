@@ -1,5 +1,7 @@
 package com.iconmaster.aec.client.gui;
 
+import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import com.iconmaster.aec.network.RequestSyncPacket;
 import com.iconmaster.aec.tileentity.AetherCraftTileEntity;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -147,24 +149,6 @@ public class AetherCraftGui<T extends AetherCraftTileEntity> extends GuiContaine
 //	}
 	
 	protected void requestSync() {
-		//TODO: make it request sync
-		/*ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(bos);
-
-		try {
-			outputStream.writeByte(this.te.energyBlockType);
-			outputStream.writeInt(this.te.xCoord);
-			outputStream.writeInt(this.te.yCoord);
-			outputStream.writeInt(this.te.zCoord);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = "AecReq";
-		packet.data = bos.toByteArray();
-		packet.length = bos.size();
-		PacketDispatcher.sendPacketToServer(packet);
-		*/
+		AetherCraftPacketHandler.HANDLER.sendToServer(new RequestSyncPacket(te.xCoord,te.yCoord,te.zCoord));
 	}
 }

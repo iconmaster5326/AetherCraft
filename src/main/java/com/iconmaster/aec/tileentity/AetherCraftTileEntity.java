@@ -130,7 +130,7 @@ public class AetherCraftTileEntity extends TileEntity implements ISidedInventory
 	@Override
 	public void readFromNBT(NBTTagCompound tagCompound) {
 		super.readFromNBT(tagCompound);
-		//TODO: what is second arg to getTagList??
+
 		NBTTagList tagList = tagCompound.getTagList("Inventory", 10);
 
 		for (int i = 0; i < tagList.tagCount(); i++) {

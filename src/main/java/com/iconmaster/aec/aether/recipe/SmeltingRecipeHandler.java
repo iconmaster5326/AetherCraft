@@ -33,19 +33,5 @@ public class SmeltingRecipeHandler implements IDynamicAVRecipeHandler {
 			}
 			((ArrayList) recipeList.get(uid)).add(recipe);
         }
-        
-        //TODO: apparently metasmelting is not a thing??
-//        // AND meta-smelting. Hoo boy.
-//		it = FurnaceRecipes.smelting().getMetaSmeltingList().entrySet().iterator();
-//        while (it.hasNext()) {
-//        	Map.Entry pairs = (Map.Entry)it.next();
-//        	SmeltingRecipe recipe = new SmeltingRecipe(UidUtils.getStackFromUid((List)pairs.getKey()),(ItemStack)pairs.getValue());
-//			ItemStack output = DynamicAVRegister.getOutput(recipe);
-//			List uid = UidUtils.getUID(output);
-//			if (recipeList.get(uid) == null) {
-//				recipeList.put(uid, new ArrayList());
-//			}
-//			((ArrayList) recipeList.get(uid)).add(recipe);
-//        }
 	}
 }

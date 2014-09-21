@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//TODO: Downlad IC2 API and REFLECT AROUND IT!!!
+//TODO: Download IC2 API and REFLECT AROUND IT!!!
 public class IC2CraftingHandler implements IDynamicAVRecipeHandler {
 	
 	private String type;
