@@ -29,7 +29,7 @@ import net.minecraftforge.common.util.EnumHelper;
 import java.io.File;
 import java.util.HashMap;
 
-@Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.client.gui.ConfigGui")
+@Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.config.ConfigGui")
 public class AetherCraft {
 	
     public static final String MODID = "AetherCraft";

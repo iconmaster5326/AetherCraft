@@ -85,11 +85,11 @@ public class Options {
 		config.save();
 	}
 	
-	public void setOptionsMap(HashMap options) {
+	public void setOptionsMap(HashMap<String,Object> options) {
 		this.options = options;
 	}
 	
-	public HashMap getOptionsMap() {
+	public HashMap<String,Object> getOptionsMap() {
 		return  options;
 	}
 
@@ -116,5 +116,8 @@ public class Options {
 
 		//addOption("","",0);
 	}
-	
+
+	public HashMap<String,String> getDescs() {
+		return descs;
+	}
 }

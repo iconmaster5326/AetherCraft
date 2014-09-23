@@ -52,6 +52,7 @@ public class ClientProxy extends CommonProxy {
 		MinecraftForge.EVENT_BUS.register(new TooltipEvent());
 		MinecraftForge.EVENT_BUS.register(new AetherArmorDamageEvent());
 		FMLCommonHandler.instance().bus().register(new SSPLogInEvent());
+		FMLCommonHandler.instance().bus().register(new ConfigUpdateEvent());
 	}
 	
 	@SideOnly(Side.CLIENT)
