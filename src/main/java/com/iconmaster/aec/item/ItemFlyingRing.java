@@ -67,6 +67,7 @@ public class ItemFlyingRing extends Item implements IAetherRing {
 		stack.setItemDamage(1);
 		player.capabilities.allowFlying = true;
 		player.capabilities.isFlying = true;
+		player.fallDistance = 0;
 		
 		player.sendPlayerAbilities();
 		//System.out.println("ACTIVATED");
