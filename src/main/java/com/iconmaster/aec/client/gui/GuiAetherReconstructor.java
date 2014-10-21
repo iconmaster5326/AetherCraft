@@ -14,7 +14,6 @@ import org.lwjgl.opengl.GL11;
 public class GuiAetherReconstructor extends AetherCraftGui<TileEntityAetherReconstructor> {
 	private static final ResourceLocation gui_texture = new ResourceLocation(
 			"aec", "textures/gui/aetherReconstructorGui.png");
-	private TileEntityAetherReconstructor te;
 
 	public GuiAetherReconstructor(InventoryPlayer player,
 			TileEntityAetherReconstructor tileEntity) {
