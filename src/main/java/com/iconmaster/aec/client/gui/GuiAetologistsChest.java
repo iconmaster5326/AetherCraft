@@ -76,7 +76,7 @@ public class GuiAetologistsChest extends AetherCraftGui<TileEntityAetologistsChe
 	@Override
 	public void initGui() {
 		super.initGui();
-		//make buttons:		id, x, y, width, height, text
+		//make buttons:		name, x, y, width, height, text
 		bindButton = new GuiButton(1,((width - xSize) / 2)+108,((height - ySize) / 2)+4,56,12,"Bind Items");
 		updateButtonText();
 		buttonList.add(bindButton);

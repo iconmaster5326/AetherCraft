@@ -173,7 +173,7 @@ public class AVRegistry {
 		values = new HashMap();
 		
 		AVConfigHandler.loadAllConfigFiles();
-		DynamicAVRegister.addDynamicValues();
+		//DynamicAVRegister.addDynamicValues();
 		
 	}
 	

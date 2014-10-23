@@ -7,6 +7,7 @@ import com.iconmaster.aec.command.ConfigCommand;
 import com.iconmaster.aec.config.Options;
 import com.iconmaster.aec.item.*;
 import com.iconmaster.aec.network.AetherCraftPacketHandler;
+import com.iconmaster.avlib.AVLib;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -23,11 +24,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.io.File;
-import java.util.HashMap;
 
 @Mod(modid = AetherCraft.MODID, version = AetherCraft.VERSION,guiFactory="com.iconmaster.aec.config.ConfigGui")
 public class AetherCraft {
@@ -183,6 +182,8 @@ public class AetherCraft {
 		InfuserRegistry.addDefaultRecipes();
 		AVRegistry.reloadAllValues(); //Just to make sure some mods last-minute registered stuff gets added
 		event.registerServerCommand(new ConfigCommand());
+
+		AVLib.testLib();
 	}
 
 	public static File getConfigDir() {
