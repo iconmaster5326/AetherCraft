@@ -62,7 +62,7 @@ public class ItemLightRing extends Item implements IAetherRing {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote) {
+		if (world.isRemote) {
 			return stack;
 		}
 		
