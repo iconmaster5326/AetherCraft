@@ -48,6 +48,10 @@ public class ItemFlyingRing extends Item implements IAetherRing {
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+		if (!world.isRemote) {
+			return stack;
+		}
+		
 		if (stack.getItemDamage() == 0) {
 			if (!canRingFunction(stack,player)) {return stack;}
 			activateRing(stack,player);
