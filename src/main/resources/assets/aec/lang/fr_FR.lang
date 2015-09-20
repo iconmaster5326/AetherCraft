@@ -1,0 +1,71 @@
+aec.aetherManipulator.0.name=Manipulateur d'Aether
+aec.aetherManipulator.1.name=Manipulateur infusé
+aec.aetherManipulator.2.name=Manipulateur doré
+aec.aetherExtractor.0.name=Extracteur d'Aether
+aec.aetherExtractor.1.name=Extracteur infusé
+aec.aetherExtractor.2.name=Extracteur doré
+aec.aetherCondenser.0.name=Condensateur d'Aether
+aec.aetherCondenser.1.name=Condensateur infusé
+aec.aetherCondenser.2.name=Condensateur doré
+aec.aetherContainer.0.name=Conteneur d'Aether
+aec.aetherContainer.1.name=Conteneur infusé
+aec.aetherContainer.2.name=Conteneur doré
+aec.aetherInfuser.0.name=Infuseur d'Aether
+aec.aetherInfuser.1.name=Cataliseur infusé
+aec.aetherInfuser.2.name=Infuseur doré
+aec.aetherReconstructor.0.name=Reconstructeur d'Aether
+tile.aec.aetherConduit.0.name=Conduit d'Aether
+tile.aec.aetherConduit.1.name=Conduit infusé
+tile.aec.aetherConduit.2.name=Conduit doré
+aec.aetherPump.0.name=Pompe d'Aether
+aec.aetherPump.1.name=Pompe infusée
+aec.aetherPump.2.name=pompe dorée
+tile.aec.aetoChest.name=Coffre de l'Aetologiste
+
+aec.infused.block.0.name=Bloc infusé
+aec.infused.block.1.name=Briques infusées
+aec.infused.block.2.name=Bloc doré
+aec.infused.block.3.name=Briques dorées
+aec.infused.block.4.name=Bloc éternel
+aec.infused.block.5.name=Briques éternelles
+
+aec.aetherBattery.0.name=Cellule d'Aether
+aec.aetherBattery.1.name=Batterie d'Aether
+aec.aetherBattery.2.name=Cristal de stockage moindre
+
+aec.infused.0.name=Lingot infusé
+aec.infused.1.name=Foyer Aetheral
+aec.infused.2.name=Baton infusé
+aec.infused.3.name=bande provoquée
+aec.infused.4.name=Lingot doré
+aec.infused.5.name=Matière dorée
+aec.infused.6.name=Une singularité spatiale
+aec.infused.7.name=Energie pure
+aec.infused.8.name=Lingot éternel
+aec.infused.9.name=Cristal pur
+aec.infused.10.name=Singularité compressée
+
+item.aec.aetherArmor.0.name=Casque d'Aether
+item.aec.aetherArmor.1.name=Plastron d'Aether
+item.aec.aetherArmor.2.name=Jambière d'Aether
+item.aec.aetherArmor.3.name=Bottes d'Aether
+
+item.aec.flyingRing.name=Anneau de vol
+item.aec.repairRing.name=Anneau de réparation
+item.aec.regnerationRing.name=Anneau de régénération
+aec.potion.regneration=Régénération
+item.aec.phasingRing.name=Anneau de phase
+item.aec.lightRing.name=Anneau d'illumination
+item.aec.teleRing.name=Anneau de Téléportation
+
+item.aec.aetherPickaxe.name=Pioche d'Aether
+item.aec.aetherAxe.name=Hache d'Aether
+item.aec.aetherSword.name=Epée d'Aether
+item.aec.aetherShovel.name=Pelle d'Aether
+item.aec.aetherHammer.name=Marteau d'Aether
+item.aec.aetherShears.name=Ciseaux d'Aether
+
+item.aec.aetometer.name=Aetomètre
+tile.aec.flame.name=Flammes Aethérale
+
+itemGroup.aetherCraft=AetherCraft
